@@ -1,0 +1,50 @@
+{
+  "budget_contract": {
+    "calls_per_slot": 2,
+    "candidate_slots": 3,
+    "derived_limit": {
+      "candidate_evaluations": 3,
+      "interventions": 3,
+      "llm_calls": 6,
+      "llm_tokens": 4200
+    },
+    "interventions_per_candidate": 1,
+    "max_completion_tokens_per_call": 700
+  },
+  "candidate_rows": 72,
+  "model_manifest": {
+    "context_limit": 4096,
+    "engine": "vllm-openai",
+    "engine_version": "0.10.2",
+    "max_tokens": 700,
+    "model": "microsoft/phi-4",
+    "quantization": "bitsandbytes-4bit",
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "temperature": 0.2,
+    "top_p": 0.95
+  },
+  "sources": [
+    {
+      "fjr": null,
+      "jsr": 0.0,
+      "mean_tokens": 966.875,
+      "proposal_source": "P0_LLM",
+      "worlds": 8
+    },
+    {
+      "fjr": null,
+      "jsr": 0.5,
+      "mean_tokens": 848.875,
+      "proposal_source": "P1_EXTERNAL",
+      "worlds": 8
+    },
+    {
+      "fjr": null,
+      "jsr": 1.0,
+      "mean_tokens": 835.0,
+      "proposal_source": "P2_ORACLE",
+      "worlds": 8
+    }
+  ],
+  "world_source_rows": 24
+}

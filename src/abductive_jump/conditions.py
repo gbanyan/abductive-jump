@@ -148,11 +148,17 @@ def build_prompt(
     elif proposal_source is ProposalSource.P1_EXTERNAL:
         constraint += " The representation was proposed by a family-blind structural process; do not replace it."
 
+    output_token_target = (
+        600
+        if condition is Condition.B0_DIRECT_LLM and supplied_representation is None
+        else 160
+    )
     system = (
         "You construct executable scientific theories. Return exactly one JSON object and no markdown. "
         "Truth is determined only by an external simulator. Never invent outcomes or refer to hidden fields. "
         "Silently calculate and verify the simplest exact rule against every observation before writing JSON. "
-        "Start with {, keep derivation and explanation to one short sentence each, and finish within 160 tokens."
+        "Start with {, keep derivation and explanation to one short sentence each, and finish within "
+        f"{output_token_target} tokens."
     )
     representation_output: object = (
         "USE_SUPPLIED_REPRESENTATION"
@@ -193,4 +199,4 @@ def build_prompt(
         )
     if prior_summary:
         user_parts.append("Prior structured search summary: " + prior_summary)
-    return PromptSpec("theory-json-v9", condition, proposal_source, system, "\n".join(user_parts))
+    return PromptSpec("theory-json-v10", condition, proposal_source, system, "\n".join(user_parts))

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from dataclasses import dataclass
 from typing import Any
 
@@ -104,3 +105,21 @@ def external_representation_proposals(
             records.append(consequence_record)
         proposals.append(RepresentationProposal(second, tuple(records)))
     return tuple(proposals)
+
+
+def select_external_proposals(
+    world: PublicWorld, seed: int, slots: int, *, diverse: bool = True
+) -> tuple[RepresentationProposal, ...]:
+    """Select a seed-randomized family-blind subset without outcome access.
+
+    The full-system condition uses structural uniqueness (the archive analogue),
+    while the plain representation-mutation condition samples with replacement.
+    """
+    proposals = list(external_representation_proposals(world, seed))
+    rng = random.Random(seed ^ 0xB4B5)
+    if not 1 <= slots <= len(proposals):
+        raise ValueError("external proposal slots exceed the frozen portfolio")
+    if diverse:
+        rng.shuffle(proposals)
+        return tuple(proposals[:slots])
+    return tuple(rng.choice(proposals) for _ in range(slots))

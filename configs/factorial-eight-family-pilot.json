@@ -1,0 +1,27 @@
+{
+  "candidate_slots": 3,
+  "concurrency": 16,
+  "context_limit": 4096,
+  "decoding_seed_base": 96021,
+  "engine": "vllm-openai",
+  "engine_version": "0.10.2",
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "gate_thresholds": {"delta_cf": 0.1, "delta_falsification": 0.1, "epsilon_candidate_obs": 1e-12, "epsilon_falsification": 1e-12, "epsilon_obs": 1e-12, "min_prediction_separation": 0.5},
+  "generation": {"max_tokens": 700, "temperature": 0.2, "top_p": 0.95},
+  "model": "microsoft/phi-4",
+  "no_jump": false,
+  "proposal_sources": ["P0_LLM", "P1_EXTERNAL", "P2_ORACLE"],
+  "quantization": "bitsandbytes-4bit",
+  "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "sample_temperature": 0.7,
+  "world_seeds": [71]
+}

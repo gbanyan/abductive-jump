@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import threading
 import time
 import urllib.request
 from dataclasses import asdict, dataclass
@@ -9,6 +10,8 @@ from pathlib import Path
 from typing import Any
 
 from .conditions import PromptSpec
+
+_LOG_LOCK = threading.Lock()
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,7 +108,7 @@ class OpenAICompatibleClient:
             representation_hash,
         )
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
-        with self.log_path.open("a", encoding="utf-8") as handle:
+        with _LOG_LOCK, self.log_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(asdict(record), sort_keys=True) + "\n")
         return output, record
 
@@ -124,4 +127,3 @@ def extract_json_object(text: str) -> dict[str, Any]:
             if isinstance(value, dict):
                 return value
     raise ValueError("no JSON object in model output")
-

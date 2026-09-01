@@ -62,3 +62,14 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - On the same eight-family development set, nine independent high-temperature LLM mutation plans per world parsed and completed reasoning in 51/72 slots but produced 0/72 validated jumps. Gate counts were J1 28/72, J2 20/72, J3 15/72, J4 2/72, J5 0/72. This localizes the failure beyond syntax: some self-proposals escaped and discriminated but did not survive prospective falsification.
 - The first external v9 attempt exposed sparse Parquet columns and pre-call rank-deficiency failures. It was superseded before freeze; the corrected rerun retains all 72 calls and sparse error fields. No confirmatory data have been generated.
 - Current suite: 100 tests pass and Ruff reports no findings. Model, budgets, condition runner, confirmatory seeds, and thresholds remain unfrozen pending no-jump and throughput calibration.
+
+## 2026-09-02 03:34 +08:00 — Unified condition and budget pilot
+
+- Implemented a common B0–B5 runner. Each condition uses three slots; each slot always receives two LLM calls, one deterministic candidate evaluation, and one prospectively committed intervention. Invalid scientific outputs consume their slot; HTTP/infrastructure failures abort the run.
+- B2 retains the incumbent graph. B3 changes only an equation value attribute that remains inside the frozen language. B4 samples the nine-member external typed portfolio with replacement. B5 selects structurally distinct portfolio members without replacement and records archive occupancy. All use the same deterministic realization and exact outcome-blind intervention designer.
+- The first eight-family runner attempt stopped because a syntactically parsed B0 graph contained dangling edges. Moved graph validation into the phase-one failure boundary; the malformed candidate now falls back to the incumbent and receives no extra opportunity. The aborted directory is excluded from results.
+- Corrected rerun: 288/288 calls, 144 candidate rows, and identical per-cell resources. Development JSR was B0 0/8, B1 0/8, B2 0/8, B3 0/8, B4 1/8, B5 3/8. This is not confirmatory.
+- Matched no-jump rerun: 288/288 calls; FJR was 0/8 for every condition, and no candidate passed J4 or J5.
+- Added the P0/P1/P2 factorial on a separate development seed with the same two-call reasoner path. JSR was P0 0/8, P1 4/8, P2 8/8. P2 supplies only the correct typed representation, not its equation or outcomes.
+- Throughput at concurrency 16 makes the minimum permitted confirmatory scale feasible on the mandated single RTX 4090. Candidate budget three is retained: it avoids the nine-candidate external ceiling while producing multi-family development successes.
+- Current suite: 105 tests pass and Ruff reports no findings. No confirmatory seed has been queried.
