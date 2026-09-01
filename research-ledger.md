@@ -63,7 +63,7 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - The first external v9 attempt exposed sparse Parquet columns and pre-call rank-deficiency failures. It was superseded before freeze; the corrected rerun retains all 72 calls and sparse error fields. No confirmatory data have been generated.
 - Current suite: 100 tests pass and Ruff reports no findings. Model, budgets, condition runner, confirmatory seeds, and thresholds remain unfrozen pending no-jump and throughput calibration.
 
-## 2026-09-02 03:34 +08:00 — Unified condition and budget pilot
+## 2026-09-02 03:09 +08:00 — Unified condition and budget pilot
 
 - Implemented a common B0–B5 runner. Each condition uses three slots; each slot always receives two LLM calls, one deterministic candidate evaluation, and one prospectively committed intervention. Invalid scientific outputs consume their slot; HTTP/infrastructure failures abort the run.
 - B2 retains the incumbent graph. B3 changes only an equation value attribute that remains inside the frozen language. B4 samples the nine-member external typed portfolio with replacement. B5 selects structurally distinct portfolio members without replacement and records archive occupancy. All use the same deterministic realization and exact outcome-blind intervention designer.
@@ -73,3 +73,11 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Added the P0/P1/P2 factorial on a separate development seed with the same two-call reasoner path. JSR was P0 0/8, P1 4/8, P2 8/8. P2 supplies only the correct typed representation, not its equation or outcomes.
 - Throughput at concurrency 16 makes the minimum permitted confirmatory scale feasible on the mandated single RTX 4090. Candidate budget three is retained: it avoids the nine-candidate external ceiling while producing multi-family development successes.
 - Current suite: 105 tests pass and Ruff reports no findings. No confirmatory seed has been queried.
+
+## 2026-09-02 03:10 +08:00 — Preregistration freeze
+
+- Clerical correction: the immediately preceding entry was initially stamped `03:34`; host time showed this was impossible. Its header was corrected to `03:09`. Its scientific content is unchanged.
+- Froze `docs/abductive-jump-preregistration.md` and all four confirmatory configs in commit `895ebb9118ffd0046825b88868621f2a70f69f61` before any confirmatory model request.
+- Re-audited the live server: `microsoft/phi-4` on the mandated `gblinux` host, vLLM image digest `sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db`.
+- Recorded config hashes in `artifacts/preregistration-freeze.json`. The Git worktree was clean at the freeze check.
+- The next model request using seeds 10000–10049 or 20000–20024 begins confirmatory inference; from that point families, seeds, operators, thresholds, budgets, model, and prompts cannot change to rescue results.

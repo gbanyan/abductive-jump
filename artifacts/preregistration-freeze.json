@@ -1,0 +1,14 @@
+{
+  "confirmatory_configs": {
+    "configs/confirmatory-factorial-control.json": "e04fe7106a4f11f60befd83ae53a799a2cec9393a3a32aa476942660495d86cb",
+    "configs/confirmatory-factorial-jump.json": "00b8c0ebb269ea35bcf39dca90d57a8d2f4b26e788c78015a7bf87d31c2f9757",
+    "configs/confirmatory-primary-control.json": "5ea17c7acee107e1a506382181a4b8f7fcac10e52ac86af8db8db4ea7ce03616",
+    "configs/confirmatory-primary-jump.json": "9c83d26b5faf4d3795d99949c5f4aae2762f66f1454e7f8a93d24444ea9d0699"
+  },
+  "docker_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+  "frozen_at": "2026-09-02T03:10:12+08:00",
+  "model": "microsoft/phi-4",
+  "model_revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "preregistration_commit": "895ebb9118ffd0046825b88868621f2a70f69f61",
+  "worktree_clean_before_manifest": true
+}
