@@ -10,6 +10,7 @@ artifacts/raw_llm/
 artifacts/pilot/calibration-smoke*/
 artifacts/pilot/phi-external/
 artifacts/pilot/**/llm_calls.jsonl
+artifacts/confirmatory/**/llm_calls.jsonl
 artifacts/pilot/primary-runner-eight-family/
 artifacts/pilot/primary-runner-smoke/
 *.safetensors
