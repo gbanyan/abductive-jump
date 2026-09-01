@@ -77,6 +77,7 @@ def run(config_path: Path, output_dir: Path, base_url: str) -> dict[str, Any]:
                     source,
                     supplied,
                     fitted.expression if fitted else None,
+                    fitted.observational_loss if fitted else None,
                     separation_table,
                 )
                 decoding_seed = config["decoding_seed_base"] + 100 * family_index + 10 * seed_index + (2 if supplied else 0)

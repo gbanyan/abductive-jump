@@ -1,0 +1,26 @@
+{
+  "candidate_slots": 9,
+  "context_limit": 4096,
+  "decoding_seed_base": 91021,
+  "engine": "vllm-openai",
+  "engine_version": "0.10.2",
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "generation": {
+    "max_tokens": 256,
+    "temperature": 0.2,
+    "top_p": 0.95
+  },
+  "model": "microsoft/phi-4",
+  "quantization": "bitsandbytes-4bit",
+  "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "world_seeds": [41]
+}

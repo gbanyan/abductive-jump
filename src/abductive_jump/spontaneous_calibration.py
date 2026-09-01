@@ -85,6 +85,7 @@ def run(config_path: Path, output_dir: Path, base_url: str) -> dict[str, Any]:
                     ProposalSource.P0_LLM,
                     proposed.representation,
                     fitted_public.expression,
+                    fitted_public.observational_loss,
                     table,
                 )
                 reasoning_output, reasoning_call = client.generate(
@@ -131,4 +132,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

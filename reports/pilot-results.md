@@ -22,8 +22,14 @@ These are engine self-consistency checks, not method results.
 | Phi-4 14B, supplied representation, free AST | 8 | 8/8 | 2/8 |
 | Phi-4, supplied representation + shared deterministic fitter + exact separation table | 8 | 8/8 | 8/8 |
 | Phi-4, self-proposed representation + same fitter/reasoner | 24 | 21/24 proposal parses | 0/24 |
+| Phi-4, 9 independent compact typed mutation plans/world | 8 worlds, 72 slots | 51/72 proposal and reasoning parses | 0/8 worlds; 0/72 candidates |
+| External family-blind representations + Phi-4 reasoner (v9) | 8 worlds, 72 slots | 72/72 | 8/8 worlds; 9/72 candidates |
 | External family-blind portfolio reachability (no LLM) | 800 jump + 800 control | deterministic | 800/800 jump; 0/800 control |
 
 The free-AST failures motivated a preregistration-safe narrowing before freeze: parameter/equation fitting is a shared deterministic component, while representation proposal remains the manipulated factor. No confirmatory thresholds, families, or operators have been changed after viewing confirmatory results because no confirmatory run exists.
 
 The external reachability ceiling uses nine typed variants, including generic square-transform, affine-context, and sign-contrast realizations. Its 100% coverage is useful for avoiding a search-space floor but creates an operator-alignment threat. Confirmatory claims require family-blind code paths, matched budgets, ablations/random typing controls, and preferably a held-out structural family; reachability alone is not evidence for B4/B5 superiority.
+
+The compact self-proposal interface exposes the same generic mutation vocabulary and accepts at most three operations. It avoids the token asymmetry of asking the model to reproduce an entire graph. Across 72 high-temperature slots it produced 51 executable plans: 28 passed J1, 20 passed J2, 15 passed J3, two passed J4, and none passed J5. In contrast, the nine externally generated candidates per world plus the same v9 reasoner yielded exactly one successful structural candidate in each family (unification yielded one additional equivalent success), with 100% JSON parsing. This is calibration evidence for a proposal gap, not a confirmatory effect.
+
+The v9 external run used 72 calls, 8,263 completion tokens, and 109.17 summed call-seconds. The sample-matched run used 123 of a maximum 144 calls because malformed first-stage plans did not receive a reasoning call, 21,511 completion tokens, and 264.73 summed call-seconds. Confirmatory conditions therefore still require a runner that enforces identical per-world resource envelopes and does not recycle failed-slot capacity.

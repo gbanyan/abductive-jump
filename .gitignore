@@ -8,5 +8,7 @@ __pycache__/
 artifacts/traces/
 artifacts/raw_llm/
 artifacts/pilot/calibration-smoke*/
+artifacts/pilot/phi-external/
+artifacts/pilot/**/llm_calls.jsonl
 *.safetensors
 *.gguf

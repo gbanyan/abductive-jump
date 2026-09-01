@@ -27,19 +27,34 @@ def _solve_linear(matrix: list[list[float]], targets: list[float]) -> list[float
         + [sum(row[i] * target for row, target in zip(matrix, targets))]
         for i in range(width)
     ]
+    # Rank-deficient public designs are expected in observationally equivalent
+    # worlds. Use a deterministic RREF solution with all free coefficients set
+    # to zero instead of rejecting an otherwise realizable representation.
+    pivot_columns: list[int] = []
+    pivot_row = 0
     for column in range(width):
-        pivot = max(range(column, width), key=lambda row: abs(normal[row][column]))
+        pivot = max(range(pivot_row, width), key=lambda row: abs(normal[row][column]))
         if abs(normal[pivot][column]) < 1e-10:
-            raise ValueError("singular realization basis")
-        normal[column], normal[pivot] = normal[pivot], normal[column]
-        scale = normal[column][column]
-        normal[column] = [value / scale for value in normal[column]]
+            continue
+        normal[pivot_row], normal[pivot] = normal[pivot], normal[pivot_row]
+        scale = normal[pivot_row][column]
+        normal[pivot_row] = [value / scale for value in normal[pivot_row]]
         for row in range(width):
-            if row == column:
+            if row == pivot_row:
                 continue
             factor = normal[row][column]
-            normal[row] = [left - factor * right for left, right in zip(normal[row], normal[column])]
-    return [normal[row][-1] for row in range(width)]
+            normal[row] = [
+                left - factor * right
+                for left, right in zip(normal[row], normal[pivot_row])
+            ]
+        pivot_columns.append(column)
+        pivot_row += 1
+        if pivot_row == width:
+            break
+    solution = [0.0] * width
+    for row, column in enumerate(pivot_columns):
+        solution[column] = normal[row][-1]
+    return solution
 
 
 def _clean(value: float) -> float:

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from .expressions import Expression
+from .mutations import MutationOperator
 from .representation import NodeKind, Representation
 from .worlds import PublicWorld
 
@@ -58,6 +59,22 @@ EXPRESSION_GRAMMAR = {
     "limits": {"nodes": 32, "depth": 8},
 }
 
+MUTATION_PLAN_CONTRACT = {
+    "max_steps": 3,
+    "operators": [operator.value for operator in MutationOperator if operator.value != "SUBGRAPH_CROSSOVER"],
+    "step_schema": {"operator": "OPERATOR_NAME", "arguments": {"argument_name": "string_value"}},
+    "common_arguments": {
+        "node": "existing node id",
+        "other": "existing node id",
+        "id": "new unique node id",
+        "kind": "allowed node kind",
+        "relation": "relation label",
+        "attr_transform": "optional structural attribute such as square",
+        "attr_form": "optional structural form such as affine_context or additive_linear",
+        "attr_contrast": "optional structural contrast such as sign_flip",
+    },
+}
+
 
 def _public_payload(world: PublicWorld) -> dict[str, object]:
     variable_types: dict[str, str] = {}
@@ -100,10 +117,13 @@ def build_prompt(
     proposal_source: ProposalSource,
     supplied_representation: Representation | None = None,
     supplied_expression: Expression | None = None,
+    supplied_observational_loss: float | None = None,
     prediction_separation_table: list[dict[str, object]] | None = None,
     prior_summary: str | None = None,
 ) -> PromptSpec:
     payload = _public_payload(world)
+    if condition is Condition.B1_SAMPLE_MATCHED:
+        payload["mutation_plan_contract"] = MUTATION_PLAN_CONTRACT
     if supplied_representation is not None:
         payload["supplied_candidate_representation"] = supplied_representation.canonical_dict()
         payload["supplied_representation_delta_from_incumbent"] = _representation_delta(
@@ -111,6 +131,8 @@ def build_prompt(
         )
     if supplied_expression is not None:
         payload["supplied_fitted_expression"] = supplied_expression.tree
+        if supplied_observational_loss is not None:
+            payload["supplied_observational_loss"] = supplied_observational_loss
     if prediction_separation_table is not None:
         payload["prediction_separation_table_without_outcomes"] = prediction_separation_table
     constraint = {
@@ -129,14 +151,16 @@ def build_prompt(
     system = (
         "You construct executable scientific theories. Return exactly one JSON object and no markdown. "
         "Truth is determined only by an external simulator. Never invent outcomes or refer to hidden fields. "
-        "Silently calculate and verify the simplest exact rule against every observation before writing JSON."
+        "Silently calculate and verify the simplest exact rule against every observation before writing JSON. "
+        "Start with {, keep derivation and explanation to one short sentence each, and finish within 160 tokens."
+    )
+    representation_output: object = (
+        "USE_SUPPLIED_REPRESENTATION"
+        if supplied_representation is not None
+        else {"schema_version": "1", "nodes": [], "edges": []}
     )
     output_contract = {
-        "representation": (
-            "USE_SUPPLIED_REPRESENTATION"
-            if supplied_representation is not None
-            else {"schema_version": "1", "nodes": [], "edges": []}
-        ),
+        "representation": representation_output,
         "derivation": "brief arithmetic check of the rule on every observation",
         "expression": (
             "USE_SUPPLIED_FITTED_EXPRESSION"
@@ -146,6 +170,9 @@ def build_prompt(
         "explanation": "short mechanistic explanation",
         "selected_intervention_ids": ["exactly one listed test case id"],
     }
+    if condition is Condition.B1_SAMPLE_MATCHED and supplied_representation is None:
+        output_contract.pop("representation")
+        output_contract["mutation_plan"] = [MUTATION_PLAN_CONTRACT["step_schema"]]
     user_parts = [
         constraint,
         "Expression variable names must be copied exactly from the public observation/query field names, never from representation node IDs unless a node ID is also a public field. For a sequence field, either history_sum or var (which sums the sequence) is valid. Fields listed in known_nuisance_fields are irrelevant distractors and must not appear in the expression. Read the supplied representation delta carefully: its node attributes are part of the assumed representation. Every operator must use exactly the keys shown in the expression grammar. Fit every observation exactly without using its outcome as an input; numerically check the rule on every row. The selected intervention and its prediction are frozen before the simulator reveals outcomes.",
@@ -153,10 +180,17 @@ def build_prompt(
         "World: " + json.dumps(payload, sort_keys=True, separators=(",", ":")),
     ]
     if supplied_expression is not None:
+        fit_status = (
+            "fits every observation exactly"
+            if supplied_observational_loss is None or supplied_observational_loss <= 1e-12
+            else "is the deterministic best fit but does not fit every observation exactly"
+        )
         user_parts.insert(
             1,
-            "The shared deterministic hypothesis-genome fitter has already fit the supplied_fitted_expression exactly on observations. Use it unchanged. The exact experiment designer has computed candidate and incumbent-oracle predictions without seeing simulator outcomes. Choose exactly one listed experiment with maximum absolute separation; some rows are non-discriminating controls.",
+            "The shared deterministic hypothesis-genome fitter supplied an expression that "
+            + fit_status
+            + ". Use it unchanged. The exact experiment designer has computed candidate and incumbent-oracle predictions without seeing simulator outcomes. Choose exactly one listed experiment with maximum absolute separation; some rows are non-discriminating controls.",
         )
     if prior_summary:
         user_parts.append("Prior structured search summary: " + prior_summary)
-    return PromptSpec("theory-json-v8", condition, proposal_source, system, "\n".join(user_parts))
+    return PromptSpec("theory-json-v9", condition, proposal_source, system, "\n".join(user_parts))

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 from .mutations import MutationOperator, MutationRecord, mutate
 from .representation import NodeKind, Representation
@@ -15,6 +16,31 @@ class RepresentationProposal:
     @property
     def operators(self) -> tuple[str, ...]:
         return tuple(record.operator.value for record in self.ancestry)
+
+
+def apply_mutation_plan(
+    incumbent: Representation,
+    plan: list[dict[str, Any]],
+    seed: int,
+    *,
+    max_steps: int = 3,
+) -> RepresentationProposal:
+    """Execute a compact LLM-chosen plan through the same typed mutation API."""
+    if not 1 <= len(plan) <= max_steps:
+        raise ValueError(f"mutation plan must contain 1..{max_steps} steps")
+    current = incumbent
+    records: list[MutationRecord] = []
+    for index, step in enumerate(plan):
+        if set(step) != {"operator", "arguments"}:
+            raise ValueError("each mutation step requires only operator and arguments")
+        operator = MutationOperator(str(step["operator"]))
+        raw_arguments = step["arguments"]
+        if not isinstance(raw_arguments, dict):
+            raise TypeError("mutation arguments must be an object")
+        arguments = {str(key): str(value) for key, value in raw_arguments.items()}
+        current, record = mutate(current, operator, arguments, seed + index)
+        records.append(record)
+    return RepresentationProposal(current, tuple(records))
 
 
 def external_representation_proposals(
