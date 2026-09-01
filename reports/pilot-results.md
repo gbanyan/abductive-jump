@@ -21,7 +21,9 @@ These are engine self-consistency checks, not method results.
 | Qwen2.5-14B-AWQ, supplied representation, free AST | 8 | 8/8 | 0/8 |
 | Phi-4 14B, supplied representation, free AST | 8 | 8/8 | 2/8 |
 | Phi-4, supplied representation + shared deterministic fitter + exact separation table | 8 | 8/8 | 8/8 |
-| Phi-4, self-proposed representation + same fitter/reasoner | 8 | 6/8 proposal parses | 0/8 |
+| Phi-4, self-proposed representation + same fitter/reasoner | 24 | 21/24 proposal parses | 0/24 |
+| External family-blind portfolio reachability (no LLM) | 800 jump + 800 control | deterministic | 800/800 jump; 0/800 control |
 
 The free-AST failures motivated a preregistration-safe narrowing before freeze: parameter/equation fitting is a shared deterministic component, while representation proposal remains the manipulated factor. No confirmatory thresholds, families, or operators have been changed after viewing confirmatory results because no confirmatory run exists.
 
+The external reachability ceiling uses nine typed variants, including generic square-transform, affine-context, and sign-contrast realizations. Its 100% coverage is useful for avoiding a search-space floor but creates an operator-alignment threat. Confirmatory claims require family-blind code paths, matched budgets, ablations/random typing controls, and preferably a held-out structural family; reachability alone is not evidence for B4/B5 superiority.

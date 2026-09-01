@@ -45,3 +45,10 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - With supplied correct representation, fitted expression, an exact candidate-vs-incumbent separation table that contains no outcomes, a no-op distractor, and exactly one allowed experiment choice, Phi-4 passed 8/8 oracle worlds.
 - An initial two-stage spontaneous scan passed 0/8 (proposal JSON parsed in 6/8). This is below the desired non-floor calibration band, so the primary model/config and benchmark are not frozen. Additional spontaneous/sample/external-proposal calibration is required.
 - Preserved negative and intermediate calibration traces; no confirmatory study has been launched.
+
+## 2026-09-02 02:23 +08:00 — Proposal-floor and external-reachability calibration
+
+- Expanded spontaneous Phi-4 proposals to 24 worlds across three world seeds and low/high-temperature decoding. Proposal JSON parsed in 21/24, but no candidate escaped the frozen incumbent language (J1 = 0/24) and validated success remained 0/24.
+- Extended the family-blind external portfolio from eight to nine typed variants using only generic node/relation mutations and generic function/regime attributes (square transform, affine context, sign contrast). The proposer still receives only `PublicWorld`, never family or truth.
+- Ran 14,400 deterministic candidate evaluations across 800 jump and 800 matched no-jump worlds. Portfolio reachability was 800/800 jump worlds; false acceptance was 0/800 controls.
+- This is explicitly a reachability ceiling, not a B4/B5 result. It does not include matched LLM calls, candidate selection constraints, or confirmatory budgets, and the alignment between generic variants and procedural families remains a Reviewer #2 threat.

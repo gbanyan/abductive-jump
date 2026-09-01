@@ -77,6 +77,16 @@ def fit_representation(public: PublicWorld, candidate: Representation) -> Fitted
     added_attributes = {
         str(key): value for node in added_nodes for key, value in node.attributes.items()
     }
+    changed_fields = {
+        name
+        for query in public.intervention_queries
+        for name in query["intervention"]
+    }
+    if regime not in scalar_fields:
+        regime_candidates = [
+            name for name in scalar_fields if name in changed_fields and name != primary
+        ]
+        regime = regime_candidates[0] if regime_candidates else None
 
     terms: list[tuple[str, dict[str, Any]]] = []
     if NodeKind.STATE_VARIABLE in added_kinds and sequence_fields:
@@ -170,4 +180,3 @@ def fit_representation(public: PublicWorld, candidate: Representation) -> Fitted
         tuple(name for name, _ in terms),
         tuple(coefficients),
     )
-

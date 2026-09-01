@@ -24,7 +24,8 @@ Status: pilot; no primary model/config is frozen and no confirmatory result has 
 - Mechanistic interface change: a family-blind deterministic realization layer now fits the hypothesis genome licensed by any supplied typed representation. It receives only public observations, the candidate graph, and known nuisance labels. The same fitter will be shared by every condition. The LLM is then responsible for coherent interpretation and prospective experiment selection; exact code supplies candidate-versus-incumbent prediction separation without simulator outcomes.
 - Unit evidence: the shared fitter produces J0–J5-valid ground-truth realizations for all eight families without receiving family labels or truth programs.
 - Oracle supplied representation + shared fitter, with one no-op distractor and exactly one permitted intervention choice: validated success 8/8; parse 8/8.
-- Spontaneous two-stage scan (LLM proposes representation, same fitter and experiment interface): validated success 0/8; proposal parse 6/8. This is below the desired 5–30% calibration band and requires additional seeds/difficulty/interface calibration before freezing.
+- Spontaneous two-stage scans (LLM proposes representation, same fitter and experiment interface): validated success 0/24 across three world seeds and two decoding regimes; no candidate passed J1. This is below the desired 5–30% calibration band and requires sampling/budget calibration before freezing.
+- Family-blind external portfolio reachability, without LLM calls: at least one candidate passed J0–J5 in 800/800 jump worlds, while 0/800 matched no-jump worlds produced an accepted jump (14,400 candidates total). This is a reachability ceiling, not a condition result: it uses all nine generic typed variants and therefore does not yet measure budgeted selection or rule out operator-suite benchmark alignment.
 
 ## Interpretation
 
@@ -32,8 +33,7 @@ The successful oracle condition is not evidence for the primary hypothesis by it
 
 ## Next calibration gates
 
-1. Run additional spontaneous seeds and B1 sampling to establish a non-degenerate difficulty range.
-2. Run P1 external family-blind proposals through the identical fitter/reasoner.
+1. Run B1 sample-matched proposal pools to determine whether ordinary sampling escapes the J1 floor.
+2. Run P1 external family-blind proposals through the identical fitter/reasoner under a matched candidate/intervention budget.
 3. Finalize B0–B5 call/token/evaluation/intervention accounting.
 4. Only then freeze model, prompt/parser/fitter versions, seeds, thresholds, and budgets in preregistration.
-

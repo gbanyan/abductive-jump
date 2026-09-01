@@ -30,22 +30,27 @@ def external_representation_proposals(
     outcome = outcome_nodes[0] if outcome_nodes else incumbent.nodes[-1]
     equation = equation_nodes[0] if equation_nodes else outcome
     plans = (
-        (NodeKind.LATENT_VARIABLE, "causes", source.id, outcome.id),
-        (NodeKind.INVARIANT, "governs", equation.id, equation.id),
-        (NodeKind.REGIME, "selects", equation.id, equation.id),
-        (NodeKind.RELATION, "conditions", source.id, equation.id),
-        (NodeKind.STATE_VARIABLE, "updates", source.id, outcome.id),
-        (NodeKind.FUNCTION, "transforms", source.id, equation.id),
-        (NodeKind.CAUSAL_EDGE, "orients", source.id, outcome.id),
-        (NodeKind.TRANSITION, "updates", source.id, outcome.id),
+        (NodeKind.LATENT_VARIABLE, "causes", source.id, outcome.id, {}),
+        (NodeKind.INVARIANT, "governs", equation.id, equation.id, {}),
+        (NodeKind.REGIME, "selects", equation.id, equation.id, {"contrast": "sign_flip"}),
+        (NodeKind.RELATION, "conditions", source.id, equation.id, {"form": "additive_linear"}),
+        (NodeKind.STATE_VARIABLE, "updates", source.id, outcome.id, {"form": "additive_state"}),
+        (NodeKind.FUNCTION, "transforms", source.id, equation.id, {"transform": "square"}),
+        (NodeKind.FUNCTION, "governs", source.id, equation.id, {"form": "affine_context"}),
+        (NodeKind.CAUSAL_EDGE, "orients", source.id, outcome.id, {}),
+        (NodeKind.TRANSITION, "updates", source.id, outcome.id, {}),
     )
     proposals: list[RepresentationProposal] = []
-    for index, (kind, relation, left, right) in enumerate(plans):
+    for index, (kind, relation, left, right, attributes) in enumerate(plans):
         node_id = f"m{seed % 1_000_000:06d}_{index}"
         first, add_record = mutate(
             incumbent,
             MutationOperator.ADD_NODE,
-            {"kind": kind.value, "id": node_id},
+            {
+                "kind": kind.value,
+                "id": node_id,
+                **{f"attr_{key}": value for key, value in attributes.items()},
+            },
             seed + index * 10,
         )
         if kind in {NodeKind.INVARIANT, NodeKind.REGIME}:
@@ -73,4 +78,3 @@ def external_representation_proposals(
             records.append(consequence_record)
         proposals.append(RepresentationProposal(second, tuple(records)))
     return tuple(proposals)
-

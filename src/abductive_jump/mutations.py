@@ -69,7 +69,18 @@ def mutate(
 
     if operator is MutationOperator.ADD_NODE:
         kind = NodeKind(arguments.get("kind", NodeKind.PRIMITIVE.value))
-        nodes.append(Node(arguments.get("id") or _fresh_id(parent, kind.value.lower(), rng), kind))
+        attributes = {
+            key.removeprefix("attr_"): value
+            for key, value in arguments.items()
+            if key.startswith("attr_")
+        }
+        nodes.append(
+            Node(
+                arguments.get("id") or _fresh_id(parent, kind.value.lower(), rng),
+                kind,
+                attributes,
+            )
+        )
     elif operator is MutationOperator.REMOVE_NODE:
         nodes = [n for n in nodes if n.id != node_id]
         edges = [e for e in edges if e.source != node_id and e.target != node_id]
@@ -160,4 +171,3 @@ def mutate(
         datetime.now(UTC).isoformat(),
     )
     return child, record
-
