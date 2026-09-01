@@ -1,0 +1,16 @@
+{
+  "model_manifest": {
+    "context_limit": 4096,
+    "engine": "vLLM",
+    "engine_version": "0.10.2",
+    "max_tokens": 700,
+    "model": "microsoft/phi-4",
+    "quantization": "bitsandbytes-dynamic-4bit-vllm-default",
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "temperature": 0.2,
+    "top_p": 0.9
+  },
+  "n": 8,
+  "proposal_parse_rate": 0.75,
+  "success_rate": 0.0
+}

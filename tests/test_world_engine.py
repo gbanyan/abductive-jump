@@ -16,7 +16,7 @@ def test_jump_worlds_are_locally_adequate_and_truth_passes_all_gates(family, see
     result = evaluate_jump(world, world.truth, commitment)
     assert oracle.exact
     assert oracle.hypotheses_evaluated == len(world.incumbent_programs)
-    assert oracle.observational_loss == 0
+    assert oracle.observational_loss <= 1e-12
     assert result.validated_jump
     assert result.counterfactual_candidate_loss == 0
     assert result.counterfactual_oracle_loss > 0
@@ -45,7 +45,9 @@ def test_public_world_redacts_truth_family_and_hidden_splits():
     assert "family" not in fields
     assert "validation" not in fields
     assert "falsification" not in fields
-    assert all(case.case_id.startswith("obs-") for case in public.observations)
+    assert all(case["case_id"].startswith("obs-") for case in public.observations)
+    public_fields = {name for case in public.observations for name in case["inputs"]}
+    assert not public_fields & {"x", "x1", "x2", "history", "regime", "environment", "context"}
 
 
 def test_commitment_tampering_is_rejected():

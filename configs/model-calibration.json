@@ -1,0 +1,26 @@
+{
+  "status": "superseded_rejected_candidate_pilot_only",
+  "decision": "rejected_after_0_of_8_oracle_mutation_free_realization_successes",
+  "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+  "revision": "539535859b135b0244c91f3e59816150c8056698",
+  "quantization": "AWQ-4bit",
+  "engine": "vLLM",
+  "engine_version": "0.10.2",
+  "engine_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+  "context_limit": 4096,
+  "generation": {"temperature": 0.2, "top_p": 0.9, "max_tokens": 700},
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "world_seeds": [1001, 1002],
+  "decoding_seed_base": 73000,
+  "oracle_competence_target": [0.8, 0.95],
+  "spontaneous_target": [0.05, 0.3]
+}

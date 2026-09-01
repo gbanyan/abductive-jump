@@ -1,0 +1,21 @@
+{
+  "by_source": {
+    "P2_ORACLE": {
+      "mean_tokens": 1388.125,
+      "n": 8,
+      "parse_rate": 1.0,
+      "success_rate": 0.0
+    }
+  },
+  "model_manifest": {
+    "context_limit": 4096,
+    "engine": "vLLM",
+    "engine_version": "0.10.2",
+    "max_tokens": 700,
+    "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+    "quantization": "AWQ-4bit",
+    "revision": "539535859b135b0244c91f3e59816150c8056698",
+    "temperature": 0.2,
+    "top_p": 0.9
+  }
+}

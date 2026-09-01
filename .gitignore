@@ -7,6 +7,6 @@ __pycache__/
 .mypy_cache/
 artifacts/traces/
 artifacts/raw_llm/
+artifacts/pilot/calibration-smoke*/
 *.safetensors
 *.gguf
-

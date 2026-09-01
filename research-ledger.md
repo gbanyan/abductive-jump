@@ -33,3 +33,15 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Recorded 1,600 unique ground-truth candidate hashes and 800 unique matched split hashes. Jump/no-jump pairs intentionally share a split policy for comparison.
 - Materialized the world manifest, ground truth, oracle certificates, gate results, and no-jump tables as Parquet plus `reports/world-engine-validation.md`.
 - Interpretation boundary: P0 demonstrates engine self-consistency and gate separability only. It does not establish LLM difficulty, proposal reachability, absence of template leakage, or a representation-mutation advantage.
+
+## 2026-09-02 02:16 +08:00 — Calibration interface and model audit
+
+- Added executable bounded expression ASTs, typed structural-support checks, prospective one-intervention commitments, prompt/output hashing, full call replay logs, B0–B5 and P0–P2 condition identifiers, and a family-blind external mutation portfolio.
+- Found and repaired pilot-only interface defects before freeze: semantic world IDs, incomplete lexicalization, publicly exposed simulator latent state, ambiguous recursive AST examples, supplied graph IDs misaligned with public variables, non-identifiable state/property observational designs, and experiment prompts lacking incumbent predictions.
+- Revalidated the engine after each repair. Current suite: 88 passing tests; P0 remains 800/800 ground-truth jump success and 0/800 no-jump acceptance with exact oracles.
+- Qwen2.5-14B-Instruct-AWQ revision `539535859b135b0244c91f3e59816150c8056698` failed the eight-family oracle-mutation free-realization screen (0/8) and was rejected before freeze.
+- Switched, per calibration policy, to Microsoft Phi-4 revision `2db69c1c3e91a05d2c64a3185acfbaf36f744e25`, still 14B/single-4090/frozen-weight. Free realization reached only 2/8.
+- Introduced a shared family-blind deterministic hypothesis-genome fitter. This deliberately narrows the estimand to representation proposal under exact within-representation realization. The fitter itself passes all eight ground-truth families in tests.
+- With supplied correct representation, fitted expression, an exact candidate-vs-incumbent separation table that contains no outcomes, a no-op distractor, and exactly one allowed experiment choice, Phi-4 passed 8/8 oracle worlds.
+- An initial two-stage spontaneous scan passed 0/8 (proposal JSON parsed in 6/8). This is below the desired non-floor calibration band, so the primary model/config and benchmark are not frozen. Additional spontaneous/sample/external-proposal calibration is required.
+- Preserved negative and intermediate calibration traces; no confirmatory study has been launched.

@@ -1,0 +1,26 @@
+{
+  "status": "oracle_scan_only_not_confirmatory",
+  "model": "microsoft/phi-4",
+  "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "quantization": "bitsandbytes-dynamic-4bit-vllm-default",
+  "engine": "vLLM",
+  "engine_version": "0.10.2",
+  "engine_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+  "context_limit": 4096,
+  "generation": {"temperature": 0.2, "top_p": 0.9, "max_tokens": 700},
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "world_seeds": [1101],
+  "proposal_sources": ["P2_ORACLE"],
+  "decoding_seed_base": 75000,
+  "oracle_competence_target": [0.8, 0.95],
+  "spontaneous_target": [0.05, 0.3]
+}

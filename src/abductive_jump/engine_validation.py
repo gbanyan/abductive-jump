@@ -72,6 +72,7 @@ def run(config_path: Path, artifact_dir: Path, report_path: Path) -> dict[str, A
                 gate_row = asdict(result)
                 gate_row["validated_jump"] = result.validated_jump
                 gate_row["escape_reasons"] = list(result.escape_reasons)
+                gate_row["no_jump"] = no_jump
                 gates.append(gate_row)
                 if no_jump:
                     controls.append(
@@ -91,7 +92,7 @@ def run(config_path: Path, artifact_dir: Path, report_path: Path) -> dict[str, A
     _write(artifact_dir / "jump_gate_results.parquet", gates)
     _write(artifact_dir / "no_jump_controls.parquet", controls)
 
-    jump_rows = [row for row in gates if "-jump-" in row["world_id"]]
+    jump_rows = [row for row in gates if not row["no_jump"]]
     summary = {
         "worlds": len(manifests),
         "jump_worlds": len(jump_rows),
@@ -132,4 +133,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
