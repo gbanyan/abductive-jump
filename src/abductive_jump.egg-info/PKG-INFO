@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: abductive-jump
+Version: 0.1.0
+Summary: Procedural benchmark for validated representation-level abductive jumps
+Requires-Python: >=3.11
+Requires-Dist: pyarrow>=17
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
