@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 REQUIRED = (
+    "artifacts/compositional-execution-source-audit.json",
     "artifacts/generic_primitive_manifest.json",
     "artifacts/high_level_operator_exclusions.json",
     "artifacts/composition_reachability.parquet",
@@ -96,6 +97,17 @@ def run(root: Path) -> dict[str, Any]:
         actual = _hash(root / name)
         if actual != expected_hash:
             raise ValueError(f"frozen config changed: {name}")
+    execution_source = json.loads(
+        (root / "artifacts" / "compositional-execution-source-audit.json").read_text()
+    )
+    if not execution_source["local_remote_sha256_match"]:
+        raise ValueError("execution-source audit did not establish local/remote parity")
+    if execution_source["aggregate_confirmatory_outcomes_inspected"]:
+        raise ValueError("execution-source audit reports premature confirmatory inspection")
+    for name, expected_hash in execution_source["sha256"].items():
+        actual = _hash(root / name)
+        if actual != expected_hash:
+            raise ValueError(f"execution source changed: {name}")
     replay = json.loads(
         (root / "artifacts" / "compositional-replay-validation.json").read_text()
     )
@@ -109,6 +121,7 @@ def run(root: Path) -> dict[str, Any]:
         "confirmatory_raw_calls": sum(row["lines"] for row in raw.values()),
         "replay": replay,
         "frozen_config_hashes_verified": True,
+        "execution_source_hashes_verified": True,
         "heldout_unlock_order_verified_in_ledger": True,
     }
     output = root / "artifacts" / "compositional-reproducibility-manifest.json"

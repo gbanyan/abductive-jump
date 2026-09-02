@@ -129,3 +129,9 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Audited all primary budgets: C0/C2/C3/C_self/C_rand each had 192 candidate-evaluation/attempt capacity and six calls per world. C1 and C5 remain separately costed references as registered.
 - Corrected a trace-accounting-only defect without another model call: an unparsable or wrong-schema C_self output now expands to all 16 fixed invalid plan opportunities rather than one summary error. Replay of the 24 existing C_self planning calls yields 384/384 recorded opportunities and 0 valid plans, preserving C_self JSR 0/8.
 - Corrected-pilot audit passes with C2 depth-one success 0, zero budget mismatches, and 336/336 unique call keys. Current suite: 150 tests, Ruff clean. The registered budgets/search remain unchanged; confirmatory inference may now begin with the existing-family shard only.
+
+## 2026-09-02 15:06 +08:00 — Mid-run execution-source integrity audit
+
+- Without reading aggregate outcomes, compared the exact local and `gblinux` hashes for the running experiment config and seven execution-critical modules. All eleven paths match byte for byte; the existing-family raw trace is still append-only and incomplete.
+- Documented why `compositional_experiment.py` differs from the earlier admissibility-correction manifest: commit `8b958e5` makes unparsable/wrong-schema C_self outputs consume all 16 fixed invalid plan opportunities, as preregistered, instead of aborting the shard. It changes trace accounting, not search, gates, budgets, or success semantics.
+- Commit `8b958e5` was recorded at 12:45:06 +08:00; the confirmatory raw trace was created at 12:45:36.535 +08:00. Thus the exact runner source preceded the first confirmatory call. `artifacts/compositional-execution-source-audit.json` records this chronology and the local/remote hashes, and the final reproducibility verifier now enforces them.

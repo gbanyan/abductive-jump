@@ -1,0 +1,24 @@
+{
+  "aggregate_confirmatory_outcomes_inspected": false,
+  "confirmatory_raw_trace_created_at": "2026-09-02T12:45:36.535439260+08:00",
+  "execution_source_commit": "8b958e58b33b583ae0b0971c6ee4a2b51d3ba8b0",
+  "execution_source_commit_at": "2026-09-02T12:45:06+08:00",
+  "execution_source_preceded_raw_trace_seconds": 30.53543926,
+  "local_remote_sha256_match": true,
+  "observed_at": "2026-09-02T15:06:53+08:00",
+  "purpose": "Retrospective operational audit of the exact already-committed source present locally and on gblinux for the running confirmatory phase.",
+  "sha256": {
+    "configs/compositional-confirmatory-existing-control.json": "2f775b36ec259e9c6ab9da8a119d1ac3e8a0454a6b3fa800a4ea6da34c1ef9cd",
+    "configs/compositional-confirmatory-existing.json": "4c3b1095d554d20f2c202db9b3e8aef3ee6d25a582653b1da1c1418a6c4f29f5",
+    "configs/compositional-confirmatory-heldout-control.json": "a2c585564e953a720b014848382bf6201e25a3ae135aa1f33f048b3060ec9070",
+    "configs/compositional-confirmatory-heldout.json": "9c6c04539455eeb3a5818cd4244f59be4e70862fb7d8e415d1110a4f21bbde68",
+    "src/abductive_jump/composition_search.py": "68afc16f1d8a88617c9183368dde5818ca067ca4fae1a79359de2fd0adbc56c5",
+    "src/abductive_jump/compositional_experiment.py": "93721f3185c9ae0f09dc06237f769c06667beae5ccb6d556c3218a1766917e3c",
+    "src/abductive_jump/compositional_realization.py": "4a11302ced2b9204750cf540eee13b1abea97721e28c336176da5298143d6d9b",
+    "src/abductive_jump/compositional_worlds.py": "27ac9105f0ae84ab75ce1c171b4a4aa065693a2f63ccfb614eaf2d14bbe11c36",
+    "src/abductive_jump/conditions.py": "4e50228462f4138121e434689804a75426d311077b8917cfff67c293ee4c4c32",
+    "src/abductive_jump/gates.py": "5ec6732d08b533bc963444e545c2ba9b2fbdeff8a2a244bc415e6ca785a37777",
+    "src/abductive_jump/generic_primitives.py": "10142f9ca5af2fb552abec513a4902860a3e5dbb3ee6b18a2bd5589371f389f7"
+  },
+  "trace_accounting_change": "Commit 8b958e5 maps unparsable or wrong-schema C_self output to all 16 preregistered invalid plan opportunities. It changes trace completeness, not search, gates, configuration, or success semantics. The change and corrected pilot were committed before the first confirmatory call."
+}
