@@ -135,3 +135,10 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Without reading aggregate outcomes, compared the exact local and `gblinux` hashes for the running experiment config and seven execution-critical modules. All eleven paths match byte for byte; the existing-family raw trace is still append-only and incomplete.
 - Documented why `compositional_experiment.py` differs from the earlier admissibility-correction manifest: commit `8b958e5` makes unparsable/wrong-schema C_self outputs consume all 16 fixed invalid plan opportunities, as preregistered, instead of aborting the shard. It changes trace accounting, not search, gates, budgets, or success semantics.
 - Commit `8b958e5` was recorded at 12:45:06 +08:00; the confirmatory raw trace was created at 12:45:36.535 +08:00. Thus the exact runner source preceded the first confirmatory call. `artifacts/compositional-execution-source-audit.json` records this chronology and the local/remote hashes, and the final reproducibility verifier now enforces them.
+
+## 2026-09-02 16:59 +08:00 — Existing-family reconstruction confirmatory terminal
+
+- Completed the frozen 400-world existing-family reconstruction shard with exit code 0: exactly 2,800 world-condition rows, 8,400 selected candidates, and 16,800 unique inference calls. No infrastructure rerun occurred.
+- Terminal reconstruction JSR was C0 0/400, C1 131/400 (32.75%), C2 0/400, C3 400/400 (100%), C_self 0/400, C_rand 52/400 (13%), and C5 400/400 (100%). These are terminal known-family results, not a final verdict; safety controls and held-out evidence remain pending.
+- Independent run audit passed: zero primary budget mismatches, zero C2 depth-one successes, 19,200/19,200 fixed C_self plan opportunities recorded, zero valid C_self plans, and 16,800/16,800 unique call keys.
+- Held-out confirmatory remains locked. The next registered step is the existing-family no-jump control; no held-out inference has been run or inspected.
