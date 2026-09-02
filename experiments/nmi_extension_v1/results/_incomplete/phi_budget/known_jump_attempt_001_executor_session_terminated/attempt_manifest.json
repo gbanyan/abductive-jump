@@ -1,0 +1,13 @@
+{
+  "attempt_id": "PHI-BUDGET-SENSITIVITY::known_jump::attempt-001",
+  "status": "incomplete_infrastructure_termination",
+  "started_after_protocol_freeze": true,
+  "completed_calls": 202,
+  "expected_calls": 2400,
+  "summary_json_created": false,
+  "transport_error_log_created": false,
+  "llm_calls_sha256": "4c6abe366e695f8e3649af0362533f28372bdccf52d5b6149aed35317dbadadc",
+  "observed_at_utc": "2026-09-02T17:40:35Z",
+  "cause": "The interactive executor session ended with its agent turn; the model server remained healthy and idle.",
+  "disposition": "Preserved in full and excluded as an incomplete shard. The single protocol-allowed clean whole-shard restart uses a new empty output directory. No calls are mixed or selectively reused."
+}

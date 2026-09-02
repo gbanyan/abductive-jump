@@ -10,6 +10,11 @@ from typing import Any
 
 import pyarrow.parquet as pq
 
+from abductive_jump.compositional_experiment import _world
+from abductive_jump.compositional_worlds import HELD_OUT_FAMILY
+from abductive_jump.conditions import Condition, ProposalSource
+from abductive_jump.worlds import FAMILIES, generate_world
+
 ROOT = Path(__file__).resolve().parents[1]
 EXT = ROOT / "experiments" / "nmi_extension_v1"
 
@@ -24,6 +29,18 @@ def load(path: Path) -> dict[str, Any]:
 
 def _lines(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text().splitlines()]
+
+
+def require(value: bool, message: str) -> None:
+    if not value:
+        raise ValueError(message)
+
+
+SOURCE_CONDITIONS = {
+    ProposalSource.P0_LLM.value: Condition.B1_SAMPLE_MATCHED.value,
+    ProposalSource.P1_EXTERNAL.value: Condition.B4_REPRESENTATION_MUTATION.value,
+    ProposalSource.P2_ORACLE.value: Condition.B4_REPRESENTATION_MUTATION.value,
+}
 
 
 def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
@@ -42,10 +59,10 @@ def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
     worlds = pq.read_table(run_dir / "world_results.parquet").to_pylist()
     candidates = pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
     calls = _lines(run_dir / "llm_calls.jsonl")
-    assert len(worlds) == expected_world_rows, (run_dir, "world rows")
-    assert len(candidates) == expected_candidate_rows, (run_dir, "candidate rows")
+    require(len(worlds) == expected_world_rows, f"{run_dir}: world rows")
+    require(len(candidates) == expected_candidate_rows, f"{run_dir}: candidate rows")
     if factorial:
-        assert len(calls) == expected_candidate_rows * 2, (run_dir, "calls")
+        require(len(calls) == expected_candidate_rows * 2, f"{run_dir}: calls")
     else:
         phase_one = [
             row
@@ -57,15 +74,15 @@ def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
             for row in calls
             if row["proposal_source"] == "COMPOSITION_SEARCH"
         ]
-        assert len(phase_two) == expected_candidate_rows, (run_dir, "phase-two calls")
+        require(len(phase_two) == expected_candidate_rows, f"{run_dir}: phase-two calls")
         repairs = len(phase_one) - expected_candidate_rows
-        assert 0 <= repairs <= expected_candidate_rows, (run_dir, "repair calls")
+        require(0 <= repairs <= expected_candidate_rows, f"{run_dir}: repair calls")
         if int(config.get("validator_repair_attempts", 0)) == 0:
-            assert repairs == 0, (run_dir, "unexpected repair")
+            require(repairs == 0, f"{run_dir}: unexpected repair")
         traces = pq.read_table(run_dir / "llm_self_plans.parquet").to_pylist()
-        assert len(traces) == len(phase_one) * int(config["self_plans_per_slot"]), (
-            run_dir,
-            "plan traces",
+        require(
+            len(traces) == len(phase_one) * int(config["self_plans_per_slot"]),
+            f"{run_dir}: plan traces",
         )
     call_keys = {
         (
@@ -76,13 +93,222 @@ def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
         )
         for row in calls
     }
-    assert len(call_keys) == len(calls), (run_dir, "duplicate calls")
+    require(len(call_keys) == len(calls), f"{run_dir}: duplicate calls")
     expected_seeds = (
         set(range(int(config["world_seed_range"]["start"]), int(config["world_seed_range"]["stop_exclusive"])))
         if factorial
         else {int(seed) for seed in config["world_seeds"]}
     )
-    assert {int(row["world_seed"]) for row in worlds} == expected_seeds
+    require(
+        {int(row["world_seed"]) for row in worlds} == expected_seeds,
+        f"{run_dir}: world seed set",
+    )
+
+    expected_world_keys = set()
+    expected_candidate_keys = set()
+    if factorial:
+        expected_call_keys = set()
+        for source in config["proposal_sources"]:
+            condition = SOURCE_CONDITIONS[source]
+            for family in config["families"]:
+                for seed in expected_seeds:
+                    world = generate_world(family, seed, no_jump=bool(config["no_jump"]))
+                    expected_world_keys.add((source, condition, family, seed, world.world_id))
+                    for slot in range(int(config["candidate_slots"])):
+                        expected_candidate_keys.add(
+                            (source, condition, family, seed, world.world_id, slot)
+                        )
+                        decoding_seed = (
+                            int(config["decoding_seed_base"])
+                            + list(Condition).index(Condition(condition)) * 10_000_000
+                            + FAMILIES.index(family) * 100_000
+                            + seed * 100
+                            + slot * 2
+                        )
+                        expected_call_keys.add((condition, source, world.world_id, decoding_seed))
+                        expected_call_keys.add((condition, source, world.world_id, decoding_seed + 1))
+        actual_world_keys = {
+            (
+                str(row["proposal_source"]),
+                str(row["condition"]),
+                str(row["family"]),
+                int(row["world_seed"]),
+                str(row["world_id"]),
+            )
+            for row in worlds
+        }
+        actual_candidate_keys = {
+            (
+                str(row["proposal_source"]),
+                str(row["condition"]),
+                str(row["family"]),
+                int(row["world_seed"]),
+                str(row["world_id"]),
+                int(row["slot"]),
+            )
+            for row in candidates
+        }
+        require(call_keys == expected_call_keys, f"{run_dir}: exact call identities")
+    else:
+        require(
+            config["conditions"] == [Condition.C_SELF_LLM_COMPOSITION.value],
+            f"{run_dir}: unexpected condition config",
+        )
+        for family in config["families"]:
+            for seed in expected_seeds:
+                world = _world(config, family, seed)
+                expected_world_keys.add(
+                    (Condition.C_SELF_LLM_COMPOSITION.value, family, seed, world.world_id)
+                )
+                for slot in range(int(config["candidate_slots"])):
+                    expected_candidate_keys.add(
+                        (
+                            Condition.C_SELF_LLM_COMPOSITION.value,
+                            family,
+                            seed,
+                            world.world_id,
+                            slot,
+                        )
+                    )
+        actual_world_keys = {
+            (
+                str(row["condition"]),
+                str(row["family"]),
+                int(row["world_seed"]),
+                str(row["world_id"]),
+            )
+            for row in worlds
+        }
+        actual_candidate_keys = {
+            (
+                str(row["condition"]),
+                str(row["family"]),
+                int(row["world_seed"]),
+                str(row["world_id"]),
+                int(row["slot"]),
+            )
+            for row in candidates
+        }
+    require(actual_world_keys == expected_world_keys, f"{run_dir}: exact world identities")
+    require(
+        actual_candidate_keys == expected_candidate_keys,
+        f"{run_dir}: exact candidate identities",
+    )
+    require(
+        all(bool(row["no_jump"]) == bool(config["no_jump"]) for row in worlds + candidates),
+        f"{run_dir}: no_jump identity",
+    )
+
+    for row in calls:
+        require(row["model"] == config["model"], f"{run_dir}: call model")
+        require(row["revision"] == config["revision"], f"{run_dir}: call revision")
+        require(row["quantization"] == config["quantization"], f"{run_dir}: call quantization")
+        require(
+            hashlib.sha256(str(row["full_prompt_json"]).encode()).hexdigest()
+            == row["prompt_hash"],
+            f"{run_dir}: prompt hash",
+        )
+        request = json.loads(row["request_json"])
+        require(request["model"] == config["model"], f"{run_dir}: request model")
+        require(
+            int(request["max_tokens"]) == int(config["generation"]["max_tokens"]),
+            f"{run_dir}: request max_tokens",
+        )
+        expected_temperature = (
+            float(config["sample_temperature"])
+            if row["condition"] == Condition.B1_SAMPLE_MATCHED.value
+            else float(config["generation"]["temperature"])
+        )
+        require(float(request["temperature"]) == expected_temperature, f"{run_dir}: temperature")
+        require(float(request["top_p"]) == float(config["generation"]["top_p"]), f"{run_dir}: top_p")
+        require(int(request["seed"]) == int(row["decoding_seed"]), f"{run_dir}: seed")
+        require(request.get("reasoning_effort") == config.get("reasoning_effort"), f"{run_dir}: reasoning")
+        require(request.get("response_format") == config.get("response_format"), f"{run_dir}: response format")
+        response = json.loads(row["raw_response_json"])
+        message = response["choices"][0]["message"]
+        require(str(message.get("content") or "") == row["full_output"], f"{run_dir}: answer capture")
+        require(
+            str(message.get("reasoning") or message.get("reasoning_content") or "")
+            == str(row.get("reasoning_output") or ""),
+            f"{run_dir}: reasoning capture",
+        )
+
+    summary = load(run_dir / "summary.json")
+    manifest = summary["model_manifest"]
+    for key in (
+        "model",
+        "revision",
+        "quantization",
+        "engine",
+        "engine_version",
+        "context_limit",
+        "reasoning_effort",
+        "response_format",
+        "transport_retries",
+    ):
+        require(manifest.get(key) == config.get(key), f"{run_dir}: summary manifest {key}")
+    require(
+        manifest["max_tokens"] == config["generation"]["max_tokens"],
+        f"{run_dir}: summary max_tokens",
+    )
+    if not factorial:
+        require(summary["config"] == config, f"{run_dir}: embedded config")
+        call_lookup = {
+            (
+                row["proposal_source"],
+                row["world_id"],
+                int(row["decoding_seed"]),
+            ): row
+            for row in calls
+        }
+        trace_groups: dict[tuple[str, int, str], list[dict[str, Any]]] = {}
+        for row in traces:
+            trace_groups.setdefault(
+                (str(row["world_id"]), int(row["slot"]), str(row["repair_stage"])), []
+            ).append(row)
+        for candidate in candidates:
+            family = str(candidate["family"])
+            seed = int(candidate["world_seed"])
+            slot = int(candidate["slot"])
+            family_index = [*FAMILIES, HELD_OUT_FAMILY].index(family)
+            initial_seed = (
+                int(config["decoding_seed_base"])
+                + list(Condition).index(Condition.C_SELF_LLM_COMPOSITION) * 10_000_000
+                + family_index * 100_000
+                + seed * 100
+                + slot * 2
+            )
+            world_id = str(candidate["world_id"])
+            require(
+                (ProposalSource.LLM_COMPOSITION.value, world_id, initial_seed) in call_lookup,
+                f"{run_dir}: missing initial C_self call",
+            )
+            require(
+                (ProposalSource.COMPOSITION_SEARCH.value, world_id, initial_seed + 1)
+                in call_lookup,
+                f"{run_dir}: missing phase-two call",
+            )
+            initial_traces = trace_groups.get((world_id, slot, "initial"), [])
+            repair_traces = trace_groups.get((world_id, slot, "repair"), [])
+            require(len(initial_traces) == int(config["self_plans_per_slot"]), f"{run_dir}: initial traces")
+            repair_call = (
+                ProposalSource.LLM_COMPOSITION.value,
+                world_id,
+                initial_seed + 50_000_000,
+            ) in call_lookup
+            require(repair_call == bool(repair_traces), f"{run_dir}: repair call/trace pairing")
+            if repair_call:
+                require(
+                    int(config.get("validator_repair_attempts", 0)) == 1
+                    and len(repair_traces) == int(config["self_plans_per_slot"])
+                    and not all(bool(row.get("valid")) for row in initial_traces),
+                    f"{run_dir}: invalid repair trigger",
+                )
+            elif int(config.get("validator_repair_attempts", 0)) == 1:
+                require(
+                    all(bool(row.get("valid")) for row in initial_traces),
+                    f"{run_dir}: omitted required repair",
+                )
     error_path = run_dir / "llm_calls.jsonl.transport-errors"
     artifacts = {
         str(path.relative_to(ROOT)): sha(path)
@@ -110,7 +336,7 @@ def main() -> None:
     missing = []
     for relative, expected_hash in sorted(config_manifest["configs"].items()):
         config_path = ROOT / relative
-        assert sha(config_path) == expected_hash, config_path
+        require(sha(config_path) == expected_hash, f"config hash: {config_path}")
         config = load(config_path)
         run_dir = EXT / "results" / config["treatment_id"] / config_path.stem
         if not (run_dir / "summary.json").is_file():

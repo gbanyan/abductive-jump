@@ -65,6 +65,8 @@ def _paired(left: list[dict[str, Any]], right: list[dict[str, Any]], label: str)
         (str(row["family"]), int(row["world_seed"])): bool(row["condition_success"])
         for row in right
     }
+    if len(left_lookup) != len(left) or len(right_lookup) != len(right):
+        raise ValueError(f"duplicate world rows in paired contrast {label}")
     if set(left_lookup) != set(right_lookup):
         raise ValueError(f"unpaired world sets for {label}")
     by_family: dict[str, list[tuple[bool, bool]]] = defaultdict(list)
@@ -190,22 +192,31 @@ def _aggregate_boolean_stages(
         grouped[tuple(str(normalized.get(key, "")) for key in keys)].append(normalized)
     output = []
     for group, values in sorted(grouped.items()):
+        prior_survival = [True] * len(values)
         for stage in stages:
-            applicable = [row for row in values if row.get(stage) is not None]
+            marginal = [bool(row.get(stage)) for row in values]
+            cumulative = [before and current for before, current in zip(prior_survival, marginal, strict=True)]
+            conditional_denominator = sum(prior_survival)
+            conditional_successes = sum(cumulative)
             output.append(
                 {
                     **dict(zip(keys, group, strict=True)),
                     "grain": grain,
                     "stage": stage,
-                    "successes": sum(bool(row.get(stage)) for row in applicable),
-                    "total": len(applicable),
-                    "rate": (
-                        sum(bool(row.get(stage)) for row in applicable) / len(applicable)
-                        if applicable
+                    "marginal_successes": sum(marginal),
+                    "cumulative_successes": sum(cumulative),
+                    "total": len(values),
+                    "cumulative_rate": sum(cumulative) / len(values) if values else None,
+                    "conditional_denominator": conditional_denominator,
+                    "conditional_successes": conditional_successes,
+                    "conditional_rate": (
+                        conditional_successes / conditional_denominator
+                        if conditional_denominator
                         else None
                     ),
                 }
             )
+            prior_survival = cumulative
     return output
 
 
@@ -217,7 +228,12 @@ def _call_ledger(
     rows = [json.loads(line) for line in (run_dir / "llm_calls.jsonl").read_text().splitlines()]
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
-        grouped[(str(row["condition"]), str(row["proposal_source"]))].append(row)
+        source_group = (
+            str(row["proposal_source"])
+            if study == "AJ_FACTORIAL"
+            else "ALL_CSELF_PHASES"
+        )
+        grouped[(str(row["condition"]), source_group)].append(row)
     result = []
     for (condition, source), values in sorted(grouped.items()):
         unquantified_reasoning = any(
@@ -232,6 +248,9 @@ def _call_ledger(
                 "split": split,
                 "condition": condition,
                 "proposal_source": source,
+                "proposal_sources_json": json.dumps(
+                    sorted({str(row["proposal_source"]) for row in values})
+                ),
                 "model": config["model"],
                 "reasoning_effort": config.get("reasoning_effort"),
                 "max_tokens": cap,
@@ -254,14 +273,22 @@ def _call_ledger(
                 ),
                 "answer_tokens": (
                     sum(
-                        int(row.get("answer_tokens") or row.get("completion_tokens", 0))
+                        int(
+                            row["answer_tokens"]
+                            if row.get("answer_tokens") is not None
+                            else row.get("completion_tokens", 0)
+                        )
                         for row in values
                     )
                     if reasoning_split_available
                     else None
                 ),
                 "nonempty_reasoning_responses": sum(bool(row.get("reasoning_output")) for row in values),
-                "completion_cap_hits": sum(int(row.get("completion_tokens", 0)) == cap for row in values),
+                "completion_cap_hits": sum(
+                    int(row.get("completion_tokens", 0)) == cap
+                    or str(row.get("finish_reason", "")) == "length"
+                    for row in values
+                ),
                 "latency_seconds_sum": sum(float(row.get("latency_seconds", 0.0)) for row in values),
                 "latency_seconds_mean": sum(float(row.get("latency_seconds", 0.0)) for row in values)
                 / len(values),
@@ -387,9 +414,33 @@ def run(root: Path) -> dict[str, Any]:
         "representation_constructed",
         "valid",
     )
-    gate_stages = ("phase_one_valid", "phase_two_valid", "j0", "j1", "j2", "j3", "j4", "j5", "validated_jump")
+    aj_gate_stages = (
+        "phase_one_valid",
+        "phase_two_valid",
+        "j0",
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5",
+        "validated_jump",
+    )
+    cj_gate_stages = ("phase_two_valid", "j0", "j1", "j2", "j3", "j4", "j5", "validated_jump")
     attrition = _aggregate_boolean_stages(plan_rows, plan_stages, "plan_attempt")
-    attrition.extend(_aggregate_boolean_stages(candidate_rows, gate_stages, "retained_candidate"))
+    attrition.extend(
+        _aggregate_boolean_stages(
+            [row for row in candidate_rows if row["study"] == "AJ_FACTORIAL"],
+            aj_gate_stages,
+            "retained_candidate",
+        )
+    )
+    attrition.extend(
+        _aggregate_boolean_stages(
+            [row for row in candidate_rows if row["study"] == "CJ_CSELF"],
+            cj_gate_stages,
+            "retained_candidate",
+        )
+    )
 
     repaired_slots = {
         (
@@ -452,15 +503,30 @@ def run(root: Path) -> dict[str, Any]:
                 for row in final_plan_rows
                 if row["treatment_id"] == treatment and row["split"] == split
             ]
-            ledger["raw_plan_outputs_attempted"] = len(raw_plans)
+            ledger["plan_attempt_rows"] = len(raw_plans)
+            ledger["plan_portfolio_responses"] = len(
+                {
+                    (
+                        str(row["world_id"]),
+                        int(row["slot"]),
+                        str(row.get("repair_stage", "initial")),
+                    )
+                    for row in raw_plans
+                }
+            )
             ledger["final_representation_attempts"] = len(final_plans)
+            ledger["valid_plans_evaluated_total"] = sum(
+                bool(row.get("valid")) for row in raw_plans
+            )
             ledger["valid_final_plans"] = sum(bool(row.get("valid")) for row in final_plans)
             ledger["constructed_final_representations"] = sum(
                 bool(row.get("representation_constructed")) for row in final_plans
             )
         else:
-            ledger["raw_plan_outputs_attempted"] = None
+            ledger["plan_attempt_rows"] = None
+            ledger["plan_portfolio_responses"] = None
             ledger["final_representation_attempts"] = len(selected_candidates)
+            ledger["valid_plans_evaluated_total"] = None
             ledger["valid_final_plans"] = None
             ledger["constructed_final_representations"] = sum(
                 bool(row.get("phase_one_valid")) and not bool(row.get("fallback_to_incumbent"))
@@ -474,11 +540,17 @@ def run(root: Path) -> dict[str, Any]:
         ledger["generic_operations_evaluated"] = sum(
             int(row.get("primitive_operations_used", 0)) for row in selected_worlds
         )
+        ledger["generic_operations_accounting_note"] = (
+            "Recorded valid-plan operations only; partially executed invalid plans are not "
+            "instrumented, so this is a lower bound on actual primitive attempts."
+            if study == "CJ_CSELF"
+            else "Not applicable to AJ factorial representation proposals."
+        )
         ledger["declared_candidate_evaluations"] = sum(
             int(row.get("candidate_evaluations", 0)) for row in selected_worlds
         )
         ledger["deterministic_fitter_calls_derived"] = (
-            sum(bool(row.get("valid")) for row in final_plans) + len(selected_candidates)
+            sum(bool(row.get("valid")) for row in raw_plans) + len(selected_candidates)
             if study == "CJ_CSELF"
             else len(selected_candidates)
             + sum(bool(row.get("realization_error_type")) for row in selected_candidates)

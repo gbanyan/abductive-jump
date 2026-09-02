@@ -23,6 +23,12 @@ from .proposals import apply_mutation_plan, select_external_proposals
 from .realization import fit_representation
 from .worlds import FAMILIES, generate_world
 
+SOURCE_CONDITIONS = {
+    ProposalSource.P0_LLM: Condition.B1_SAMPLE_MATCHED,
+    ProposalSource.P1_EXTERNAL: Condition.B4_REPRESENTATION_MUTATION,
+    ProposalSource.P2_ORACLE: Condition.B4_REPRESENTATION_MUTATION,
+}
+
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -65,11 +71,40 @@ def _compare(prefix: str, saved: dict[str, Any], actual: dict[str, Any], fields:
     return mismatches
 
 
+def _compare_result_fields(
+    prefix: str, saved: dict[str, Any], actual: dict[str, Any]
+) -> list[str]:
+    mismatches = []
+    for field, value in actual.items():
+        if field not in saved or saved[field] is None:
+            mismatches.append(f"{prefix}:missing_saved_field:{field}")
+            continue
+        stored = saved[field]
+        if isinstance(value, float):
+            if abs(float(stored) - value) > 1e-10:
+                mismatches.append(f"{prefix}:{field}")
+        elif isinstance(value, tuple):
+            if list(stored) != list(value):
+                mismatches.append(f"{prefix}:{field}")
+        elif stored != value:
+            mismatches.append(f"{prefix}:{field}:{stored!r}!={value!r}")
+    return mismatches
+
+
 def replay_compositional(config_path: Path, run_dir: Path) -> dict[str, Any]:
     config = json.loads(config_path.read_text())
+    saved_rows = pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
+    declared = tuple(config["conditions"])
+    if declared != (Condition.C_SELF_LLM_COMPOSITION.value,) and config.get("treatment_id"):
+        raise ValueError(f"extension replay expected only C_self, found config conditions {declared}")
+    unexpected = [
+        row for row in saved_rows if row["condition"] != Condition.C_SELF_LLM_COMPOSITION.value
+    ]
+    if unexpected and config.get("treatment_id"):
+        raise ValueError(f"unexpected non-C_self candidate rows: {len(unexpected)}")
     saved_rows = [
         row
-        for row in pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
+        for row in saved_rows
         if row["condition"] == Condition.C_SELF_LLM_COMPOSITION.value
     ]
     calls = _calls(run_dir / "llm_calls.jsonl")
@@ -81,6 +116,10 @@ def replay_compositional(config_path: Path, run_dir: Path) -> dict[str, Any]:
     for saved in saved_rows:
         world = _world(config, str(saved["family"]), int(saved["world_seed"]))
         slot = int(saved["slot"])
+        if bool(saved["no_jump"]) != bool(config["no_jump"]):
+            raise ValueError(f"saved no_jump mismatch for {world.world_id}:{slot}")
+        if slot not in range(int(config["candidate_slots"])):
+            raise ValueError(f"saved slot outside config for {world.world_id}:{slot}")
         key = (world.world_id, slot)
         initial_seed = _seed(config, condition, world.family, world.seed, slot)
         if key not in reconstructed:
@@ -178,18 +217,22 @@ def replay_compositional(config_path: Path, run_dir: Path) -> dict[str, Any]:
             result = evaluate_executable(world, theory, commitment, _thresholds(config))
             result_fields = asdict(result)
             result_fields["validated_jump"] = result.validated_jump
-            mismatches.extend(
-                _compare(
-                    prefix,
-                    saved,
-                    result_fields,
-                    ("j0", "j1", "j2", "j3", "j4", "j5", "validated_jump"),
-                )
+            result_fields["compositional_jump"] = bool(
+                result.validated_jump and selected.candidate.depth >= 2
             )
+            mismatches.extend(_compare_result_fields(prefix, saved, result_fields))
+            if not bool(saved["phase_two_valid"]):
+                mismatches.append(prefix + ":saved_phase_two_invalid_but_replay_valid")
             replay_verified = True
         except (KeyError, TypeError, ValueError, OverflowError) as exc:
             if bool(saved["phase_two_valid"]):
                 mismatches.append(prefix + f":phase_two:{type(exc).__name__}:{exc}")
+            elif str(saved.get("phase_two_error_type") or "") != type(exc).__name__:
+                mismatches.append(prefix + ":phase_two_error_type")
+            elif str(saved.get("phase_two_error") or "") != str(exc):
+                mismatches.append(prefix + ":phase_two_error")
+            else:
+                replay_verified = True
         output_rows.append(
             {
                 **saved,
@@ -225,12 +268,28 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
     mismatches: list[str] = []
     treatment_id = str(config.get("treatment_id", "historical_test"))
     for saved in saved_rows:
-        condition = Condition(str(saved["condition"]))
         source = ProposalSource(str(saved["proposal_source"]))
+        if source not in tuple(ProposalSource(value) for value in config["proposal_sources"]):
+            raise ValueError(f"saved source absent from config: {source.value}")
+        condition = SOURCE_CONDITIONS[source]
+        if str(saved["condition"]) != condition.value:
+            raise ValueError(
+                f"saved condition/source mismatch: {saved['condition']} / {source.value}"
+            )
         family = str(saved["family"])
         world_seed = int(saved["world_seed"])
         slot = int(saved["slot"])
-        world = generate_world(family, world_seed, no_jump=bool(saved["no_jump"]))
+        if family not in config["families"]:
+            raise ValueError(f"saved family absent from config: {family}")
+        expected_seeds = range(
+            int(config["world_seed_range"]["start"]),
+            int(config["world_seed_range"]["stop_exclusive"]),
+        )
+        if world_seed not in expected_seeds or slot not in range(int(config["candidate_slots"])):
+            raise ValueError(f"saved seed/slot absent from config: {world_seed}/{slot}")
+        world = generate_world(family, world_seed, no_jump=bool(config["no_jump"]))
+        if bool(saved["no_jump"]) != world.no_jump:
+            raise ValueError(f"saved no_jump mismatch: {world.world_id}:{slot}")
         public = world.public()
         decoding_seed = _seed(config, condition, family, world_seed, slot)
         phase_one = calls[(condition.value, source.value, world.world_id, decoding_seed)]
@@ -250,6 +309,8 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
             candidate = None
             ancestry = ()
         fallback = False
+        phase_one_valid = False
+        realization_error_type = ""
         try:
             payload = extract_json_object(str(phase_one["full_output"]))
             if source is ProposalSource.P0_LLM:
@@ -257,11 +318,13 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
                 candidate, ancestry = proposal.representation, proposal.operators
             if candidate is None or candidate.validate():
                 raise ValueError("invalid replay candidate")
+            phase_one_valid = True
         except (KeyError, TypeError, ValueError, OverflowError):
             candidate, ancestry, fallback = world.incumbent, (), True
         try:
             fitted = fit_representation(public, candidate)
-        except (KeyError, TypeError, ValueError, OverflowError):
+        except (KeyError, TypeError, ValueError, OverflowError) as exc:
+            realization_error_type = type(exc).__name__
             candidate, ancestry, fallback = world.incumbent, (), True
             fitted = fit_representation(public, candidate)
         table = _prediction_table(world, fitted.expression)
@@ -274,6 +337,7 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
             "representation_hash": candidate.structural_hash,
             "mutation_ancestry": list(ancestry),
             "exact_designer_intervention_id": exact,
+            "phase_one_valid": phase_one_valid,
         }
         mismatches.extend(
             _compare(
@@ -290,6 +354,8 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
         )
         if abs(float(saved["observational_loss"]) - fitted.observational_loss) > 1e-10:
             mismatches.append(prefix + ":observational_loss")
+        if str(saved.get("realization_error_type") or "") != realization_error_type:
+            mismatches.append(prefix + ":realization_error_type")
         phase_two = calls[(condition.value, source.value, world.world_id, decoding_seed + 1)]
         replay_verified = False
         result_fields: dict[str, Any] = {}
@@ -307,18 +373,19 @@ def replay_factorial(config_path: Path, run_dir: Path) -> dict[str, Any]:
             )
             result_fields = asdict(result)
             result_fields["validated_jump"] = result.validated_jump
-            mismatches.extend(
-                _compare(
-                    prefix,
-                    saved,
-                    result_fields,
-                    ("j0", "j1", "j2", "j3", "j4", "j5", "validated_jump"),
-                )
-            )
+            mismatches.extend(_compare_result_fields(prefix, saved, result_fields))
+            if not bool(saved["phase_two_valid"]):
+                mismatches.append(prefix + ":saved_phase_two_invalid_but_replay_valid")
             replay_verified = True
         except (KeyError, TypeError, ValueError, OverflowError) as exc:
             if bool(saved["phase_two_valid"]):
                 mismatches.append(prefix + f":phase_two:{type(exc).__name__}:{exc}")
+            elif str(saved.get("phase_two_error_type") or "") != type(exc).__name__:
+                mismatches.append(prefix + ":phase_two_error_type")
+            elif str(saved.get("phase_two_error") or "") != str(exc):
+                mismatches.append(prefix + ":phase_two_error")
+            else:
+                replay_verified = True
         output_rows.append(
             {
                 **saved,
