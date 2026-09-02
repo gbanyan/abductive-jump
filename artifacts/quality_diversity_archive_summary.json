@@ -1,0 +1,7 @@
+{
+  "maximum_occupancy": 3,
+  "minimum_occupancy": 3,
+  "offered_candidates": 1800,
+  "retained_entries": 1800,
+  "worlds": 600
+}

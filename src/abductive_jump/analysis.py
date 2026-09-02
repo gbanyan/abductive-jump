@@ -4,6 +4,7 @@ import csv
 import json
 import math
 import random
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -220,10 +221,153 @@ def run(root: Path) -> dict[str, Any]:
                     else None
                 ),
                 "mean_archive_occupancy": sum(row["archive_occupancy"] for row in jumps) / len(jumps),
+                "mean_counterfactual_gain": sum(
+                    row["oracle_cf_loss"] - row["candidate_cf_loss"]
+                    for row in condition_candidates
+                    if row["replay_verified"]
+                )
+                / len(condition_candidates),
+                "unique_representation_hashes": len(
+                    {row["representation_hash"] for row in condition_candidates}
+                ),
+                "unique_structural_descriptors": len(
+                    {row["structural_descriptor"] for row in condition_candidates}
+                ),
             }
         )
     pq.write_table(pa.Table.from_pylist(condition_rows), artifacts / "condition_summary.parquet", compression="zstd")
     pq.write_table(pa.Table.from_pylist(factorial), artifacts / "proposal_reasoning_factorial.parquet", compression="zstd")
+
+    per_family_rows = []
+    for condition in conditions:
+        for family in FAMILIES:
+            jump_rows = [
+                row
+                for row in primary
+                if row["condition"] == condition
+                and row["family"] == family
+                and not row["no_jump"]
+            ]
+            control_rows = [
+                row
+                for row in primary
+                if row["condition"] == condition
+                and row["family"] == family
+                and row["no_jump"]
+            ]
+            per_family_rows.append(
+                {
+                    "condition": condition,
+                    "family": family,
+                    "jump_worlds": len(jump_rows),
+                    "jump_successes": sum(row["condition_success"] for row in jump_rows),
+                    "jsr": sum(row["condition_success"] for row in jump_rows)
+                    / len(jump_rows),
+                    "control_worlds": len(control_rows),
+                    "false_jumps": sum(row["condition_success"] for row in control_rows),
+                    "fjr": sum(row["condition_success"] for row in control_rows)
+                    / len(control_rows),
+                }
+            )
+    pq.write_table(
+        pa.Table.from_pylist(per_family_rows),
+        artifacts / "per_family_results.parquet",
+        compression="zstd",
+    )
+
+    candidate_groups: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for candidate in candidates:
+        candidate_groups[(candidate["condition"], candidate["world_id"])].append(candidate)
+    frontier_rows = []
+    for condition in conditions:
+        for slots in (1, 2, 3):
+            for family_label in (*FAMILIES, "MACRO"):
+                selected_worlds = [
+                    row
+                    for row in primary
+                    if row["condition"] == condition
+                    and (family_label == "MACRO" or row["family"] == family_label)
+                ]
+                jump_worlds = [row for row in selected_worlds if not row["no_jump"]]
+                control_worlds = [row for row in selected_worlds if row["no_jump"]]
+
+                def prefix_success(
+                    world_row: dict[str, Any],
+                    frozen_condition: str = condition,
+                    frozen_slots: int = slots,
+                ) -> bool:
+                    return any(
+                        candidate["validated_jump"]
+                        for candidate in candidate_groups[
+                            (frozen_condition, world_row["world_id"])
+                        ]
+                        if int(candidate["slot"]) < frozen_slots
+                    )
+
+                prefix_candidates = [
+                    row
+                    for row in candidates
+                    if row["condition"] == condition
+                    and int(row["slot"]) < slots
+                    and (family_label == "MACRO" or row["family"] == family_label)
+                    and not row["no_jump"]
+                ]
+                frontier_rows.append(
+                    {
+                        "condition": condition,
+                        "family": family_label,
+                        "candidate_slots": slots,
+                        "llm_calls_per_world": slots * 2,
+                        "candidate_evaluations_per_world": slots,
+                        "interventions_per_world": slots,
+                        "jsr": sum(prefix_success(row) for row in jump_worlds)
+                        / len(jump_worlds),
+                        "fjr": sum(prefix_success(row) for row in control_worlds)
+                        / len(control_worlds),
+                        "mean_completion_tokens": sum(
+                            row["phase_one_tokens"] + row["phase_two_tokens"]
+                            for row in prefix_candidates
+                        )
+                        / len(jump_worlds),
+                    }
+                )
+    pq.write_table(
+        pa.Table.from_pylist(frontier_rows),
+        artifacts / "compute_quality_frontier.parquet",
+        compression="zstd",
+    )
+
+    sensitivity_rows = []
+    for condition in conditions:
+        for block in range(5):
+            block_start = 10_000 + block * 10
+            for family_label in (*FAMILIES, "MACRO"):
+                selected = [
+                    row
+                    for row in primary
+                    if row["condition"] == condition
+                    and not row["no_jump"]
+                    and block_start <= int(row["world_seed"]) < block_start + 10
+                    and (family_label == "MACRO" or row["family"] == family_label)
+                ]
+                sensitivity_rows.append(
+                    {
+                        "condition": condition,
+                        "seed_block": block,
+                        "seed_start": block_start,
+                        "seed_stop_exclusive": block_start + 10,
+                        "family": family_label,
+                        "worlds": len(selected),
+                        "successes": sum(row["condition_success"] for row in selected),
+                        "jsr": sum(row["condition_success"] for row in selected)
+                        / len(selected),
+                    }
+                )
+    pq.write_table(
+        pa.Table.from_pylist(sensitivity_rows),
+        artifacts / "seed_sensitivity.parquet",
+        compression="zstd",
+    )
 
     primary_pairs = [
         (external, baseline)
@@ -304,6 +448,30 @@ def run(root: Path) -> dict[str, Any]:
         "aj6_available": False,
         "claim": "Structured external representation mutation enabled validated escape more reliably than matched fixed-space and LLM self-proposal baselines in the tested procedural worlds." if aj5 else "The preregistered AJ5 criteria were not met.",
     }
+    frontier = pq.read_table(artifacts / "compute_quality_frontier.parquet").to_pylist()
+    sensitivity = pq.read_table(artifacts / "seed_sensitivity.parquet").to_pylist()
+    final["compute_quality_frontier_macro"] = [
+        row for row in frontier if row["family"] == "MACRO"
+    ]
+    final["seed_sensitivity_macro"] = [
+        row
+        for row in sensitivity
+        if row["family"] == "MACRO"
+        and row["condition"]
+        in {
+            Condition.B4_REPRESENTATION_MUTATION.value,
+            Condition.B5_FULL_SYSTEM.value,
+        }
+    ]
+    final["negative_controls"] = json.loads(
+        (artifacts / "negative_controls_summary.json").read_text()
+    )
+    final["hypothesis_genome_validation"] = json.loads(
+        (artifacts / "hypothesis_genome_validation_summary.json").read_text()
+    )
+    final["quality_diversity_archive"] = json.loads(
+        (artifacts / "quality_diversity_archive_summary.json").read_text()
+    )
     ablations = [
         {
             "ablation": "A1_NO_DIVERSITY_ARCHIVE",

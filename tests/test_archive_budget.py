@@ -1,6 +1,11 @@
 import pytest
 
-from abductive_jump.archive import ArchiveEntry, QualityDiversityArchive
+from abductive_jump.archive import (
+    ArchiveEntry,
+    QualityDiversityArchive,
+    TheoryArchiveEntry,
+    TheoryQualityDiversityArchive,
+)
 from abductive_jump.budget import (
     BudgetAccount,
     BudgetExceeded,
@@ -17,6 +22,17 @@ def test_archive_uses_structural_bins_and_keeps_best_fit():
     assert archive.offer(ArchiveEntry(candidate, 1.0, ("a",), (1, 0)))
     assert not archive.offer(ArchiveEntry(candidate, 3.0, ("a",), (1, 0)))
     assert archive.occupancy == 1
+
+
+def test_executable_theory_archive_hashes_prediction_signature_stably():
+    representation = generate_world("state_invention", 1).truth.representation
+    first = TheoryArchiveEntry(representation, "b", 2.0, ("ADD_STATE",), (1, -1))
+    better = TheoryArchiveEntry(representation, "a", 1.0, ("ADD_STATE",), (1, -1))
+    archive = TheoryQualityDiversityArchive()
+    assert archive.offer(first)
+    assert archive.offer(better)
+    assert archive.occupancy == 1
+    assert next(iter(archive.snapshot().values())).theory_hash == "a"
 
 
 def test_budget_is_atomic_and_enforces_every_primary_dimension():

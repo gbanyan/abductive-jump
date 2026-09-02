@@ -92,3 +92,15 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Ran the preregistered triggered A6 secondary ablation with identical per-world budget: random untyped mutation JSR 18/400 (4.5%), FJR 0/200. A1/A2/A3 showed no archive, falsifier, or crossover contribution; A4 value-only was 0%; A5 LLM-chosen mutation was 0.25%.
 - The 10,000-replicate family-stratified paired bootstrap and Holm correction support all eight B4/B5 comparisons against B0–B3. Differences were 0.3525–0.355; adjusted p-values were `0.00079992`. P1−P0 and P2−P0 adjusted p-values were `0.00019998`. B4/B5 FJR Wilson upper bound was 0.01885.
 - Frozen verdict: **AJ5**. AJ6 is unavailable because no structural family was held out. The claim is narrowed to structured external proposal coverage in the tested worlds; archive/falsifier benefits and general autonomous discovery are not supported.
+
+## 2026-09-02 11:26 +08:00 — Requirement-level completion audit
+
+- Re-read the complete 52-section objective and treated prior completion as unproven. Added `reports/completion-audit.md` with a requirement/evidence matrix and condition-fidelity audit.
+- Found and repaired four evidence gaps without changing frozen inference or the AJ5 decision: explicit four-category negative controls, a machine-readable compute-quality frontier and seed sensitivity analysis, full per-mutation provenance export, and an executable/tested `G_H` value mutation/crossover/exchange implementation.
+- Ran 2,400 deterministic negative-control evaluations across all 600 confirmatory worlds. Random semantic paraphrase, observation-incompatible structural change, unnecessary latent, and overcomplicated no-gain categories each had 0/600 acceptance.
+- Validated 1,800 `G_H` mutations/crossovers/exchanges: representation hashes changed in 0 rows and J1 escaped in 0 rows. This strengthens the genome-level distinction without rerunning or redefining primary B3.
+- Expanded the confirmatory mutation trace from 10,800 candidate summaries to 17,224 record-level rows with genome level, operator, canonical arguments, mutation seed, parent hash, child hash, and candidate hash.
+- Materialized nested one/two/three-slot compute frontiers, five disjoint seed blocks, and full per-family tables. B4 frontier was 13.25%/25.25%/35.5%; B5 was 14.5%/24.0%/35.5%, with zero FJR throughout.
+- Added a stable executable-theory quality-diversity archive and reconstructed all frozen B5 candidates. It retained three bins in every one of 600 worlds. This is retention/accounting evidence, not an online causal archive effect; B5=B4 remains unchanged.
+- Updated the reproducibility manifest to hash 28 tracked outputs and all six gitignored raw traces. Raw trace line counts total exactly 36,000 (32,400 preregistered plus 3,600 triggered secondary calls).
+- Final audit suite: 112 tests, Ruff clean, 10,800/10,800 replay-verified theories, and no gate/result changes. Optional semantic diagnostics and a held-out structural family remain intentionally unrun and unclaimed.

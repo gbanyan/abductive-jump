@@ -1,6 +1,6 @@
 {
   "candidate_theories": 10800,
   "intervention_predictions": 10800,
-  "mutation_traces": 10800,
+  "mutation_traces": 17224,
   "verified_theories": 10800
 }

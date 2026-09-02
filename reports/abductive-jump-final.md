@@ -25,6 +25,8 @@ All eight preregistered B4/B5 comparisons against B0–B3 were positive after Ho
 
 Every world-condition cell used exactly six LLM calls, three candidate evaluations, and three interventions, with identical 4,200-token ex ante capacity. Actual mean completion tokens per world ranged from 818 to 1,427 because EOS was not padded. B4/B5 used fewer actual tokens than B0 and still performed better. B4 and B5 required about 2,335 and 2,364 completion tokens per successful world; B0/B1 required over 400,000 because each produced only one success.
 
+The nested compute frontier is monotonic. For B4, one/two/three candidate slots yielded 13.25%/25.25%/35.5% JSR; B5 yielded 14.5%/24.0%/35.5%, with FJR 0 at every point. Five disjoint 10-seed macro blocks ranged from 32.5% to 38.75% for B4 and 32.5% to 41.25% for B5. Full per-family, frontier, and seed-block rows are materialized rather than inferred from candidate-level pseudo-replicates.
+
 ## Proposal–reasoning decomposition
 
 | Proposal source | JSR | Interpretation |
@@ -47,6 +49,8 @@ P1−P0 was 0.355 (95% CI 0.31–0.40), and P2−P0 was 1.0 (CI 1.0–1.0); both
 | A6 Random untyped mutation | 4.5% | 35.5% | Random edits sometimes aligned by chance but were far weaker; FJR remained 0/200. |
 
 The data therefore support structured representation proposal, not the extra B5 archive/falsifier machinery. The strongest mechanistic statement is that the supplied proposal distribution changes reachability. The study does not establish quality-diversity or evolutionary dynamics as necessary components.
+
+Four additional deterministic negative controls were evaluated on all 600 confirmatory worlds: structurally unchanged semantic paraphrases, structurally changed but observation-incompatible theories, unnecessary latent variables, and overcomplicated no-gain theories. Each category was accepted in 0/600 worlds. A separate 1,800-row `G_H` validation exercised value mutation, value crossover, and attribute exchange; no operation changed the representation hash or passed J1.
 
 ## Replay and integrity
 

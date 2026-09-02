@@ -76,6 +76,12 @@ def replay_primary(
             diverse=condition is Condition.B5_FULL_SYSTEM,
         )
         candidate, ancestry, _ = _phase_one_representation(world, condition, slot, external)
+        mutation_records: tuple[Any, ...] = (
+            external[slot].ancestry
+            if condition
+            in {Condition.B4_REPRESENTATION_MUTATION, Condition.B5_FULL_SYSTEM}
+            else ()
+        )
         fallback = False
         try:
             phase_one = extract_json_object(calls[key])
@@ -87,14 +93,15 @@ def replay_primary(
             elif condition is Condition.B1_SAMPLE_MATCHED:
                 proposal = apply_mutation_plan(world.incumbent, phase_one["mutation_plan"], decoding_seed)
                 candidate, ancestry = proposal.representation, proposal.operators
+                mutation_records = proposal.ancestry
             if candidate is None or candidate.validate():
                 raise ValueError("invalid replay candidate")
         except (KeyError, TypeError, ValueError, OverflowError):
-            candidate, ancestry, fallback = world.incumbent, (), True
+            candidate, ancestry, mutation_records, fallback = world.incumbent, (), (), True
         try:
             fitted = fit_representation(public, candidate)
         except (KeyError, TypeError, ValueError, OverflowError):
-            candidate, ancestry, fallback = world.incumbent, (), True
+            candidate, ancestry, mutation_records, fallback = world.incumbent, (), (), True
             fitted = fit_representation(public, candidate)
         if fallback != bool(row["fallback_to_incumbent"]):
             mismatches.append(f"{condition}:{world.world_id}:{slot}:fallback")
@@ -157,18 +164,51 @@ def replay_primary(
                     f"{condition}:{world.world_id}:{slot}:phase_two:{type(exc).__name__}:{exc}"
                 )
         theories.append(replayed)
-        traces.append(
-            {
-                "condition": condition.value,
-                "world_id": world.world_id,
-                "world_seed": world_seed,
-                "slot": slot,
-                "parent_hash": world.incumbent.structural_hash,
-                "child_hash": candidate.structural_hash,
-                "operators": list(ancestry),
-                "fallback_to_incumbent": fallback,
-            }
-        )
+        base_trace = {
+            "condition": condition.value,
+            "world_id": world.world_id,
+            "world_seed": world_seed,
+            "slot": slot,
+            "candidate_hash": candidate.structural_hash,
+            "fallback_to_incumbent": fallback,
+        }
+        if mutation_records:
+            for record_index, record in enumerate(mutation_records):
+                traces.append(
+                    {
+                        **base_trace,
+                        "genome_level": "G_R",
+                        "record_index": record_index,
+                        "parent_hash": record.parent_hash,
+                        "operator": record.operator.value,
+                        "arguments_json": json.dumps(
+                            dict(record.arguments), sort_keys=True, separators=(",", ":")
+                        ),
+                        "mutation_seed": record.seed,
+                        "child_hash": record.child_hash,
+                    }
+                )
+        else:
+            marker = "NO_MUTATION"
+            genome_level = "NONE"
+            if condition is Condition.B0_DIRECT_LLM and not fallback:
+                marker, genome_level = "LLM_DIRECT_GRAPH", "G_R"
+            elif condition is Condition.B3_ATTRIBUTE_MUTATION:
+                marker, genome_level = "WITHIN_SPACE_ATTRIBUTE_VARIANT", "G_H"
+            traces.append(
+                {
+                    **base_trace,
+                    "genome_level": genome_level,
+                    "record_index": 0,
+                    "parent_hash": world.incumbent.structural_hash,
+                    "operator": marker,
+                    "arguments_json": json.dumps(
+                        {"slot": slot}, sort_keys=True, separators=(",", ":")
+                    ),
+                    "mutation_seed": decoding_seed,
+                    "child_hash": candidate.structural_hash,
+                }
+            )
     if mismatches:
         raise ValueError(f"replay mismatches ({len(mismatches)}): {mismatches[:10]}")
     return theories, predictions, traces

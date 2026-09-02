@@ -20,12 +20,31 @@ TRACKED_OUTPUTS = (
     "artifacts/condition_summary.parquet",
     "artifacts/confirmatory_comparisons.parquet",
     "artifacts/ablation_summary.parquet",
+    "artifacts/compute_quality_frontier.parquet",
+    "artifacts/seed_sensitivity.parquet",
+    "artifacts/per_family_results.parquet",
+    "artifacts/negative_controls.parquet",
+    "artifacts/negative_controls_summary.json",
+    "artifacts/hypothesis_genome_validation.parquet",
+    "artifacts/hypothesis_genome_validation_summary.json",
+    "artifacts/quality_diversity_archive.parquet",
+    "artifacts/quality_diversity_archive_summary.json",
     "artifacts/final_claim_matrix.csv",
     "artifacts/final_verdict.json",
     "artifacts/replay-validation.json",
     "docs/abductive-jump-preregistration.md",
     "reports/abductive-jump-final.md",
     "reports/abductive-jump-reviewer2.md",
+    "reports/completion-audit.md",
+)
+
+RAW_TRACES = (
+    "artifacts/confirmatory/primary-jump/llm_calls.jsonl",
+    "artifacts/confirmatory/primary-control/llm_calls.jsonl",
+    "artifacts/confirmatory/factorial-jump/llm_calls.jsonl",
+    "artifacts/confirmatory/factorial-control/llm_calls.jsonl",
+    "artifacts/confirmatory/ablation-a6-jump/llm_calls.jsonl",
+    "artifacts/confirmatory/ablation-a6-control/llm_calls.jsonl",
 )
 
 
@@ -49,6 +68,15 @@ def run(root: Path) -> dict[str, Any]:
         "preregistered_llm_calls": 32_400,
         "triggered_secondary_llm_calls": 3_600,
         "files": files,
+        "raw_traces": {
+            relative: {
+                "sha256": hashlib.sha256((root / relative).read_bytes()).hexdigest(),
+                "bytes": (root / relative).stat().st_size,
+                "lines": sum(1 for _ in (root / relative).open()),
+                "gitignored": True,
+            }
+            for relative in RAW_TRACES
+        },
     }
     (root / "artifacts" / "reproducibility-manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n"

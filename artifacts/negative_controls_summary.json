@@ -1,0 +1,18 @@
+{
+  "INVALID_STRUCTURAL_CHANGE": {
+    "accepted": 0,
+    "rows": 600
+  },
+  "OVERCOMPLICATED_NO_GAIN": {
+    "accepted": 0,
+    "rows": 600
+  },
+  "RANDOM_SEMANTIC_PARAPHRASE": {
+    "accepted": 0,
+    "rows": 600
+  },
+  "UNNECESSARY_LATENT": {
+    "accepted": 0,
+    "rows": 600
+  }
+}

@@ -24,4 +24,4 @@ The project is executed in the fixed order documented in `research-ledger.md`: d
 
 ## Status
 
-The preregistered confirmatory study is complete. The frozen decision tree returns **AJ5 — representation-mutation advantage**: B4 and B5 each reached 35.5% JSR versus 0–0.25% for B0–B3, with 0/200 false jumps in every condition. P0/P1/P2 were 0%, 35.5%, and 100%. The diversity archive and falsifier added no measured benefit, and there was no held-out structural family, so AJ6 is explicitly unavailable. See `reports/abductive-jump-final.md` and the append-only `research-ledger.md`.
+The preregistered confirmatory study is complete. The frozen decision tree returns **AJ5 — representation-mutation advantage**: B4 and B5 each reached 35.5% JSR versus 0–0.25% for B0–B3, with 0/200 false jumps in every condition. P0/P1/P2 were 0%, 35.5%, and 100%. The diversity archive and falsifier added no measured benefit, and there was no held-out structural family, so AJ6 is explicitly unavailable. See `reports/abductive-jump-final.md`, `reports/completion-audit.md`, and the append-only `research-ledger.md`.

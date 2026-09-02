@@ -134,6 +134,206 @@
       "p_one_sided": 9.999000099990002e-05
     }
   ],
+  "compute_quality_frontier_macro": [
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B0_DIRECT_LLM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.0,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 480.44
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B0_DIRECT_LLM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.0025,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 954.42
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B0_DIRECT_LLM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.0025,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 1427.1175
+    },
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B1_SAMPLE_MATCHED",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.0,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 341.2475
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B1_SAMPLE_MATCHED",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.0025,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 684.1075
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B1_SAMPLE_MATCHED",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.0025,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 1022.065
+    },
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B2_FIXED_SPACE_AGENT",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.0,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 272.575
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B2_FIXED_SPACE_AGENT",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.0,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 544.4625
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B2_FIXED_SPACE_AGENT",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.0,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 817.8775
+    },
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B3_ATTRIBUTE_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.0,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 290.455
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B3_ATTRIBUTE_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.0,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 579.595
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B3_ATTRIBUTE_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.0,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 868.4225
+    },
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.1325,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 274.28
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.2525,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 549.3025
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.355,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 828.9225
+    },
+    {
+      "candidate_evaluations_per_world": 1,
+      "candidate_slots": 1,
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 1,
+      "jsr": 0.145,
+      "llm_calls_per_world": 2,
+      "mean_completion_tokens": 280.9325
+    },
+    {
+      "candidate_evaluations_per_world": 2,
+      "candidate_slots": 2,
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 2,
+      "jsr": 0.24,
+      "llm_calls_per_world": 4,
+      "mean_completion_tokens": 561.1775
+    },
+    {
+      "candidate_evaluations_per_world": 3,
+      "candidate_slots": 3,
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "fjr": 0.0,
+      "interventions_per_world": 3,
+      "jsr": 0.355,
+      "llm_calls_per_world": 6,
+      "mean_completion_tokens": 839.0425
+    }
+  ],
   "condition_results": [
     {
       "abductive_precision": 0.25,
@@ -148,8 +348,11 @@
       "jsr_ci_low": 0.0,
       "jump_worlds": 400,
       "mean_archive_occupancy": 1.61,
+      "mean_counterfactual_gain": 12528.021817121138,
       "mean_tokens_per_world": 1427.1175,
       "tokens_per_successful_world": 570847.0,
+      "unique_representation_hashes": 599,
+      "unique_structural_descriptors": 96,
       "validated_candidates": 1
     },
     {
@@ -165,8 +368,11 @@
       "jsr_ci_low": 0.0,
       "jump_worlds": 400,
       "mean_archive_occupancy": 2.1325,
+      "mean_counterfactual_gain": 8905.38877740178,
       "mean_tokens_per_world": 1022.065,
       "tokens_per_successful_world": 408826.0,
+      "unique_representation_hashes": 1156,
+      "unique_structural_descriptors": 150,
       "validated_candidates": 1
     },
     {
@@ -182,8 +388,11 @@
       "jsr_ci_low": 0.0,
       "jump_worlds": 400,
       "mean_archive_occupancy": 1.0,
+      "mean_counterfactual_gain": 12505.872284610841,
       "mean_tokens_per_world": 817.8775,
       "tokens_per_successful_world": null,
+      "unique_representation_hashes": 400,
+      "unique_structural_descriptors": 15,
       "validated_candidates": 0
     },
     {
@@ -199,8 +408,11 @@
       "jsr_ci_low": 0.0,
       "jump_worlds": 400,
       "mean_archive_occupancy": 1.0,
+      "mean_counterfactual_gain": 12505.872284610841,
       "mean_tokens_per_world": 868.4225,
       "tokens_per_successful_world": null,
+      "unique_representation_hashes": 1200,
+      "unique_structural_descriptors": 15,
       "validated_candidates": 0
     },
     {
@@ -216,8 +428,11 @@
       "jsr_ci_low": 0.31,
       "jump_worlds": 400,
       "mean_archive_occupancy": 2.76,
+      "mean_counterfactual_gain": 5975.858369219634,
       "mean_tokens_per_world": 828.9225,
       "tokens_per_successful_world": 2334.992957746479,
+      "unique_representation_hashes": 1104,
+      "unique_structural_descriptors": 135,
       "validated_candidates": 154
     },
     {
@@ -233,8 +448,11 @@
       "jsr_ci_low": 0.31,
       "jump_worlds": 400,
       "mean_archive_occupancy": 3.0,
+      "mean_counterfactual_gain": 5294.1342794572765,
       "mean_tokens_per_world": 839.0425,
       "tokens_per_successful_world": 2363.5,
+      "unique_representation_hashes": 1200,
+      "unique_structural_descriptors": 135,
       "validated_candidates": 145
     }
   ],
@@ -247,6 +465,138 @@
     "B4_REPRESENTATION_MUTATION": 8,
     "B5_FULL_SYSTEM": 8
   },
+  "hypothesis_genome_validation": {
+    "j1_escapes": 0,
+    "representation_hash_changes": 0,
+    "rows": 1800
+  },
+  "negative_controls": {
+    "INVALID_STRUCTURAL_CHANGE": {
+      "accepted": 0,
+      "rows": 600
+    },
+    "OVERCOMPLICATED_NO_GAIN": {
+      "accepted": 0,
+      "rows": 600
+    },
+    "RANDOM_SEMANTIC_PARAPHRASE": {
+      "accepted": 0,
+      "rows": 600
+    },
+    "UNNECESSARY_LATENT": {
+      "accepted": 0,
+      "rows": 600
+    }
+  },
   "preregistration_commit": "895ebb9118ffd0046825b88868621f2a70f69f61",
+  "quality_diversity_archive": {
+    "maximum_occupancy": 3,
+    "minimum_occupancy": 3,
+    "offered_candidates": 1800,
+    "retained_entries": 1800,
+    "worlds": 600
+  },
+  "seed_sensitivity_macro": [
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "jsr": 0.3375,
+      "seed_block": 0,
+      "seed_start": 10000,
+      "seed_stop_exclusive": 10010,
+      "successes": 27,
+      "worlds": 80
+    },
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "jsr": 0.325,
+      "seed_block": 1,
+      "seed_start": 10010,
+      "seed_stop_exclusive": 10020,
+      "successes": 26,
+      "worlds": 80
+    },
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "jsr": 0.3625,
+      "seed_block": 2,
+      "seed_start": 10020,
+      "seed_stop_exclusive": 10030,
+      "successes": 29,
+      "worlds": 80
+    },
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "jsr": 0.3875,
+      "seed_block": 3,
+      "seed_start": 10030,
+      "seed_stop_exclusive": 10040,
+      "successes": 31,
+      "worlds": 80
+    },
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "family": "MACRO",
+      "jsr": 0.3625,
+      "seed_block": 4,
+      "seed_start": 10040,
+      "seed_stop_exclusive": 10050,
+      "successes": 29,
+      "worlds": 80
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "jsr": 0.4125,
+      "seed_block": 0,
+      "seed_start": 10000,
+      "seed_stop_exclusive": 10010,
+      "successes": 33,
+      "worlds": 80
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "jsr": 0.35,
+      "seed_block": 1,
+      "seed_start": 10010,
+      "seed_stop_exclusive": 10020,
+      "successes": 28,
+      "worlds": 80
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "jsr": 0.3375,
+      "seed_block": 2,
+      "seed_start": 10020,
+      "seed_stop_exclusive": 10030,
+      "successes": 27,
+      "worlds": 80
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "jsr": 0.325,
+      "seed_block": 3,
+      "seed_start": 10030,
+      "seed_stop_exclusive": 10040,
+      "successes": 26,
+      "worlds": 80
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "family": "MACRO",
+      "jsr": 0.35,
+      "seed_block": 4,
+      "seed_start": 10040,
+      "seed_stop_exclusive": 10050,
+      "successes": 28,
+      "worlds": 80
+    }
+  ],
   "verdict": "AJ5"
 }
