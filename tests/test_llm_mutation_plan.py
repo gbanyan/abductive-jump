@@ -1,6 +1,6 @@
 import pytest
 
-from abductive_jump.proposals import apply_mutation_plan
+from abductive_jump.proposals import apply_mutation_plan, random_untyped_proposal
 from abductive_jump.representation import NodeKind
 from abductive_jump.worlds import generate_world
 
@@ -41,3 +41,13 @@ def test_llm_plan_has_frozen_complexity_and_schema():
             [{"operator": "ADD_NODE", "arguments": {}, "comment": "extra"}],
             10,
         )
+
+
+def test_random_untyped_ablation_is_deterministic_and_lacks_semantic_attributes():
+    public = generate_world("meta_law", 2).public()
+    first = random_untyped_proposal(public, 99)
+    second = random_untyped_proposal(public, 99)
+    assert first.representation.structural_hash == second.representation.structural_hash
+    added = [node for node in first.representation.nodes if node.id.startswith("random_")]
+    assert len(added) == 1
+    assert not added[0].attributes

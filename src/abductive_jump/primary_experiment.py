@@ -92,6 +92,8 @@ def _run_slot(
     base_url: str,
     log_path: Path,
     source_override: ProposalSource | None = None,
+    representation_override: Representation | None = None,
+    ancestry_override: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     world = generate_world(family, world_seed, no_jump=bool(config.get("no_jump", False)))
     public = world.public()
@@ -102,7 +104,13 @@ def _run_slot(
         slots,
         diverse=condition is Condition.B5_FULL_SYSTEM,
     )
-    if source_override is ProposalSource.P2_ORACLE:
+    if representation_override is not None:
+        supplied, ancestry, source = (
+            representation_override,
+            ancestry_override,
+            source_override or ProposalSource.P1_EXTERNAL,
+        )
+    elif source_override is ProposalSource.P2_ORACLE:
         supplied, ancestry, source = world.truth.representation, (), source_override
     else:
         supplied, ancestry, source = _phase_one_representation(

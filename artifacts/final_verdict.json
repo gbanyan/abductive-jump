@@ -1,0 +1,252 @@
+{
+  "a6_fjr": 0.0,
+  "ablations": [
+    {
+      "ablation": "A1_NO_DIVERSITY_ARCHIVE",
+      "interpretation": "no archive effect; B4 and B5 are equal",
+      "jsr": 0.355,
+      "reference_jsr": 0.355
+    },
+    {
+      "ablation": "A2_NO_FALSIFIER",
+      "interpretation": "pre-J5 world success versus validated J0-J5 success",
+      "jsr": 0.355,
+      "reference_jsr": 0.355
+    },
+    {
+      "ablation": "A3_NO_CROSSOVER",
+      "interpretation": "structurally null: primary portfolio never used crossover",
+      "jsr": 0.355,
+      "reference_jsr": 0.355
+    },
+    {
+      "ablation": "A4_VALUE_ONLY",
+      "interpretation": "value mutation remains inside H(R0)",
+      "jsr": 0.0,
+      "reference_jsr": 0.355
+    },
+    {
+      "ablation": "A5_LLM_CHOOSES_MUTATION",
+      "interpretation": "same generic mutation vocabulary, LLM proposal source",
+      "jsr": 0.0025,
+      "reference_jsr": 0.355
+    },
+    {
+      "ablation": "A6_RANDOM_UNTYPED",
+      "interpretation": "random node and edge edits without structural-semantic attributes",
+      "jsr": 0.045,
+      "reference_jsr": 0.355
+    }
+  ],
+  "aj6_available": false,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260902,
+  "claim": "Structured external representation mutation enabled validated escape more reliably than matched fixed-space and LLM self-proposal baselines in the tested procedural worlds.",
+  "comparisons": [
+    {
+      "ci_high": 0.3975,
+      "ci_low": 0.305,
+      "comparison": "B4_REPRESENTATION_MUTATION-B0_DIRECT_LLM",
+      "estimate": 0.3525,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.3075,
+      "comparison": "B4_REPRESENTATION_MUTATION-B1_SAMPLE_MATCHED",
+      "estimate": 0.3525,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.31,
+      "comparison": "B4_REPRESENTATION_MUTATION-B2_FIXED_SPACE_AGENT",
+      "estimate": 0.355,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.31,
+      "comparison": "B4_REPRESENTATION_MUTATION-B3_ATTRIBUTE_MUTATION",
+      "estimate": 0.355,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.3975,
+      "ci_low": 0.3075,
+      "comparison": "B5_FULL_SYSTEM-B0_DIRECT_LLM",
+      "estimate": 0.35250000000000004,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.3075,
+      "comparison": "B5_FULL_SYSTEM-B1_SAMPLE_MATCHED",
+      "estimate": 0.35250000000000004,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.31,
+      "comparison": "B5_FULL_SYSTEM-B2_FIXED_SPACE_AGENT",
+      "estimate": 0.355,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.40249999999999997,
+      "ci_low": 0.31,
+      "comparison": "B5_FULL_SYSTEM-B3_ATTRIBUTE_MUTATION",
+      "estimate": 0.355,
+      "family": "primary",
+      "p_holm": 0.0007999200079992001,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 0.4,
+      "ci_low": 0.31,
+      "comparison": "P1_EXTERNAL-P0_LLM",
+      "estimate": 0.355,
+      "family": "factorial",
+      "p_holm": 0.00019998000199980003,
+      "p_one_sided": 9.999000099990002e-05
+    },
+    {
+      "ci_high": 1.0,
+      "ci_low": 1.0,
+      "comparison": "P2_ORACLE-P0_LLM",
+      "estimate": 1.0,
+      "family": "factorial",
+      "p_holm": 0.00019998000199980003,
+      "p_one_sided": 9.999000099990002e-05
+    }
+  ],
+  "condition_results": [
+    {
+      "abductive_precision": 0.25,
+      "accepted_candidates_j0_j3": 4,
+      "condition": "B0_DIRECT_LLM",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.0025,
+      "jsr_ci_high": 0.0075,
+      "jsr_ci_low": 0.0,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 1.61,
+      "mean_tokens_per_world": 1427.1175,
+      "tokens_per_successful_world": 570847.0,
+      "validated_candidates": 1
+    },
+    {
+      "abductive_precision": 0.00847457627118644,
+      "accepted_candidates_j0_j3": 118,
+      "condition": "B1_SAMPLE_MATCHED",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.0025,
+      "jsr_ci_high": 0.0075,
+      "jsr_ci_low": 0.0,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 2.1325,
+      "mean_tokens_per_world": 1022.065,
+      "tokens_per_successful_world": 408826.0,
+      "validated_candidates": 1
+    },
+    {
+      "abductive_precision": null,
+      "accepted_candidates_j0_j3": 0,
+      "condition": "B2_FIXED_SPACE_AGENT",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.0,
+      "jsr_ci_high": 0.0,
+      "jsr_ci_low": 0.0,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 1.0,
+      "mean_tokens_per_world": 817.8775,
+      "tokens_per_successful_world": null,
+      "validated_candidates": 0
+    },
+    {
+      "abductive_precision": null,
+      "accepted_candidates_j0_j3": 0,
+      "condition": "B3_ATTRIBUTE_MUTATION",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.0,
+      "jsr_ci_high": 0.0,
+      "jsr_ci_low": 0.0,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 1.0,
+      "mean_tokens_per_world": 868.4225,
+      "tokens_per_successful_world": null,
+      "validated_candidates": 0
+    },
+    {
+      "abductive_precision": 0.5703703703703704,
+      "accepted_candidates_j0_j3": 270,
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.355,
+      "jsr_ci_high": 0.40249999999999997,
+      "jsr_ci_low": 0.31,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 2.76,
+      "mean_tokens_per_world": 828.9225,
+      "tokens_per_successful_world": 2334.992957746479,
+      "validated_candidates": 154
+    },
+    {
+      "abductive_precision": 0.5534351145038168,
+      "accepted_candidates_j0_j3": 262,
+      "condition": "B5_FULL_SYSTEM",
+      "control_worlds": 200,
+      "fjr": 0.0,
+      "fjr_ci_high": 0.018845326377266575,
+      "fjr_ci_low": 1.734723475976807e-18,
+      "jsr": 0.355,
+      "jsr_ci_high": 0.4,
+      "jsr_ci_low": 0.31,
+      "jump_worlds": 400,
+      "mean_archive_occupancy": 3.0,
+      "mean_tokens_per_world": 839.0425,
+      "tokens_per_successful_world": 2363.5,
+      "validated_candidates": 145
+    }
+  ],
+  "factorial_jsr": {
+    "P0_LLM": 0.0,
+    "P1_EXTERNAL": 0.355,
+    "P2_ORACLE": 1.0
+  },
+  "family_success_coverage": {
+    "B4_REPRESENTATION_MUTATION": 8,
+    "B5_FULL_SYSTEM": 8
+  },
+  "preregistration_commit": "895ebb9118ffd0046825b88868621f2a70f69f61",
+  "verdict": "AJ5"
+}

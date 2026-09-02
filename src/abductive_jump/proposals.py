@@ -123,3 +123,31 @@ def select_external_proposals(
         rng.shuffle(proposals)
         return tuple(proposals[:slots])
     return tuple(rng.choice(proposals) for _ in range(slots))
+
+
+def random_untyped_proposal(world: PublicWorld, seed: int) -> RepresentationProposal:
+    """A6 control: random graph edits without kind-specific structural semantics."""
+    rng = random.Random(seed)
+    kinds = tuple(NodeKind)
+    kind = rng.choice(kinds)
+    node_id = f"random_{seed % 1_000_000:06d}"
+    first, add_record = mutate(
+        world.incumbent,
+        MutationOperator.ADD_NODE,
+        {"kind": kind.value, "id": node_id},
+        seed,
+    )
+    known = [node.id for node in first.nodes]
+    source = rng.choice(known)
+    target = rng.choice(known)
+    second, edge_record = mutate(
+        first,
+        MutationOperator.ADD_RELATION,
+        {
+            "node": source,
+            "other": target,
+            "relation": rng.choice(("relates", "affects", "contains", "maps_to")),
+        },
+        seed + 1,
+    )
+    return RepresentationProposal(second, (add_record, edge_record))

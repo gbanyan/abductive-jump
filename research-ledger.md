@@ -81,3 +81,14 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Re-audited the live server: `microsoft/phi-4` on the mandated `gblinux` host, vLLM image digest `sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db`.
 - Recorded config hashes in `artifacts/preregistration-freeze.json`. The Git worktree was clean at the freeze check.
 - The next model request using seeds 10000–10049 or 20000–20024 begins confirmatory inference; from that point families, seeds, operators, thresholds, budgets, model, and prompts cannot change to rescue results.
+
+## 2026-09-02 11:10 +08:00 — Confirmatory completion, replay, and verdict
+
+- Completed all four frozen shards on `gblinux`: 14,400 primary jump calls, 7,200 primary control calls, 7,200 factorial jump calls, and 3,600 factorial control calls. All expected rows and equal-budget invariants matched exactly; no infrastructure shard rerun was required.
+- Primary JSR: B0 1/400, B1 1/400, B2 0/400, B3 0/400, B4 142/400, B5 142/400. Every primary condition had FJR 0/200. B4 and B5 each succeeded in all eight families.
+- Factorial JSR: P0 0/400, P1 142/400, P2 400/400. All factorial FJR values were 0/200.
+- Replayed 10,800 primary candidates from raw outputs and frozen seeds. Reconstructed graph, expression, exact intervention, prediction, and commitment; every J0–J5 value matched. Materialized canonical candidate, mutation, and intervention artifacts.
+- Corrected two analysis-only defects with regression tests: replay initially mixed public/internal variable names for the diagnostic prediction export, and the first bootstrap draft included control seeds in JSR resampling. Frozen outputs, gates, and raw rates were unaffected.
+- Ran the preregistered triggered A6 secondary ablation with identical per-world budget: random untyped mutation JSR 18/400 (4.5%), FJR 0/200. A1/A2/A3 showed no archive, falsifier, or crossover contribution; A4 value-only was 0%; A5 LLM-chosen mutation was 0.25%.
+- The 10,000-replicate family-stratified paired bootstrap and Holm correction support all eight B4/B5 comparisons against B0–B3. Differences were 0.3525–0.355; adjusted p-values were `0.00079992`. P1−P0 and P2−P0 adjusted p-values were `0.00019998`. B4/B5 FJR Wilson upper bound was 0.01885.
+- Frozen verdict: **AJ5**. AJ6 is unavailable because no structural family was held out. The claim is narrowed to structured external proposal coverage in the tested worlds; archive/falsifier benefits and general autonomous discovery are not supported.

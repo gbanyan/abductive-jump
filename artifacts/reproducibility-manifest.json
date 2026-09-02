@@ -1,0 +1,104 @@
+{
+  "files": {
+    "artifacts/ablation_summary.parquet": {
+      "bytes": 1904,
+      "columns": 4,
+      "rows": 6,
+      "sha256": "3ab4193e3835fa539e375346b363b783149c8965d2d968f525ea3ff0a8f37b28"
+    },
+    "artifacts/candidate_theories.parquet": {
+      "bytes": 2295840,
+      "columns": 44,
+      "rows": 10800,
+      "sha256": "56ad0a35a0701ed850761439c2e77b1c0fc38a358649106b650687b5cacb45a5"
+    },
+    "artifacts/condition_summary.parquet": {
+      "bytes": 5451,
+      "columns": 15,
+      "rows": 6,
+      "sha256": "f1ca299b1d276195b5f3274bdba6fcc0bd10ecbcc5373046a6543a2ed44bb387"
+    },
+    "artifacts/confirmatory_comparisons.parquet": {
+      "bytes": 2624,
+      "columns": 7,
+      "rows": 10,
+      "sha256": "b549631c1601b11db55951fb929afa71d12c6a7d3a36bd142ea02519fbb0e631"
+    },
+    "artifacts/confirmatory_jump_gate_results.parquet": {
+      "bytes": 426950,
+      "columns": 20,
+      "rows": 10800,
+      "sha256": "a15617473d9a5df17a89534acd7d77fd3a941c44a6af68df965dce4b1be99dd8"
+    },
+    "artifacts/confirmatory_no_jump_controls.parquet": {
+      "bytes": 11855,
+      "columns": 15,
+      "rows": 1200,
+      "sha256": "345203bba794262cc2d43fe0ceee643082779f5d987c752b863436a752b48a05"
+    },
+    "artifacts/final_claim_matrix.csv": {
+      "bytes": 416,
+      "sha256": "b7dbd8cf38f0190301f395c209ebd0c0185ee4138ee3d3c9ad1c8a4a00b991ce"
+    },
+    "artifacts/final_verdict.json": {
+      "bytes": 7449,
+      "sha256": "ecedbf3e6048d81ddde887ab721c23e7d50593c90c33486e17d8b20bc0704ce5"
+    },
+    "artifacts/incumbent_oracle.parquet": {
+      "bytes": 61663,
+      "columns": 6,
+      "rows": 1600,
+      "sha256": "5de4f95d4562ca140fd06706acd107e1688dcbfaaeb534b4b4839f238b654869"
+    },
+    "artifacts/intervention_predictions.parquet": {
+      "bytes": 412893,
+      "columns": 12,
+      "rows": 10800,
+      "sha256": "ed6c346227e70c42707d3018a62b71fda672baccdf0b8b25da882c840e68a1c2"
+    },
+    "artifacts/mutation_trace.parquet": {
+      "bytes": 313382,
+      "columns": 8,
+      "rows": 10800,
+      "sha256": "88bae9a188d918e6510c659b0aaecd4c0f7ad627c295682f5e5c055573d63248"
+    },
+    "artifacts/proposal_reasoning_factorial.parquet": {
+      "bytes": 15483,
+      "columns": 11,
+      "rows": 1800,
+      "sha256": "2981b9f51a9799d08ccef0ad0a823902f9f1850d700fc9d44c3c65983e57f9c8"
+    },
+    "artifacts/replay-validation.json": {
+      "bytes": 129,
+      "sha256": "e5fa0885b41b48c000a0e21b98431942850ab85ab6f1202ad5304b15c5e20fd3"
+    },
+    "artifacts/world_ground_truth.parquet": {
+      "bytes": 166004,
+      "columns": 4,
+      "rows": 1600,
+      "sha256": "87a47e869853bbcd9d31b927ace92de23bc84c6714a5f01125eee8c6f995fb41"
+    },
+    "artifacts/world_manifest.parquet": {
+      "bytes": 195549,
+      "columns": 13,
+      "rows": 1600,
+      "sha256": "e975395c12c41d56e90c531fce8a0c60cc87db05d0c5f375dd299557c2f6c79e"
+    },
+    "docs/abductive-jump-preregistration.md": {
+      "bytes": 10070,
+      "sha256": "eea088c9edc57ebf3d7a50c437eb56895883a6e528fdb3bfac0ff8a1e73ceb98"
+    },
+    "reports/abductive-jump-final.md": {
+      "bytes": 7292,
+      "sha256": "89b23b12b2981cc58b7a94ccbeda71b8a9083bd8a468fe7dc45f7965cfc235c2"
+    },
+    "reports/abductive-jump-reviewer2.md": {
+      "bytes": 6625,
+      "sha256": "10b69a987fe94b016499b8b82bc2a1e9c6fddeb800cd75d9acedec10da832adc"
+    }
+  },
+  "preregistered_llm_calls": 32400,
+  "preregistration_commit": "895ebb9118ffd0046825b88868621f2a70f69f61",
+  "replay_verified_candidates": 10800,
+  "triggered_secondary_llm_calls": 3600
+}

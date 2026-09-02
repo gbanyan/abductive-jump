@@ -1,0 +1,7 @@
+criterion,passed,evidence
+B4/B5 exceed B0-B3 after Holm,True,8/8 corrected comparisons
+B4/B5 FJR upper Wilson <= 0.05,True,B4=0.0188; B5=0.0188
+P1 and P2 exceed P0,True,P0=0.000; P1=0.355; P2=1.000
+P2 reasoning ceiling >= 0.80,True,1.000
+B4 and B5 succeed in >=4 families,True,"{""B4_REPRESENTATION_MUTATION"": 8, ""B5_FULL_SYSTEM"": 8}"
+Held-out structural family for AJ6,False,not available; AJ6 prohibited

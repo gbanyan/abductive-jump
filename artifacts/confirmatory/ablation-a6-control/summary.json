@@ -1,0 +1,8 @@
+{
+  "ablation": "A6_RANDOM_UNTYPED",
+  "candidate_rows": 600,
+  "fjr": 0.0,
+  "jsr": null,
+  "llm_calls": 1200,
+  "worlds": 200
+}

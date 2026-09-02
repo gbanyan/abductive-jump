@@ -1,0 +1,77 @@
+{
+  "budget_contract": {
+    "calls_per_slot": 2,
+    "candidate_slots": 3,
+    "derived_limit": {
+      "candidate_evaluations": 3,
+      "interventions": 3,
+      "llm_calls": 6,
+      "llm_tokens": 4200
+    },
+    "interventions_per_candidate": 1,
+    "max_completion_tokens_per_call": 700
+  },
+  "candidate_rows": 7200,
+  "conditions": [
+    {
+      "condition": "B0_DIRECT_LLM",
+      "fjr": null,
+      "jsr": 0.0025,
+      "mean_archive_occupancy": 1.61,
+      "mean_tokens": 1427.1175,
+      "worlds": 400
+    },
+    {
+      "condition": "B1_SAMPLE_MATCHED",
+      "fjr": null,
+      "jsr": 0.0025,
+      "mean_archive_occupancy": 2.1325,
+      "mean_tokens": 1022.065,
+      "worlds": 400
+    },
+    {
+      "condition": "B2_FIXED_SPACE_AGENT",
+      "fjr": null,
+      "jsr": 0.0,
+      "mean_archive_occupancy": 1.0,
+      "mean_tokens": 817.8775,
+      "worlds": 400
+    },
+    {
+      "condition": "B3_ATTRIBUTE_MUTATION",
+      "fjr": null,
+      "jsr": 0.0,
+      "mean_archive_occupancy": 1.0,
+      "mean_tokens": 868.4225,
+      "worlds": 400
+    },
+    {
+      "condition": "B4_REPRESENTATION_MUTATION",
+      "fjr": null,
+      "jsr": 0.355,
+      "mean_archive_occupancy": 2.76,
+      "mean_tokens": 828.9225,
+      "worlds": 400
+    },
+    {
+      "condition": "B5_FULL_SYSTEM",
+      "fjr": null,
+      "jsr": 0.355,
+      "mean_archive_occupancy": 3.0,
+      "mean_tokens": 839.0425,
+      "worlds": 400
+    }
+  ],
+  "model_manifest": {
+    "context_limit": 4096,
+    "engine": "vllm-openai",
+    "engine_version": "0.10.2",
+    "max_tokens": 700,
+    "model": "microsoft/phi-4",
+    "quantization": "bitsandbytes-4bit",
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "temperature": 0.2,
+    "top_p": 0.95
+  },
+  "world_condition_rows": 2400
+}
