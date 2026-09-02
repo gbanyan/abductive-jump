@@ -1,0 +1,26 @@
+{
+  "schema_version": "nmi-extension-protocol-amendment-v1",
+  "amendment_id": "NMI-EXT-V1-AMENDMENT-001",
+  "parent_protocol_id": "NMI-EXT-V1",
+  "parent_freeze_commit": "4606413539c908171293f2a47f834fd4d7f8fe30",
+  "parent_freeze_tag": "nmi-extension-v1-protocol-freeze",
+  "authored_after_confirmatory_unlock": true,
+  "affected_requests_already_executed_at_authorship": false,
+  "affected_shards_started_at_authorship": false,
+  "correction": {
+    "issue": "The treatment summary listed temperature 0.2 without stating the frozen factorial runner's P0 sample-temperature override.",
+    "effective_temperatures": {
+      "P0_LLM": 0.7,
+      "P1_EXTERNAL": 0.2,
+      "P2_ORACLE": 0.2,
+      "C_SELF_LLM_COMPOSITION": 0.2
+    },
+    "code_basis": "primary_experiment._run_slot sets generation.temperature=config.sample_temperature when the mapped condition is B1_SAMPLE_MATCHED; factorial_experiment maps P0_LLM to B1_SAMPLE_MATCHED.",
+    "historical_basis": "Both frozen confirmatory-factorial configs declare generation.temperature=0.2 and sample_temperature=0.7.",
+    "operational_config_change": false,
+    "code_change": false,
+    "seed_prompt_budget_gate_change": false,
+    "reason": "Clarification of the already-frozen executable behavior, discovered by static inspection before any affected factorial request."
+  },
+  "unlock_rule": "Factorial shards may start only after this amendment is committed, pushed and tagged; C_self shards are unaffected and may continue."
+}
