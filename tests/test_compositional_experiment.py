@@ -21,3 +21,15 @@ def test_llm_self_plan_uses_exact_generic_engine_and_records_depth():
     assert len(evaluations) == 16
     assert all(item.candidate.depth == 4 for item in evaluations)
     assert all(row["valid"] for row in trace)
+
+
+def test_invalid_self_output_consumes_all_fixed_plan_opportunities():
+    world = generate_world("coordinate_transform", 74)
+    evaluations, trace = _parse_self_plans(world, "not-json", 99)
+    assert evaluations == []
+    assert len(trace) == 16
+    assert all(not row["valid"] and row["error"].startswith("invalid_output") for row in trace)
+    evaluations, trace = _parse_self_plans(world, "{}", 99)
+    assert evaluations == []
+    assert len(trace) == 16
+    assert all(row["error"].startswith("invalid_schema") for row in trace)

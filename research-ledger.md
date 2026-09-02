@@ -121,3 +121,11 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Applied only admissibility corrections allowed by the preregistration's implementation-failure rule: reification still creates the same relation carrier and edges but no longer assigns arity; `CHANGE_ARITY` remains separately required. Candidates without a completed generic motif now use the exact incumbent-oracle executable basis instead of a flexible fallback.
 - Added an exhaustive depth-one audit. Across 90 development/unit worlds x 192 alternatives = 17,280 candidate evaluations, zero depth-one candidate now validates. Constructive reachability remains 90/90 and the primitive names/count, d_max=4, breadth=48, search policy, held-out family, model, prompts, seeds, configs, and thresholds are unchanged.
 - Post-correction suite: 149 tests and Ruff clean. The original pilot and raw calls are retained under `artifacts/compositional/pilot-existing`; it will be superseded by an identical-config pilot rerun before any confirmatory call.
+
+## 2026-09-02 12:44 +08:00 — Corrected existing-only pilot accepted
+
+- Reran the identical frozen eight-world pilot after the recorded admissibility correction. Exactly 56 world-condition rows, 168 candidate rows, and 336 unique LLM calls completed with no infrastructure rerun.
+- Pilot-only JSR: C0 0/8, C1 3/8, C2 0/8, C3 8/8, C_self 0/8, C_rand 1/8, C5 8/8. Every C3 success had ancestry depth four. These rates only validate non-floor behavior and do not enter confirmatory estimates.
+- Audited all primary budgets: C0/C2/C3/C_self/C_rand each had 192 candidate-evaluation/attempt capacity and six calls per world. C1 and C5 remain separately costed references as registered.
+- Corrected a trace-accounting-only defect without another model call: an unparsable or wrong-schema C_self output now expands to all 16 fixed invalid plan opportunities rather than one summary error. Replay of the 24 existing C_self planning calls yields 384/384 recorded opportunities and 0 valid plans, preserving C_self JSR 0/8.
+- Corrected-pilot audit passes with C2 depth-one success 0, zero budget mismatches, and 336/336 unique call keys. Current suite: 150 tests, Ruff clean. The registered budgets/search remain unchanged; confirmatory inference may now begin with the existing-family shard only.

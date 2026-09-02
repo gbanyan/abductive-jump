@@ -122,10 +122,27 @@ def _self_prompt(world: World) -> PromptSpec:
 def _parse_self_plans(
     world: World, output: str, seed: int, *, required_plans: int = 16
 ) -> tuple[list[SearchEvaluation], list[dict[str, Any]]]:
-    payload = extract_json_object(output)
+    try:
+        payload = extract_json_object(output)
+    except ValueError as exc:
+        return [], [
+            {
+                "plan_index": plan_index,
+                "valid": False,
+                "error": f"invalid_output:{type(exc).__name__}:{exc}",
+            }
+            for plan_index in range(required_plans)
+        ]
     plans = payload.get("plans")
     if not isinstance(plans, list):
-        raise TypeError("plans must be a list")
+        return [], [
+            {
+                "plan_index": plan_index,
+                "valid": False,
+                "error": "invalid_schema:plans_must_be_a_list",
+            }
+            for plan_index in range(required_plans)
+        ]
     evaluations: list[SearchEvaluation] = []
     trace: list[dict[str, Any]] = []
     for plan_index in range(required_plans):
