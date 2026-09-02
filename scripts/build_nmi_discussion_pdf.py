@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTIFACTS = ROOT / "artifacts"
 TMP = ROOT / "tmp" / "pdfs"
 OUTPUT = ROOT / "output" / "pdf" / "NMI_discussion_draft.pdf"
+MANUSCRIPT_OUTPUT = ROOT / "output" / "pdf" / "NMI_manuscript_draft.pdf"
 
 NAVY = "#17324D"
 BLUE = "#2978A0"
@@ -115,7 +116,7 @@ def setup_plot() -> None:
 
 
 def panel_label(ax, label: str) -> None:
-    ax.text(-0.08, 1.05, label, transform=ax.transAxes, weight="bold", fontsize=12)
+    ax.text(-0.13, 1.02, label, transform=ax.transAxes, weight="bold", fontsize=12)
 
 
 def save_figure(fig, name: str) -> Path:
@@ -254,9 +255,9 @@ def figure_2() -> Path:
     lows = np.array([lookup[k]["jsr_ci_low"] for k in order])
     highs = np.array([lookup[k]["jsr_ci_high"] for k in order])
     colours = [GREY, GREY, GREY, GREY, BLUE, ORANGE]
-    fig, axes = plt.subplots(1, 3, figsize=(10.4, 3.8))
+    fig, axes = plt.subplots(2, 2, figsize=(10.4, 6.8))
 
-    ax = axes[0]
+    ax = axes[0, 0]
     ax.bar(np.arange(6), vals * 100, color=colours, width=0.72)
     ax.errorbar(
         np.arange(6),
@@ -269,14 +270,14 @@ def figure_2() -> Path:
     )
     counts = [1, 1, 0, 0, 142, 142]
     for i, (v, count) in enumerate(zip(vals, counts, strict=True)):
-        ax.text(i, v * 100 + 3.8, f"{count}/400", ha="center", fontsize=7.5)
+        ax.text(i, v * 100 + 3.2, f"{count}/400", ha="center", fontsize=7.2)
     ax.set_xticks(np.arange(6), labels)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 46)
-    ax.set_title("Typed proposals outperform fixed-space alternatives")
+    ax.set_title("World-level AJ5 success", pad=9)
     panel_label(ax, "a")
 
-    ax = axes[1]
+    ax = axes[0, 1]
     fact_labels = ["P0\nLLM", "P1\nExternal", "P2\nOracle"]
     fact = [0, 35.5, 100]
     bars = ax.bar(np.arange(3), fact, color=[GREY, BLUE, GOLD], width=0.65)
@@ -287,10 +288,10 @@ def figure_2() -> Path:
     ax.set_xticks(np.arange(3), fact_labels)
     ax.set_ylim(0, 112)
     ax.set_ylabel("Jump success rate (%)")
-    ax.set_title("Only the representation source changes")
+    ax.set_title("Proposal-source factorial", pad=9)
     panel_label(ax, "b")
 
-    ax = axes[2]
+    ax = axes[1, 0]
     slots = [1, 2, 3]
     ax.plot(slots, np.array([53, 101, 142]) / 4, marker="o", lw=2.5, color=BLUE, label="B4 typed")
     ax.plot(slots, np.array([58, 96, 142]) / 4, marker="o", lw=2.5, color=ORANGE, label="B5 full")
@@ -302,15 +303,33 @@ def figure_2() -> Path:
     ax.set_ylabel("Successful worlds (%)")
     ax.set_ylim(0, 43)
     ax.legend(frameon=False, fontsize=8)
-    ax.set_title("Success grows with registered opportunities")
+    ax.set_title("Success by candidate opportunity", pad=9)
     panel_label(ax, "c")
+
+    ax = axes[1, 1]
+    gates = ["J0", "J1", "J2", "J3", "J4", "J5"]
+    b4 = [1200, 823, 573, 270, 154, 154]
+    b5 = [1200, 838, 562, 262, 145, 145]
+    x = np.arange(len(gates))
+    ax.plot(x, np.array(b4) / 12, marker="o", lw=2.2, color=BLUE, label="B4")
+    ax.plot(x, np.array(b5) / 12, marker="o", lw=2.2, color=ORANGE, label="B5")
+    for i, (a, b) in enumerate(zip(b4, b5, strict=True)):
+        if i in {0, 3, 5}:
+            ax.text(i - 0.05, a / 12 + 4, str(a), color=BLUE, fontsize=7, ha="right")
+            ax.text(i + 0.05, b / 12 - 7, str(b), color=ORANGE, fontsize=7, ha="left")
+    ax.set_xticks(x, gates)
+    ax.set_ylim(0, 112)
+    ax.set_ylabel("Candidates retained (%)")
+    ax.legend(frameon=False, fontsize=8)
+    ax.set_title("Cumulative gate attrition (n=1,200)", pad=9)
+    panel_label(ax, "d")
     fig.suptitle(
-        "Figure 2 | Representation proposals separate from reasoning",
+        "Figure 2 | Typed proposals and their gate attrition",
         fontsize=14,
         weight="bold",
         color=NAVY,
     )
-    fig.tight_layout(rect=(0, 0, 1, 0.92), w_pad=1.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.94), h_pad=2.2, w_pad=1.8)
     return save_figure(fig, "figure_2_aj5.png")
 
 
@@ -327,20 +346,20 @@ def figure_3() -> Path:
         "C5_ORACLE_REPRESENTATION",
     ]
     labels = [
-        "C0\nFixed",
-        "C1\nAtomic*",
-        "C2\nDepth 1",
-        "C3\nCompose",
-        "Cself\nLLM",
-        "Crand\nRandom",
-        "C5\nOracle*",
+        "C0",
+        "C1*",
+        "C2",
+        "C3",
+        "Cself",
+        "Crand",
+        "C5*",
     ]
     values = np.array([lookup[k]["jsr"] for k in order]) * 100
     low = np.array([lookup[k]["jsr_ci_low"] for k in order]) * 100
     high = np.array([lookup[k]["jsr_ci_high"] for k in order]) * 100
-    fig = plt.figure(figsize=(10.4, 6.0))
+    fig = plt.figure(figsize=(10.4, 6.6))
     grid = fig.add_gridspec(
-        2, 2, height_ratios=[0.8, 1.2], width_ratios=[0.38, 0.62], hspace=0.42, wspace=0.28
+        2, 2, height_ratios=[0.8, 1.2], width_ratios=[0.38, 0.62], hspace=0.55, wspace=0.32
     )
 
     ax = fig.add_subplot(grid[0, 0])
@@ -392,28 +411,28 @@ def figure_3() -> Path:
 
     ax = fig.add_subplot(grid[1, :])
     fam = pq.read_table(ARTIFACTS / "compositional_per_family.parquet").to_pylist()
-    names = [r["family"].replace("_", "\n") for r in fam]
+    aliases = {
+        "latent_common_cause": "latent cause",
+        "unification": "unification",
+        "hidden_regimes": "regimes",
+        "property_to_relation": "relation",
+        "state_invention": "state",
+        "coordinate_transform": "coordinate",
+        "causal_ambiguity": "causal",
+        "meta_law": "meta-law",
+    }
+    names = [aliases[r["family"]] for r in fam]
     c1 = np.array([r["c1_jsr"] for r in fam]) * 100
     c3 = np.array([r["c3_jsr"] for r in fam]) * 100
     x = np.arange(len(names))
     w = 0.36
     ax.bar(x - w / 2, c1, w, color=GOLD, label="C1 atomic reference")
     ax.bar(x + w / 2, c3, w, color=ORANGE, label="C3 generic composition")
-    ax.set_xticks(x, names, fontsize=7.3)
+    ax.set_xticks(x, names, fontsize=7.3, rotation=24, ha="right")
     ax.set_ylim(0, 112)
     ax.set_ylabel("Jump success rate (%)")
     ax.legend(frameon=False, ncol=2, loc="upper left")
-    ax.text(
-        0.99,
-        0.08,
-        "retained jump gain rho = 3.053\n95% CI 2.685-3.540",
-        transform=ax.transAxes,
-        ha="right",
-        va="bottom",
-        color=NAVY,
-        weight="bold",
-    )
-    ax.set_title("C3 succeeds across all eight structural families")
+    ax.set_title("C3 saturates all eight generators; C1 varies by family", pad=10)
     panel_label(ax, "c")
     fig.suptitle(
         "Figure 3 | Generic rewrites compose into validated representations",
@@ -421,7 +440,16 @@ def figure_3() -> Path:
         weight="bold",
         color=NAVY,
     )
-    fig.tight_layout(rect=(0, 0.02, 1, 0.93))
+    fig.text(
+        0.98,
+        0.015,
+        "Retained jump gain rho = 3.053 (95% CI 2.685-3.540)",
+        ha="right",
+        fontsize=8,
+        color=NAVY,
+        weight="bold",
+    )
+    fig.tight_layout(rect=(0, 0.05, 1, 0.93))
     return save_figure(fig, "figure_3_cj5.png")
 
 
@@ -519,10 +547,10 @@ def figure_4() -> Path:
     ax = axes[1, 1]
     ax.axis("off")
     cards = [
-        ("0 / 300", "C3 false jumps"),
-        ("10,800 / 10,800", "AJ5 exact replay"),
-        ("16,800 / 16,800", "CJ5 exact replay"),
-        ("0", "exclusions or shard reruns"),
+        ("2,400 / 2,400", "model-free gate matches"),
+        ("500 / 500", "jump worlds retained"),
+        ("0 / 300", "control false jumps"),
+        ("38,400 / 38,400", "Cself plans schema-invalid"),
     ]
     for i, (number, label) in enumerate(cards):
         row, col = divmod(i, 2)
@@ -543,16 +571,68 @@ def figure_4() -> Path:
             color=NAVY,
         )
         ax.text(x0 + 0.22, y0 + 0.08, label, ha="center", va="center", fontsize=8)
-    ax.set_title("The complete audit trail reproduces")
+    ax.set_title("Component audit changes the attribution")
     panel_label(ax, "d")
     fig.suptitle(
-        "Figure 4 | Held-out transfer, specificity and audit trail",
+        "Figure 4 | Transfer, depth and model-free replay",
         fontsize=14,
         weight="bold",
         color=NAVY,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.93), h_pad=2.0, w_pad=1.5)
     return save_figure(fig, "figure_4_heldout.png")
+
+
+def figure_5() -> Path:
+    fig, ax = plt.subplots(figsize=(10.4, 5.2))
+    ax.axis("off")
+    stages = [
+        (0.02, 0.61, 0.16, 0.25, "Observations", "x=z=w\ny=9x^3", BLUE),
+        (0.22, 0.61, 0.16, 0.25, "Incumbent", "y = 9x^3\nexact fit", GREY),
+        (0.42, 0.57, 0.20, 0.33, "Four rewrites", "1 reify edge\n2 arity -> 3\n3 bind z\n4 bind w", ORANGE),
+        (0.66, 0.61, 0.16, 0.25, "Candidate", "y = 9xzw\noutside grammar", BLUE),
+        (0.84, 0.61, 0.14, 0.25, "Commit", "z: 6 -> 7\nx=w=6", RED),
+    ]
+    for x0, y0, w, h, title, body, colour in stages:
+        ax.add_patch(
+            FancyBboxPatch((x0, y0), w, h, boxstyle="round,pad=0.015", fc="white", ec=colour, lw=2)
+        )
+        ax.text(x0 + w / 2, y0 + h - 0.07, title, ha="center", weight="bold", color=NAVY)
+        ax.text(x0 + w / 2, y0 + 0.09, body, ha="center", va="center", fontsize=8.5)
+    for left, right in ((0.18, 0.22), (0.38, 0.42), (0.62, 0.66), (0.82, 0.84)):
+        ax.add_patch(FancyArrowPatch((left, 0.735), (right, 0.735), arrowstyle="-|>", color=NAVY))
+
+    outcomes = [
+        (0.12, "Frozen predictions", "incumbent 1,944\ncandidate 2,268", NAVY),
+        (0.40, "Reveal intervention", "observed 2,268\ncandidate wins", ORANGE),
+        (0.68, "Independent falsification", "z=5 -> 1,620\ncandidate exact", CYAN),
+    ]
+    for x0, title, body, colour in outcomes:
+        ax.add_patch(
+            FancyBboxPatch((x0, 0.16), 0.22, 0.24, boxstyle="round,pad=0.02", fc=LIGHT, ec=colour, lw=1.6)
+        )
+        ax.text(x0 + 0.11, 0.32, title, ha="center", weight="bold", color=NAVY, fontsize=9)
+        ax.text(x0 + 0.11, 0.22, body, ha="center", va="center", fontsize=8.5)
+    ax.add_patch(FancyArrowPatch((0.34, 0.28), (0.40, 0.28), arrowstyle="-|>", color=NAVY))
+    ax.add_patch(FancyArrowPatch((0.62, 0.28), (0.68, 0.28), arrowstyle="-|>", color=NAVY))
+    ax.text(
+        0.93,
+        0.28,
+        "J0-J5\nPASS",
+        ha="center",
+        va="center",
+        fontsize=13,
+        weight="bold",
+        color=ORANGE,
+    )
+    fig.suptitle(
+        "Figure 5 | One complete prospective escape",
+        fontsize=14,
+        weight="bold",
+        color=NAVY,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    return save_figure(fig, "figure_5_worked_example.png")
 
 
 class Rule(Flowable):
@@ -578,6 +658,16 @@ def styles():
             fontName="DejaVu-Bold",
             fontSize=25,
             leading=30,
+            textColor=colors.HexColor(NAVY),
+            alignment=TA_LEFT,
+            spaceAfter=12,
+        ),
+        "manuscript_title": ParagraphStyle(
+            "ManuscriptTitle",
+            parent=base["Title"],
+            fontName="DejaVu-Bold",
+            fontSize=18,
+            leading=22,
             textColor=colors.HexColor(NAVY),
             alignment=TA_LEFT,
             spaceAfter=12,
@@ -688,9 +778,23 @@ def page_decor(canvas, doc) -> None:
     canvas.line(20 * mm, height - 15 * mm, width - 20 * mm, height - 15 * mm)
     canvas.setFont("DejaVu", 7.5)
     canvas.setFillColor(colors.HexColor(GREY))
-    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI DISCUSSION DRAFT | 2 SEPTEMBER 2026")
+    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI DISCUSSION DRAFT | 3 SEPTEMBER 2026")
     canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
     canvas.drawString(20 * mm, 11 * mm, "Not for submission - figures redraw frozen results")
+    canvas.restoreState()
+
+
+def manuscript_page_decor(canvas, doc) -> None:
+    canvas.saveState()
+    width, height = A4
+    canvas.setStrokeColor(colors.HexColor("#D7E0E5"))
+    canvas.setLineWidth(0.5)
+    canvas.line(20 * mm, height - 15 * mm, width - 20 * mm, height - 15 * mm)
+    canvas.setFont("DejaVu", 7.5)
+    canvas.setFillColor(colors.HexColor(GREY))
+    canvas.drawString(20 * mm, height - 11.5 * mm, "MANUSCRIPT FOR SCIENTIFIC DISCUSSION")
+    canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
+    canvas.drawString(20 * mm, 11 * mm, "Nature Machine Intelligence Article format | not yet submitted")
     canvas.restoreState()
 
 
@@ -765,12 +869,49 @@ def design_table(st) -> Table:
     return table
 
 
+def literature_table(st) -> Table:
+    data = [
+        ["Evaluation", "Exec", "Frozen", "Non-member", "Prospective", "Falsify", "Attribution / replay", "Breadth"],
+        ["Hypothesis Search / HypoGen", "partial", "no", "no", "no", "no", "no", "language tasks"],
+        ["POPPER", "partial", "no", "no", "yes", "yes", "limited", "literature"],
+        ["FunSearch", "yes", "skeleton", "no", "feedback", "tests", "proposer/evaluator", "mathematics"],
+        ["PiEvo", "yes", "evolving", "no", "varies", "varies", "proposer/search", "4 benchmarks"],
+        ["Model Discovery Agent", "yes", "open set", "no", "Bayesian", "predictive", "proposer/inference", "3 sciences"],
+        ["HypoArena", "judged", "no", "no", "context", "rubric", "no", "988 / 6 / 15"],
+        ["This work", "yes", "yes", "canonical", "locked", "exact", "factorial / exact", "9 families / 1 model"],
+    ]
+    wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
+    table = Table(
+        wrapped,
+        colWidths=[27 * mm, 14 * mm, 17 * mm, 20 * mm, 20 * mm, 17 * mm, 31 * mm, 25 * mm],
+        repeatRows=1,
+        hAlign="LEFT",
+    )
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
+                ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return table
+
+
 def manuscript_story(st, figures: dict[int, Path]) -> list:
     text = (ROOT / "manuscript" / "NMI_MANUSCRIPT.md").read_text()
     lines = text.splitlines()
     story: list = []
     paragraph: list[str] = []
     inserted: set[int] = set()
+    skipping_markdown_table = False
 
     def flush() -> None:
         if paragraph:
@@ -782,6 +923,10 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
 
     for line in lines:
         stripped = line.strip()
+        if skipping_markdown_table:
+            if stripped.startswith("|") or not stripped:
+                continue
+            skipping_markdown_table = False
         stripped = stripped.replace(
             "**[DISCLOSURE REQUIRES EXPLICIT APPROVAL BY ALL AUTHORS BEFORE SUBMISSION.]**",
             "This disclosure remains subject to approval by all human authors before submission.",
@@ -801,15 +946,19 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
             if heading == "Abstract":
                 story.append(Paragraph("Abstract", st["h1"]))
             elif heading == "Results":
-                story.extend([PageBreak(), Paragraph("Results", st["h1"])])
+                story.append(Paragraph("Results", st["h1"]))
             else:
                 story.append(Paragraph(inline_markup(heading), st["h1"]))
         elif stripped.startswith("### "):
             flush()
             heading = stripped[4:]
+            if heading.startswith("Table 1 |"):
+                story.extend([Paragraph(inline_markup(heading), st["h2"]), literature_table(st)])
+                skipping_markdown_table = True
+                continue
             story.append(Paragraph(inline_markup(heading), st["h2"]))
             if (
-                heading == "A prospective criterion for representation-level escape"
+                heading == "A prospective criterion for hypothesis-space expansion"
                 and 1 not in inserted
             ):
                 story.extend(
@@ -824,7 +973,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                 )
                 inserted.add(1)
             elif (
-                heading == "Typed representation proposals outperform fixed-space alternatives"
+                heading == "Typed proposals outperform fixed-space alternatives"
                 and 2 not in inserted
             ):
                 story.extend(
@@ -851,20 +1000,28 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     ]
                 )
                 inserted.add(3)
-            elif (
-                heading == "Composition transfers to a held-out structural family"
-                and 4 not in inserted
-            ):
+            elif heading == "A deterministic component audit removes the language model" and 4 not in inserted:
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Held-out structural-family result and integrity checks. Error bars in panel b are Wilson 95% intervals; n=100 worlds per condition. The hold-out is structurally new but conceptually adjacent to prior binary relation reification.",
+                            "Figure 4 | Held-out transfer, depth bounds and the post-hoc deterministic component audit. The model-free replay reproduced all 2,400 C3 candidate verdicts and retained 500/500 jump successes with 0/300 control false jumps. Cself never reached structural evaluation because every plan record failed the same schema check.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(4)
+            elif heading == "A worked prospective escape" and 5 not in inserted:
+                story.extend(
+                    [
+                        image_flow(figures[5]),
+                        caption(
+                            "Figure 5 | Worked held-out example. Correlated observations make the cubic incumbent and triadic candidate observationally identical. A committed intervention separates them before outcome reveal, and an independent case falsifies the incumbent.",
+                            st,
+                        ),
+                    ]
+                )
+                inserted.add(5)
         elif not stripped:
             flush()
         elif stripped.startswith("**["):
@@ -880,7 +1037,7 @@ def build_pdf() -> Path:
     setup_plot()
     TMP.mkdir(parents=True, exist_ok=True)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4()}
+    figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4(), 5: figure_5()}
     st = styles()
 
     frame = Frame(
@@ -900,7 +1057,7 @@ def build_pdf() -> Path:
         rightMargin=20 * mm,
         topMargin=18 * mm,
         bottomMargin=18 * mm,
-        title="Measuring representation change in language-model discovery",
+        title="A prospective assay for hypothesis-space expansion in AI systems",
         author="Discussion draft",
     )
     doc.addPageTemplates(PageTemplate(id="content", frames=[frame], onPage=page_decor))
@@ -908,31 +1065,31 @@ def build_pdf() -> Path:
     story: list = [
         Spacer(1, 36 * mm),
         Paragraph("DISCUSSION DRAFT", st["subtitle"]),
-        Paragraph("Measuring representation change in language-model discovery", st["title"]),
+        Paragraph("A prospective assay for hypothesis-space expansion in AI systems", st["manuscript_title"]),
         Rule(75 * mm, colors.HexColor(ORANGE), 3),
         Spacer(1, 10 * mm),
         Paragraph(
-            "A preregistered, prospective benchmark of bounded hypothesis-space escape",
+            "A prospective, commit-frozen assay with a post-hoc component audit",
             st["subtitle"],
         ),
         Spacer(1, 18 * mm),
         Paragraph("The central result", st["h1"]),
         Spacer(1, 3 * mm),
         Paragraph(
-            "A frozen language model can participate in prospectively validated representation change when embedded in a transparent typed search scaffold. The evidence applies to the tested model, interface and synthetic worlds - not to autonomous scientific discovery or human-like creativity.",
+            "The prospective assay is valid, but the successful C3 escapes are attributable to the deterministic typed search scaffold: a model-free replay retained 500/500 jump successes and 0/300 control false jumps.",
             st["callout"],
         ),
         Spacer(1, 12 * mm),
-        Paragraph("Prepared for scientific discussion | 2 September 2026", st["subtitle"]),
+        Paragraph("Prepared for scientific discussion | 3 September 2026", st["subtitle"]),
         Paragraph(
-            "Status: conditionally ready. Numbers are audited; author metadata, archival DOI and final production figures remain pre-submission actions.",
+            "Status: major scientific revision completed from existing evidence. Multi-model and independently authored holdout extensions remain pre-submission experiments.",
             st["small"],
         ),
         PageBreak(),
         Paragraph("Discussion overview", st["h1"]),
         Paragraph("What the experiments establish", st["h2"]),
         Paragraph(
-            "AJ5 validates the assay: typed external proposals succeed in 142/400 worlds, while direct, sampling-matched, fixed-space and attribute-only conditions succeed in 0-1/400. CJ5 removes atomic family answers: generic four-step compositions succeed in 400/400 known-family and 100/100 held-out structural-family worlds.",
+            "AJ5 validates the assay: typed external proposals succeed in 142/400 worlds, while direct, sampling-matched, fixed-space and attribute-only conditions succeed in 0-1/400. CJ5 shows that deterministic four-step search succeeds in 400/400 known-family and 100/100 held-out-family worlds.",
             st["body"],
         ),
         Paragraph("What makes the comparison informative", st["h2"]),
@@ -942,7 +1099,7 @@ def build_pdf() -> Path:
         ),
         Paragraph("What the experiments do not establish", st["h2"]),
         Paragraph(
-            "The study does not show unrestricted scientific discovery, independent model creativity or concept-free invention. Generic primitives and search strata are supplied by the researchers; the held-out family is structurally new but conceptually adjacent; and C3 saturation indicates a well-aligned synthetic benchmark.",
+            "The study does not show language-model necessity, unrestricted discovery or concept-free invention. Cself is a serialization failure, the held-out family is conceptually adjacent, the no-jump null is exact by construction after J3, and C3 saturation indicates a well-aligned synthetic benchmark.",
             st["body"],
         ),
         Spacer(1, 5 * mm),
@@ -961,14 +1118,14 @@ def build_pdf() -> Path:
             "CJ5 known",
             "400/400 C3",
             "52/400 random; 0/400 self",
-            "0/200 C3 controls",
+            "0/200 controls; model-free",
             "part of 16,800/16,800",
         ],
         [
             "CJ5 held out",
             "100/100 C3",
             "13/100 random; 0/100 self",
-            "0/100 C3 controls",
+            "0/100 controls; model-free",
             "part of 16,800/16,800",
         ],
     ]
@@ -1025,7 +1182,13 @@ def build_pdf() -> Path:
             PageBreak(),
             image_flow(figs[4]),
             caption(
-                "Figure 4 | Held-out structural-family results, registered depth bounds and deterministic replay. Zero accepted controls is finite-sample evidence, not proof of zero risk.",
+                "Figure 4 | Held-out transfer, registered depth bounds and model-free replay. Zero controls is a specificity check in the exact simulator, not a noisy-science false-positive estimate.",
+                st,
+            ),
+            PageBreak(),
+            image_flow(figs[5]),
+            caption(
+                "Figure 5 | Complete worked example from correlated observations through four generic rewrites, prospective commitment, outcome reveal and independent falsification.",
                 st,
             ),
             PageBreak(),
@@ -1038,6 +1201,39 @@ def build_pdf() -> Path:
     )
     story.extend(manuscript_story(st, figs))
     doc.build(story)
+
+    manuscript_frame = Frame(
+        20 * mm,
+        18 * mm,
+        A4[0] - 40 * mm,
+        A4[1] - 36 * mm,
+        leftPadding=0,
+        rightPadding=0,
+        topPadding=3 * mm,
+        bottomPadding=3 * mm,
+    )
+    manuscript_doc = BaseDocTemplate(
+        str(MANUSCRIPT_OUTPUT),
+        pagesize=A4,
+        leftMargin=20 * mm,
+        rightMargin=20 * mm,
+        topMargin=18 * mm,
+        bottomMargin=18 * mm,
+        title="A prospective assay for hypothesis-space expansion in AI systems",
+        author="Manuscript discussion copy",
+    )
+    manuscript_doc.addPageTemplates(
+        PageTemplate(id="manuscript", frames=[manuscript_frame], onPage=manuscript_page_decor)
+    )
+    clean_story: list = [
+        Spacer(1, 18 * mm),
+        Paragraph("A prospective assay for hypothesis-space expansion in AI systems", st["manuscript_title"]),
+        Rule(75 * mm, colors.HexColor(ORANGE), 3),
+        Spacer(1, 8 * mm),
+        Paragraph("Article | manuscript for scientific discussion", st["subtitle"]),
+    ]
+    clean_story.extend(manuscript_story(st, figs))
+    manuscript_doc.build(clean_story)
     return OUTPUT
 
 

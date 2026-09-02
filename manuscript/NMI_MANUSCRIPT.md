@@ -1,114 +1,128 @@
-# Measuring representation change in language-model discovery
-
-**[AUTHOR NAMES AND AFFILIATIONS — REQUIRED BEFORE SUBMISSION]**
+# A prospective assay for hypothesis-space expansion in AI systems
 
 ## Abstract
 
-Hypotheses can be novel in wording or prediction while remaining inside a supplied representational language. We introduce a preregistered benchmark for a narrower event: escape from a frozen incumbent hypothesis language, followed by better prediction than its best admissible hypothesis on a committed intervention. Across eight synthetic families, typed external representation proposals enabled a frozen language model to validate escapes in 142 of 400 worlds, compared with 0–1 of 400 for direct, sampling-matched, fixed-space and attribute-only alternatives. Without family-level operators, four-step compositions of 29 generic graph rewrites succeeded in 400 of 400 known-family worlds and 100 of 100 worlds from a held-out structural family; random compositions succeeded in 52 and 13, respectively, whereas language-model compositions succeeded in none. No false jumps occurred in 300 control worlds. These results isolate representation proposal as a bottleneck in this benchmark, while remaining specific to a human-designed scaffold, one frozen model and synthetic worlds.
+Scientific discovery can require changing not only a hypothesis but the language in which hypotheses are expressed. Existing evaluations rarely make that boundary, or the cost of crossing it, objectively testable. We introduce a prospective assay for bounded hypothesis-space expansion. A candidate must be structurally outside a frozen incumbent language, fit existing observations, commit to a discriminating intervention before its outcome is revealed, outperform the best incumbent predictor and survive independent falsification. Across synthetic mechanistic worlds, typed high-level proposals succeeded in 142 of 400 cases, whereas direct, sampled, fixed-space and attribute-only alternatives succeeded in 0–1. Compositions of generic local rewrites succeeded in 400 of 400 known-family and 100 of 100 held-out-family worlds. A post-hoc component audit reproduced all C3 verdicts without language-model outputs, locating this result in the deterministic search scaffold rather than the model. The assay enables auditable attribution of hypothesis-space expansion while exposing saturation and limited external validity.
 
-Abduction, conceptual change and scientific creativity are often described as changes in the space of possible explanations rather than better search within an unchanged space<sup>1–6</sup>. Computational systems can invent predicates and features<sup>7,8</sup>, restructure domain theories<sup>9</sup>, discover equations<sup>10,11</sup> and produce new algorithms by searching executable programs<sup>12,13</sup>. Language models have broadened this agenda: they can generate and update hypotheses<sup>14,15</sup>, guide program search<sup>13</sup> and participate in agentic scientific workflows<sup>16–20</sup>. Yet a high-scoring or unusual candidate need not change the representational language supplied by a task. Conversely, a structurally different candidate need not make a useful prediction.
+## Introduction
 
-This distinction creates a measurement problem. Natural-language novelty ratings, embedding distance and downstream performance do not establish that a candidate lies outside an incumbent hypothesis space. Nor does failure inside a supplied grammar distinguish inadequate reasoning from an inability to propose a more expressive representation. Work on computational creativity and constructive induction makes this conceptual distinction explicit<sup>4–9</sup>, but recent language-model benchmarks primarily measure generation, recovery, ranking or performance within task-defined spaces<sup>14,15,21,22</sup>. Broad scientific agents add tools, critique and experiments<sup>16–20</sup>, but their many interacting components make the source of a successful hypothesis difficult to identify.
+Abduction selects an explanatory hypothesis, but scientific change sometimes alters the representational vocabulary in which hypotheses can be stated<sup>1–3</sup>. Computational creativity and constructive-induction research formalized related distinctions between exploration within a space and transformations of that space<sup>4–9</sup>. Symbolic regression, program search and language-model-guided systems can discover useful equations, algorithms and hypotheses<sup>10–17</sup>, while multi-agent systems increasingly automate broader scientific workflows<sup>18–20</sup>.
 
-Here we operationalize **bounded representation-level escape**. We freeze an incumbent typed grammar and its best admissible predictor, require a candidate to fail canonical grammar membership while fitting the same observations, and commit prospectively to an intervention on which candidate and incumbent disagree. A candidate succeeds only if it predicts the intervention and an independent falsification set better than the incumbent oracle. We first validate this assay across eight procedural families using atomic typed representation mutations. We then remove the family-level operator menu and ask whether local generic graph rewrites can be composed into successful representations, including in a preregistered held-out structural family. Proposal source and reasoning are separated while calls, candidate slots and interventions are held fixed. This design does not test human-like creativity or unrestricted science. It tests whether a frozen model embedded in a specified scaffold can cross a known representational boundary and earn that crossing prospectively.
+Recent work now explicitly targets expanding principle or model spaces. PiEvo treats discovery as optimization over an evolving principle space across four benchmarks<sup>21</sup>. Model Discovery Agent couples a language-model proposer to Bayesian experiment design in an open model setting spanning physics, chemistry and biology<sup>22</sup>. HypoArena evaluates prospective hypothesis discovery in 988 cases across six domains and 15 frontier models<sup>23</sup>. These studies broaden the scientific tasks and models under evaluation. A complementary measurement problem remains: how can an evaluation prove that a candidate left a specified incumbent hypothesis language, charge it a prediction before seeing the answer, and separately identify which system component caused the escape?
+
+Here we operationalize **bounded hypothesis-space expansion**. We freeze an incumbent representational language, generate executable candidates and require a six-gate verdict: incumbent adequacy (J0), canonical structural non-membership (J1), candidate adequacy (J2), a discriminating committed prediction (J3), prospective intervention gain (J4) and independent falsification survival (J5; Fig. 1). Candidate prose, model confidence, embedding distance and semantic novelty do not enter the verdict.
+
+Our experiments validate the assay and reveal a component-attribution limit. Typed proposals and generic compositional search cross the frozen language reliably, whereas fixed-space alternatives do not. However, a code-path audit and inference-free replay show that C3's representations, fitted equations, structural ranking and interventions were deterministic; removing the model output leaves all 500 jump and 300 control verdicts unchanged. The central contribution is therefore the prospective assay and a transparent typed search scaffold—not evidence that a language model was necessary for the successful escapes.
+
+### Table 1 | Position relative to adjacent discovery evaluations
+
+| Evaluation | Executable hypotheses | Frozen formal language | Proves non-membership | Prospective intervention | Independent falsification | Proposal/reasoning separation | Deterministic replay | Breadth |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Hypothesis Search / HypoGen | partial | no | no | no | no | no | no | language tasks |
+| POPPER | partial | no | no | yes | yes | no | partial | literature claims |
+| FunSearch | yes | fixed program skeleton | no | evaluator feedback | held-out tests | proposer/evaluator | partial | mathematics |
+| PiEvo | yes | evolving principle space | no formal certificate | benchmark dependent | benchmark dependent | proposer/search | no exact replay claim | 4 benchmarks, multiple backbones |
+| Model Discovery Agent | yes | open model set | no formal certificate | Bayesian experiment design | posterior predictive checks | proposer/inference | implementation dependent | physics, chemistry, biology |
+| HypoArena | judged text | no | no | context regression | rubric/judge | no | no | 988 cases, 6 domains, 15 models |
+| This work | yes | yes | canonical certificate | outcome locked | independent exact cases | factorial + component audit | exact | 9 synthetic families, 1 model |
 
 ## Results
 
-### A prospective criterion for representation-level escape
+### A prospective criterion for hypothesis-space expansion
 
-Each procedural world supplied observations for which at least one hypothesis in a frozen incumbent language was exactly adequate. The eight families required, respectively, a latent common cause, unification, a hidden regime, conversion of a property into a relation, state invention, a coordinate transformation, resolution of causal ambiguity or a meta-law. The observations deliberately left the incumbent and target representations indistinguishable. A deterministic designer selected, from a finite public action set, the intervention that maximized separation between the fitted candidate and the incumbent oracle without observing its outcome (Fig. 1a–c).
+Each synthetic world contains observations compatible with an incumbent model, a frozen typed-graph language, hidden intervention outcomes and independent falsification cases. The best incumbent predictor is computed exactly or by bounded exhaustive search. Before any intervention outcome is revealed, a candidate representation, executable expression, selected action, prediction and split hash are committed. A validated jump is the conjunction J0∧J1∧J2∧J3∧J4∧J5 (Fig. 1). This design turns “leaving a hypothesis space” into a replayable event rather than a judgement about wording or apparent novelty.
 
-A validated jump required every registered gate J0–J5 (Fig. 1d). The incumbent oracle first had to fit the observations (J0). The candidate had to be executable and outside the incumbent grammar (J1), fit the observations exactly (J2), and disagree materially with the incumbent on the frozen intervention (J3). Only then was the intervention revealed: the candidate had to improve on the incumbent by the registered margin (J4) and pass an independent falsification set (J5). World-level jump success rate (JSR) was the fraction of worlds with at least one validated candidate among three slots. False-jump rate (FJR) applied the same rule to matched control worlds whose truth lay inside the incumbent language. Candidate text, model confidence and semantic novelty never entered the verdict.
+### Typed proposals outperform fixed-space alternatives
 
-The unit of replication was a generated world, not a candidate. Confirmatory populations comprised 50 seeds in each of eight jump families (n=400) and 25 seeds in each of eight no-jump controls (n=200). Conditions shared worlds and had the same ex ante opportunity: three candidate slots, two model calls and one prospectively committed intervention per slot. Exact simulators, canonical graph hashes and full event records made every verdict replayable.
+In AJ5, direct model proposals (B0) and sampling-matched proposals (B1) each succeeded in 1 of 400 worlds. Fixed-space reasoning (B2), attribute-only mutation (B3) and value-only mutation succeeded in none. External typed representation proposals succeeded in 142 of 400 worlds in both B4 and B5 (35.5%; Fig. 2a). All eight registered comparisons of B4 or B5 against B0–B3 were positive after Holm correction (adjusted P≤4.00×10−4).
 
-### Typed representation proposals outperform fixed-space alternatives
+The proposal-source factorial held the downstream path fixed. Model-proposed representations (P0) succeeded in 0 of 400 worlds, external typed proposals (P1) in 142, and oracle representations (P2) in 400 (Fig. 2b). This shows that the tested system can execute a supplied changed representation. It does not establish that the model is needed after deterministic fitting, because the fitted expression and maximum-separation intervention were supplied to the second call and programmatically enforced.
 
-Direct model proposals (B0) and sampling-matched model proposals (B1) each succeeded in 1 of 400 worlds (0.25%). Repeated reasoning with the representation fixed (B2) and external changes restricted to incumbent-language attributes (B3) succeeded in 0 of 400. In contrast, externally sampled typed representation mutations (B4) and a structurally diverse variant with a falsification gate (B5) each succeeded in 142 of 400 worlds (35.5%; stratified bootstrap 95% CI, B4 31.0–40.25%; B5 31.0–40.0%; Fig. 2a).
-
-All eight preregistered contrasts of B4 or B5 against B0–B3 were positive (one-sided paired bootstrap P=9.999×10−5; Holm-adjusted P=7.999×10−4 for each comparison). Successful worlds were distributed across all eight families: B4 family counts were 18, 29, 17, 12, 20, 13, 18 and 15 of 50; B5 counts were 16, 31, 13, 23, 13, 17, 16 and 13. Thus, the aggregate was not produced by one family.
-
-No condition produced a false jump in 200 control worlds. For B4 and B5, the two-sided Wilson 95% upper bound was 1.88%, below the preregistered 5% threshold. This does not imply zero underlying risk; it bounds the risk supported by these controls. The external conditions also showed a monotonic opportunity curve: B4 succeeded in 53, 101 and 142 of 400 worlds after one, two and three slots, respectively, and B5 in 58, 96 and 142 (Fig. 2c). Fixed-space conditions remained near zero despite the same call, evaluation and intervention capacity.
-
-### The proposal source is the limiting component
-
-We next held the reasoner and three-slot/two-call path fixed while changing only the representation source. Model-proposed representations (P0) succeeded in 0 of 400 worlds, external typed proposals (P1) in 142 of 400, and an oracle-correct representation whose equation and outcomes remained hidden (P2) in 400 of 400 (Fig. 2b). P1−P0 and P2−P0 were significant after Holm correction (adjusted P=2.000×10−4 each). The reasoner could therefore use a correct or useful changed representation when supplied, whereas its proposal interface did not reliably produce one.
-
-This attribution is to the tested interface, not to the model in isolation. The external proposer encoded a nine-member portfolio of generic but high-level structural changes. The equality of B4 and B5 further showed no measurable archive benefit in the primary portfolio. Removing the falsifier or crossover likewise did not change world-level JSR; crossover was never used by the primary three-candidate portfolio. Value-only mutation remained at zero, model selection from the mutation vocabulary reached 1 of 400, and random untyped edits reached 18 of 400. These outcomes suggested that typed representation proposals mattered, while also exposing a stronger alternative explanation: the high-level menu might contain prepackaged family answers.
+Candidate-level gate attrition clarifies the result (Fig. 2c). In jump worlds, B4 had 1,200 candidates at J0, 823 through J1, 573 through J2, 270 through J3 and 154 through J4–J5. B5 had 1,200, 838, 562, 262 and 145, respectively. In controls, B4 and B5 still produced 112 and 110 candidates through J3, but none passed J4. The zero-control result is therefore not created by J0–J3 alone; prospective outcomes eliminate apparently admissible escapes.
 
 ### Generic rewrites compose into validated representations
 
-We tested that explanation in a second, separately preregistered study. The nine atomic high-level operations were removed from the focal condition and replaced with 29 local graph/abstract-syntax-tree rewrites. Adding an untyped node, changing its type or observability, adding a function, changing relation arity and binding each argument were separate operations. No primitive accepted a family label, ground truth, target distance, outcome or semantic fitness judgment. Each candidate followed a linear ancestry of at most four operations.
+CJ5 replaced nine high-level mutations with 29 local graph and abstract-syntax-tree rewrites. Adding a node, changing its type or observability, changing arity and binding each argument were separate steps. No primitive accepted a family label, target distance or outcome. C3 deterministically traversed 48 four-step branches, ranked candidates using observational fit, structural escape and prospective prediction separation without outcomes, and retained three.
 
-Across the same eight structural families with new seeds (n=400 worlds), fixed-space search (C0) and all 192 generic depth-one alternatives (C2) succeeded in 0 worlds. The frozen atomic portfolio (C1), retained as a reference rather than a cost-matched condition, succeeded in 131 worlds (32.75%). Outcome-blind stratified traversal of four-step generic compositions (C3) succeeded in all 400 worlds (100%), as did the oracle representation (C5). C3 exceeded C0 and C2 by 1.0 (95% CI 1.0–1.0; one-sided paired randomization P=9.999×10−5; Holm-adjusted P=2.000×10−4; Fig. 3b).
+Across eight known structural families with new seeds (n=400 worlds), fixed-space search (C0) and 192 generic depth-one alternatives (C2) succeeded in no worlds. The frozen atomic reference (C1) succeeded in 131 (32.75%), random four-step paths (C_rand) in 52 (13.0%), and C3 in all 400 (Fig. 3). C3 exceeded C_rand by 0.87 (95% CI 0.845–0.895; Holm-adjusted P=3.00×10−4). C3 was 100% in every family; this demonstrates within-generator reliability and assay separability, not eight statistically independent replications or an unsaturated frontier benchmark.
 
-The retained jump gain, defined relative to C0 and the atomic reference C1, was 3.053 (stratified bootstrap 95% CI 2.685–3.540; Fig. 3c). Values above one are possible because the generic traversal was not restricted to reproducing the three sampled atomic alternatives and explored a larger structured candidate set under the registered operation budget. This statistic therefore does not mean generic operators were three times intrinsically better than atomic ones; C1 and C3 have different operation semantics.
+C_self also scored 0/400, but its failure is narrower than initially anticipated. All 38,400 confirmatory plan records failed the same schema check because `plans` was not a list; no proposed four-step plan reached structural evaluation. C_self therefore measures the registered serialization interface, not conceptual inability to compose representations. Grammar-constrained decoding and validator repair remain necessary future controls.
 
-Two controls isolated composition from opportunity alone. Random four-step paths from the same primitive generator (C_rand) succeeded in 52 of 400 worlds (13.0%); the C3−C_rand difference was 0.87 (95% CI 0.845–0.895; Holm-adjusted P=3.000×10−4). The frozen model received the same primitive manifest and attempted three sets of 16 four-step plans (C_self), but succeeded in 0 worlds. As in AJ5, this identifies a limitation of the tested planning/output interface; malformed plans consumed their slots and the external system did not repair them semantically.
+### A deterministic component audit removes the language model
 
-### Composition transfers to a held-out structural family
+Inspection of the frozen C3 execution path showed that the representation, expression, candidate ranking and selected intervention were generated deterministically before the model response. The response's representation, expression and intervention fields were overwritten; only its explanation remained, and explanation does not enter J0–J5. We therefore performed a post-hoc, inference-free ablation that replaced both model calls with a valid empty explanation and recomputed every C3 theory and commitment from the archived representation, expression and intervention.
 
-The second study preregistered a family excluded from AJ5 development, CJ5 pilot inference and known-family confirmation. In 100 `triadic_relation_reification` worlds, observations supported an incumbent cubic rule under correlated inputs, whereas the target reified an arity-three relation whose product mechanism was exposed by intervention. The primitive set contained reification and arity changes but no operation that created this target in one step.
+All 2,400 candidate verdicts matched the archive. The model-free replay retained 500/500 jump-world successes and 0/300 control-world false jumps (Fig. 4). Thus Phi-4 was not causally necessary for C3 under the implemented path. AJ5 still measures differences among model-facing proposal interfaces, but the perfect C3 result belongs to the typed deterministic search-and-evaluation scaffold. This audit changes the system attribution, not the validity of the prospective assay.
 
-C3 succeeded in 100 of 100 held-out worlds. C0, C1, C2 and C_self each succeeded in 0; C_rand succeeded in 13. The C3−C_rand difference was 0.87 (95% CI 0.80–0.93; Holm-adjusted P=3.000×10−4; Fig. 4b). C3 also produced no false jumps in 100 held-out-interface controls, for a combined C3 control count of 0/300 and Wilson 95% upper bound of 1.26%.
+### Transfer to one held-out structural family
 
-Every successful C3 candidate had registered ancestry depth four, and none of 17,280 evaluated depth-one alternatives validated. This establishes a depth-one lower bound and depth-four constructive upper bound within the registered operator system, not a globally minimal graph-edit or conceptual distance. The held-out claim is similarly bounded: AJ5 already included a binary property-to-relation family and the generic language contained a dormant reification operation. What was held out was the arity-three structure, product mechanism, generator and confirmatory instances—not the broad concept of reification.
+The second study reserved `triadic_relation_reification` from AJ5 development, CJ5 pilot inference and known-family confirmation. Observations supported an incumbent cubic rule under correlated inputs; the target reified an arity-three relation exposed by intervention. C3 succeeded in 100 of 100 held-out worlds, C_rand in 13, and C0, C1, C2 and C_self in none. C3 exceeded C_rand by 0.87 (95% CI 0.80–0.93; adjusted P=3.00×10−4).
 
-All 10,800 selected AJ5 candidates and all 16,800 selected CJ5 candidates reproduced their representation, intervention and J0–J5 verdicts in deterministic replay, with zero mismatches. The CJ5 replay reconstructed 35,533 ancestry records. No confirmatory world was excluded and no shard was rerun in either study. Together, the results support compositional, prospective escape from the registered hypothesis spaces while locating that capability in the complete human-designed search-and-reasoning scaffold.
+The holdout is limited. The earlier study contained a binary property-to-relation family, and the generic language already contained reification. What was new was the arity-three structure, product mechanism, generator and instances. Success across a single conceptually adjacent family cannot support broad external generalization.
+
+### A worked prospective escape
+
+In one held-out world, observations with x=z=w gave y=9x³, so the incumbent `y=9x³` and candidate `y=9xzw` both fit exactly. Four generic edits reified the incumbent prediction edge, changed the new relation to arity three, and bound z and w (Fig. 5). Before outcome reveal, the assay committed to setting z from 6 to 7 at x=w=6. The incumbent predicted 1,944; the candidate predicted 2,268; the revealed outcome was 2,268. Independent falsification at z=5 yielded 1,620, again exact for the candidate. The representation failed the frozen language on relation count, type, arity bindings and result structure, and passed J0–J5.
+
+### Specificity and replay
+
+The zero false-jump count requires qualification. In C3 controls, 800 of 900 candidates passed J1, 567 passed J2 and 283 passed J3, but none passed J4. The null was therefore non-trivial through the prospective commitment gate. Nevertheless, because no-jump truth is generated inside the incumbent language and the incumbent oracle is exact, an outside candidate cannot strictly beat it under noiseless evaluation. The observed 0/300 is best interpreted as a structural-specificity check under the exact simulator, not an empirical false-positive estimate for noisy science; the Wilson upper bound is descriptive only.
+
+All 10,800 AJ5 and 16,800 CJ5 selected candidates replayed exactly, including 35,533 CJ5 ancestry records. No confirmatory world was excluded and no shard was rerun.
 
 ## Discussion
 
-This study turns a broad claim about explanatory “jumps” into a bounded event with a prospective cost. A candidate must cross a frozen syntactic boundary, preserve the observations and then outperform the best incumbent explanation on an intervention selected before its outcome is known. Under this criterion, fixed-space search, additional model sampling and attribute mutation were insufficient in the tested worlds, whereas typed external proposals enabled reliable escapes. When atomic family-level operators were removed, outcome-blind compositions of generic rewrites not only retained the effect but succeeded on a preregistered held-out structural family.
+This work contributes an assay for a specific event: an executable candidate leaves a frozen hypothesis language and pays for that move with a prospective prediction that beats the best incumbent and survives independent falsification. Canonical non-membership, outcome-before-commitment ordering, proposal-source factorials, false-jump controls and deterministic replay distinguish the assay from broader discovery benchmarks (Table 1).
 
-The result connects computational accounts of transformational creativity and constructive induction<sup>4–9</sup> to recent executable and language-model-guided search<sup>12–15</sup>. FunSearch shows that frozen-model proposals can be selected by a deterministic evaluator to produce valuable programs<sup>13</sup>; hypothesis benchmarks assess generation, recovery and ranking<sup>14,15,21,22</sup>; falsification and multi-agent systems expand the scientific workflow<sup>16–20</sup>. Our complementary contribution is not broader autonomy. It is an assay that separates representation proposal from reasoning and distinguishes search within a language from prospective gain after leaving it.
+The experiments also show why component attribution must be audited at code-path level. AJ5 indicates that typed external proposals reach useful representations more often than the registered model interfaces. But C_self never crossed its parser, and C3 did not require the model output. The defensible mechanistic result is therefore that typed representation search can cross a frozen space and that interface failures can be separated from downstream executability. Claims of language-model-driven representation change would require a redesigned path in which model-generated scientific content survives into the committed theory, plus a true minus-model ablation.
 
-The proposal factorial matters for this interpretation. The same frozen reasoner solved every world when given the oracle representation and a substantial fraction when given external typed proposals, but not when responsible for proposing the representation through the registered interface. The CJ5 self-composition result sharpened that gap. It should not be read as a universal inability of language models: it is conditional on Phi-4, its quantized runtime, prompt, decoding policy, plan syntax and finite budget. Nor should C3 be described as the model's unaided invention. Generic operators, traversal strata, structural ranking, exact fitters and simulators were designed by humans. The demonstrated capability belongs to their composition with the frozen model.
+External validity is the principal limitation. The worlds are synthetic and noiseless; C3 is saturated; search strata and generators were co-designed; the operator language embeds graph, function, relation and binding priors; only one model and one adjacent held-out family were tested. World seeds quantify within-generator reliability. The higher-level generalization units are nine structural families, only one of which was held out, so small world-level P values do not substitute for structural breadth.
 
-Several limitations constrain external validity. First, synthetic worlds trade ecological realism for exact oracles, exhaustive membership checks and uncontaminated outcomes. Success may not translate to scientific domains where representations are informal and interventions costly. Second, C3's perfect benchmark score suggests that the registered traversal is well aligned with these generators; it measures condition separation rather than a frontier ceiling. Third, the mutation language embeds meta-level priors about graphs, functions, relations and binding. Although it withholds family and outcome information, these priors are scientifically consequential. Fourth, the held-out relation is structurally new to the study but conceptually adjacent to an earlier binary relation family. Fifth, zero accepted controls provides an upper confidence bound, not proof of zero false discoveries.
+A decisive extension should freeze the current assay and add independently authored families, distractor primitives, deeper compositions, stochastic observations, partial observability and at least one recognizable mechanistic simulation. It should compare a stronger open model and a frontier model, with raw, grammar-constrained and validator-repair interfaces, and report parse validity and cumulative J0–J5 attrition. These experiments are proposed, not part of the present evidence.
 
-A real-science extension should therefore preserve the prospective logic while weakening designer alignment: freeze domain ontologies before target selection, use interventions whose outcomes are genuinely unavailable to the system builders, compare multiple independently developed proposal languages and model families, and enlist domain experts to judge whether a formal structural change corresponds to explanatory value. Until then, the present result supports a narrower conclusion. Representation proposal can be an experimentally separable bottleneck, and a frozen language model can participate in overcoming it when embedded in a transparent, typed and falsifiable search process.
+The current conclusion is narrower but useful: hypothesis-space expansion can be measured prospectively and replayed exactly; typed deterministic search can produce it in controlled worlds; and the assay exposes when an apparent language-model capability is actually supplied by the surrounding scaffold.
 
 ## Methods
 
-### Study design and preregistration
+### Study design and protocol freezing
 
-AJ5 and CJ5 were frozen in Git before their respective confirmatory model calls. AJ5 used preregistration commit `895ebb9118ffd0046825b88868621f2a70f69f61`. CJ5 used commit `65f2087` with a documented pre-unlock correction at `7ecb977`; held-out execution was unlocked only at `27ee542`, after known-family and control shards were terminal. Pilot seeds were excluded. No confirmatory result caused a change to model, families, operators, thresholds, budgets or seeds.
+AJ5 and CJ5 protocols were frozen in Git before their reported confirmatory model calls. AJ5 uses commit `895ebb9118ffd0046825b88868621f2a70f69f61`. CJ5 uses `65f20874e16bddf8a7ae36996395ff52b27153b7`, with a documented correction at `7ecb977` and held-out unlock at `27ee542`. The commits are publicly retrievable but unsigned, and no independent registry or transparency-log timestamp was located. We therefore describe the studies as prospectively specified and commit-frozen, not formally preregistered. Pilot seeds were excluded; no confirmatory result changed families, operators, thresholds, budgets or seeds.
 
 ### Model and inference
 
-Both studies used frozen `microsoft/phi-4` revision `2db69c1c3e91a05d2c64a3185acfbaf36f744e25`, served with vLLM 0.10.2 from image digest `sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db` using dynamic bitsandbytes 4-bit quantization on one RTX 4090. The context limit was 4,096 tokens, temperature 0.2, top-p 0.95 and completion cap 700; the AJ5 sampling manipulation used temperature 0.7 for registered proposal calls. Each request had a deterministic seed. No fine-tuning, reinforcement learning or cross-world adaptation occurred.
+Both studies used frozen `microsoft/phi-4` revision `2db69c1c3e91a05d2c64a3185acfbaf36f744e25`, vLLM 0.10.2, dynamic bitsandbytes 4-bit quantization, a 4,096-token context, temperature 0.2, top-p 0.95 and completion cap 700. AJ5 sampling proposals used temperature 0.7. Each request had a deterministic seed. No fine-tuning or cross-world adaptation occurred.
 
-### Procedural worlds and incumbent oracles
+### Worlds, representations and search
 
-World generators returned public observations, a redacted action set, a frozen incumbent `LanguageSpec`, hidden truth and independent intervention/falsification cases. AJ5 used eight families and 50 jump seeds per family; CJ5 reconstructed them with 50 new seeds per family. No-jump controls used 25 seeds per family in each phase. CJ5 added 100 jump and 100 control seeds through the held-out interface. An exact or bounded exhaustive procedure verified local adequacy and produced the best incumbent prediction.
+Generators returned public observations, redacted actions, a frozen incumbent `LanguageSpec`, hidden truth and independent intervention and falsification cases. AJ5 used eight families and 50 jump seeds per family; CJ5 used 50 new seeds per family. No-jump controls used 25 seeds per family in each phase. CJ5 added 100 held-out jump and 100 control seeds. Representations were canonical typed graphs with executable fitted programs.
 
-### Representations and search conditions
-
-Representations were canonical typed graphs with executable fitted programs. AJ5 tested direct model output, model sampling, fixed-space reasoning, value-only mutation, sampled high-level representation mutation and structurally diverse mutation. CJ5 replaced the focal high-level portfolio with `GENERIC_PRIMITIVE_SET_V1`, comprising 29 local operations over nodes, edges, functions, equations, dependencies, constraints, temporal indices, types, observability, arity, bindings, reification, decomposition, copy and crossover. C3 traversed 48 four-operation branches using outcome-blind structural strata and retained three candidates. C_rand sampled 48 paths and selected by seeded structural hash. C_self requested 16 plans in each of three slots; invalid plans were not repaired.
+AJ5 tested direct model output, model sampling, fixed-space reasoning, attribute-only mutation and two typed high-level proposal conditions. CJ5 used 29 generic local rewrites. C3 traversed 48 four-operation branches and retained three candidates by a deterministic score. C_rand sampled 48 four-step paths. C_self requested 16 plans in each of three slots; invalid plans were not repaired.
 
 ### Prospective evaluation
 
-For each candidate, deterministic fitting used observations only. J0 required incumbent observation MSE≤10−12; J1 required DSL validity and at least one frozen-language membership failure; J2 required candidate observation MSE≤10−12; J3 required absolute candidate–oracle separation≥0.5 on the selected action; J4 required candidate intervention MSE to improve on the oracle by >0.1; and J5 required candidate falsification MSE≤10−12 and >0.1 improvement over the oracle. The action, predictions, candidate hash and split hash were committed before simulator evaluation.
+J0 required incumbent observation MSE≤10−12; J1 required DSL validity and frozen-language non-membership; J2 required candidate observation MSE≤10−12; J3 required candidate–oracle prediction separation≥0.5 on the committed action; J4 required intervention MSE improvement>0.1; J5 required falsification MSE≤10−12 and improvement>0.1. Candidate, prediction, action and split hashes were committed before simulator evaluation.
 
-### Statistics
+### Statistics and component audit
 
-The world was the replicate. AJ5 macro-averaged families equally and used 10,000 deterministic family-stratified paired bootstrap replicates (seed 20260902) for percentile 95% intervals and one-sided paired P values. CJ5 used the same bootstrap for effects and paired random sign-flip tests for registered contrasts. Holm correction was applied within each preregistered comparison family at α=0.05. FJR intervals are two-sided Wilson 95% intervals. Exact n and denominators are stated with each result; candidate rows were never analyzed as independent replicates.
+The world was the replicate. AJ5 used 10,000 family-stratified paired bootstrap replicates; CJ5 used the same bootstrap for effects and paired sign-flip tests. Holm correction was applied within prospectively specified comparison families at α=0.05. Candidate rows were used only for attrition. Family-level distributions are reported descriptively because eight known families plus one held-out family do not support a stable population-level family inference.
+
+The post-hoc component audit reconstructed all C3 candidates from archived deterministic representations, fitted expressions and selected interventions, replacing the model-derived explanation with an empty string. It then regenerated each world, froze a new commitment and recomputed J0–J5. No model inference was run.
 
 ### Integrity and replay
 
-Every request, representation, ancestry edge, fitted program, intervention commitment, gate value and configuration hash was retained. Replay reconstructed selected representations from the incumbent and mutation records and recomputed J0–J5. Infrastructure failures would have required an identical whole-shard rerun; none occurred. There were no outcome-quality exclusions.
+Requests, representations, ancestry edges, fitted programs, commitments, gate values and configuration hashes were retained. Replay reconstructed representations and recomputed J0–J5. Infrastructure failures would have required whole-shard reruns; none occurred. There were no outcome-quality exclusions.
 
 ### AI assistance in research and writing
 
-The tested language model generated registered candidate and reasoning outputs as described above. OpenAI Codex was used after completion of all experiments to inspect repository artifacts, recompute lightweight audits, search literature, and assist with drafting and consistency checking. It did not choose confirmatory hypotheses, alter data, rerun inference or make authorship decisions. All numbers were traced to frozen artifacts; all citations and interpretations require author verification. Human authors retain responsibility for the work. **[DISCLOSURE REQUIRES EXPLICIT APPROVAL BY ALL AUTHORS BEFORE SUBMISSION.]**
+Phi-4 generated the registered outputs described above. OpenAI Codex was used only after experiments to inspect artifacts, recompute inference-free audits, verify literature metadata and assist drafting. It did not choose confirmatory hypotheses, alter source data or run new model inference. Human authors verified the cited metadata and remain responsible for originality, accuracy and integrity.
 
 ## Data availability
 
-All synthetic-world definitions, confirmatory result tables, comparison tables, manifests and replay artifacts are included in the project repository. Before submission, the authors will archive the exact release in a DOI-minting repository and replace this sentence with the accession and immutable link. No personal or third-party restricted data were used.
+Synthetic-world definitions, result tables, manifests and replay artifacts are included in the project repository. The submission release will archive an exact commit in a DOI-minting repository. No personal or restricted third-party data were used.
 
 ## Code availability
 
-Source code for generation, search, evaluation, statistics and deterministic replay is included in the project repository. The submission release will identify the exact Git commit and an archival DOI. The frozen external model weights are not redistributed; model identifier, revision, runtime image and inference configuration are reported above.
+Source code for generation, search, evaluation, statistics, component audit and replay is included in the project repository. The release will identify the exact commit and archival DOI. Model weights are not redistributed; identifier, revision and runtime are reported above.
 
 ## References
 
@@ -120,45 +134,38 @@ Source code for generation, search, evaluation, statistics and deterministic rep
 6. Wiggins, G. A. Searching for computational creativity. *New Gener. Comput.* **24**, 209–222 (2006).
 7. Muggleton, S. & Buntine, W. Machine invention of first-order predicates by inverting resolution. In *Proc. 5th Int. Conf. Machine Learning* 339–352 (1988).
 8. Stahl, I. Predicate invention in inductive logic programming. *Mach. Learn.* **13**, 287–320 (1993).
-9. Donoho, S. K. & Rendell, L. A. Rerepresenting and restructuring domain theories: a constructive induction approach. *J. Artif. Intell. Res.* **2**, 411–446 (1995).
+9. Donoho, S. K. & Rendell, L. A. Rerepresenting and restructuring domain theories. *J. Artif. Intell. Res.* **2**, 411–446 (1995).
 10. Schmidt, M. & Lipson, H. Distilling free-form natural laws from experimental data. *Science* **324**, 81–85 (2009).
-11. Udrescu, S.-M. & Tegmark, M. AI Feynman: a physics-inspired method for symbolic regression. *Sci. Adv.* **6**, eaay2631 (2020).
+11. Udrescu, S.-M. & Tegmark, M. AI Feynman. *Sci. Adv.* **6**, eaay2631 (2020).
 12. Fawzi, A. et al. Discovering faster matrix multiplication algorithms with reinforcement learning. *Nature* **610**, 47–53 (2022).
 13. Romera-Paredes, B. et al. Mathematical discoveries from program search with large language models. *Nature* **625**, 468–475 (2024).
-14. Wang, Z. et al. Hypothesis Search: inductive reasoning with language models. In *International Conference on Learning Representations* (2024).
+14. Wang, Z. et al. Hypothesis Search: inductive reasoning with language models. In *ICLR* (2024).
 15. Zhou, Y. et al. Hypothesis generation with large language models. In *NLP4Science* 117–139 (2024).
-16. Huang, A. et al. POPPER: automated hypothesis validation with language models. In *Proc. ICML*, PMLR **267** (2025).
-17. Lu, C. et al. The AI Scientist: towards fully automated open-ended scientific discovery. Preprint at https://arxiv.org/abs/2408.06292 (2024).
-18. Gottweis, J. et al. Towards an AI co-scientist. *Nature* (2026). https://doi.org/10.1038/s41586-026-10644-y
-19. Swanson, K. et al. An autonomous multi-agent system for scientific discovery. *Nature* (2026). https://doi.org/10.1038/s41586-026-10652-y
+16. Huang, A. et al. POPPER: automated hypothesis validation with language models. In *ICML*, PMLR **267** (2025).
+17. Lu, C. et al. The AI Scientist. Preprint at https://arxiv.org/abs/2408.06292 (2024).
+18. Gottweis, J. et al. Accelerating scientific discovery with Co-Scientist. *Nature* (2026). https://doi.org/10.1038/s41586-026-10644-y
+19. Ghareeb, A. E. et al. A multi-agent system for automating scientific discovery. *Nature* **655**, 497–505 (2026). https://doi.org/10.1038/s41586-026-10652-y
 20. Boiko, D. A. et al. Autonomous chemical research with large language models. *Nature* **624**, 570–578 (2023).
-21. Chen, T. et al. HypoSpace: a diagnostic benchmark for set-valued hypothesis generation under underdetermination and sublinear coverage bounds. Preprint at https://arxiv.org/abs/2510.15614 (2025).
-22. Liu, Y. et al. ResearchBench: benchmarking LLMs in scientific discovery via inspiration-based task decomposition. *Findings ACL* 13187–13207 (2026).
-23. Koivisto, M. & Grassini, S. Best humans still outperform artificial intelligence in a creative divergent thinking task. *Sci. Rep.* **13**, 13601 (2023).
-24. Hubert, K. F., Awa, K. N. & Zabelina, D. L. A comparison of human and AI creativity across domains. *Sci. Rep.* **14**, 2562 (2024).
-25. Haase, J., Hanel, P. H. P. & Pokutta, S. Artificial muses: generative artificial intelligence chatbots have risen to human-level creativity. *J. Creat.* **35**, 100113 (2025).
-26. Ding, A. W. & Li, S. Generative AI lacks the human creativity to achieve scientific discovery from scratch. *Sci. Rep.* **15**, 9587 (2025).
-27. Pearl, J. *Causality: Models, Reasoning, and Inference* (Cambridge Univ. Press, 2009).
-28. Peters, J., Janzing, D. & Schölkopf, B. *Elements of Causal Inference* (MIT Press, 2017).
-29. Zahavy, T. Position: LLMs can't jump. ICML Position Paper/OpenPrint 20260728.0010v1 (2026).
-30. Bran, A. M. et al. Augmenting large language models with chemistry tools. *Nat. Mach. Intell.* **6**, 525–535 (2024).
-31. Zheng, Y. et al. Large language models for scientific discovery in molecular property prediction. *Nat. Mach. Intell.* **7**, 437–447 (2025).
-32. Ektefaie, Y. et al. Evaluating generalizability of artificial intelligence models for molecular datasets. *Nat. Mach. Intell.* **6**, 1512–1524 (2024).
-33. Kauffmann, J. et al. Explainable AI reveals Clever Hans effects in unsupervised learning models. *Nat. Mach. Intell.* **7**, 412–422 (2025).
-34. Kim, Y. et al. Capable language models can outgrow the benefits of collaboration. *Nat. Mach. Intell.* **8**, 1157–1172 (2026).
+21. Pu, Y., Lin, T. & Chen, H. Principle-Evolvable Scientific Discovery via Uncertainty Minimization. In *ICML*, PMLR **306** (2026).
+22. Murphy, K. Model Discovery Agent: LLM-assisted Bayesian experiment design for data-efficient discovery of mechanistic world models. Preprint at https://arxiv.org/abs/2608.09696 (2026).
+23. Zhong, T. et al. Before the Action: Benchmarking LLMs on Prospective Hypothesis Discovery. Preprint at https://arxiv.org/abs/2607.15766 (2026).
+24. Chen, T. et al. HypoSpace. Preprint at https://arxiv.org/abs/2510.15614 (2025).
+25. Liu, Y. et al. ResearchBench. *Findings ACL* 13187–13207 (2026).
+26. Pearl, J. *Causality* (Cambridge Univ. Press, 2009).
+27. Peters, J., Janzing, D. & Schölkopf, B. *Elements of Causal Inference* (MIT Press, 2017).
 
 ## Acknowledgements
 
-**[FUNDING AND ACKNOWLEDGEMENTS — REQUIRED BEFORE SUBMISSION]**
+To be completed by the authors before submission.
 
 ## Author contributions
 
-**[CRediT-CONFORMANT AUTHOR CONTRIBUTIONS — REQUIRED BEFORE SUBMISSION]**
+To be completed using the CRediT taxonomy before submission.
 
 ## Competing interests
 
-**[COMPETING-INTERESTS STATEMENT — REQUIRED BEFORE SUBMISSION]**
+To be completed by the authors before submission.
 
 ## Correspondence
 
-**[CORRESPONDING AUTHOR AND EMAIL — REQUIRED BEFORE SUBMISSION]**
+To be completed by the corresponding author before submission.

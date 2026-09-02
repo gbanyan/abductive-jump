@@ -2,17 +2,17 @@
 
 ## One-sentence paper
 
-A preregistered synthetic benchmark shows that a frozen language model can support prospectively validated escape from an explicitly bounded hypothesis language when an external scaffold proposes typed representation changes, and that generic multi-step rewrites retain and extend this effect under a held-out structural family.
+A prospective assay certifies bounded hypothesis-space expansion, while a model-free replay shows that the successful generic compositions belong to the deterministic typed search scaffold rather than the language model.
 
 ## Reader journey
 
 1. **Problem:** Fluent or useful hypotheses need not change the language in which explanations are expressed, so “novelty” scores do not identify representation-level escape.
 2. **Measurement:** Freeze an incumbent grammar, require observational adequacy, prove non-membership canonically, commit to a discriminating intervention, and compare against the best incumbent hypothesis.
 3. **AJ5 assay validation:** Direct LLM, extra sampling, fixed-space search and attribute-only mutation nearly never jump; typed representation mutation succeeds in 142/400 worlds with zero accepted control worlds.
-4. **Mechanism:** With the same reasoner, external proposals succeed in 142/400 and LLM self-proposals in 0/400; an oracle representation reaches 400/400. This localizes the bottleneck to proposal under this interface.
-5. **CJ5 hardening:** Remove family-level atomic operators. Four-step generic composition reaches 400/400 known and 100/100 held-out worlds; depth-one, fixed-space and self-composition controls are zero.
-6. **Specificity:** Random generic paths succeed only 52/400 and 13/100; all C3 successes require registered depth four; controls remain 0/300.
-7. **Meaning:** The result is a scaffold-level capability in engineered worlds, not autonomous science or proof of human-like abduction.
+4. **Attribution audit:** C_self never passes its schema boundary; model-free C3 replay matches 2,400/2,400 candidate verdicts and retains 500/500 jump successes.
+5. **CJ5 hardening:** Four-step deterministic composition reaches 400/400 known and 100/100 held-out worlds; depth-one and fixed-space controls are zero.
+6. **Specificity:** Random paths succeed only 52/400 and 13/100; C3 controls reach J3 but cannot beat an exact incumbent after outcome reveal.
+7. **Meaning:** The contribution is an assay and typed-search result, not language-model necessity or autonomous science.
 
 ## Main display sequence
 
@@ -21,16 +21,18 @@ A preregistered synthetic benchmark shows that a frozen language model can suppo
 | Fig. 1 | What exactly counts as escape? | Incumbent language, typed mutation, J0–J5 gates, prospective intervention, replay | Construct validity |
 | Fig. 2 | Does representation mutation matter? | AJ5 condition JSR/FJR; proposal–reasoning factorial; dose response | External representation proposals outperform matched fixed-space alternatives |
 | Fig. 3 | Does the result survive removal of atomic answers? | CJ5 known-family rates, C3–controls contrasts, retained gain | Generic composition realizes the effect |
-| Fig. 4 | Is composition specific and transferable? | Held-out family, random/self controls, depth and replay, limits inset | Held-out structural generalization within benchmark |
-| Table 1 | Were opportunities and tests matched? | Conditions, proposal source, operation budget, calls, candidate slots, oracle role | Interpretability of comparisons |
+| Fig. 4 | Which component caused success? | Held-out family, depth, model-free replay and C_self schema audit | Correct system attribution |
+| Fig. 5 | What does one escape look like? | Observations → incumbent → four rewrites → commitment → falsification | Concrete construct validity |
+| Table 1 | How does the assay differ from nearby work? | Formal membership, intervention, falsification, attribution, replay and breadth | Novelty and limits |
 
 ## Results subsections
 
 1. **A prospective criterion for representation-level escape** — define assay, families, controls and gates.
 2. **Typed representation proposals outperform fixed-space alternatives** — AJ5 primary counts, intervals and corrected tests.
-3. **The proposal source is the limiting component** — P0/P1/P2 factorial and AJ5 ablations.
-4. **Generic rewrites compose into validated representations** — CJ5 known-family results and retained gain.
-5. **Composition transfers to a held-out structural family** — held-out counts, specificity, depth, safety and replay.
+3. **Generic rewrites compose into validated representations** — CJ5 known-family results, retained gain and C_self schema attrition.
+4. **A deterministic component audit removes the language model** — model-free replay.
+5. **Transfer to one held-out structural family** — bounded held-out result.
+6. **A worked prospective escape** — concrete end-to-end case.
 
 ## Discussion logic
 
@@ -40,7 +42,7 @@ Answer first; relate to conceptual change, search and agentic science; explain w
 
 All are at or below 75 characters including spaces; ranking balances clarity, reach and claim safety.
 
-1. **Measuring representation change in language-model discovery** (59)
+1. **A prospective assay for hypothesis-space expansion in AI systems** (64)
 2. **A prospective test of representation change in language models** (62)
 3. **Representation search enables bounded jumps in language models** (62)
 4. **Testing representation change in language-model reasoning** (57)
@@ -51,4 +53,4 @@ All are at or below 75 characters including spaces; ranking balances clarity, re
 9. **Benchmarking representation-space escape in language models** (59)
 10. **Generic rewrites expand language-model hypothesis spaces** (55)
 
-Recommended title 1 avoids treating “jump” as an established natural kind and makes the measurement contribution explicit. Final title requires author approval.
+Recommended title 1 makes the assay primary and does not imply that the language model caused C3 success. Final title requires author approval.

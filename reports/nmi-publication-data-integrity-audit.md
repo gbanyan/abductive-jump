@@ -25,7 +25,7 @@ Audit date: 2 September 2026. Verdict: **PASS WITH CLAIM LIMITATIONS**. No new i
 1. C3 is not concept-free search. Its generic strata cover typed nodes, functions, relations and reified edges; this is a supplied meta-language with structural priors.
 2. The held-out arity-three reification family is non-isomorphic to the earlier binary property-to-relation family but conceptually adjacent. “Unseen structural configuration” is defensible; “new concept” is not.
 3. C3's 100% rate shows that the controlled benchmark is fully traversable by the registered structured search. It does not establish open-ended theory invention.
-4. C_self=0 isolates a proposal/search organization gap only for frozen Phi-4 under this interface and budget.
+4. C_self=0 is entirely explained at the registered parser boundary: 38,400/38,400 confirmatory plan records failed because `plans` was not a list. It cannot isolate conceptual proposal ability.
 5. Zero observed false jumps means 0/300, not zero true risk; the combined C3 Wilson 95% upper bound is 1.2643%.
 
-These limitations do not invalidate CJ5 under its preregistered procedural definition, but they prohibit claims of autonomous representation invention, universal LLM incapacity or general scientific discovery.
+These limitations do not invalidate the prospectively specified CJ5 procedure, but they prohibit claims of language-model necessity, autonomous representation invention, universal LLM incapacity or general scientific discovery. A post-hoc model-free replay reproduced 2,400/2,400 C3 candidate verdicts, 500/500 jump successes and 0/300 control false jumps.

@@ -1,0 +1,22 @@
+{
+  "c3_without_llm": {
+    "analysis": "post-hoc deterministic component audit; no new model inference",
+    "candidate_gate_matches": 2400,
+    "candidate_rows": 2400,
+    "control_worlds": 300,
+    "false_jumps": 0,
+    "intervention": "replace both Phi-4 calls with a valid empty explanation while preserving the archived deterministic representation, fit and maximum-separation intervention",
+    "jump_successes": 500,
+    "jump_worlds": 500,
+    "llm_field_retained": "explanation (not used by J0-J5)",
+    "scientific_fields_from_llm": []
+  },
+  "c_self": {
+    "confirmatory_plan_records": 38400,
+    "error_counts": {
+      "invalid_schema:plans_must_be_a_list": 38400
+    },
+    "interpretation": "C_self is an interface-validity result, not evidence of conceptual proposal failure.",
+    "valid_plan_records": 0
+  }
+}

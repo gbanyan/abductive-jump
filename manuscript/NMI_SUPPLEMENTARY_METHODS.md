@@ -57,13 +57,19 @@ Thresholds were frozen: J0 and J2 observation MSE≤10−12; J3 separation≥0.5
 
 ## S9. Opportunity and compute accounting
 
-Every condition–world cell had three final slots, two LLM calls per slot, one final candidate evaluation and one intervention commitment per slot, with 700 completion tokens per call. AJ5 therefore executed 32,400 preregistered calls plus 3,600 A6 calls. CJ5 executed 33,600 calls. Unused completion capacity was not reassigned. Actual calls, tokens, attempted/valid operations, candidate evaluations, interventions and latency are reported rather than claiming equality of realized token counts.
+Every condition–world cell had three final slots, two LLM calls per slot, one final candidate evaluation and one intervention commitment per slot, with 700 completion tokens per call. AJ5 therefore executed 32,400 prospectively specified calls plus 3,600 A6 calls. CJ5 executed 33,600 calls. Unused completion capacity was not reassigned. Actual calls, tokens, attempted/valid operations, candidate evaluations, interventions and latency are reported rather than claiming equality of realized token counts.
 
 ## S10. Statistical analysis
 
 The replicate was the world. AJ5 used 10,000 deterministic, family-stratified paired bootstrap replicates with seed 20260902. Seeds were resampled inside each family and conditions remained paired; the aggregate gave each family equal weight. Percentile 95% intervals were reported for rates and paired differences. One-sided empirical P values included the finite-replicate correction and eight primary comparisons were Holm adjusted.
 
-CJ5 used the same stratified bootstrap for effect intervals and paired random sign-flip tests for registered beneficial contrasts. C3–C0 and C3–C2 formed the known-family primary multiplicity family; C3–C1, C3–C_rand and C3–C_self formed a secondary family. Held-out contrasts formed their own preregistered family. Two-sided Wilson intervals summarize JSR/FJR. No candidate-level pseudoreplication was used.
+CJ5 used the same stratified bootstrap for effect intervals and paired random sign-flip tests for registered beneficial contrasts. C3–C0 and C3–C2 formed the known-family primary multiplicity family; C3–C1, C3–C_rand and C3–C_self formed a secondary family. Held-out contrasts formed their own prospectively specified family. Two-sided Wilson intervals summarize JSR/FJR. No candidate-level pseudoreplication was used.
+
+### Post-hoc component audit
+
+An inference-free audit replaced both C3 model calls with a valid empty explanation while preserving only the archived deterministic representation, fitted expression and maximum-separation intervention. Every world was regenerated and every commitment and J0–J5 verdict recomputed. All 2,400 candidate verdicts matched, retaining 500/500 jump successes and 0/300 control false jumps. The audit is explicitly post-hoc and changes attribution, not the registered comparison.
+
+All 38,400 confirmatory C_self plan records failed `invalid_schema:plans_must_be_a_list`; no plan reached structural evaluation. C_self is therefore reported as a serialization-interface result.
 
 Retained jump gain was `rho_J=(JSR_C3−JSR_C0)/(JSR_C1−JSR_C0)`. It is undefined for a non-positive denominator. It compares observed rates and does not normalize unequal operator semantics.
 
@@ -76,4 +82,3 @@ Replay rebuilt each selected representation from `R0` and its ancestry, recomput
 ## S12. Software and environment
 
 The repository records package versions, configuration hashes, prompt identifiers, model revision, vLLM image digest, GPU class and random seeds in reproducibility manifests. Tests cover world determinism, public-field redaction, DSL membership, primitive legality, budget invariants, reachability, statistics and replay. The publication phase did not call the model or generate new experimental rows.
-

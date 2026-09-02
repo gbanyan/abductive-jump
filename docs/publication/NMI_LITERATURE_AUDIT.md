@@ -1,12 +1,12 @@
 # Literature audit for an NMI Article
 
-Status: publication audit, 2 September 2026. Sources were checked against publisher, proceedings, DOI, or arXiv records. The audit distinguishes a work's demonstrated result from broader claims made around it.
+Status: publication audit, 3 September 2026. Sources were checked against publisher, proceedings, DOI, or arXiv records. The audit distinguishes a work's demonstrated result from broader claims made around it.
 
 ## Question and defensible gap
 
-The manuscript asks whether a frozen language model can help a system escape an explicitly bounded incumbent hypothesis language, and whether that escape predicts a prospectively frozen intervention better than every admissible incumbent hypothesis. This is narrower than creativity, scientific autonomy, conceptual change, or open-ended discovery.
+The manuscript asks how a system's escape from an explicitly bounded incumbent hypothesis language can be certified prospectively and attributed to the component that caused it. A post-hoc code-path audit shows that C3 does not require language-model output, so the paper is framed as an assay and typed-search study rather than evidence of language-model discovery.
 
-The literature already establishes all of the following separately: computational accounts of conceptual change; predicate and feature invention; search over programs or equations; novelty and quality-diversity search; LLM hypothesis generation; and agentic scientific workflows. The remaining empirical gap is a controlled measurement that combines (1) a frozen incumbent grammar, (2) typed representation-changing proposals, (3) an incumbent-space oracle, (4) a prospective discriminating intervention, (5) deterministic structural and predictive gates, (6) no-jump false-positive controls, and (7) a proposal-by-reasoning factorial with the same frozen model.
+The literature already establishes all of the following separately: computational accounts of conceptual change; predicate and feature invention; search over programs or equations; novelty and quality-diversity search; LLM hypothesis generation; and agentic scientific workflows. The remaining empirical gap is a controlled measurement that combines (1) a frozen incumbent grammar, (2) typed representation-changing proposals, (3) an incumbent-space oracle, (4) a prospective discriminating intervention, (5) deterministic structural and predictive gates, (6) no-jump specificity controls, (7) proposal-by-reasoning comparisons and (8) exact component-level replay.
 
 ## Evidence clusters
 
@@ -26,7 +26,7 @@ Symbolic regression, program synthesis, FunSearch, AlphaTensor, novelty search a
 
 Hypothesis Search, Hypothesis Generation with LLMs, HypoSpace, ResearchBench and ProjectionBench evaluate generation, retrieval, ranking, recoverability or projection of hypotheses. FunSearch, POPPER, the AI Scientist line, the AI co-scientist and Robin demonstrate iterative proposal, critique, falsification, tool use or experimental validation. LLM4SD, ChemCrow and autonomous chemical agents show domain-specific scientific utility.
 
-Most of these systems operate in natural-language or task-defined candidate spaces and score usefulness, recovery, novelty or downstream performance. Those are important but do not certify non-membership in a preregistered incumbent grammar. Conversely, the present synthetic benchmark does not establish real scientific importance or autonomous discovery.
+PiEvo explicitly evolves a principle space, Model Discovery Agent expands a mechanistic hypothesis class while selecting interventions, and HypoArena evaluates prospective hypothesis discovery across 988 cases, six domains and 15 frontier models. It is therefore no longer accurate to characterize recent work as confined to supplied task spaces. The narrower distinction is that these systems do not combine a canonical non-membership certificate, exact incumbent oracle, independent falsification and deterministic component replay. Conversely, the present synthetic benchmark does not match their model or domain breadth and does not establish real scientific importance or autonomous discovery.
 
 ### Human and machine creativity
 
@@ -49,18 +49,20 @@ Causal discovery formalizes observational equivalence and the identifying role o
 | Zhou et al. (2024) | Iterative LLM hypothesis updates improve predictive classification | Structural escape from an incumbent grammar | Adjacent generation benchmark |
 | HypoSpace (2025 preprint) | Coverage, validity, uniqueness and recovery in enumerable hypothesis sets | Escape from the enumerated set | Complementary closed-space diagnostic |
 | POPPER (2025) | Sequential falsification with statistical error control | Representation-level escape | Closest falsification scaffold |
+| PiEvo (2026) | Expanding principle-space optimization across four benchmarks | Canonical structural non-membership and exact replay | Closest open-space search predecessor |
+| Model Discovery Agent (2026) | Open-class mechanistic discovery with Bayesian experiment design | Frozen-language non-membership certificate | Closest mechanistic and intervention predecessor |
+| HypoArena (2026) | Prospective discovery across 988 cases, six domains and 15 models | Executable frozen grammar and exact falsification | Closest broad prospective benchmark |
 | AI co-scientist (2026) | Multi-agent generation and ranking with expert and experimental validation | Isolated representation proposal bottleneck | Broader real-science system |
 | AI Scientist / Robin | End-to-end or multi-agent scientific workflows | Deterministic structural jump predicate | Broader automation systems |
 | Zahavy (2026 position paper) | Philosophical position that present LLMs lack abductive “jumps” | Impossibility proof or operational test | Motivation and adversarial framing only |
 
 ## Novelty conclusion
 
-The priority claim survives only in a qualified form: **to our knowledge, this is a prospective, preregistered benchmark that isolates bounded representation-level escape by comparing typed proposals against a frozen incumbent-space oracle under matched reasoning and intervention controls.** “To our knowledge” must remain. The manuscript must not claim the first concept-invention system, general scientific discovery, human-like abduction, or a refutation/proof of Zahavy's position.
+The priority claim survives only in a qualified form: **to our knowledge, this assay uniquely combines canonical structural non-membership, outcome-before-commitment comparison to a frozen incumbent oracle, independent exact falsification and deterministic component replay.** The protocols are described as prospectively specified and commit-frozen, not preregistered, because the public commits are unsigned and no independent registry timestamp was located. The manuscript must not claim the first expanding-space system, language-model necessity, general scientific discovery or human-like abduction.
 
 ## Literature limitations
 
-- The search covered primary publisher/proceedings records and broad exact-phrase/concept queries through 2 September 2026; it cannot prove universal absence.
+- The search covered primary publisher/proceedings records and broad exact-phrase/concept queries through 3 September 2026; it cannot prove universal absence.
 - Several 2025–2026 systems remain preprints or conference papers; status is recorded in the citation ledger.
 - Terminology is fragmented across conceptual change, predicate invention, program synthesis, open-endedness and scientific agents; keyword absence is not used as evidence of novelty.
 - The rapidly changing agentic-science literature requires a final date-of-submission refresh.
-

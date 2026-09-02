@@ -1,6 +1,7 @@
 # Proposed AI-use disclosure
 
-The confirmatory experiments used a frozen `microsoft/phi-4` model as an experimental component. Its roles, prompts, revision, runtime, decoding settings, call budgets and outputs are described in the Methods and archived artifacts. OpenAI Codex was used only after all experiments were complete to inspect repository artifacts, perform lightweight numerical and consistency checks, retrieve literature and journal guidance, and assist with drafting the publication package. It did not generate or modify confirmatory data, choose post-result experiments, rerun inference, or determine authorship. Every numerical statement was traced to frozen artifacts, and the human authors are responsible for verifying the citations, analysis, interpretation and final text.
+The experiments used a frozen `microsoft/phi-4` model as a registered experimental component. Its prompts, revision, runtime, decoding settings, budgets and outputs are described in the Methods and archived artifacts. A post-hoc component audit established that the C3 scientific fields and verdicts were deterministic and did not require model output; this limitation is reported in the main text.
 
-**MANDATORY HUMAN ACTION:** all authors must review, edit as needed and explicitly approve this disclosure before submission. An AI system cannot provide that approval or assume scholarly accountability.
+OpenAI Codex was used after completion of the experiments to inspect artifacts, recompute inference-free audits, verify literature metadata and journal guidance, and assist drafting and consistency checks. It did not generate or modify confirmatory source data, choose confirmatory hypotheses, rerun model inference or determine authorship. Human authors verified the cited metadata and remain responsible for originality, accuracy, interpretation and integrity.
 
+All authors must review and approve this disclosure before submission.
