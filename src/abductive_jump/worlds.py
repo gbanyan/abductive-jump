@@ -188,6 +188,13 @@ def predict(program: Program, inputs: Mapping[str, Any], intervention: Mapping[s
     if program.name == "meta_function":
         c = float(intervention.get("context", inputs.get("context", 0)))
         return (p("base") + p("slope") * c) * x
+    if program.name == "cubic_x":
+        return p("k") * float(intervention.get("x", x)) ** 3
+    if program.name == "triadic_relation":
+        xv = float(intervention.get("x", inputs.get("x", 0.0)))
+        zv = float(intervention.get("z", inputs.get("z", 0.0)))
+        wv = float(intervention.get("w", inputs.get("w", 0.0)))
+        return p("k") * xv * zv * wv
     raise ValueError(f"unknown program {program.name}")
 
 

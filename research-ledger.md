@@ -104,3 +104,12 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Added a stable executable-theory quality-diversity archive and reconstructed all frozen B5 candidates. It retained three bins in every one of 600 worlds. This is retention/accounting evidence, not an online causal archive effect; B5=B4 remains unchanged.
 - Updated the reproducibility manifest to hash 28 tracked outputs and all six gitignored raw traces. Raw trace line counts total exactly 36,000 (32,400 preregistered plus 3,600 triggered secondary calls).
 - Final audit suite: 112 tests, Ruff clean, 10,800/10,800 replay-verified theories, and no gate/result changes. Optional semantic diagnostics and a held-out structural family remain intentionally unrun and unclaimed.
+
+## 2026-09-02 12:21 +08:00 — Compositional-phase preregistration candidate freeze
+
+- Began the requested final generalization/falsification phase without modifying the frozen AJ5 artifacts or verdict. Audited the existing state before new code and documented that all 299 successful B4/B5 candidate rows used a fixed family-aligned typed-node portfolio despite two/three-step syntactic ancestry.
+- Defined `GENERIC_PRIMITIVE_SET_V1` with 29 local graph/AST rewrites. `ADD_NODE` is now strictly untyped; type, observability, arity, temporal indexing, dependencies, and argument bindings require separate records. High-level AJ5 operators and answer-bearing attributes are excluded outside C1.
+- Added deterministic ancestry, generic compositional realization, structured/random/depth-one search, a same-vocabulary LLM self-composition interface, and an independent triadic-relation held-out generator. Temporal state was rejected as held out because AJ5 already exposed it.
+- Verified constructive reachability on 90/90 development/unit worlds spanning the old eight families plus the held-out interface; no single first witness primitive validated. Registered bounded depths include 2, 3, and 4.
+- Froze breadth 48, depth 4, 192 operation/evaluation capacity, three final slots, two Phi-4 calls per slot, new confirmatory seeds, 400 reconstruction worlds, 100 held-out worlds, and 300 no-jump controls in the preregistration and versioned configs.
+- Pre-freeze validation: 147 tests pass, Ruff clean, all five compositional configs parse. No new-phase LLM call has been made; held-out confirmatory seeds remain locked.

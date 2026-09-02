@@ -295,6 +295,10 @@ def program_expression(program: Program) -> Expression:
         tree = b("mul", c(p("k")), v("x", True))
     elif program.name == "meta_function":
         tree = b("mul", b("add", c(p("base")), b("mul", c(p("slope")), v("context"))), v("x"))
+    elif program.name == "cubic_x":
+        tree = b("mul", c(p("k")), b("pow", v("x"), c(3)))
+    elif program.name == "triadic_relation":
+        tree = b("mul", c(p("k")), b("mul", b("mul", v("x"), v("z")), v("w")))
     else:
         raise ValueError(program.name)
     return Expression(tree)

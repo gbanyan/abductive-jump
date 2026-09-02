@@ -1,0 +1,26 @@
+{
+  "excluded_operator_names": [
+    "LATENTIZE",
+    "ADD_STATE",
+    "PROPERTY_TO_RELATION",
+    "ADD_REGIME",
+    "COMMON_CAUSE",
+    "META_LAW",
+    "UNIFY_MECHANISMS",
+    "CAUSAL_CONFOUNDER",
+    "COORDINATE_TRANSFORM",
+    "VARIABLE_TO_FUNCTION",
+    "ADD_INVARIANT",
+    "MERGE_RULES"
+  ],
+  "excluded_payload_patterns": [
+    "ADD_NODE with kind or attr_*",
+    "transform=square",
+    "form=affine_context",
+    "form=additive_linear",
+    "contrast=sign_flip",
+    "any family-conditioned dispatch"
+  ],
+  "legacy_portfolio_allowed_only_in": "C1_ATOMIC_HIGH_LEVEL reference",
+  "portfolio": "GENERIC_PRIMITIVE_SET_V1"
+}

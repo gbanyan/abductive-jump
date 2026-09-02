@@ -1,0 +1,131 @@
+{
+  "admissibility": {
+    "add_node_semantic_payload_forbidden": true,
+    "composable": true,
+    "genericity": "each operation is applicable across multiple graph domains",
+    "local_rewrite": true,
+    "no_family_semantics": "operator names and dispatch contain no benchmark family labels",
+    "no_ground_truth": "API accepts only parent, operator, local arguments, seed, depth, optional donor"
+  },
+  "implementation_sha256": "ea330d223e802bf214ab717e374e01e04f22557df09c8211df1ea4bfb9ee6ca1",
+  "name": "GENERIC_PRIMITIVE_SET_V1",
+  "operators": [
+    {
+      "description": "Create one untyped Primitive node; no semantic type or attributes accepted.",
+      "name": "ADD_NODE"
+    },
+    {
+      "description": "Remove one node and its incident edges.",
+      "name": "REMOVE_NODE"
+    },
+    {
+      "description": "Add one local labeled edge between existing nodes.",
+      "name": "ADD_EDGE"
+    },
+    {
+      "description": "Remove one identified edge.",
+      "name": "REMOVE_EDGE"
+    },
+    {
+      "description": "Reverse one identified edge without changing its label.",
+      "name": "REVERSE_EDGE"
+    },
+    {
+      "description": "Change one existing node to one DSL type.",
+      "name": "CHANGE_NODE_TYPE"
+    },
+    {
+      "description": "Relabel one existing edge.",
+      "name": "CHANGE_EDGE_TYPE"
+    },
+    {
+      "description": "Change one node's observability flag.",
+      "name": "CHANGE_OBSERVABILITY"
+    },
+    {
+      "description": "Change one node's integer arity metadata.",
+      "name": "CHANGE_ARITY"
+    },
+    {
+      "description": "Bind one existing node to one argument position.",
+      "name": "BIND_ARGUMENT"
+    },
+    {
+      "description": "Remove one argument binding.",
+      "name": "UNBIND_ARGUMENT"
+    },
+    {
+      "description": "Create one generic function node without operation semantics.",
+      "name": "ADD_FUNCTION"
+    },
+    {
+      "description": "Remove one function node and incident edges.",
+      "name": "REMOVE_FUNCTION"
+    },
+    {
+      "description": "Create one generic equation node without a family law.",
+      "name": "ADD_EQUATION"
+    },
+    {
+      "description": "Remove one equation node and incident edges.",
+      "name": "REMOVE_EQUATION"
+    },
+    {
+      "description": "Add one composition edge between function nodes.",
+      "name": "COMPOSE_FUNCTIONS"
+    },
+    {
+      "description": "Remove one composition edge.",
+      "name": "DECOMPOSE_FUNCTION"
+    },
+    {
+      "description": "Add a generic temporal index to one node.",
+      "name": "ADD_TEMPORAL_INDEX"
+    },
+    {
+      "description": "Remove one temporal index.",
+      "name": "REMOVE_TEMPORAL_INDEX"
+    },
+    {
+      "description": "Add one generic dependency edge.",
+      "name": "ADD_DEPENDENCY"
+    },
+    {
+      "description": "Remove one dependency edge.",
+      "name": "REMOVE_DEPENDENCY"
+    },
+    {
+      "description": "Create one generic constraint node without content.",
+      "name": "ADD_CONSTRAINT"
+    },
+    {
+      "description": "Remove one constraint node and incident edges.",
+      "name": "REMOVE_CONSTRAINT"
+    },
+    {
+      "description": "Merge two existing nodes locally.",
+      "name": "MERGE_NODES"
+    },
+    {
+      "description": "Split one node into two nodes.",
+      "name": "SPLIT_NODE"
+    },
+    {
+      "description": "Replace one edge by a relation node with one input and one result edge.",
+      "name": "REIFY_EDGE_AS_NODE"
+    },
+    {
+      "description": "Collapse one locally connected node into an edge.",
+      "name": "REIFY_NODE_AS_EDGE"
+    },
+    {
+      "description": "Copy one node as the bounded one-node subgraph case.",
+      "name": "SUBGRAPH_COPY"
+    },
+    {
+      "description": "Copy one donor node; requires explicit donor provenance.",
+      "name": "SUBGRAPH_CROSSOVER"
+    }
+  ],
+  "status": "candidate freeze; no confirmatory use"
+}

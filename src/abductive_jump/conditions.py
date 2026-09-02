@@ -17,12 +17,22 @@ class Condition(StrEnum):
     B3_ATTRIBUTE_MUTATION = "B3_ATTRIBUTE_MUTATION"
     B4_REPRESENTATION_MUTATION = "B4_REPRESENTATION_MUTATION"
     B5_FULL_SYSTEM = "B5_FULL_SYSTEM"
+    C0_FIXED_SPACE = "C0_FIXED_SPACE"
+    C1_ATOMIC_HIGH_LEVEL = "C1_ATOMIC_HIGH_LEVEL"
+    C2_GENERIC_DEPTH_1 = "C2_GENERIC_DEPTH_1"
+    C3_GENERIC_COMPOSITION = "C3_GENERIC_COMPOSITION"
+    C_SELF_LLM_COMPOSITION = "C_SELF_LLM_COMPOSITION"
+    C_RAND_RANDOM_PRIMITIVES = "C_RAND_RANDOM_PRIMITIVES"
+    C5_ORACLE_REPRESENTATION = "C5_ORACLE_REPRESENTATION"
 
 
 class ProposalSource(StrEnum):
     P0_LLM = "P0_LLM"
     P1_EXTERNAL = "P1_EXTERNAL"
     P2_ORACLE = "P2_ORACLE"
+    COMPOSITION_SEARCH = "COMPOSITION_SEARCH"
+    LLM_COMPOSITION = "LLM_COMPOSITION"
+    RANDOM_PRIMITIVES = "RANDOM_PRIMITIVES"
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,6 +152,13 @@ def build_prompt(
         Condition.B3_ATTRIBUTE_MUTATION: "Use the incumbent representation exactly. External search may alter coefficients, thresholds, signs, or rule values only.",
         Condition.B4_REPRESENTATION_MUTATION: "Use the supplied externally mutated representation exactly and realize its strongest executable theory.",
         Condition.B5_FULL_SYSTEM: "Use the supplied representation exactly; prioritize observed fit and a discriminating prediction. Archive diversity is handled externally.",
+        Condition.C0_FIXED_SPACE: "Retain the supplied incumbent representation exactly and evaluate its fitted executable rule.",
+        Condition.C1_ATOMIC_HIGH_LEVEL: "Use the supplied frozen AJ5 high-level portfolio representation exactly.",
+        Condition.C2_GENERIC_DEPTH_1: "Use the supplied single-primitive representation exactly.",
+        Condition.C3_GENERIC_COMPOSITION: "Use the supplied representation constructed by generic local rewrites exactly.",
+        Condition.C_SELF_LLM_COMPOSITION: "Use the representation constructed from your generic primitive plan exactly.",
+        Condition.C_RAND_RANDOM_PRIMITIVES: "Use the supplied random generic-primitive representation exactly.",
+        Condition.C5_ORACLE_REPRESENTATION: "Assume the supplied oracle representation is correct and use it exactly.",
     }[condition]
     if proposal_source is ProposalSource.P2_ORACLE:
         constraint = "Assume the supplied representation is correct. Infer its executable law from observations and choose the most discriminating listed intervention."

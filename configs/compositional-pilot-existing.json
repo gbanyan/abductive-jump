@@ -1,0 +1,56 @@
+{
+  "candidate_slots": 3,
+  "concurrency": 16,
+  "conditions": [
+    "C0_FIXED_SPACE",
+    "C1_ATOMIC_HIGH_LEVEL",
+    "C2_GENERIC_DEPTH_1",
+    "C3_GENERIC_COMPOSITION",
+    "C_SELF_LLM_COMPOSITION",
+    "C_RAND_RANDOM_PRIMITIVES",
+    "C5_ORACLE_REPRESENTATION"
+  ],
+  "context_limit": 4096,
+  "docker_image": "vllm/vllm-openai:v0.10.2",
+  "docker_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+  "engine": "vllm-openai",
+  "engine_version": "0.10.2",
+  "gate_thresholds": {
+    "delta_cf": 0.1,
+    "delta_falsification": 0.1,
+    "epsilon_candidate_obs": 1e-12,
+    "epsilon_falsification": 1e-12,
+    "epsilon_obs": 1e-12,
+    "min_prediction_separation": 0.5
+  },
+  "generation": {
+    "max_tokens": 700,
+    "temperature": 0.2,
+    "top_p": 0.95
+  },
+  "max_depth": 4,
+  "model": "microsoft/phi-4",
+  "primitive_operation_budget": 192,
+  "prompt_template": "theory-json-v10+generic-self-composition-v1",
+  "quantization": "bitsandbytes-4bit",
+  "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "search_breadth": 48,
+  "self_plans_per_slot": 16,
+  "decoding_seed_base": 220000001,
+  "search_seed_base": 230000001,
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "world_seeds": [
+    801
+  ],
+  "no_jump": false,
+  "phase": "PILOT_EXISTING_ONLY"
+}
