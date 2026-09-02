@@ -45,6 +45,8 @@ SOURCE_CONDITIONS = {
 
 
 def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
+    config_path = config_path.resolve()
+    run_dir = run_dir.resolve()
     config = load(config_path)
     factorial = run_dir.name.startswith("factorial_")
     families = len(config["families"])
