@@ -156,3 +156,10 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Terminal held-out JSR was C0 0/100, C1 0/100, C2 0/100, C3 100/100 (100%), C_self 0/100, C_rand 13/100 (13%), and C5 100/100 (100%). These are terminal reconstruction results, not the final verdict; the matched held-out no-jump control remains pending.
 - Independent run audit passed: zero primary budget mismatches, zero C2 depth-one successes, 4,800/4,800 fixed C_self plan opportunities recorded, zero valid C_self plans, and 4,200/4,200 unique call keys.
 - No configuration, prompt, operator, fitter, threshold, model, seed, or search rule changed after held-out unlock. The next registered action is the frozen held-out no-jump control; cross-shard analysis remains deferred until it is terminal and audited.
+
+## 2026-09-02 21:39 +08:00 — Held-out no-jump control terminal and analysis unlock
+
+- Completed the frozen 100-world `triadic_relation_reification` no-jump shard with exit code 0: exactly 700 world-condition rows, 2,100 selected candidates, and 4,200 unique inference calls. No infrastructure rerun occurred.
+- All seven conditions had zero held-out false jumps: C0, C1, C2, C3, C_self, C_rand, and C5 were each 0/100.
+- Independent run audit passed with zero primary budget mismatches, zero C2 depth-one successes, 4,800/4,800 fixed C_self opportunities, zero valid C_self plans, and 4,200/4,200 unique call keys.
+- All four registered confirmatory shards are now terminal and independently audited. The analysis seal is lifted; deterministic replay, preregistered statistics, the decision tree, reports, and reproducibility verification may now run without further model inference.

@@ -1,0 +1,11 @@
+{
+  "audit_passed": true,
+  "c2_depth_one_successes": 0,
+  "candidate_rows": 2100,
+  "llm_calls": 4200,
+  "primary_budget_mismatches": 0,
+  "self_plan_opportunities": 4800,
+  "self_valid_plans": 0,
+  "unique_call_keys": 4200,
+  "world_condition_rows": 700
+}
