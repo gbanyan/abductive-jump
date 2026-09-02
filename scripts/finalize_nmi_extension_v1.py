@@ -316,7 +316,7 @@ def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
     artifacts = {
         str(path.relative_to(ROOT)): sha(path)
         for path in sorted(run_dir.iterdir())
-        if path.is_file()
+        if path.is_file() and path.name != "validation.json"
     }
     return {
         "experiment_id": config["extension_experiment_id"],

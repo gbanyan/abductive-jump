@@ -33,3 +33,12 @@ from a new empty canonical output directory through root-owned persistent runner
 The incomplete attempt is excluded because it has no complete world/candidate result tables, not
 because of output content.
 
+## Result finalizer self-hash correction
+
+After `deepseek_matched/heldout_jump` completed, the hardened per-shard finalizer was invoked with
+shell redirection to `validation.json`. Redirection creates that file before the finalizer scans the
+shard directory, so the first report included the then-empty report file in its own artifact map.
+This circular entry did not affect or inspect any scientific result, but it could not be a stable
+content manifest. The finalizer was corrected to exclude only `validation.json` from the artifact
+map. Two consecutive finalizations of the completed shard then produced byte-identical reports.
+All raw result artifacts remain included and unchanged.
