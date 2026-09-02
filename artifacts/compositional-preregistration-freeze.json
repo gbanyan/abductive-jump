@@ -1,0 +1,19 @@
+{
+  "frozen_before_new_phase_llm_calls": true,
+  "portfolio": "GENERIC_PRIMITIVE_SET_V1",
+  "preregistration_git_commit": "65f2087",
+  "sha256": {
+    "artifacts/generic_primitive_manifest.json": "61199505a581d45f8cbe6856f10aaff876111e5669dfc045d59de241cbbfe107",
+    "artifacts/high_level_operator_exclusions.json": "3c8f85920d754c8c3176d80f4204c82ad7579611169771e308d88107989c6b24",
+    "configs/compositional-confirmatory-existing-control.json": "2f775b36ec259e9c6ab9da8a119d1ac3e8a0454a6b3fa800a4ea6da34c1ef9cd",
+    "configs/compositional-confirmatory-existing.json": "4c3b1095d554d20f2c202db9b3e8aef3ee6d25a582653b1da1c1418a6c4f29f5",
+    "configs/compositional-confirmatory-heldout-control.json": "a2c585564e953a720b014848382bf6201e25a3ae135aa1f33f048b3060ec9070",
+    "configs/compositional-confirmatory-heldout.json": "9c6c04539455eeb3a5818cd4244f59be4e70862fb7d8e415d1110a4f21bbde68",
+    "configs/compositional-pilot-existing.json": "cfeca8d5d07f74a9b630263f0ff3ddcffe540d432842f7f3924fa81ab24ee17f",
+    "docs/compositional-representation-jump-preregistration.md": "34485151b121cb294932a6bb36a0e22f6b24f050062be13a5497c24f5ffe52c5",
+    "src/abductive_jump/composition_search.py": "68afc16f1d8a88617c9183368dde5818ca067ca4fae1a79359de2fd0adbc56c5",
+    "src/abductive_jump/compositional_experiment.py": "190c2fc4897c1bdfa790ff7fd1324884071f024e198e19392c6d8d02d101ef6e",
+    "src/abductive_jump/compositional_worlds.py": "27ac9105f0ae84ab75ce1c171b4a4aa065693a2f63ccfb614eaf2d14bbe11c36",
+    "src/abductive_jump/generic_primitives.py": "b7b1d838dbf35153ce96a76615da968eb0858c89b62d486c364358a2297807c3"
+  }
+}
