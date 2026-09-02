@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -331,6 +332,16 @@ def verify_shard(config_path: Path, run_dir: Path) -> dict[str, Any]:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=Path)
+    parser.add_argument("--run-dir", type=Path)
+    args = parser.parse_args()
+    if bool(args.config) != bool(args.run_dir):
+        raise ValueError("--config and --run-dir must be supplied together")
+    if args.config and args.run_dir:
+        report = verify_shard(args.config, args.run_dir)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return
     config_manifest = load(EXT / "configs" / "config_manifest.json")
     shards = []
     missing = []
