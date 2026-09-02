@@ -1,0 +1,343 @@
+{
+  "audit_scope": "Phase 2 runtime audit using only PING and synthetic toy prompts; no benchmark or confirmatory world was queried",
+  "audit_status": "complete",
+  "audit_time_utc": "2026-09-02T16:52:18Z",
+  "api": {
+    "authentication_observed": "No credential was required from the auditing host on the private-network endpoint",
+    "base_url": "http://192.168.30.16:8888/v1",
+    "chat_endpoint": "http://192.168.30.16:8888/v1/chat/completions",
+    "health_status": 200,
+    "models_response_sha256": "c546ca013b9120d02ccb00971c076dfd51798972bff183eb08bf6ac14d644416",
+    "openapi_response_sha256": "84bd22002973e1f459705a0cbd6a35e855250bb09e48773379fcf5267b518bd7",
+    "server_version_endpoint": "0.25.2.dev0+g752a3a504.d20260714"
+  },
+  "declared_model": {
+    "api_alias": "deepseek-v4-flash-vision-exp",
+    "created_epoch": 1788367688,
+    "created_utc": "2026-09-02T16:48:08Z",
+    "max_model_len": 1048576,
+    "object": "model",
+    "owned_by": "vllm",
+    "root": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp"
+  },
+  "identity_caveat": "This manifest identifies exactly the served DeepSeek-V4-Flash-Vision-Exp snapshot and runtime. It does not equate this snapshot with DeepSeek-V4-Flash-0731 or any other similarly named release.",
+  "model_snapshot": {
+    "architecture": "DeepseekV4ForCausalLM",
+    "config_sha256": "6cd841bdd6702f5e2ac34671bc78047ed80817102465525ae2a41c502abbcd75",
+    "hf_repository": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+    "hf_revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+    "local_snapshot_path_host_rank0": "/home/gbanyan/.cache/huggingface/hub/models--deepseek-ai--DeepSeek-V4-Flash-Vision-Exp/snapshots/86f746b36186f0e567729a5c06a8c918caba82a9",
+    "local_snapshot_path_container": "/cache/huggingface/hub/models--deepseek-ai--DeepSeek-V4-Flash-Vision-Exp/snapshots/86f746b36186f0e567729a5c06a8c918caba82a9",
+    "max_position_embeddings": 1048576,
+    "model_type": "deepseek_v4",
+    "tokenizer_class": "PreTrainedTokenizerFast",
+    "tokenizer_config_sha256": "6ac8c8dc065ed118161d02dd532749ae3f52c243deac27872134fae2f50d8547",
+    "tokenizer_max_length": 1048576,
+    "tokenizer_revision": "same pinned Hugging Face snapshot as model",
+    "torch_dtype": "bfloat16",
+    "weight_format": {
+      "approximate_snapshot_size": "157G",
+      "files": "48 sharded safetensors files",
+      "quantization_config": {
+        "activation_scheme": "dynamic",
+        "fmt": "e4m3",
+        "quant_method": "fp8",
+        "scale_fmt": "ue8m0",
+        "weight_block_size": [
+          128,
+          128
+        ]
+      }
+    }
+  },
+  "runtime": {
+    "container": {
+      "container_id_at_audit": "99ec6db3e99f",
+      "image_id": "sha256:3430d6614a8e2925f34d059af6caf05aff42387326db4d05639a60f10f2654d8",
+      "image_name": "ghcr.io/anemll/dspark-vllm-gx10:0.1.1",
+      "image_repo_digest": "sha256:a83948492cf13df455170fb42885f5ef4db54fefe0feff0f841ecbff464ac9d8",
+      "started_at_utc": "2026-09-02T13:38:10.574678877Z"
+    },
+    "host": {
+      "audited_node_hostname": "gbgx10",
+      "compute_capability": "12.1",
+      "gpu_driver": "580.173.02",
+      "gpu_on_audited_node": "NVIDIA GB10",
+      "kernel": "Linux 6.17.0-1031-nvidia aarch64",
+      "system_memory_bytes": 130596184064,
+      "topology_limit": "Only rank 0 was reached directly; the hardware identity of rank 1 was not independently observed"
+    },
+    "libraries": {
+      "cuda_reported_by_torch": "13.0",
+      "torch": "2.11.0+cu130",
+      "transformers": "5.13.1",
+      "vllm": "0.25.2.dev0+g752a3a504.d20260714"
+    },
+    "process_argv": [
+      "/usr/local/bin/vllm",
+      "serve",
+      "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "--revision",
+      "86f746b36186f0e567729a5c06a8c918caba82a9",
+      "--served-model-name",
+      "deepseek-v4-flash-vision-exp",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "8888",
+      "--trust-remote-code",
+      "--tensor-parallel-size",
+      "2",
+      "--pipeline-parallel-size",
+      "1",
+      "--kv-cache-dtype",
+      "nvfp4_ds_mla",
+      "--block-size",
+      "256",
+      "--max-model-len",
+      "1048576",
+      "--max-num-seqs",
+      "4",
+      "--max-num-batched-tokens",
+      "16384",
+      "--long-prefill-token-threshold",
+      "1024",
+      "--max-cudagraph-capture-size",
+      "28",
+      "--gpu-memory-utilization",
+      "0.835",
+      "--enable-prefix-caching",
+      "--enable-prompt-tokens-details",
+      "--async-scheduling",
+      "--enable-chunked-prefill",
+      "--speculative-config",
+      "{\"method\":\"dspark\",\"num_speculative_tokens\":6,\"draft_sample_method\":\"probabilistic\"}",
+      "--tokenizer-mode",
+      "deepseek_v4",
+      "--limit-mm-per-prompt",
+      "{\"image\":8}",
+      "--distributed-executor-backend",
+      "mp",
+      "--moe-backend",
+      "flashinfer_b12x",
+      "--tool-call-parser",
+      "deepseek_v4",
+      "--enable-auto-tool-choice",
+      "--reasoning-parser",
+      "deepseek_v4",
+      "--reasoning-config",
+      "{\"reasoning_parser\":\"deepseek_v4\",\"reasoning_start_str\":\"<think>\",\"reasoning_end_str\":\"</think>\"}",
+      "--default-chat-template-kwargs",
+      "{\"thinking\":true,\"reasoning_effort\":\"max\"}",
+      "--generation-config",
+      "vllm",
+      "--enable-flashinfer-autotune",
+      "--nnodes",
+      "2",
+      "--node-rank",
+      "0",
+      "--master-addr",
+      "192.168.100.10",
+      "--master-port",
+      "25000"
+    ],
+    "parallelism": {
+      "distributed_executor_backend": "mp",
+      "nnodes": 2,
+      "pipeline_parallel_size": 1,
+      "rank_observed": 0,
+      "tensor_parallel_size": 2
+    },
+    "serving_parameters": {
+      "async_scheduling": true,
+      "block_size": 256,
+      "chunked_prefill": true,
+      "default_chat_template_reasoning_effort": "max",
+      "enable_prefix_caching": true,
+      "enable_prompt_tokens_details": true,
+      "generation_config": "vllm",
+      "gpu_memory_utilization": 0.835,
+      "kv_cache_dtype": "nvfp4_ds_mla",
+      "long_prefill_token_threshold": 1024,
+      "max_cudagraph_capture_size": 28,
+      "max_model_len": 1048576,
+      "max_num_batched_tokens": 16384,
+      "max_num_seqs": 4,
+      "moe_backend": "flashinfer_b12x",
+      "reasoning_parser": "deepseek_v4",
+      "speculative_decoding": {
+        "draft_sample_method": "probabilistic",
+        "method": "dspark",
+        "num_speculative_tokens": 6
+      },
+      "tokenizer_mode": "deepseek_v4",
+      "trust_remote_code": true
+    }
+  },
+  "runtime_patching": {
+    "encoding_source": "The pinned Vision-Exp snapshot's encoding/encoding_dsv4.py, not a 0731 snapshot",
+    "encoding_source_sha256": "b4bbb74bbb11a9c8ada04daa30cc7de7dba3abba08e9ade06d38b51a3d0d1701",
+    "live_patched_encoding_sha256": "d70cc346510019e99b25ee44435ffe0ae54a6116ffd69e904a6b2e417f80b09c",
+    "startup_log_confirmed_applied": [
+      "issue55 tool-call truncation safety",
+      "Vision-Exp model/encoding/dspark hotfix",
+      "issue27 partial-prefill concurrency",
+      "issue43 decode fairness/diagnostics",
+      "issue26 hybrid SWA minimum annotation",
+      "issue133 Triton specialization"
+    ],
+    "note": "The image entrypoint also conditionally applies additional DSpark shell/Python hotfixes. Their mounted presence alone is not treated as proof that each optional patch was active."
+  },
+  "reasoning_interface": {
+    "answer_field": "choices[0].message.content",
+    "effective_mapping_observed_from_live_entrypoint": {
+      "high": "high",
+      "low": "low",
+      "max": "max",
+      "medium": "low",
+      "minimal": "low",
+      "none": "thinking disabled",
+      "xhigh": "max"
+    },
+    "openapi_advertised_values": [
+      "none",
+      "minimal",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+    ],
+    "reasoning_field": "choices[0].message.reasoning",
+    "reasoning_content_field_observed": false,
+    "toy_test_accepted_values": [
+      "none",
+      "minimal",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+    ],
+    "protocol_relevant_distinct_levels": [
+      "none",
+      "low",
+      "high",
+      "max"
+    ]
+  },
+  "usage_accounting": {
+    "observed_fields": [
+      "prompt_tokens",
+      "completion_tokens",
+      "total_tokens",
+      "prompt_tokens_details.cached_tokens",
+      "prompt_tokens_details.multimodal_tokens"
+    ],
+    "reasoning_token_count_exposed_separately": false,
+    "interpretation": "With reasoning enabled, completion_tokens includes both separately returned reasoning text and final answer tokens; the response does not expose a reliable reasoning-versus-answer token split.",
+    "metrics_field": "present at top level but null in tested non-streaming responses"
+  },
+  "toy_tests": {
+    "determinism": {
+      "payload": "PING, temperature=0, seed=424242, max_completion_tokens=128",
+      "reasoning_max": {
+        "answer_exact_matches": "3/3",
+        "completion_token_counts": [
+          29,
+          27,
+          27
+        ],
+        "reasoning_text_unique_count": 2,
+        "raw_response_byte_deterministic": false
+      },
+      "reasoning_none": {
+        "answer_exact_matches": "3/3",
+        "completion_token_counts": [
+          3,
+          3,
+          3
+        ],
+        "reasoning_values": [
+          null,
+          null,
+          null
+        ],
+        "raw_response_byte_deterministic_ignoring_ids": true
+      },
+      "seed_parameter_accepted": true,
+      "system_fingerprint": "vllm-0.25.2.dev0+g752a3a504.d20260714-tp2-34fb5568",
+      "warning": "A fixed seed and temperature zero did not make max-effort reasoning text deterministic under this probabilistic speculative-decoding runtime. Capture and replay must therefore treat model generation as potentially nondeterministic."
+    },
+    "json_object": {
+      "content": "{\"alpha\": 2}",
+      "finish_reason": "stop",
+      "request_accepted": true,
+      "syntactically_valid_json": true
+    },
+    "json_schema": {
+      "reasoning_max": {
+        "completion_tokens": 65,
+        "content": "{\"label\":\"alpha\",\"count\":2}",
+        "finish_reason": "stop",
+        "prompt_tokens": 108,
+        "reasoning_present": true,
+        "request_accepted": true,
+        "schema_satisfied": true
+      },
+      "reasoning_none": {
+        "completion_tokens": 13,
+        "content": "{\"label\": \"alpha\", \"count\": 2}",
+        "finish_reason": "stop",
+        "prompt_tokens": 16,
+        "reasoning_present": false,
+        "request_accepted": true,
+        "schema_satisfied": true
+      },
+      "strict": true
+    },
+    "ping": {
+      "high": {
+        "answer": "PING",
+        "completion_tokens": 31,
+        "prompt_tokens": 89,
+        "reasoning_present": true,
+        "total_tokens": 120
+      },
+      "low": {
+        "answer": "PING",
+        "completion_tokens": 64,
+        "prompt_tokens": 10,
+        "reasoning_present": true,
+        "total_tokens": 74
+      },
+      "max": {
+        "answer": "PING",
+        "completion_tokens": 31,
+        "prompt_tokens": 102,
+        "reasoning_present": true,
+        "total_tokens": 133
+      },
+      "none": {
+        "answer": "PING",
+        "completion_tokens": 3,
+        "prompt_tokens": 10,
+        "reasoning_present": false,
+        "total_tokens": 13
+      }
+    }
+  },
+  "constrained_output": {
+    "json_object_supported_by_toy_test": true,
+    "strict_json_schema_supported_with_reasoning_max": true,
+    "strict_json_schema_supported_with_reasoning_none": true,
+    "scientific_use_constraint": "Constrained output must be a separately declared condition and must not be silently enabled in protocol-matched or no-repair conditions."
+  },
+  "unobserved_or_unverified": [
+    "Independent hardware identity and container digest on distributed rank 1",
+    "A separate tokenizer commit distinct from the pinned model snapshot",
+    "Exact per-response reasoning-token counts",
+    "Bitwise model-generation determinism under concurrent production load",
+    "Whether every conditionally mounted hotfix was active"
+  ]
+}
