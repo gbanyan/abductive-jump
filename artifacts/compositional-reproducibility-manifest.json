@@ -1,0 +1,69 @@
+{
+  "confirmatory_raw_calls": 33600,
+  "execution_source_hashes_verified": true,
+  "frozen_config_hashes_verified": true,
+  "heldout_unlock_order_verified_in_ledger": true,
+  "implementation_correction_commit": "7ecb977",
+  "preregistration_commit": "65f2087",
+  "raw_traces": {
+    "artifacts/compositional/confirmatory-existing-control/llm_calls.jsonl": {
+      "expected_lines": 8400,
+      "lines": 8400,
+      "sha256": "6b903357cb85830ebbbc0bc8c0295e0f19502a3bbc0893ff9242814f0d75c266"
+    },
+    "artifacts/compositional/confirmatory-existing/llm_calls.jsonl": {
+      "expected_lines": 16800,
+      "lines": 16800,
+      "sha256": "6e0f78222c809dfafc30ba0567dfcf469c75d3ebd34560c4a6d06498d8ae077d"
+    },
+    "artifacts/compositional/confirmatory-heldout-control/llm_calls.jsonl": {
+      "expected_lines": 4200,
+      "lines": 4200,
+      "sha256": "d27d3547e00c7f8e2641ef4632029a144dd741ab46206a10357bca8c85a43e9e"
+    },
+    "artifacts/compositional/confirmatory-heldout/llm_calls.jsonl": {
+      "expected_lines": 4200,
+      "lines": 4200,
+      "sha256": "58635c51b9174477b81474f78bb2d80441f62c6c545832fbabab666676a90a8b"
+    }
+  },
+  "replay": {
+    "ancestry_rows": 35533,
+    "candidate_rows": 16800,
+    "mismatches": 0,
+    "verified_candidates": 16800
+  },
+  "tracked_output_hashes": {
+    "artifacts/composition_ancestry.parquet": "3211bf54f78487221cc819f5b1012415c0f8805fe73ef8776c7397a6af402990",
+    "artifacts/composition_reachability.parquet": "62ebcd61a04e2645a9f81dfaa28e4639092b792b46fcdfa5eeee68baf30fa039",
+    "artifacts/compositional-execution-source-audit.json": "7e0ae1e03da04ea42835eb062d63940b9070c51c44dddca03699bcef0475b54c",
+    "artifacts/compositional-replay-validation.json": "54b6a1d2c4a67ff4a049911c4c3f63f3ee26795b062e31a781b6175cd6ceba21",
+    "artifacts/compositional/confirmatory-existing-control/run_audit.json": "c8fdf4333c38f944036065a651bd26e9be827dc86689e6efd1b860de76288cc1",
+    "artifacts/compositional/confirmatory-existing/run_audit.json": "cb9be40fc81b6dd5f6aae5993f416a49f7dfabf00c448b0dc5d2375ff15c3770",
+    "artifacts/compositional/confirmatory-heldout-control/run_audit.json": "b0dfa182b10b9b99aef77c2e42c3c66a84380aadd48b8443d3543ace7220da71",
+    "artifacts/compositional/confirmatory-heldout/run_audit.json": "b0dfa182b10b9b99aef77c2e42c3c66a84380aadd48b8443d3543ace7220da71",
+    "artifacts/compositional_candidates.parquet": "0949a9bd693e76f87bf04c0b0e836b199cc23669d28b24c62238fa17cd3c34ff",
+    "artifacts/compositional_cost_frontier.parquet": "ffbf03364fc176d361c623e8e7c5689f85d6f9f16cb03efda695d62bc879c07a",
+    "artifacts/compositional_jump_results.parquet": "99a3d241bb319eeaaffe45f11aaad1362ca80543cbd07746d6f072490f48fb14",
+    "artifacts/depth_one_admissibility.parquet": "6dd14d3b3a780bc8760ed8c4b91038ccd490d5522095414e34474d9bea0be75f",
+    "artifacts/final_compositional_claim_matrix.csv": "bb8d67de2eb3ad4c494fcfa1c804f26cb790d59ea4362149844bc22df85835f9",
+    "artifacts/final_compositional_verdict.json": "de8e9b8541aad3e03a46b370225f23d938847fd1b369b9c9884183fee1ed6bf6",
+    "artifacts/generic_primitive_manifest.json": "57174f0e0be738b0ea151488ba501f86f2d03cf48f7e14cf59c46c20d5db542b",
+    "artifacts/heldout_family_results.parquet": "3b6a0edae0ade7cedcc8ff10ca5c24dc3aff9c6eec82ea648ab09cd0aca24f64",
+    "artifacts/high_level_operator_exclusions.json": "3c8f85920d754c8c3176d80f4204c82ad7579611169771e308d88107989c6b24",
+    "artifacts/llm_selected_composition.parquet": "759db7600a10d3f8852f4a30b361b81b66505d85e32d5e8c7b3dc5c2825ff103",
+    "artifacts/minimum_edit_depth.parquet": "01bedc77ad852013fe5c19b24bba1f16bf702b98789341329e888481aef6dd87",
+    "artifacts/no_jump_depth_controls.parquet": "5925b9f505002151f40761cce28ff0d10bb8c11976333acf7c0fb37fbab46404",
+    "artifacts/random_primitive_control.parquet": "6b9b8dc3ba5143e217ea1e981c42bf86f134ac92c2da5992219fa3b753f5ada6",
+    "reports/compositional-completion-audit.md": "9da43e3563615b8f2fc4f003fb7187d55edbea56477dc111c21f208653be6436",
+    "reports/compositional-representation-jump-final.md": "21b47108dd3029b23ad236c5a4f6cb1334854c491111c2f31904d11a0b2089f6",
+    "reports/compositional-representation-jump-reviewer2.md": "79fb51e3804c3ef664355f911084297586d33b6e0ce60a1b2a846eb39ec6aa9d",
+    "reports/figures/compositional/figure1-atomic-vs-composition.svg": "3ee2e0ee7350cf1bd69c2ec27f46df458dc2a01d52d60e537659baa1cc8b188f",
+    "reports/figures/compositional/figure2-jsr.svg": "ac6b4ffb4d98a4fce5b4a20d801d5bac724f2f15b6b0f06ad1ae1bbe3dbd129f",
+    "reports/figures/compositional/figure3-rho-by-family.svg": "f300215d81cc9aa57176033424ad6a6f64fd0f13ed8d73899fca11168d1b734e",
+    "reports/figures/compositional/figure4-success-vs-depth.svg": "57bed0f7d2dabbf949355a527735f10428c9c57f590a015a2e8565a3f54ea384",
+    "reports/figures/compositional/figure5-heldout.svg": "fe7d3eb02dafe56ad127503295bb984d86e53f2964b09ae48d6a63d1d1395c3b",
+    "reports/figures/compositional/figure6-jsr-vs-fjr.svg": "4d242b15c6f05aa13c593f865ed2ec2ada3baaeda9b182cdb24806e3dab0496c",
+    "reports/figures/compositional/figure7-cost-frontier.svg": "96d3eb78e3ff902ea8de0bc9e1d1dc03b2b9ece529684eb07f6a1a4258463fd8"
+  }
+}

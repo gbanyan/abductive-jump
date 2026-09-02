@@ -163,3 +163,12 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - All seven conditions had zero held-out false jumps: C0, C1, C2, C3, C_self, C_rand, and C5 were each 0/100.
 - Independent run audit passed with zero primary budget mismatches, zero C2 depth-one successes, 4,800/4,800 fixed C_self opportunities, zero valid C_self plans, and 4,200/4,200 unique call keys.
 - All four registered confirmatory shards are now terminal and independently audited. The analysis seal is lifted; deterministic replay, preregistered statistics, the decision tree, reports, and reproducibility verification may now run without further model inference.
+
+## 2026-09-02 21:44 +08:00 — Compositional replay, analysis, and final verdict
+
+- Deterministically replayed all 16,800 selected confirmatory candidates from frozen seeds and raw outputs with zero J0--J5 mismatches; materialized 35,533 ancestry rows.
+- Existing-family JSR was C3 400/400 versus C0 0/400, C2 0/400, C1 131/400, C_rand 52/400, and C_self 0/400. Held-out JSR was C3 100/100 versus C0/C1/C2/C_self 0/100 and C_rand 13/100. C5 was 100% in both reconstruction sets.
+- C3 exceeded C_rand by 0.87 in both existing and held-out comparisons (Holm-adjusted p=0.00029997). Retained jump gain was rho_J=3.0534 with 95% bootstrap interval [2.6846, 3.5398]. All C3 successes had registered depth four.
+- Across 200 existing and 100 held-out no-jump worlds, C3 had 0/300 false jumps; its combined Wilson upper bound is 0.012643. Every other condition also had zero false jumps.
+- The preregistered data verdict is **CJ5** and the 20-attack Reviewer #2 audit retains **CJ5**. The bounded claim is compositional and prospective held-out representation-space escape using supplied generic structural primitives; C_self=0 rejects autonomous LLM composition, and no claim of open-ended or vocabulary-free theory invention is made.
+- The reproducibility verifier confirms exactly 33,600 raw calls, all four source/config hash chains and shard audits, 16,800/16,800 replayed candidates, all required tables/reports, and seven valid nonempty SVG figures.
