@@ -1,0 +1,23 @@
+{
+  "supersedes_implementation_hashes_only": "artifacts/compositional-preregistration-freeze.json",
+  "correction_git_commit": "7ecb977",
+  "trigger": "pre-confirmatory existing-only pilot C2 depth-one validated jump",
+  "scientific_configuration_changed": false,
+  "operators_added_removed_or_renamed": false,
+  "heldout_confirmatory_accessed": false,
+  "confirmatory_inference_started": false,
+  "corrected_sha256": {
+    "artifacts/depth_one_admissibility.parquet": "6dd14d3b3a780bc8760ed8c4b91038ccd490d5522095414e34474d9bea0be75f",
+    "artifacts/generic_primitive_manifest.json": "57174f0e0be738b0ea151488ba501f86f2d03cf48f7e14cf59c46c20d5db542b",
+    "src/abductive_jump/composition_reachability.py": "f72089931644dd26f2785915d62c9635197a059c203b2586b533fcbfdaa0c53b",
+    "src/abductive_jump/compositional_experiment.py": "c9c57520e2864ac1abb252c62b84eaa6152557e67ca65fc6420e0cb589985a0d",
+    "src/abductive_jump/generic_primitives.py": "10142f9ca5af2fb552abec513a4902860a3e5dbb3ee6b18a2bd5589371f389f7"
+  },
+  "unchanged_config_hashes": {
+    "configs/compositional-confirmatory-existing-control.json": "2f775b36ec259e9c6ab9da8a119d1ac3e8a0454a6b3fa800a4ea6da34c1ef9cd",
+    "configs/compositional-confirmatory-existing.json": "4c3b1095d554d20f2c202db9b3e8aef3ee6d25a582653b1da1c1418a6c4f29f5",
+    "configs/compositional-confirmatory-heldout-control.json": "a2c585564e953a720b014848382bf6201e25a3ae135aa1f33f048b3060ec9070",
+    "configs/compositional-confirmatory-heldout.json": "9c6c04539455eeb3a5818cd4244f59be4e70862fb7d8e415d1110a4f21bbde68",
+    "configs/compositional-pilot-existing.json": "cfeca8d5d07f74a9b630263f0ff3ddcffe540d432842f7f3924fa81ab24ee17f"
+  }
+}
