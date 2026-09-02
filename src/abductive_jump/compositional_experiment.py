@@ -278,6 +278,11 @@ def _parse_self_plans(
     return evaluations, trace
 
 
+def _needs_validator_repair(evaluated: list[SearchEvaluation], required_plans: int) -> bool:
+    """A single repair replaces any response that did not yield the full fixed portfolio."""
+    return len(evaluated) < required_plans
+
+
 def _fixed_candidates(world: World, slots: int) -> list[SearchEvaluation]:
     base = ComposedRepresentation(world.incumbent, ())
     evaluation = evaluate_candidate(world.public(), base)
@@ -419,7 +424,8 @@ def _run_world_condition(
             repair_attempts = int(config.get("validator_repair_attempts", 0))
             if repair_attempts not in {0, 1}:
                 raise ValueError("validator_repair_attempts must be zero or one")
-            if repair_attempts == 1 and not evaluated:
+            required_plans = int(config["self_plans_per_slot"])
+            if repair_attempts == 1 and _needs_validator_repair(evaluated, required_plans):
                 repair_output, repair_call = client.generate(
                     _repair_prompt(world, output, trace),
                     world_id=world.world_id,
@@ -441,13 +447,20 @@ def _run_world_condition(
                 )
                 evaluated = repaired
                 search_trace.extend(
-                    {"slot": slot, "repair_stage": "initial", **row} for row in trace
+                    {
+                        "slot": slot,
+                        "repair_stage": "initial",
+                        "request_returned": True,
+                        **row,
+                    }
+                    for row in trace
                 )
                 trace = repair_trace
             search_trace.extend(
                 {
                     "slot": slot,
                     "repair_stage": "repair" if len(slot_calls) == 2 else "initial",
+                    "request_returned": True,
                     **row,
                 }
                 for row in trace

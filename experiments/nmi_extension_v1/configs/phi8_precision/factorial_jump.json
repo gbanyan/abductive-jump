@@ -1,0 +1,53 @@
+{
+  "candidate_slots": 3,
+  "concurrency": 1,
+  "context_limit": 4096,
+  "decoding_seed_base": 140000001,
+  "docker_image": "vllm/vllm-openai:v0.10.2",
+  "docker_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+  "engine": "transformers-openai-compat-frozen-v1",
+  "engine_version": "transformers-4.56.1+bitsandbytes-0.47.0",
+  "extension_experiment_id": "NMI-EXT-V1::phi8_precision::factorial_jump",
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "gate_thresholds": {
+    "delta_cf": 0.1,
+    "delta_falsification": 0.1,
+    "epsilon_candidate_obs": 1e-12,
+    "epsilon_falsification": 1e-12,
+    "epsilon_obs": 1e-12,
+    "min_prediction_separation": 0.5
+  },
+  "generation": {
+    "max_tokens": 700,
+    "temperature": 0.2,
+    "top_p": 0.95
+  },
+  "historical_source_config": "configs/confirmatory-factorial-jump.json",
+  "historical_source_config_sha256": "00b8c0ebb269ea35bcf39dca90d57a8d2f4b26e788c78015a7bf87d31c2f9757",
+  "model": "microsoft/phi-4",
+  "no_jump": false,
+  "prompt_template": "theory-json-v10",
+  "proposal_sources": [
+    "P0_LLM",
+    "P1_EXTERNAL",
+    "P2_ORACLE"
+  ],
+  "quantization": "bitsandbytes-8bit-runtime",
+  "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+  "sample_temperature": 0.7,
+  "transport_retries": 2,
+  "treatment_id": "phi8_precision",
+  "world_seed_range": {
+    "start": 10000,
+    "stop_exclusive": 10050
+  }
+}

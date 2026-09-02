@@ -21,7 +21,15 @@ class _Response:
 def test_extension_transport_captures_reasoning_and_preserves_v1_url(monkeypatch, tmp_path: Path):
     captured = {}
     payload = {
-        "choices": [{"message": {"content": '{"ok":true}', "reasoning": "private work"}}],
+        "id": "chatcmpl-test",
+        "created": 123456789,
+        "system_fingerprint": "toy-runtime",
+        "choices": [
+            {
+                "message": {"content": '{"ok":true}', "reasoning": "private work"},
+                "finish_reason": "stop",
+            }
+        ],
         "usage": {
             "prompt_tokens": 10,
             "completion_tokens": 7,
@@ -69,4 +77,9 @@ def test_extension_transport_captures_reasoning_and_preserves_v1_url(monkeypatch
     assert record.reasoning_tokens == 5
     assert record.answer_tokens == 2
     assert record.total_tokens == 17
+    assert json.loads(record.request_json) == captured["body"]
+    assert record.response_id == "chatcmpl-test"
+    assert record.response_created == 123456789
+    assert record.finish_reason == "stop"
+    assert record.system_fingerprint == "toy-runtime"
     assert json.loads(record.raw_response_json) == payload

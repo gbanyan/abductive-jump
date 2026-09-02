@@ -57,6 +57,12 @@ class CallRecord:
     total_tokens: int | None = None
     usage_json: str = "{}"
     attempt_count: int = 1
+    request_json: str = "{}"
+    response_id: str = ""
+    response_created: int | None = None
+    finish_reason: str = ""
+    stop_reason: str = ""
+    system_fingerprint: str = ""
 
 
 class OpenAICompatibleClient:
@@ -95,6 +101,7 @@ class OpenAICompatibleClient:
             body["reasoning_effort"] = self.manifest.reasoning_effort
         if self.manifest.response_format is not None:
             body["response_format"] = self.manifest.response_format
+        request_json = json.dumps(body, sort_keys=True, separators=(",", ":"))
         start = time.perf_counter()
         payload: dict[str, Any] | None = None
         attempt = 0
@@ -158,6 +165,12 @@ class OpenAICompatibleClient:
             int(usage["total_tokens"]) if usage.get("total_tokens") is not None else None,
             json.dumps(usage, sort_keys=True, separators=(",", ":")),
             attempt,
+            request_json,
+            str(payload.get("id") or ""),
+            int(payload["created"]) if payload.get("created") is not None else None,
+            str(payload["choices"][0].get("finish_reason") or ""),
+            str(payload["choices"][0].get("stop_reason") or ""),
+            str(payload.get("system_fingerprint") or ""),
         )
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         with _LOG_LOCK, self.log_path.open("a", encoding="utf-8") as handle:

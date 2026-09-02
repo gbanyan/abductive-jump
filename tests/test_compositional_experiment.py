@@ -1,6 +1,10 @@
 import json
 
-from abductive_jump.compositional_experiment import _parse_self_plans, _repair_prompt
+from abductive_jump.compositional_experiment import (
+    _needs_validator_repair,
+    _parse_self_plans,
+    _repair_prompt,
+)
 from abductive_jump.worlds import generate_world
 
 
@@ -46,3 +50,9 @@ def test_invalid_self_output_consumes_all_fixed_plan_opportunities():
     assert evaluations == []
     assert len(trace) == 16
     assert all(row["error"].startswith("invalid_schema") for row in trace)
+
+
+def test_one_invalid_plan_triggers_fixed_portfolio_replacement():
+    assert _needs_validator_repair([], 16)
+    assert _needs_validator_repair([object()] * 15, 16)
+    assert not _needs_validator_repair([object()] * 16, 16)

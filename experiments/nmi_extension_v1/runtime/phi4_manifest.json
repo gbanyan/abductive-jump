@@ -1,0 +1,245 @@
+{
+  "schema_version": "nmi-extension-runtime-manifest-v1",
+  "audit": {
+    "date": "2026-09-03",
+    "timezone": "Asia/Taipei",
+    "phase": "setup_only",
+    "confirmatory_worlds_opened": false,
+    "benchmark_requests_made": false,
+    "allowed_requests_used": [
+      "PING",
+      "toy_fixed_length_text",
+      "toy_json_schema"
+    ]
+  },
+  "host": {
+    "ssh_target": "gblinux",
+    "hostname": "GBLinux",
+    "kernel": "Linux 7.0.0-30-generic x86_64",
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 4090",
+      "memory_mib": 24564,
+      "driver": "595.84",
+      "count": 1
+    },
+    "cpu": "AMD Ryzen 7 5800X 8-Core Processor",
+    "logical_cpus": 16,
+    "ram_gib": 60,
+    "swap_gib": 8,
+    "root_free_gib_at_audit": 123
+  },
+  "model": {
+    "repository": "microsoft/phi-4",
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "tokenizer_revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "snapshot_path": "/home/gbanyan/abductive-model-cache/hub/models--microsoft--phi-4/snapshots/2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "cache_ref_main_at_audit": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "architecture": "Phi3ForCausalLM",
+    "model_type": "phi3",
+    "stored_dtype": "bfloat16",
+    "native_max_position_embeddings": 16384,
+    "hidden_size": 5120,
+    "intermediate_size": 17920,
+    "num_hidden_layers": 40,
+    "num_attention_heads": 40,
+    "num_key_value_heads": 10,
+    "vocab_size": 100352,
+    "weight_format": "safetensors",
+    "weight_shards": 6,
+    "weight_bytes": 29319014400,
+    "cache_footprint_gib": 28,
+    "sha256": {
+      "config.json": "07eedad2c48798b6e3728e4a1b75e0e092019a375ba725a40e40c78d13664045",
+      "tokenizer.json": "9f38d05d9d25756bb2f181ab5a0cebcd59e638df10336fc7ed1010f7296d0298",
+      "tokenizer_config.json": "2b707658c7c2b41580155a45503d7d3b42dc2f530bef678f67a39bf5d10b0510"
+    }
+  },
+  "historical_runtime": {
+    "engine": "vllm-openai",
+    "engine_version": "0.10.2",
+    "container_image": "vllm/vllm-openai:v0.10.2",
+    "container_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+    "pytorch_version": "2.8.0+cu128",
+    "bitsandbytes_version": "0.47.0",
+    "cuda_image_runtime": "12.8.1",
+    "quantization": "bitsandbytes-dynamic-4bit",
+    "load_format": "bitsandbytes",
+    "activation_dtype": "bfloat16",
+    "server_context_limit": 4096,
+    "gpu_memory_utilization": 0.9,
+    "tensor_parallel_size": 1,
+    "pipeline_parallel_size": 1,
+    "data_parallel_size": 1,
+    "server_seed": 0,
+    "api_host_binding": "127.0.0.1:8000",
+    "launch_arguments": [
+      "--model", "microsoft/phi-4",
+      "--quantization", "bitsandbytes",
+      "--load-format", "bitsandbytes",
+      "--max-model-len", "4096",
+      "--gpu-memory-utilization", "0.90",
+      "--served-model-name", "microsoft/phi-4",
+      "--seed", "0"
+    ],
+    "revision_argument_was_explicit": false,
+    "revision_resolution_note": "Historical launch relied on cached refs/main, which resolved to the required revision at audit time. Extension launches must pin --revision and --tokenizer-revision."
+  },
+  "api_probes": {
+    "models_endpoint": {
+      "success": true,
+      "served_model": "microsoft/phi-4",
+      "max_model_len": 4096
+    },
+    "ping_max_tokens_32": {
+      "success": true,
+      "seed": 4242,
+      "content": "PING",
+      "prompt_tokens": 13,
+      "completion_tokens": 2,
+      "finish_reason": "stop"
+    },
+    "ping_max_tokens_2048": {
+      "success": true,
+      "seed": 4242,
+      "content": "PING",
+      "prompt_tokens": 13,
+      "completion_tokens": 2,
+      "finish_reason": "stop"
+    },
+    "json_schema": {
+      "success": true,
+      "request_field": "response_format",
+      "request_type": "json_schema",
+      "content": "{\n  \"status\": \"PING\"\n}",
+      "schema_valid": true,
+      "finish_reason": "stop",
+      "scope_limit": "Support was verified only on a toy one-field JSON Schema."
+    },
+    "reasoning_effort": {
+      "supported_as_separate_control": false,
+      "request_field_used": null,
+      "note": "Phi-4 on the historical vLLM runtime exposes no separate reasoning-token budget."
+    }
+  },
+  "historical_c_self_budget_diagnostic": {
+    "phase_one_calls_audited": 1500,
+    "completion_cap": 700,
+    "calls_at_cap": 1500,
+    "calls_at_cap_fraction": 1.0,
+    "prompt_tokens_min": 838,
+    "prompt_tokens_median_known_families": 1027,
+    "prompt_tokens_max": 1187,
+    "representative_outputs_truncated_inside_json": true,
+    "interpretation": "The interface was completion-budget-bound; no J0-J5 or larger-budget outcome is implied."
+  },
+  "precision_feasibility": {
+    "pure_gpu_bf16": {
+      "feasible": false,
+      "reason": "Weight bytes alone exceed physical GPU memory before KV cache and runtime overhead."
+    },
+    "cpu_offload_bf16": {
+      "serves": true,
+      "operationally_feasible_for_full_extension": false,
+      "revision_pinned": true,
+      "cpu_offload_gib": 12,
+      "gpu_memory_utilization": 0.85,
+      "enforce_eager": true,
+      "loaded_gpu_gib": 15.2896,
+      "available_kv_cache_gib": 3.65,
+      "kv_cache_tokens": 19120,
+      "max_concurrency_at_4096": 4.67,
+      "toy_completion_tokens": 34,
+      "toy_wall_seconds": 25.57,
+      "toy_output_tokens_per_second": 1.33,
+      "cleanup": "temporary container removed; no GPU process left"
+    },
+    "dynamic_8bit_historical_vllm": {
+      "supported_for_unquantized_bf16_checkpoint": false,
+      "reason": "vLLM 0.10.2 dynamic bitsandbytes loading defaults to 4-bit; load_in_8bit is used by its prequantized path.",
+      "prospective_options": [
+        "immutable prequantized bitsandbytes 8-bit derivative with hashes",
+        "separately frozen Transformers/bitsandbytes 8-bit runtime"
+      ],
+      "must_disclose_engine_sensitivity": true
+    },
+    "transformers_bitsandbytes_8bit": {
+      "feasible": true,
+      "source_revision_pinned": true,
+      "container_image": "vllm/vllm-openai:v0.10.2",
+      "container_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+      "transformers_version": "4.56.1",
+      "accelerate_version": "1.10.1",
+      "bitsandbytes_version": "0.47.0",
+      "torch_version": "2.8.0+cu128",
+      "load_configuration": "BitsAndBytesConfig(load_in_8bit=True), device_map={'': 0}, torch_dtype=torch.bfloat16, local_files_only=True",
+      "model_footprint_bytes": 15687526656,
+      "gpu_allocated_bytes_after_load": 15696128512,
+      "load_seconds": 22.8505,
+      "toy_ping_new_tokens": 2,
+      "toy_ping_generation_seconds": 0.5214,
+      "matmul_note": "bitsandbytes MatMul8bitLt reported casting BF16 inputs to FP16",
+      "frozen_server_script": "scripts/phi4_transformers_openai_server.py",
+      "frozen_server_script_sha256": "628313593c65632bc4a5360a709cd2310a925d3e985a2440527a8cbf70fd3398",
+      "openai_compatible_toy_probe": {
+        "success": true,
+        "served_model": "microsoft/phi-4",
+        "content": "PING",
+        "finish_reason": "stop",
+        "scope_limit": "Only PING was queried; no benchmark or confirmatory world was opened"
+      },
+      "engine_sensitivity": "This uses a separately frozen Transformers/BitsAndBytes server, not historical vLLM generation; conclusions must distinguish numerical-precision and serving-engine changes."
+    }
+  },
+  "phi_budget_sensitivity": {
+    "condition_id": "PHI-BUDGET-SENSITIVITY",
+    "status": "recommended_for_protocol_freeze_not_executed",
+    "scientific_question": "Is the historical C_self conclusion sensitive to an unusually tight generation budget?",
+    "historical_max_completion_tokens_per_call": 700,
+    "prospective_max_completion_tokens_per_call": 2048,
+    "reasoning_effort": null,
+    "server_context_limit": 4096,
+    "largest_archived_phase_one_prompt_tokens": 1187,
+    "max_declared_prompt_plus_completion_tokens": 3235,
+    "context_headroom_tokens": 861,
+    "not_compute_matched_to_historical": true,
+    "only_intended_scientific_change": "generation.max_tokens",
+    "must_remain_identical": {
+      "model": "microsoft/phi-4",
+      "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+      "quantization": "bitsandbytes-4bit",
+      "engine_version": "0.10.2",
+      "prompt_template": "generic-self-composition-v1",
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "candidate_slots": 3,
+      "model_calls_per_slot": 2,
+      "self_plans_per_slot": 16,
+      "steps_per_plan": 4,
+      "representation_attempts_per_world": 48,
+      "interventions_per_candidate": 1,
+      "repair_attempts": 0,
+      "semantic_repair": false,
+      "primitives": "GENERIC_PRIMITIVE_SET_V1",
+      "worlds_seeds_gates_hidden_information": "exact historical C_self values"
+    },
+    "constrained_decoding_enabled": false,
+    "validator_feedback_enabled": false,
+    "confirmatory_execution_performed": false
+  },
+  "logging_gap_before_extension": {
+    "status": "resolved_before_protocol_freeze_except_unavailable_token_ids",
+    "extension_client_now_records": [
+      "request_json",
+      "raw_api_response",
+      "message.content",
+      "message.reasoning",
+      "usage",
+      "finish_reason",
+      "stop_reason",
+      "system_fingerprint",
+      "latency_seconds",
+      "transport_attempt_count"
+    ],
+    "unavailable_field": "Neither audited API exposes generated token IDs; exact response text and raw JSON are retained instead."
+  }
+}

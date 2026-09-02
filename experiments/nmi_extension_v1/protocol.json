@@ -1,0 +1,201 @@
+{
+  "schema_version": "nmi-extension-protocol-v1",
+  "protocol_id": "NMI-EXT-V1",
+  "authored_at_utc": "2026-09-02T17:10:02Z",
+  "status": "prospective_commit_freeze_pending",
+  "historical_baseline": {
+    "git_commit": "ae1ede683fdef09f2bf60f6e1052b60394ad6cf8",
+    "preservation_tag": "nmi-phi4-frozen-2026-09",
+    "policy": "AJ5/CJ5 artifacts, prompts, seeds, gates, manifests and verdicts are immutable historical evidence"
+  },
+  "audit_inputs": {
+    "component_audit_sha256": "9449bae827d8ecb1a1356feb26b4b9f1501fa402711e6ca11baaf836bde6cc7f",
+    "component_causality_matrix_sha256": "0da89815d3ca9ce5c8c0b405d852fc084b3f3193769cbef33bfc2413089fc23a",
+    "deepseek_runtime_manifest_sha256": "f1fc1a59a51de6d4744f5ed6205a2ac450249bbdb322f7837b44183abd1de8dd",
+    "phi4_runtime_manifest_sha256": "8f9c59292e414163019a7ad78f65fe97b92372280ee243c75f5f6fdf75790486",
+    "operational_config_manifest_sha256": "bbf04d252f45da35b9ed68335c2a026e1a4f35571d250d3b783028d481bf335d"
+  },
+  "scientific_questions": [
+    "Does DeepSeek under the historical interface alter model-proposal and self-composition outcomes relative to frozen Phi-4?",
+    "Does DeepSeek max reasoning with a larger predeclared completion budget alter those outcomes without increasing candidate opportunity?",
+    "How much failure is attributable to JSON/schema/typed-operation validity rather than post-construction J1-J5 failure?",
+    "Does exactly one pre-outcome validator repair or strict constrained decoding change C_self outcomes?",
+    "Is frozen Phi-4 C_self sensitive to its 700-token completion ceiling?",
+    "Does a same-revision 8-bit Phi-4 runtime materially change proposal validity or JSR relative to historical 4-bit Phi-4?",
+    "Which successful paths are LLM-dependent versus deterministic search/fitting/evaluation paths?"
+  ],
+  "models": {
+    "deepseek": {
+      "repository": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+      "api_alias": "deepseek-v4-flash-vision-exp",
+      "base_url": "http://192.168.30.16:8888/v1",
+      "runtime": "patched vLLM 0.25.2.dev0+g752a3a504.d20260714, FP8 weights, NVFP4 KV cache",
+      "identity_caveat": "Not equated with DeepSeek-V4-Flash-0731",
+      "generation_determinism": "not bitwise deterministic under max reasoning; raw generations must be retained"
+    },
+    "phi4_historical_runtime": {
+      "repository": "microsoft/phi-4",
+      "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+      "runtime": "vLLM 0.10.2 dynamic bitsandbytes 4-bit",
+      "context_limit": 4096
+    },
+    "phi4_precision_runtime": {
+      "repository": "microsoft/phi-4",
+      "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+      "runtime": "Transformers 4.56.1 plus bitsandbytes 0.47.0 runtime 8-bit",
+      "server_script": "scripts/phi4_transformers_openai_server.py",
+      "server_script_sha256": "628313593c65632bc4a5360a709cd2310a925d3e985a2440527a8cbf70fd3398",
+      "precision_caveat": "Precision and serving engine differ jointly; this is not a pure precision intervention"
+    }
+  },
+  "world_sets": {
+    "aj_jump": {"families": 8, "seeds": "10000:10050", "worlds": 400},
+    "aj_no_jump": {"families": 8, "seeds": "20000:20025", "worlds": 200},
+    "cj_known_jump": {"families": 8, "seeds": "30000:30050", "worlds": 400},
+    "cj_known_no_jump": {"families": 8, "seeds": "50000:50025", "worlds": 200},
+    "cj_heldout_jump": {"families": ["triadic_relation_reification"], "seeds": "40000:40100", "worlds": 100},
+    "cj_heldout_no_jump": {"families": ["triadic_relation_reification"], "seeds": "60000:60100", "worlds": 100}
+  },
+  "invariants": {
+    "candidate_slots": 3,
+    "self_plans_per_slot": 16,
+    "steps_per_self_plan": 4,
+    "self_representation_attempts_per_world": 48,
+    "generic_search_breadth": 48,
+    "generic_max_depth": 4,
+    "generic_primitive_operation_budget": 192,
+    "interventions_per_retained_candidate": 1,
+    "gates": "historical J0-J5 definitions and thresholds unchanged",
+    "prompts": "historical prompt semantics and public observations unchanged except validator repair appends only enumerated structural errors and the prior answer",
+    "hidden_information": "no model, parser, repair or selector sees intervention/falsification outcomes before commitment",
+    "selection": "historical deterministic fitting, ranking, candidate retention and intervention selection unchanged"
+  },
+  "treatments": {
+    "deepseek_matched": {
+      "scope": ["P0_LLM", "P1_EXTERNAL", "P2_ORACLE", "C_SELF_LLM_COMPOSITION"],
+      "reasoning_effort": "none",
+      "max_tokens": 700,
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "repair_attempts": 0,
+      "constrained_output": false,
+      "interpretation": "protocol-matched model substitution; P1/P2 only test the nonsemantic model-call interface because deterministic code supplies scientific fields"
+    },
+    "deepseek_native": {
+      "scope": ["P0_LLM", "P1_EXTERNAL", "P2_ORACLE", "C_SELF_LLM_COMPOSITION"],
+      "reasoning_effort": "max",
+      "max_tokens": 4096,
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "repair_attempts": 0,
+      "constrained_output": false,
+      "compute_matched_to_phi4": false
+    },
+    "deepseek_repair": {
+      "scope": ["C_SELF_LLM_COMPOSITION"],
+      "base": "deepseek_native",
+      "repair_trigger": "fewer than all 16 requested plans validate structurally in the initial response",
+      "repair_attempts": 1,
+      "replacement_policy": "the repaired response replaces rather than augments the initial 16-plan opportunity",
+      "allowed_feedback": ["JSON parse", "schema", "unknown operation", "argument type", "node reference", "arity", "non-executable syntax"],
+      "forbidden_feedback": ["hidden truth", "fit score", "J3 direction", "intervention outcome", "J4", "J5", "simulator-derived target hints"]
+    },
+    "deepseek_constrained": {
+      "scope": ["C_SELF_LLM_COMPOSITION"],
+      "base": "deepseek_native",
+      "repair_attempts": 0,
+      "constrained_output": "strict JSON Schema, exactly 16 arrays of exactly four typed primitive steps",
+      "pre_freeze_toy_validation": "passed with 16 plans, four steps each, reasoning present, normal stop; no benchmark world queried"
+    },
+    "phi_budget": {
+      "condition_id": "PHI-BUDGET-SENSITIVITY",
+      "scope": ["C_SELF_LLM_COMPOSITION"],
+      "only_scientific_change": "generation.max_tokens 700 to 2048",
+      "unchanged": "model revision, 4-bit runtime, prompt semantics, primitives, worlds, slots, calls, plans, representation attempts, interventions, J0-J5 and hidden boundaries",
+      "repair_attempts": 0,
+      "constrained_output": false,
+      "compute_matched_to_historical": false,
+      "rationale": "1500/1500 archived phase-one C_self calls reached 700 tokens; largest prompt 1187 plus 2048 leaves 861 tokens of context headroom"
+    },
+    "phi_constrained": {
+      "scope": ["C_SELF_LLM_COMPOSITION"],
+      "base": "historical 4-bit Phi-4",
+      "max_tokens": 700,
+      "repair_attempts": 0,
+      "constrained_output": "strict JSON Schema",
+      "interpretation": "interface sensitivity, never a replacement for historical C_self"
+    },
+    "phi_repair": {
+      "scope": ["C_SELF_LLM_COMPOSITION"],
+      "base": "historical 4-bit Phi-4",
+      "max_tokens": 700,
+      "repair_attempts": 1,
+      "repair_rule": "same structural-only replacement rule as deepseek_repair",
+      "interpretation": "interface sensitivity, never a replacement for historical C_self"
+    },
+    "phi8_precision": {
+      "scope": ["P0_LLM", "P1_EXTERNAL", "P2_ORACLE", "C_SELF_LLM_COMPOSITION"],
+      "max_tokens": 700,
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "repair_attempts": 0,
+      "constrained_output": false,
+      "interpretation": "same-revision higher-precision sensitivity confounded with serving engine; historical 4-bit results remain primary"
+    }
+  },
+  "component_necessity": {
+    "new_redundant_ablation_runs": false,
+    "reason": "C3 is already deterministic external search; P1/P2 deterministic fitting/evaluation already isolate model proposal from downstream machinery",
+    "reporting_rule": "Do not call P2 model reasoning and do not attach a new-model label to deterministic C3"
+  },
+  "outcomes": {
+    "primary": ["paired world-level JSR difference on jump worlds", "world-level false-jump rate on no-jump worlds"],
+    "secondary": ["valid-plan rate", "per-family effect", "completion-cap rate", "latency and token use"],
+    "descriptive_attrition": ["request_returned", "non_empty_answer", "json_parse_valid", "plan_schema_valid", "operation_names_valid", "argument_types_valid", "executable", "representation_constructed", "J0", "J1", "J2", "J3", "J4", "J5"],
+    "replicate": "world; candidate and plan rows are descriptive only"
+  },
+  "statistics": {
+    "paired_effect": "mean paired binary world-level success difference",
+    "confidence_interval": "family-stratified paired bootstrap, 10000 resamples, seed 730000001, percentile 95% CI",
+    "per_family": true,
+    "exact_counts": true,
+    "optional_p_values": "two-sided exact McNemar tests with Holm correction within AJ-P0 and CJ-C_self contrast families",
+    "primary_contrasts": [
+      "deepseek_matched vs historical_phi4",
+      "deepseek_native vs deepseek_matched",
+      "deepseek_repair vs deepseek_native",
+      "deepseek_constrained vs deepseek_native",
+      "phi_budget vs historical_phi4",
+      "phi_constrained vs historical_phi4",
+      "phi_repair vs historical_phi4",
+      "phi8_precision vs historical_phi4"
+    ]
+  },
+  "retry_and_exclusion": {
+    "transport_retries": 2,
+    "transport_retry_payload": "byte-semantically identical request parameters; every error and attempt logged",
+    "quality_reruns": "forbidden",
+    "terminal_failure": "abort and retain the incomplete shard; after verified infrastructure recovery, at most one whole-shard clean restart is allowed and both attempt trees are preserved",
+    "analysis_selection": "the first complete shard attempt is used; no world or candidate is excluded for malformed output or failed gates",
+    "incomplete_policy": "if the clean restart also fails, report the shard incomplete rather than substituting selected calls"
+  },
+  "compute_accounting": [
+    "LLM calls and transport attempts",
+    "model and reasoning_effort",
+    "prompt, reasoning where exposed, answer, completion and total tokens",
+    "attempted and valid plans",
+    "constructed representations",
+    "generic operations evaluated",
+    "deterministic fitter calls",
+    "simulator calls",
+    "final slots and committed interventions",
+    "wall-clock latency and infrastructure failures"
+  ],
+  "replay": {
+    "requirement": "reconstruct every downstream verdict from captured request, raw response, parsed candidate, fitted program, intervention commitment and J0-J5 fields without another model call",
+    "integrity": "SHA256 every config and result artifact; verify split/config/model-condition IDs and expected row counts; no silent exclusions"
+  },
+  "unlock_rule": "No confirmatory command may run until protocol documents, code, configs and interpretation matrix are committed, pushed, tagged, and the remote tag is verified.",
+  "manuscript_rule": "No scientific conclusion, figure or manuscript result text is updated until all extension results are frozen and replay-audited."
+}
