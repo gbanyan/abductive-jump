@@ -25,6 +25,18 @@ REQUIRED = (
     "artifacts/compositional-replay-validation.json",
     "reports/compositional-representation-jump-final.md",
     "reports/compositional-representation-jump-reviewer2.md",
+    "reports/compositional-completion-audit.md",
+    "reports/figures/compositional/figure1-atomic-vs-composition.svg",
+    "reports/figures/compositional/figure2-jsr.svg",
+    "reports/figures/compositional/figure3-rho-by-family.svg",
+    "reports/figures/compositional/figure4-success-vs-depth.svg",
+    "reports/figures/compositional/figure5-heldout.svg",
+    "reports/figures/compositional/figure6-jsr-vs-fjr.svg",
+    "reports/figures/compositional/figure7-cost-frontier.svg",
+    "artifacts/compositional/confirmatory-existing/run_audit.json",
+    "artifacts/compositional/confirmatory-existing-control/run_audit.json",
+    "artifacts/compositional/confirmatory-heldout/run_audit.json",
+    "artifacts/compositional/confirmatory-heldout-control/run_audit.json",
 )
 
 RAW_EXPECTED = {
@@ -43,10 +55,23 @@ def _hash(path: Path) -> str:
     return digest.hexdigest()
 
 
-def run(root: Path) -> dict[str, Any]:
+def _validate_required_outputs(root: Path) -> None:
     missing = [name for name in REQUIRED if not (root / name).is_file()]
     if missing:
         raise ValueError(f"missing compositional outputs: {missing}")
+    empty = [name for name in REQUIRED if (root / name).stat().st_size == 0]
+    if empty:
+        raise ValueError(f"empty compositional outputs: {empty}")
+    incomplete_audit = root / "reports" / "compositional-completion-audit.md"
+    if "| PENDING |" in incomplete_audit.read_text():
+        raise ValueError("compositional completion audit still contains PENDING requirements")
+    for name in REQUIRED:
+        if name.endswith(".svg") and not (root / name).read_text().lstrip().startswith("<svg"):
+            raise ValueError(f"invalid SVG output: {name}")
+
+
+def run(root: Path) -> dict[str, Any]:
+    _validate_required_outputs(root)
     hashes = {name: _hash(root / name) for name in REQUIRED}
     raw = {}
     for name, expected in RAW_EXPECTED.items():
