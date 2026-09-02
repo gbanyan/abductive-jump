@@ -51,6 +51,9 @@ def _manifest(config: dict[str, Any]) -> ModelManifest:
         generation["temperature"],
         generation["top_p"],
         generation["max_tokens"],
+        config.get("reasoning_effort"),
+        config.get("response_format"),
+        int(config.get("transport_retries", 0)),
     )
 
 

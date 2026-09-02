@@ -119,6 +119,29 @@ def _self_prompt(world: World) -> PromptSpec:
     )
 
 
+def _repair_prompt(world: World, original_output: str, trace: list[dict[str, Any]]) -> PromptSpec:
+    errors = [str(row.get("error", "invalid_plan")) for row in trace if not row.get("valid")]
+    system = (
+        "You repair only JSON/schema/typed-operation validity before any outcome is revealed. "
+        "Return exactly one corrected JSON object and no markdown."
+    )
+    user = (
+        _self_prompt(world).user
+        + "\nYour prior answer was structurally invalid. Replace it; do not add plans or use outcome "
+        "information. Validator errors: "
+        + json.dumps(errors[:16], separators=(",", ":"))
+        + "\nPrior answer: "
+        + original_output
+    )
+    return PromptSpec(
+        "generic-self-composition-validator-repair-v1",
+        Condition.C_SELF_LLM_COMPOSITION,
+        ProposalSource.LLM_COMPOSITION,
+        system,
+        user,
+    )
+
+
 def _parse_self_plans(
     world: World, output: str, seed: int, *, required_plans: int = 16
 ) -> tuple[list[SearchEvaluation], list[dict[str, Any]]]:
@@ -129,6 +152,13 @@ def _parse_self_plans(
             {
                 "plan_index": plan_index,
                 "valid": False,
+                "non_empty_answer": bool(output.strip()),
+                "json_parse_valid": False,
+                "plan_schema_valid": False,
+                "operation_names_valid": False,
+                "argument_types_valid": False,
+                "executable": False,
+                "representation_constructed": False,
                 "error": f"invalid_output:{type(exc).__name__}:{exc}",
             }
             for plan_index in range(required_plans)
@@ -139,6 +169,13 @@ def _parse_self_plans(
             {
                 "plan_index": plan_index,
                 "valid": False,
+                "non_empty_answer": bool(output.strip()),
+                "json_parse_valid": True,
+                "plan_schema_valid": False,
+                "operation_names_valid": False,
+                "argument_types_valid": False,
+                "executable": False,
+                "representation_constructed": False,
                 "error": "invalid_schema:plans_must_be_a_list",
             }
             for plan_index in range(required_plans)
@@ -147,21 +184,54 @@ def _parse_self_plans(
     trace: list[dict[str, Any]] = []
     for plan_index in range(required_plans):
         if plan_index >= len(plans) or not isinstance(plans[plan_index], list):
-            trace.append({"plan_index": plan_index, "valid": False, "error": "missing_plan"})
+            trace.append(
+                {
+                    "plan_index": plan_index,
+                    "valid": False,
+                    "non_empty_answer": bool(output.strip()),
+                    "json_parse_valid": True,
+                    "plan_schema_valid": False,
+                    "operation_names_valid": False,
+                    "argument_types_valid": False,
+                    "executable": False,
+                    "representation_constructed": False,
+                    "error": "missing_plan",
+                }
+            )
             continue
         plan = plans[plan_index]
         if len(plan) != 4:
-            trace.append({"plan_index": plan_index, "valid": False, "error": "depth_not_four"})
+            trace.append(
+                {
+                    "plan_index": plan_index,
+                    "valid": False,
+                    "non_empty_answer": bool(output.strip()),
+                    "json_parse_valid": True,
+                    "plan_schema_valid": False,
+                    "operation_names_valid": False,
+                    "argument_types_valid": False,
+                    "executable": False,
+                    "representation_constructed": False,
+                    "error": "depth_not_four",
+                }
+            )
             continue
         current = ComposedRepresentation(world.incumbent, ())
+        operation_names_valid = True
+        argument_types_valid = True
         try:
             for depth, step in enumerate(plan, start=1):
                 if not isinstance(step, dict) or set(step) != {"operator", "arguments"}:
                     raise ValueError("invalid step schema")
-                operator = GenericPrimitive(str(step["operator"]))
+                try:
+                    operator = GenericPrimitive(str(step["operator"]))
+                except ValueError:
+                    operation_names_valid = False
+                    raise
                 if operator is GenericPrimitive.SUBGRAPH_CROSSOVER:
                     raise ValueError("crossover requires a donor and is unavailable to self plans")
                 if not isinstance(step["arguments"], dict):
+                    argument_types_valid = False
                     raise TypeError("arguments must be an object")
                 arguments = {str(key): str(value) for key, value in step["arguments"].items()}
                 child, record = apply_primitive(
@@ -178,6 +248,13 @@ def _parse_self_plans(
                 {
                     "plan_index": plan_index,
                     "valid": True,
+                    "non_empty_answer": True,
+                    "json_parse_valid": True,
+                    "plan_schema_valid": True,
+                    "operation_names_valid": True,
+                    "argument_types_valid": True,
+                    "executable": True,
+                    "representation_constructed": True,
                     "operators": list(current.operators),
                     "candidate_hash": current.representation.structural_hash,
                     "signature": evaluation.fit.structural_signature,
@@ -185,7 +262,18 @@ def _parse_self_plans(
             )
         except (KeyError, TypeError, ValueError, OverflowError) as exc:
             trace.append(
-                {"plan_index": plan_index, "valid": False, "error": f"{type(exc).__name__}:{exc}"}
+                {
+                    "plan_index": plan_index,
+                    "valid": False,
+                    "non_empty_answer": bool(output.strip()),
+                    "json_parse_valid": True,
+                    "plan_schema_valid": True,
+                    "operation_names_valid": operation_names_valid,
+                    "argument_types_valid": argument_types_valid,
+                    "executable": False,
+                    "representation_constructed": False,
+                    "error": f"{type(exc).__name__}:{exc}",
+                }
             )
     return evaluations, trace
 
@@ -301,7 +389,10 @@ def _run_world_condition(
     search_trace: list[dict[str, Any]] = []
     if condition is Condition.C_SELF_LLM_COMPOSITION:
         candidates: list[SearchEvaluation] = []
-        self_calls: list[Any] = []
+        phase_one_token_totals: list[int] = []
+        phase_one_reasoning_token_totals: list[int] = []
+        phase_one_answer_token_totals: list[int] = []
+        phase_one_call_counts: list[int] = []
         for slot in range(slots):
             prompt = _self_prompt(world)
             output, call = client.generate(
@@ -315,7 +406,7 @@ def _run_world_condition(
                 + slot * 2,
                 candidate_parent=world.incumbent.structural_hash,
             )
-            self_calls.append(call)
+            slot_calls = [call]
             try:
                 evaluated, trace = _parse_self_plans(
                     world,
@@ -325,7 +416,50 @@ def _run_world_condition(
                 )
             except (KeyError, TypeError, ValueError, OverflowError) as exc:
                 evaluated, trace = [], [{"valid": False, "error": f"{type(exc).__name__}:{exc}"}]
-            search_trace.extend({"slot": slot, **row} for row in trace)
+            repair_attempts = int(config.get("validator_repair_attempts", 0))
+            if repair_attempts not in {0, 1}:
+                raise ValueError("validator_repair_attempts must be zero or one")
+            if repair_attempts == 1 and not evaluated:
+                repair_output, repair_call = client.generate(
+                    _repair_prompt(world, output, trace),
+                    world_id=world.world_id,
+                    world_seed=world_seed,
+                    decoding_seed=int(config["decoding_seed_base"])
+                    + list(Condition).index(condition) * 10_000_000
+                    + family_index * 100_000
+                    + world_seed * 100
+                    + slot * 2
+                    + 50_000_000,
+                    candidate_parent=world.incumbent.structural_hash,
+                )
+                slot_calls.append(repair_call)
+                repaired, repair_trace = _parse_self_plans(
+                    world,
+                    repair_output,
+                    search_seed + slot * 1000,
+                    required_plans=int(config["self_plans_per_slot"]),
+                )
+                evaluated = repaired
+                search_trace.extend(
+                    {"slot": slot, "repair_stage": "initial", **row} for row in trace
+                )
+                trace = repair_trace
+            search_trace.extend(
+                {
+                    "slot": slot,
+                    "repair_stage": "repair" if len(slot_calls) == 2 else "initial",
+                    **row,
+                }
+                for row in trace
+            )
+            phase_one_token_totals.append(sum(item.completion_tokens for item in slot_calls))
+            phase_one_reasoning_token_totals.append(
+                sum(int(item.reasoning_tokens or 0) for item in slot_calls)
+            )
+            phase_one_answer_token_totals.append(
+                sum(int(item.answer_tokens or item.completion_tokens) for item in slot_calls)
+            )
+            phase_one_call_counts.append(len(slot_calls))
             candidates.append(
                 max(
                     evaluated,
@@ -338,7 +472,10 @@ def _run_world_condition(
             "primitive_operations_used": sum(bool(row.get("valid")) * 4 for row in search_trace),
             "candidate_evaluations": int(config["primitive_operation_budget"]),
             "search": "LLM-selected generic composition",
-            "phase_one_calls": self_calls,
+            "phase_one_token_totals": phase_one_token_totals,
+            "phase_one_reasoning_token_totals": phase_one_reasoning_token_totals,
+            "phase_one_answer_token_totals": phase_one_answer_token_totals,
+            "phase_one_call_counts": phase_one_call_counts,
         }
     else:
         candidates, search_meta = _condition_candidates(world, condition, search_seed, slots, config)
@@ -416,8 +553,13 @@ def _run_world_condition(
             "phase_two_valid": False,
             "validated_jump": False,
             "compositional_jump": False,
-            "phase_one_tokens": phase_one_call.completion_tokens if phase_one_call else search_meta["phase_one_calls"][slot].completion_tokens,
+            "phase_one_tokens": phase_one_call.completion_tokens if phase_one_call else search_meta["phase_one_token_totals"][slot],
+            "phase_one_reasoning_tokens": int(phase_one_call.reasoning_tokens or 0) if phase_one_call else search_meta["phase_one_reasoning_token_totals"][slot],
+            "phase_one_answer_tokens": int(phase_one_call.answer_tokens or phase_one_call.completion_tokens) if phase_one_call else search_meta["phase_one_answer_token_totals"][slot],
+            "phase_one_call_count": 1 if phase_one_call else search_meta["phase_one_call_counts"][slot],
             "phase_two_tokens": phase_two_call.completion_tokens,
+            "phase_two_reasoning_tokens": int(phase_two_call.reasoning_tokens or 0),
+            "phase_two_answer_tokens": int(phase_two_call.answer_tokens or phase_two_call.completion_tokens),
             "primitive_operation_capacity": search_meta["primitive_operation_capacity"],
             "primitive_operations_used": search_meta["primitive_operations_used"],
             "candidate_evaluations": search_meta["candidate_evaluations"],
@@ -464,7 +606,7 @@ def _run_world_condition(
             (int(row["ancestry_depth"]) for row in candidate_rows if row["validated_jump"]),
             default=None,
         ),
-        "llm_calls": slots * 2,
+        "llm_calls": sum(int(row["phase_one_call_count"]) + 1 for row in candidate_rows),
         "llm_tokens": sum(int(row["phase_one_tokens"]) + int(row["phase_two_tokens"]) for row in candidate_rows),
         "primitive_operation_capacity": search_meta["primitive_operation_capacity"],
         "primitive_operations_used": search_meta["primitive_operations_used"],

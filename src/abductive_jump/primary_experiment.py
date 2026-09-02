@@ -155,6 +155,17 @@ def _run_slot(
         representation_hash=supplied.structural_hash if supplied else "",
     )
     row["phase_one_tokens"] = phase_one_call.completion_tokens
+    row["phase_one_prompt_tokens"] = phase_one_call.prompt_tokens
+    row["phase_one_answer_tokens"] = int(
+        phase_one_call.answer_tokens or phase_one_call.completion_tokens
+    )
+    row["phase_one_reasoning_tokens"] = int(phase_one_call.reasoning_tokens or 0)
+    row["phase_one_total_tokens"] = int(
+        phase_one_call.total_tokens
+        or phase_one_call.prompt_tokens + phase_one_call.completion_tokens
+    )
+    row["phase_one_non_empty"] = bool(phase_one_output.strip())
+    row["phase_one_attempt_count"] = phase_one_call.attempt_count
     row["phase_one_latency_seconds"] = phase_one_call.latency_seconds
     row["phase_one_prompt_hash"] = phase_one_call.prompt_hash
     candidate_representation = supplied
@@ -218,6 +229,17 @@ def _run_slot(
         representation_hash=candidate_representation.structural_hash,
     )
     row["phase_two_tokens"] = phase_two_call.completion_tokens
+    row["phase_two_prompt_tokens"] = phase_two_call.prompt_tokens
+    row["phase_two_answer_tokens"] = int(
+        phase_two_call.answer_tokens or phase_two_call.completion_tokens
+    )
+    row["phase_two_reasoning_tokens"] = int(phase_two_call.reasoning_tokens or 0)
+    row["phase_two_total_tokens"] = int(
+        phase_two_call.total_tokens
+        or phase_two_call.prompt_tokens + phase_two_call.completion_tokens
+    )
+    row["phase_two_non_empty"] = bool(phase_two_output.strip())
+    row["phase_two_attempt_count"] = phase_two_call.attempt_count
     row["phase_two_latency_seconds"] = phase_two_call.latency_seconds
     row["phase_two_prompt_hash"] = phase_two_call.prompt_hash
     row["representation_hash"] = candidate_representation.structural_hash

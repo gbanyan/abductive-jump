@@ -1,6 +1,6 @@
 import json
 
-from abductive_jump.compositional_experiment import _parse_self_plans
+from abductive_jump.compositional_experiment import _parse_self_plans, _repair_prompt
 from abductive_jump.worlds import generate_world
 
 
@@ -21,6 +21,19 @@ def test_llm_self_plan_uses_exact_generic_engine_and_records_depth():
     assert len(evaluations) == 16
     assert all(item.candidate.depth == 4 for item in evaluations)
     assert all(row["valid"] for row in trace)
+    assert all(row["representation_constructed"] for row in trace)
+
+
+def test_repair_prompt_contains_only_public_world_and_structural_errors():
+    world = generate_world("coordinate_transform", 73)
+    prompt = _repair_prompt(
+        world,
+        '{"plans":"wrong"}',
+        [{"valid": False, "error": "invalid_schema:plans_must_be_a_list"}],
+    )
+    assert "invalid_schema:plans_must_be_a_list" in prompt.user
+    assert "hidden truth" not in prompt.user
+    assert "falsification" not in prompt.user
 
 
 def test_invalid_self_output_consumes_all_fixed_plan_opportunities():

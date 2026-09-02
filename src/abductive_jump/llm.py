@@ -25,6 +25,9 @@ class ModelManifest:
     temperature: float
     top_p: float
     max_tokens: int
+    reasoning_effort: str | None = None
+    response_format: dict[str, Any] | None = None
+    transport_retries: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,11 +50,23 @@ class CallRecord:
     candidate_parent: str
     mutation_ancestry: tuple[str, ...]
     representation_hash: str
+    reasoning_output: str = ""
+    raw_response_json: str = ""
+    answer_tokens: int | None = None
+    reasoning_tokens: int | None = None
+    total_tokens: int | None = None
+    usage_json: str = "{}"
+    attempt_count: int = 1
 
 
 class OpenAICompatibleClient:
     def __init__(self, base_url: str, manifest: ModelManifest, log_path: Path):
-        self.url = base_url.rstrip("/") + "/v1/chat/completions"
+        normalized = base_url.rstrip("/")
+        self.url = (
+            normalized + "/chat/completions"
+            if normalized.endswith("/v1")
+            else normalized + "/v1/chat/completions"
+        )
         self.manifest = manifest
         self.log_path = log_path
 
@@ -76,17 +91,47 @@ class OpenAICompatibleClient:
             "max_tokens": self.manifest.max_tokens,
             "seed": decoding_seed,
         }
-        request = urllib.request.Request(
-            self.url,
-            json.dumps(body).encode(),
-            {"Content-Type": "application/json"},
-        )
+        if self.manifest.reasoning_effort is not None:
+            body["reasoning_effort"] = self.manifest.reasoning_effort
+        if self.manifest.response_format is not None:
+            body["response_format"] = self.manifest.response_format
         start = time.perf_counter()
-        with urllib.request.urlopen(request, timeout=600) as response:
-            payload: dict[str, Any] = json.load(response)
+        payload: dict[str, Any] | None = None
+        attempt = 0
+        while payload is None:
+            attempt += 1
+            request = urllib.request.Request(
+                self.url,
+                json.dumps(body).encode(),
+                {"Content-Type": "application/json"},
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=600) as response:
+                    payload = json.load(response)
+            except (OSError, TimeoutError) as exc:
+                error = {
+                    "attempt": attempt,
+                    "error": f"{type(exc).__name__}:{exc}",
+                    "request_body": body,
+                    "world_id": world_id,
+                    "world_seed": world_seed,
+                }
+                error_path = self.log_path.with_suffix(self.log_path.suffix + ".transport-errors")
+                error_path.parent.mkdir(parents=True, exist_ok=True)
+                with _LOG_LOCK, error_path.open("a", encoding="utf-8") as handle:
+                    handle.write(json.dumps(error, sort_keys=True) + "\n")
+                if attempt > self.manifest.transport_retries:
+                    raise
         latency = time.perf_counter() - start
-        output = payload["choices"][0]["message"]["content"]
+        message = payload["choices"][0]["message"]
+        output = str(message.get("content") or "")
+        reasoning = str(message.get("reasoning") or message.get("reasoning_content") or "")
         usage = payload.get("usage", {})
+        completion_details = usage.get("completion_tokens_details", {}) or {}
+        reasoning_tokens = usage.get("reasoning_tokens", completion_details.get("reasoning_tokens"))
+        answer_tokens = usage.get("answer_tokens")
+        if answer_tokens is None and usage.get("completion_tokens") is not None:
+            answer_tokens = int(usage["completion_tokens"]) - int(reasoning_tokens or 0)
         record = CallRecord(
             prompt.condition.value,
             prompt.proposal_source.value,
@@ -106,6 +151,13 @@ class OpenAICompatibleClient:
             candidate_parent,
             mutation_ancestry,
             representation_hash,
+            reasoning,
+            json.dumps(payload, sort_keys=True, separators=(",", ":")),
+            int(answer_tokens) if answer_tokens is not None else None,
+            int(reasoning_tokens) if reasoning_tokens is not None else None,
+            int(usage["total_tokens"]) if usage.get("total_tokens") is not None else None,
+            json.dumps(usage, sort_keys=True, separators=(",", ":")),
+            attempt,
         )
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         with _LOG_LOCK, self.log_path.open("a", encoding="utf-8") as handle:
