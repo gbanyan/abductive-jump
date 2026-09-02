@@ -233,7 +233,9 @@ def apply_primitive(
             raise ValueError("edge does not exist")
         reified = arguments.get("id") or _fresh_id(parent, "reified", rng)
         edges.remove(edge)
-        nodes.append(Node(reified, NodeKind.RELATION, {"arity": 2}))
+        # Reification creates a relation carrier but does not assert its arity.  Arity is a
+        # separate primitive, so this operation alone cannot license a relational basis.
+        nodes.append(Node(reified, NodeKind.RELATION))
         edges.extend((Edge(node_id, "argument_0", reified), Edge(reified, "result_of", other_id)))
     elif operator is GenericPrimitive.REIFY_NODE_AS_EDGE:
         old = by_id[node_id]

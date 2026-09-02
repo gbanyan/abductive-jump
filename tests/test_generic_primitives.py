@@ -88,3 +88,13 @@ def test_add_node_cannot_smuggle_type_or_semantic_attributes():
             depth=1,
         )
 
+
+def test_edge_reification_does_not_smuggle_arity():
+    child, _ = apply_primitive(
+        BASE,
+        GenericPrimitive.REIFY_EDGE_AS_NODE,
+        {"node": "p", "other": "q", "relation": "link", "id": "rel"},
+        1,
+        depth=1,
+    )
+    assert "arity" not in child.node("rel").attributes

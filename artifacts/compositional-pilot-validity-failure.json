@@ -1,0 +1,28 @@
+{
+  "classification": "pre-confirmatory implementation/admissibility defect",
+  "confirmatory_data_generated": false,
+  "invalid_pilot_path": "artifacts/compositional/pilot-existing",
+  "pilot_worlds": 8,
+  "pilot_llm_calls": 336,
+  "trigger": {
+    "condition": "C2_GENERIC_DEPTH_1",
+    "family": "property_to_relation",
+    "operator": "REIFY_EDGE_AS_NODE",
+    "validated_worlds": 1,
+    "total_worlds": 8
+  },
+  "root_causes": [
+    "REIFY_EDGE_AS_NODE assigned arity=2 in the same primitive, allowing the fitter to recognize a bound relation after one edit",
+    "incomplete representations used an observationally flexible fallback basis rather than the exact incumbent-oracle executable basis"
+  ],
+  "corrections": [
+    "REIFY_EDGE_AS_NODE no longer assigns arity; CHANGE_ARITY remains a separate frozen primitive",
+    "incomplete/incumbent-basis candidates are realized with the exact incumbent-oracle program compiler",
+    "an exhaustive registered depth-one admissibility audit now evaluates 192 candidates across 90 development/unit worlds"
+  ],
+  "post_correction_depth_one_candidates": 17280,
+  "post_correction_validated_depth_one_candidates": 0,
+  "old_primitive_sha256": "b7b1d838dbf35153ce96a76615da968eb0858c89b62d486c364358a2297807c3",
+  "corrected_primitive_sha256": "10142f9ca5af2fb552abec513a4902860a3e5dbb3ee6b18a2bd5589371f389f7",
+  "anti_hindsight_statement": "No primitive was added, removed, renamed, or made more family-specific; depth, breadth, search policy, held-out family, prompts, seeds, model, thresholds, and confirmatory configs are unchanged. The original pilot is retained and excluded from scientific estimates."
+}

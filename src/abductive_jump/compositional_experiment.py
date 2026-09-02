@@ -32,6 +32,7 @@ from .expressions import Expression
 from .external_reasoning_calibration import _arrow_table, _manifest, _prediction_table
 from .generic_primitives import ComposedRepresentation, GenericPrimitive, apply_primitive
 from .llm import OpenAICompatibleClient, extract_json_object
+from .oracle import incumbent_oracle
 from .primary_experiment import _thresholds
 from .proposals import select_external_proposals
 from .realization import fit_representation
@@ -253,6 +254,15 @@ def _fit_for_condition(world: World, condition: Condition, representation: Any) 
         internal_expression = program_expression(world.truth.program)
         return expression, expression_loss(internal_expression, world.observations), "ORACLE_PROGRAM_COMPILER"
     fitted = fit_composed_representation(world.public(), representation)
+    if fitted.structural_signature == "incumbent_basis":
+        expression = _translate_expression(
+            program_expression(incumbent_oracle(world).program), dict(world.variable_names)
+        )
+        return (
+            expression,
+            expression_loss(program_expression(incumbent_oracle(world).program), world.observations),
+            fitted.structural_signature,
+        )
     return fitted.expression, fitted.observational_loss, fitted.structural_signature
 
 

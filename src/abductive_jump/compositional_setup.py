@@ -9,7 +9,8 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from .composition_reachability import verify_reachability
+from .composition_reachability import executable_result, verify_reachability
+from .composition_search import depth_one_search
 from .compositional_worlds import HELD_OUT_FAMILY, generate_heldout_world
 from .generic_primitives import GenericPrimitive, apply_primitive
 from .worlds import FAMILIES, generate_world
@@ -105,15 +106,13 @@ def run(root: Path) -> dict[str, int]:
     )
 
     rows = []
+    worlds = []
     development_seeds = range(701, 711)
     for family in FAMILIES:
-        rows.extend(
-            verify_reachability(generate_world(family, seed), 800_000 + seed)
-            for seed in development_seeds
-        )
+        worlds.extend(generate_world(family, seed) for seed in development_seeds)
+    worlds.extend(generate_heldout_world(seed) for seed in development_seeds)
     rows.extend(
-        verify_reachability(generate_heldout_world(seed), 900_000 + seed)
-        for seed in development_seeds
+        verify_reachability(world, 800_000 + world.seed) for world in worlds
     )
     pq.write_table(
         pa.Table.from_pylist(rows),
@@ -138,11 +137,41 @@ def run(root: Path) -> dict[str, int]:
         output / "minimum_edit_depth.parquet",
         compression="zstd",
     )
+    atomic_rows = []
+    for world in worlds:
+        search = depth_one_search(world.public(), 950_000 + world.seed, operation_budget=192)
+        successes = [
+            item
+            for item in search.evaluated
+            if executable_result(world, item.candidate)["validated_jump"]
+        ]
+        atomic_rows.append(
+            {
+                "world_id": world.world_id,
+                "family": world.family,
+                "world_seed": world.seed,
+                "evaluated_depth_one_candidates": len(search.evaluated),
+                "validated_depth_one_candidates": len(successes),
+                "successful_operator_sequences": [
+                    list(item.candidate.operators) for item in successes
+                ],
+            }
+        )
+    pq.write_table(
+        pa.Table.from_pylist(atomic_rows),
+        output / "depth_one_admissibility.parquet",
+        compression="zstd",
+    )
+    if any(row["validated_depth_one_candidates"] for row in atomic_rows):
+        raise ValueError("GENERIC_PRIMITIVE_SET_V1 has a depth-one semantic shortcut")
     return {
         "operators": len(GenericPrimitive),
         "reachability_worlds": len(rows),
         "families": len(depths),
         "all_reachable": sum(bool(row["reachable"]) for row in rows),
+        "depth_one_candidates_checked": sum(
+            int(row["evaluated_depth_one_candidates"]) for row in atomic_rows
+        ),
     }
 
 

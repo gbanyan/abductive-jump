@@ -113,3 +113,11 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - Verified constructive reachability on 90/90 development/unit worlds spanning the old eight families plus the held-out interface; no single first witness primitive validated. Registered bounded depths include 2, 3, and 4.
 - Froze breadth 48, depth 4, 192 operation/evaluation capacity, three final slots, two Phi-4 calls per slot, new confirmatory seeds, 400 reconstruction worlds, 100 held-out worlds, and 300 no-jump controls in the preregistration and versioned configs.
 - Pre-freeze validation: 147 tests pass, Ruff clean, all five compositional configs parse. No new-phase LLM call has been made; held-out confirmatory seeds remain locked.
+
+## 2026-09-02 12:34 +08:00 — Existing-only pilot validity failure and admissibility correction
+
+- Ran the registered eight-world existing-family pilot (336 calls). Preliminary JSR was C0 0/8, C1 3/8, C2 1/8, C3 8/8, C_self 0/8, C_rand 1/8, and C5 8/8. These are invalid pilot-only estimates and are not confirmatory evidence.
+- The C2 success was a fatal benchmark-validity signal: one `property_to_relation` world passed J0--J5 after a single `REIFY_EDGE_AS_NODE`. Inspection found that reification created a Relation with arity 2 atomically, and incomplete representations could inherit an overly flexible public-data basis.
+- Applied only admissibility corrections allowed by the preregistration's implementation-failure rule: reification still creates the same relation carrier and edges but no longer assigns arity; `CHANGE_ARITY` remains separately required. Candidates without a completed generic motif now use the exact incumbent-oracle executable basis instead of a flexible fallback.
+- Added an exhaustive depth-one audit. Across 90 development/unit worlds x 192 alternatives = 17,280 candidate evaluations, zero depth-one candidate now validates. Constructive reachability remains 90/90 and the primitive names/count, d_max=4, breadth=48, search policy, held-out family, model, prompts, seeds, configs, and thresholds are unchanged.
+- Post-correction suite: 149 tests and Ruff clean. The original pilot and raw calls are retained under `artifacts/compositional/pilot-existing`; it will be superseded by an identical-config pilot rerun before any confirmatory call.

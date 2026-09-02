@@ -7,7 +7,7 @@
     "no_family_semantics": "operator names and dispatch contain no benchmark family labels",
     "no_ground_truth": "API accepts only parent, operator, local arguments, seed, depth, optional donor"
   },
-  "implementation_sha256": "ea330d223e802bf214ab717e374e01e04f22557df09c8211df1ea4bfb9ee6ca1",
+  "implementation_sha256": "005fde1b2a3459b56f413803ba23eb2013e204da53b167b840210e569ab74b15",
   "name": "GENERIC_PRIMITIVE_SET_V1",
   "operators": [
     {

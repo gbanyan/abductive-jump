@@ -5,7 +5,7 @@ from typing import Any
 
 from .compositional_realization import fit_composed_representation
 from .compositional_worlds import HELD_OUT_FAMILY
-from .executable import evaluate_executable, freeze_theory, parse_theory
+from .executable import evaluate_executable, freeze_theory, parse_theory, program_expression
 from .generic_primitives import ComposedRepresentation, GenericPrimitive, compose
 from .oracle import incumbent_oracle
 from .representation import NodeKind
@@ -97,10 +97,23 @@ def executable_result(world: World, candidate: ComposedRepresentation) -> dict[s
     public_to_internal = {public: internal for internal, public in world.variable_names}
     internal_to_public = dict(world.variable_names)
     oracle = incumbent_oracle(world)
+    expression = fit.expression
+    if fit.structural_signature == "incumbent_basis":
+        def translate(value: Any) -> Any:
+            if isinstance(value, dict):
+                result = {key: translate(item) for key, item in value.items()}
+                if result.get("op") in {"var", "raw_var", "history_sum"}:
+                    result["name"] = internal_to_public.get(
+                        str(result["name"]), str(result["name"])
+                    )
+                return result
+            return value
+
+        expression = type(fit.expression)(translate(program_expression(oracle.program).tree))
     selected = max(
         world.interventions,
         key=lambda case: abs(
-            fit.expression.evaluate(
+            expression.evaluate(
                 {internal_to_public.get(name, name): value for name, value in case.inputs if not name.startswith("_")},
                 {internal_to_public.get(name, name): value for name, value in case.intervention},
             )
@@ -109,7 +122,7 @@ def executable_result(world: World, candidate: ComposedRepresentation) -> dict[s
     )
     payload = {
         "representation": candidate.representation.canonical_dict(),
-        "expression": fit.expression.tree,
+        "expression": expression.tree,
         "explanation": "deterministic reachability witness",
         "selected_intervention_ids": [selected.case_id],
     }
