@@ -149,3 +149,10 @@ All times use Asia/Taipei (UTC+08:00). Entries are append-only except to correct
 - All seven conditions had zero false jumps: C0, C1, C2, C3, C_self, C_rand, and C5 were each 0/200. Independent audit passed with zero budget mismatches, zero C2 depth-one successes, 9,600/9,600 fixed C_self opportunities, and zero valid C_self plans.
 - Both registered known-family shards are now terminal and independently audited. The existing-family reconstruction results and safety controls satisfy the preregistered procedural condition for held-out unlock.
 - **Held-out status changes from locked to unlocked at this ledger entry.** No held-out inference call has yet been issued or inspected. The next action is the frozen `triadic_relation_reification` reconstruction config with seeds 40000--40099; no operator, depth, breadth, fitter, search rule, prompt, threshold, model, or seed was changed after the known-family outcome.
+
+## 2026-09-02 20:24 +08:00 — Held-out reconstruction confirmatory terminal
+
+- Completed the frozen 100-world `triadic_relation_reification` reconstruction shard with exit code 0: exactly 700 world-condition rows, 2,100 selected candidates, and 4,200 unique inference calls. No infrastructure rerun occurred.
+- Terminal held-out JSR was C0 0/100, C1 0/100, C2 0/100, C3 100/100 (100%), C_self 0/100, C_rand 13/100 (13%), and C5 100/100 (100%). These are terminal reconstruction results, not the final verdict; the matched held-out no-jump control remains pending.
+- Independent run audit passed: zero primary budget mismatches, zero C2 depth-one successes, 4,800/4,800 fixed C_self plan opportunities recorded, zero valid C_self plans, and 4,200/4,200 unique call keys.
+- No configuration, prompt, operator, fitter, threshold, model, seed, or search rule changed after held-out unlock. The next registered action is the frozen held-out no-jump control; cross-shard analysis remains deferred until it is terminal and audited.
