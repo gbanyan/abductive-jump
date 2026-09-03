@@ -89,6 +89,18 @@ The separately frozen `PHI-BUDGET-SENSITIVITY` reused the exact historical Phi-4
 
 Each shard had to match its frozen seed panel, model identity, revision, call cardinality and artifact schema before receiving `complete_verified` status. Replay was locked until all five shards were verified. Analysis was then locked until all outputs replayed with zero mismatches. Reported inference consists of counts, Wilson intervals, paired world transitions, paired JSR differences and per-family descriptions. DeepSeek native is explicitly not compute-matched, and the Phi-4 sensitivity changes serving engine together with precision.
 
-## S12. Software and environment
+## S12. Minimal sensitivity results and attrition
+
+All autonomous fixed-panel conditions produced 0/96 successful worlds (Wilson 95% interval 0–3.8%): the historical Phi-4 4-bit slice, Phi-4 4-bit with the 2,048-token cap, Phi-4 8-bit, DeepSeek matched, DeepSeek native and Phi-4 8-bit with one validator-only repair. The five registered paired contrasts therefore contained 96 joint failures, no successes unique to either member and a paired JSR difference of 0.000. Each of the eight families contributed 12 worlds and had 0/12 in every autonomous condition; these family counts are descriptive.
+
+The fixed-panel 2,048-token Phi-4 run produced 993/4,608 schema-valid plan opportunities but no executable plan. Across the complete descriptive known-family population, 4,642/19,200 opportunities were schema-valid and 9 executable. Those 9 plans occurred within a single selected slot, yielding one candidate, which failed J1. The held-out population produced 1,289/4,800 schema-valid and 0 executable opportunities. JSR was 0/400 known-family and 0/100 held-out, matching the historical world-level counts.
+
+Phi-4 8-bit produced 4,608/4,608 JSON-extractable effective opportunities but 0 schema-valid because the extracted outer `plans` field was not a list. Its one-repair condition repeated the same error in every effective replacement opportunity. DeepSeek matched had 4,480 non-list `plans` errors and 128 missing plans among 4,608 opportunities. DeepSeek native exposed reasoning text in all 576 calls, but no separate answer reached the parser; 518 calls ended at the 4,096-token cap and 58 reported a stop finish reason.
+
+The balanced DeepSeek supplied-representation control succeeded in 3/40 worlds (7.5%; Wilson 95% interval 2.6–19.9%): 1/5 coordinate-transformation and 2/5 hidden-regime worlds, with 0/5 in each other family. Of 120 model-authored expression-and-intervention candidates, 4 were parse-valid, executable and passed J1–J2; 3 also passed J3–J5. The other calls supplied reasoning text without a usable final answer; 116/120 reached the cap. This is a minimum positive control for occasional supplied-representation use, not a reliable ceiling.
+
+The extension used 576 calls in each unrepaired n=96 C_self condition, 864 in the triggered repair and 120 in P2. Total completion tokens were 231,773 for Phi-4 8-bit, 237,792 for DeepSeek matched, 2,249,518 for DeepSeek native, 433,373 for repaired Phi-4, 485,312 for P2 and 528,976 for the fixed-panel Phi-budget condition. The service exposed reasoning text but not a separate reasoning-token count for DeepSeek. All five new shards and both Phi-budget populations replayed without mismatch: 2,772 candidate rows, zero mismatches and zero replay-time model calls.
+
+## S13. Software and environment
 
 The repository records package versions, configuration hashes, prompt identifiers, model revision, vLLM image digest, GPU class and random seeds in reproducibility manifests. Tests cover world determinism, public-field redaction, DSL membership, primitive legality, budget invariants, reachability, statistics and replay. The publication phase did not call the model or generate new experimental rows.

@@ -1,0 +1,10 @@
+{
+  "candidate_rows": 300,
+  "config_sha256": "31a46eea60ed5c73be07f2217b5e03a5b1e1b8cbd85916d38d0b440812c4aa4b",
+  "kind": "compositional",
+  "mismatches": 0,
+  "raw_calls_sha256": "dad89de56b856eb9b6625b1ad84d8ef4ce2a764875c0756cf8cb02af035e8d50",
+  "replayed_candidates_sha256": "499f78571cccf4921944b80db05b95b7486f9bc3b38155c67474bd3e50c95667",
+  "treatment_id": "phi_budget",
+  "verified_rows": 300
+}

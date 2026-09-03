@@ -1,0 +1,17 @@
+{
+  "artifact_sha256": {
+    "candidate_results.parquet": "d2ef447a46e841a1735ee61190bcb08596e433f1a43c0cc1a8033323d884c2fa",
+    "condition_summary.parquet": "eeb0cd050ea35b06819cc872980ea081cf033dfc5eae4b1a811f5597f3aa2df7",
+    "llm_calls.jsonl": "e181c1cae58aae765f0fe2aac7d4c57d95c867c8fe9c813e0a6fc8bc2c9313a9",
+    "llm_self_plans.parquet": "73033c3e0691e83e9e54b5a12874dd17ff952a8edb70ee940b48dbbf1308545d",
+    "summary.json": "eaefa3b3344fea9da4f34411e3e73f7514088e31c6441c6afd844bcfcac13ba8",
+    "world_results.parquet": "90e15f8a9f50b67f1f4888c69a6e450efdc83709ce98799ae09c5a3d75142ca3"
+  },
+  "candidate_rows": 288,
+  "experiment_id": "NMI-MIN-SENS-V1::phi8_cself",
+  "kind": "cself",
+  "llm_calls": 576,
+  "status": "complete_verified",
+  "transport_error_sentinels": 0,
+  "worlds": 96
+}

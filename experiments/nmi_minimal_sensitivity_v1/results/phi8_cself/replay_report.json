@@ -1,0 +1,10 @@
+{
+  "candidate_rows": 288,
+  "config_sha256": "d4e500ffa1372d51b5a8829e4872eec19fe88c94402ceee9580f06ed823c678c",
+  "kind": "compositional",
+  "mismatches": 0,
+  "raw_calls_sha256": "e181c1cae58aae765f0fe2aac7d4c57d95c867c8fe9c813e0a6fc8bc2c9313a9",
+  "replayed_candidates_sha256": "a9ee2a54c56a0ad7857b438254346c3ca1fee1c1ee9e5352ba9e7cb8f13d008b",
+  "treatment_id": "phi8_precision",
+  "verified_rows": 288
+}

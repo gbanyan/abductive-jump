@@ -1,0 +1,5 @@
+condition,population,successes,worlds,jsr,wilson_95_low,wilson_95_high
+historical_phi4_4bit_cself_full,original confirmatory n=400,0,400,0.0,8.673617379884035e-19,0.009512294334296508
+phi4_4bit_budget_cself_full,budget sensitivity n=400,0,400,0.0,8.673617379884035e-19,0.009512294334296508
+historical_phi4_4bit_cself_heldout,original held-out n=100,0,100,0.0,3.469446951953614e-18,0.03699349820698568
+phi4_4bit_budget_cself_heldout,budget sensitivity held-out n=100,0,100,0.0,3.469446951953614e-18,0.03699349820698568

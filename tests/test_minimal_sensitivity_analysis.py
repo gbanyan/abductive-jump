@@ -1,10 +1,13 @@
 import json
 from pathlib import Path
 
+import pyarrow as pa
+import pyarrow.parquet as pq
 import pytest
 
 from abductive_jump.minimal_sensitivity_analysis import (
     call_ledger,
+    cself_attrition,
     cumulative_pass_count,
     paired_difference,
     wilson_interval,
@@ -77,3 +80,47 @@ def test_call_ledger_can_extract_a_frozen_world_panel(tmp_path: Path) -> None:
     assert ledger["llm_calls"] == 1
     assert ledger["prompt_tokens"] == 10
     assert ledger["completion_tokens"] == 20
+
+
+def test_cself_attrition_joins_legacy_plans_to_panel_by_world_id(tmp_path: Path) -> None:
+    plan_rows = []
+    candidate_rows = []
+    for world_id, world_seed in (("included", 1), ("excluded", 2)):
+        plan_rows.append(
+            {
+                "world_id": world_id,
+                "family": "a",
+                "slot": 0,
+                "repair_stage": "initial",
+                "request_returned": True,
+                "non_empty_answer": True,
+                "json_parse_valid": True,
+                "plan_schema_valid": True,
+                "operation_names_valid": True,
+                "argument_types_valid": True,
+                "executable": True,
+                "representation_constructed": True,
+            }
+        )
+        candidate_rows.append(
+            {
+                "world_id": world_id,
+                "world_seed": world_seed,
+                "family": "a",
+                "slot": 0,
+                "j1": True,
+                "j2": True,
+                "j3": True,
+                "j4": True,
+                "j5": True,
+            }
+        )
+    pq.write_table(pa.Table.from_pylist(plan_rows), tmp_path / "llm_self_plans.parquet")
+    pq.write_table(pa.Table.from_pylist(candidate_rows), tmp_path / "candidate_results.parquet")
+
+    rows = cself_attrition("legacy", tmp_path, {("a", 1)})
+
+    assert rows[0]["passed"] == 1
+    assert rows[0]["denominator"] == 1
+    assert rows[-1]["stage"] == "J5"
+    assert rows[-1]["passed"] == 1

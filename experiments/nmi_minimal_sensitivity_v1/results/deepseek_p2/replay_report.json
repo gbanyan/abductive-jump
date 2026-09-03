@@ -1,0 +1,9 @@
+{
+  "candidate_rows": 120,
+  "config_sha256": "8892b7e93eabcc4e08f941a3353b9a13398f9c2df493dedf556d62faa9c51c2b",
+  "kind": "causal_supplied_representation_positive_control",
+  "mismatches": 0,
+  "raw_calls_sha256": "a3ea29e7878b25c05a710a1704a055f7dd013b900937e5f24fd212e32aac0cf4",
+  "replayed_candidates_sha256": "ea9fb95f97ec1ff8e9779a2b6357e360d2d3738f1954a62dd4be4ed589f33323",
+  "verified_rows": 120
+}

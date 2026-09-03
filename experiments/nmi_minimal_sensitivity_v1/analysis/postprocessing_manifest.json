@@ -1,0 +1,31 @@
+{
+  "analysis_conditions": 7,
+  "model_calls_made": 0,
+  "output_sha256": {
+    "experiments/nmi_minimal_sensitivity_v1/analysis/analysis.json": "2aaa28834bf05c7952e75fc921364d89a8eb34740d3d1b28a01af666e7c0b8b1",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv": "1f654caeb3dac1d7bb01818bdec7e4f74280281bd8f0f7c02abf99f477e321f7",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv": "9a4e3bb6e61403f11ca82273055c2d7766e86ad08d8ba1416e554205e0099880",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/minimal_sensitivity_report.md": "6e7f6861d95c32fb14e9f11c142338c35a25145964efa65568fce6d92dde5cc7",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/paired_world_differences.csv": "1ad00e96211b19187cc0c2e7c4d03a328bb32c58d64e092ddf548df12331bae6",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv": "799374a531aa141fc3736e7a5e575c2be70a2ba7f9b3d5117a569814b999caca",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_compute_ledger.csv": "f927ed3f38ae075549671dca22082a8432868426982bd3aefdee1658f402d2ae",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv": "b32f2711626b05263b9989d3b0e0c391ebb9ea7d64631c2598fd2b8a29d29841",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_paired_differences.csv": "08b8c827a8b7d56fcc30622b0b5790afa608e3649f88128d29f597fce1c8716d",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_world_summary.csv": "0f59b113fd002ed5d0fa5c56a9f558f5fd20239f754df6385013edbfed681ae9",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json": "580e5b8b21e0366d2da7fe0b28383e63de3101cd6198d9777feb87233600ac18",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv": "0ba2d121beb644100287cc7b9e0722cc4ab1f29ff4a3a44cfdaf247e5b7cefbf",
+    "reports/figures/minimal_sensitivity/figure1-world-jsr.png": "37f229df94ad4def5ce79a466317d88f4d983d383923c4cda6e821bf42af5510",
+    "reports/figures/minimal_sensitivity/figure1-world-jsr.svg": "b2663c1cb74f59ef31467c9e4223a5aa99893f841379ef54fe1589d2d3299b14",
+    "reports/figures/minimal_sensitivity/figure2-gate-attrition.png": "09a8ee749f8b3f620e3c3db2c4966494edd04609ff47e06a5a5df49dcff0e5b2",
+    "reports/figures/minimal_sensitivity/figure2-gate-attrition.svg": "3ad9072cb09642cf9ff0e1106b5fc3f7011e4d1db1288c9ad3a7a796e40c06ba",
+    "reports/figures/minimal_sensitivity/figure3-per-family.png": "ec6f802ee5e864e4b8bcc3dfbefc8c9e9f67dadcbe7cbba0714ce7b0b4e4cb64",
+    "reports/figures/minimal_sensitivity/figure3-per-family.svg": "8753bffdeb2392e9eed90125496ea75defc5848725253ab1816de2f552b3fee9"
+  },
+  "replay_candidate_rows": 2772,
+  "replay_mismatches": 0,
+  "reports": {
+    "figures": "/Users/gbanyan/Project/novelty-seeking-agent/reports/figures/minimal_sensitivity",
+    "report": "/Users/gbanyan/Project/novelty-seeking-agent/experiments/nmi_minimal_sensitivity_v1/analysis/minimal_sensitivity_report.md"
+  },
+  "status": "complete_verified"
+}

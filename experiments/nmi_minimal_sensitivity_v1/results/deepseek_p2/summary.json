@@ -1,0 +1,32 @@
+{
+  "candidate_rows": 120,
+  "design": {
+    "calls_per_world": 3,
+    "deterministic_overwrites": [
+      "representation only"
+    ],
+    "model_authored": [
+      "expression",
+      "explanation",
+      "selected_intervention_ids"
+    ],
+    "outcomes_visible_before_commitment": false,
+    "representation": "oracle representation supplied and fixed"
+  },
+  "jsr": 0.075,
+  "model_manifest": {
+    "context_limit": 1048576,
+    "engine": "patched-vllm-openai",
+    "engine_version": "0.25.2.dev0+g752a3a504.d20260714",
+    "max_tokens": 4096,
+    "model": "deepseek-v4-flash-vision-exp",
+    "quantization": "fp8-weights+nvfp4-kv-cache",
+    "reasoning_effort": "max",
+    "response_format": null,
+    "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "transport_retries": 2
+  },
+  "worlds": 40
+}

@@ -137,12 +137,14 @@ def cself_attrition(
     plan_rows = effective_plan_rows(parquet_rows(run_dir / "llm_self_plans.parquet"))
     candidate_rows = parquet_rows(run_dir / "candidate_results.parquet")
     if pairs is not None:
-        plan_rows = [
-            row for row in plan_rows if (str(row["family"]), int(row["world_seed"])) in pairs
-        ]
         candidate_rows = [
             row for row in candidate_rows if (str(row["family"]), int(row["world_seed"])) in pairs
         ]
+        # Historical Phi-budget plan ledgers predate the sensitivity schema and
+        # identify worlds by world_id, not world_seed.  Candidate rows retain
+        # both identifiers, so use their selected world IDs as the join key.
+        selected_world_ids = {str(row["world_id"]) for row in candidate_rows}
+        plan_rows = [row for row in plan_rows if str(row["world_id"]) in selected_world_ids]
     stages = (
         "request_returned",
         "non_empty_answer",

@@ -1,4 +1,10 @@
-from abductive_jump.minimal_sensitivity_reports import normalized_attrition, percent
+import numpy as np
+
+from abductive_jump.minimal_sensitivity_reports import (
+    interval_error_distances,
+    normalized_attrition,
+    percent,
+)
 
 
 def test_normalized_attrition_maps_historical_and_new_stage_names() -> None:
@@ -17,3 +23,10 @@ def test_normalized_attrition_maps_historical_and_new_stage_names() -> None:
 
 def test_percent_formats_fraction_as_percentage() -> None:
     assert percent("0.125") == "12.5%"
+
+
+def test_interval_error_distances_clamps_endpoint_roundoff() -> None:
+    distances = interval_error_distances(
+        np.array([1.0]), np.array([0.95]), np.array([1.0 - 1e-16])
+    )
+    assert distances.tolist() == [[0.050000000000000044], [0.0]]

@@ -1,0 +1,3 @@
+condition,llm_calls,transport_attempts,prompt_tokens,completion_tokens,answer_tokens,reasoning_tokens_reported,reasoning_token_count_available_calls,reasoning_text_available_calls,latency_seconds_sum,finish_reasons
+phi4_4bit_budget_cself_full,2400,2400,2921915,2216914,2216914,0,0,0,169361.06208488657,"{""length"": 513, ""stop"": 1887}"
+phi4_4bit_budget_cself_heldout,600,600,696489,546374,546374,0,0,0,41524.48343751603,"{""length"": 122, ""stop"": 478}"

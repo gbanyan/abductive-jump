@@ -35,6 +35,15 @@ LABELS = {
     "phi8_cself_repair": "Phi-4 8-bit\none repair",
     "deepseek_p2": "DeepSeek\nsupplied representation",
 }
+AXIS_LABELS = {
+    "historical_phi4_4bit_cself": "Phi-4\n4b / 700*",
+    "phi4_4bit_budget_cself": "Phi-4\n4b / 2,048",
+    "phi8_cself": "Phi-4\n8b / 700",
+    "deepseek_matched_cself": "DeepSeek\nmatched",
+    "deepseek_native_cself": "DeepSeek\nnative",
+    "phi8_cself_repair": "Phi-4 8b\none repair",
+    "deepseek_p2": "DeepSeek P2\nn=40",
+}
 COLORS = {
     "historical_phi4_4bit_cself": "#7A7A7A",
     "phi4_4bit_budget_cself": "#E69F00",
@@ -133,6 +142,13 @@ def save_figure(fig: plt.Figure, destination: Path) -> None:
     plt.close(fig)
 
 
+def interval_error_distances(
+    values: np.ndarray, lows: np.ndarray, highs: np.ndarray
+) -> np.ndarray:
+    """Return plotting distances robust to endpoint round-off at zero and one."""
+    return np.maximum(0.0, np.vstack([values - lows, highs - values]))
+
+
 def plot_world_summary(rows: list[dict[str, str]], destination: Path) -> None:
     lookup = {row["condition"]: row for row in rows}
     ordered = [lookup[name] for name in ORDER]
@@ -145,7 +161,7 @@ def plot_world_summary(rows: list[dict[str, str]], destination: Path) -> None:
     ax.errorbar(
         x,
         values,
-        yerr=np.vstack([values - lows, highs - values]),
+        yerr=interval_error_distances(values, lows, highs),
         fmt="none",
         ecolor="#202020",
         capsize=3,
@@ -161,7 +177,7 @@ def plot_world_summary(rows: list[dict[str, str]], destination: Path) -> None:
         )
     ax.axvline(5.5, color="#A0A0A0", linestyle="--", linewidth=0.9)
     ax.text(5.55, 1.075, "n=40 control", fontsize=7, color="#555555", ha="left")
-    ax.set_xticks(x, [LABELS[row["condition"]] for row in ordered])
+    ax.set_xticks(x, [AXIS_LABELS[row["condition"]] for row in ordered])
     ax.set_ylabel("World-level jump success rate")
     ax.set_ylim(0, 1.12)
     ax.set_yticks(np.linspace(0, 1, 6), [f"{int(value * 100)}%" for value in np.linspace(0, 1, 6)])
@@ -220,7 +236,7 @@ def plot_family_heatmap(rows: list[dict[str, str]], destination: Path) -> None:
     )
     fig, ax = plt.subplots(figsize=(7.2, 3.8))
     image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
-    ax.set_xticks(np.arange(len(conditions)), [LABELS[name] for name in conditions])
+    ax.set_xticks(np.arange(len(conditions)), [AXIS_LABELS[name] for name in conditions])
     ax.set_yticks(np.arange(len(families)), [name.replace("_", " ") for name in families])
     for row_index in range(matrix.shape[0]):
         for column_index in range(matrix.shape[1]):

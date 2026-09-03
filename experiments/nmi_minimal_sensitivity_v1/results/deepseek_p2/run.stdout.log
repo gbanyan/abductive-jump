@@ -1,0 +1,32 @@
+{
+  "model_manifest": {
+    "model": "deepseek-v4-flash-vision-exp",
+    "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+    "quantization": "fp8-weights+nvfp4-kv-cache",
+    "engine": "patched-vllm-openai",
+    "engine_version": "0.25.2.dev0+g752a3a504.d20260714",
+    "context_limit": 1048576,
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 4096,
+    "reasoning_effort": "max",
+    "response_format": null,
+    "transport_retries": 2
+  },
+  "design": {
+    "representation": "oracle representation supplied and fixed",
+    "model_authored": [
+      "expression",
+      "explanation",
+      "selected_intervention_ids"
+    ],
+    "deterministic_overwrites": [
+      "representation only"
+    ],
+    "outcomes_visible_before_commitment": false,
+    "calls_per_world": 3
+  },
+  "candidate_rows": 120,
+  "worlds": 40,
+  "jsr": 0.075
+}

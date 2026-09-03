@@ -1,0 +1,7 @@
+condition,llm_calls,transport_attempts,prompt_tokens,completion_tokens,answer_tokens,reasoning_tokens_reported,reasoning_token_count_available_calls,reasoning_text_available_calls,latency_seconds_sum,finish_reasons
+phi8_cself,576,576,704376,231773,231773,0,0,0,13971.75930554507,"{""length"": 288, ""stop"": 288}"
+deepseek_matched_cself,576,576,786804,237792,237792,0,0,0,10636.341976915312,"{""length"": 286, ""stop"": 290}"
+deepseek_native_cself,576,576,839796,2249518,2249518,0,0,576,156547.0789614558,"{""length"": 518, ""stop"": 58}"
+phi8_cself_repair,864,864,1254663,433373,433373,0,0,0,26462.161461129028,"{""length"": 576, ""stop"": 288}"
+deepseek_p2,120,120,183891,485312,485312,0,0,120,38836.050002799835,"{""length"": 116, ""stop"": 4}"
+phi4_4bit_budget_cself,576,576,704376,528976,528976,0,0,0,40446.13759561561,"{""length"": 123, ""stop"": 453}"

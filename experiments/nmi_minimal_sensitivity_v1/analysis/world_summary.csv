@@ -1,0 +1,8 @@
+condition,population,successes,worlds,jsr,wilson_95_low,wilson_95_high
+historical_phi4_4bit_cself,"original confirmatory n=400, fixed paired subset shown",0,96,0.0,3.469446951953614e-18,0.038475587857675686
+phi4_4bit_budget_cself,"previously frozen n=400 budget sensitivity, fixed paired subset shown",0,96,0.0,3.469446951953614e-18,0.038475587857675686
+phi8_cself,new fixed n=96 sensitivity panel,0,96,0.0,3.469446951953614e-18,0.038475587857675686
+deepseek_matched_cself,new fixed n=96 sensitivity panel,0,96,0.0,3.469446951953614e-18,0.038475587857675686
+deepseek_native_cself,new fixed n=96 sensitivity panel,0,96,0.0,3.469446951953614e-18,0.038475587857675686
+phi8_cself_repair,new fixed n=96 sensitivity panel,0,96,0.0,3.469446951953614e-18,0.038475587857675686
+deepseek_p2,new balanced n=40 positive-control subset,3,40,0.075,0.025836025774588198,0.19864233524310543

@@ -1,0 +1,6 @@
+worlds,both_fail,both_succeed,comparison_only_success,reference_only_success,paired_jsr_difference,reference,comparison
+96,96,0,0,0,0.0,historical_phi4_4bit_cself,phi4_4bit_budget_cself
+96,96,0,0,0,0.0,historical_phi4_4bit_cself,phi8_cself
+96,96,0,0,0,0.0,historical_phi4_4bit_cself,deepseek_matched_cself
+96,96,0,0,0,0.0,deepseek_matched_cself,deepseek_native_cself
+96,96,0,0,0,0.0,phi8_cself,phi8_cself_repair

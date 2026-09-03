@@ -1,0 +1,98 @@
+{
+  "candidate_rows": 288,
+  "conditions": [
+    {
+      "compositional_jsr": 0.0,
+      "condition": "C_SELF_LLM_COMPOSITION",
+      "jsr": 0.0,
+      "llm_calls": 576,
+      "mean_tokens": 2414.3020833333335,
+      "worlds": 96
+    }
+  ],
+  "config": {
+    "candidate_slots": 3,
+    "concurrency": 1,
+    "conditions": [
+      "C_SELF_LLM_COMPOSITION"
+    ],
+    "context_limit": 4096,
+    "decoding_seed_base": 320000001,
+    "docker_image": "vllm/vllm-openai:v0.10.2",
+    "docker_image_digest": "sha256:607442e407b0fea97f8a132a78b787c121a996dd4de181fa08e8da06e71ec2db",
+    "engine": "transformers-openai-compat-frozen-v1",
+    "engine_version": "transformers-4.56.1+bitsandbytes-0.47.0",
+    "extension_experiment_id": "NMI-MIN-SENS-V1::phi8_cself",
+    "families": [
+      "latent_common_cause",
+      "unification",
+      "hidden_regimes",
+      "property_to_relation",
+      "state_invention",
+      "coordinate_transform",
+      "causal_ambiguity",
+      "meta_law"
+    ],
+    "gate_thresholds": {
+      "delta_cf": 0.1,
+      "delta_falsification": 0.1,
+      "epsilon_candidate_obs": 1e-12,
+      "epsilon_falsification": 1e-12,
+      "epsilon_obs": 1e-12,
+      "min_prediction_separation": 0.5
+    },
+    "generation": {
+      "max_tokens": 700,
+      "temperature": 0.2,
+      "top_p": 0.95
+    },
+    "historical_source_config": "configs/compositional-confirmatory-existing.json",
+    "historical_source_config_sha256": "4c3b1095d554d20f2c202db9b3e8aef3ee6d25a582653b1da1c1418a6c4f29f5",
+    "max_depth": 4,
+    "model": "microsoft/phi-4",
+    "no_jump": false,
+    "phase": "CONFIRMATORY_EXISTING_RECONSTRUCTION",
+    "primitive_operation_budget": 192,
+    "prompt_template": "theory-json-v10+generic-self-composition-v1",
+    "quantization": "bitsandbytes-8bit-runtime",
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "runner_module": "abductive_jump.compositional_experiment",
+    "search_breadth": 48,
+    "search_seed_base": 330000001,
+    "self_plans_per_slot": 16,
+    "sensitivity_panel_id": "NMI-MIN-SENS-V1-PANEL-96",
+    "sensitivity_role": "same-revision 8-bit precision-and-serving-engine sensitivity",
+    "transport_retries": 2,
+    "treatment_id": "phi8_precision",
+    "validator_repair_attempts": 0,
+    "world_seeds": [
+      30014,
+      30012,
+      30029,
+      30025,
+      30011,
+      30023,
+      30000,
+      30032,
+      30001,
+      30037,
+      30002,
+      30015
+    ]
+  },
+  "model_manifest": {
+    "context_limit": 4096,
+    "engine": "transformers-openai-compat-frozen-v1",
+    "engine_version": "transformers-4.56.1+bitsandbytes-0.47.0",
+    "max_tokens": 700,
+    "model": "microsoft/phi-4",
+    "quantization": "bitsandbytes-8bit-runtime",
+    "reasoning_effort": null,
+    "response_format": null,
+    "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "transport_retries": 2
+  },
+  "world_condition_rows": 96
+}

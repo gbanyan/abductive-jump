@@ -1,0 +1,20 @@
+{
+  "artifacts": {
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/candidate_results.parquet": "42fcb3120e1bea7912549c6e3c9d1647eb2d70c5300089906c8a374745205291",
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/condition_summary.parquet": "9fed0fd109f5f3037604ec55c963d4b7ed4002fee906a61e5e9c532ed0db696e",
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/llm_calls.jsonl": "47b60112c3e9f6f66d6520dbee8254d30bd56e11e8731d5ce670a64a617ac473",
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/llm_self_plans.parquet": "28e14b919b1a8742f7d9d739a397a453a10f8c9a1f1cecf70e1c48d0a0f73723",
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/summary.json": "0777a107cd3f0416e2672ae7123ee41f47cb14795a5d159ca4d03d0e6e282e3c",
+    "experiments/nmi_extension_v1/results/phi_budget/known_jump/world_results.parquet": "b00300adeaeca935811a04a6d6ffefdcb61fc673c2209910e5e10483c8fcd5b0"
+  },
+  "candidate_rows": 1200,
+  "config": "experiments/nmi_extension_v1/configs/phi_budget/known_jump.json",
+  "config_sha256": "cba0f9907f05f80f163c1571505bcaf2858673dc91ad7cd703bf82a62103a8ef",
+  "experiment_id": "NMI-EXT-V1::phi_budget::known_jump",
+  "llm_calls": 2400,
+  "run_dir": "experiments/nmi_extension_v1/results/phi_budget/known_jump",
+  "status": "complete_verified",
+  "transport_error_records": 0,
+  "treatment_id": "phi_budget",
+  "world_rows": 400
+}

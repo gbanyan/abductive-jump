@@ -662,9 +662,9 @@ def figure_4() -> Path:
     ax.text(
         0.02,
         0.04,
-        "Model-free C3 replay: 2,400/2,400 gate matches",
+        "C3 audit: 2,400/2,400; extension replay: 2,772/2,772",
         transform=ax.transAxes,
-        fontsize=6.2,
+        fontsize=5.9,
         color=NAVY,
     )
     ax.set_title("Response-to-verdict attrition")
@@ -893,7 +893,7 @@ def page_decor(canvas, doc) -> None:
     canvas.line(20 * mm, height - 15 * mm, width - 20 * mm, height - 15 * mm)
     canvas.setFont("DejaVu", 7.5)
     canvas.setFillColor(colors.HexColor(GREY))
-    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI MANUSCRIPT WITH FIGURES | 3 SEPTEMBER 2026")
+    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI MANUSCRIPT WITH FIGURES | 4 SEPTEMBER 2026")
     canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
     canvas.drawString(20 * mm, 11 * mm, "Complete scientific discussion copy | not yet submitted")
     canvas.restoreState()
@@ -1040,7 +1040,7 @@ def literature_table(st) -> Table:
             "locked",
             "exact",
             "factorial / exact",
-            "9 families / 1 model",
+            "9 families / 2-checkpoint sensitivity",
         ],
     ]
     wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
@@ -1167,7 +1167,8 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                 )
                 inserted.add(3)
             elif (
-                heading == "A deterministic component audit removes the language model"
+                heading
+                == "Targeted sensitivities do not remove the proposal-interface bottleneck"
                 and 4 not in inserted
             ):
                 story.extend(
@@ -1502,7 +1503,7 @@ def build_pdf() -> Path:
         [
             image_flow(sensitivity_figures / "figure1-world-jsr.png"),
             caption(
-                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The supplied-representation control uses a distinct balanced n=40 subset.",
+                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
                 st,
             ),
             PageBreak(),

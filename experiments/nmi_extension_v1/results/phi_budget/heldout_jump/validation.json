@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/candidate_results.parquet": "2f9400048f05cf693cd2b1a56c7b9cb1f6e56f45ee53d6083fc70223b3d04d32",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/condition_summary.parquet": "546d48e976341c9c0a50a4883f197a3abacc7df37118e44d1cc7e7100d5cba95",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/llm_calls.jsonl": "dad89de56b856eb9b6625b1ad84d8ef4ce2a764875c0756cf8cb02af035e8d50",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/llm_self_plans.parquet": "e2d64a07fc11c2cb48470257e2b5763e1fedc059707661f568c299fb332e412e",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/run.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/run.stdout.log": "7db9e0d1cb03e6b5c28d685d2696dd154227a0fea9cedc21aea6bef080c847d0",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/summary.json": "b53d8b5df3636be677e251b0a5bc5759f5f107b4492734639169354a31189fbb",
+    "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/world_results.parquet": "ee89d91e0809f1e69404b0b1765e9d93c2b1fd3da686ccaa983e4979c19fb049"
+  },
+  "candidate_rows": 300,
+  "config": "experiments/nmi_extension_v1/configs/phi_budget/heldout_jump.json",
+  "config_sha256": "31a46eea60ed5c73be07f2217b5e03a5b1e1b8cbd85916d38d0b440812c4aa4b",
+  "experiment_id": "NMI-EXT-V1::phi_budget::heldout_jump",
+  "llm_calls": 600,
+  "run_dir": "experiments/nmi_extension_v1/results/phi_budget/heldout_jump",
+  "status": "complete_verified",
+  "transport_error_records": 0,
+  "treatment_id": "phi_budget",
+  "world_rows": 100
+}

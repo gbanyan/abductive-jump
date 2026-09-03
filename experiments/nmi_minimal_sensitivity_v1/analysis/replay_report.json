@@ -1,0 +1,78 @@
+{
+  "candidate_rows": 2772,
+  "mismatches": 0,
+  "model_calls_made": 0,
+  "shards": {
+    "deepseek_matched_cself": {
+      "candidate_rows": 288,
+      "config_sha256": "993d5ca0adb11067fd3a59ac4b8578bd1c171d23007a12a83990d2fcb2679248",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "7267f8f006c99eb874ca02d414e7d7862baf9447bf1d66d51bd146947f10812a",
+      "replayed_candidates_sha256": "5a56943f30dd403a5a818d41421a84b46e1f34c93f666259bf732bcfa760b114",
+      "treatment_id": "deepseek_matched",
+      "verified_rows": 288
+    },
+    "deepseek_native_cself": {
+      "candidate_rows": 288,
+      "config_sha256": "1b7574fa49ce2b73e5190d6ca45f1ada6de26b95313f26af559251fc6c501f37",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "ce38c605b79f1d22cbf9c92f5c1498e346c3202d00150da48eac9298f263c7bc",
+      "replayed_candidates_sha256": "133cc6339abe6d5962bc61d2aa511bd507398a379955de9269864c80fc71fa67",
+      "treatment_id": "deepseek_native",
+      "verified_rows": 288
+    },
+    "deepseek_p2": {
+      "candidate_rows": 120,
+      "config_sha256": "8892b7e93eabcc4e08f941a3353b9a13398f9c2df493dedf556d62faa9c51c2b",
+      "kind": "causal_supplied_representation_positive_control",
+      "mismatches": 0,
+      "raw_calls_sha256": "a3ea29e7878b25c05a710a1704a055f7dd013b900937e5f24fd212e32aac0cf4",
+      "replayed_candidates_sha256": "ea9fb95f97ec1ff8e9779a2b6357e360d2d3738f1954a62dd4be4ed589f33323",
+      "verified_rows": 120
+    },
+    "phi4_4bit_budget_heldout": {
+      "candidate_rows": 300,
+      "config_sha256": "31a46eea60ed5c73be07f2217b5e03a5b1e1b8cbd85916d38d0b440812c4aa4b",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "dad89de56b856eb9b6625b1ad84d8ef4ce2a764875c0756cf8cb02af035e8d50",
+      "replayed_candidates_sha256": "499f78571cccf4921944b80db05b95b7486f9bc3b38155c67474bd3e50c95667",
+      "treatment_id": "phi_budget",
+      "verified_rows": 300
+    },
+    "phi4_4bit_budget_known": {
+      "candidate_rows": 1200,
+      "config_sha256": "cba0f9907f05f80f163c1571505bcaf2858673dc91ad7cd703bf82a62103a8ef",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "47b60112c3e9f6f66d6520dbee8254d30bd56e11e8731d5ce670a64a617ac473",
+      "replayed_candidates_sha256": "b518e4b945f79f15edfa13798b0ffdb1c285424ea70402e95f974eb5d192b964",
+      "treatment_id": "phi_budget",
+      "verified_rows": 1200
+    },
+    "phi8_cself": {
+      "candidate_rows": 288,
+      "config_sha256": "d4e500ffa1372d51b5a8829e4872eec19fe88c94402ceee9580f06ed823c678c",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "e181c1cae58aae765f0fe2aac7d4c57d95c867c8fe9c813e0a6fc8bc2c9313a9",
+      "replayed_candidates_sha256": "a9ee2a54c56a0ad7857b438254346c3ca1fee1c1ee9e5352ba9e7cb8f13d008b",
+      "treatment_id": "phi8_precision",
+      "verified_rows": 288
+    },
+    "phi8_cself_repair": {
+      "candidate_rows": 288,
+      "config_sha256": "2a50011616fb3162ca752545968c8bcf4d9867847f1690ee58fb3bdefe3c88ac",
+      "kind": "compositional",
+      "mismatches": 0,
+      "raw_calls_sha256": "bb294e61fa2f88fdcece8d3b085798f1bac57cacfcb1b5291664b796b578fcdb",
+      "replayed_candidates_sha256": "032aa9eff6c0c05b1c1e2711565f2b8d315c379682b0ac0958f01861d4d26859",
+      "treatment_id": "phi8_precision",
+      "verified_rows": 288
+    }
+  },
+  "status": "complete_verified",
+  "verified_rows": 2772
+}

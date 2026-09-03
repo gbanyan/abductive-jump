@@ -1,0 +1,10 @@
+{
+  "candidate_rows": 288,
+  "config_sha256": "1b7574fa49ce2b73e5190d6ca45f1ada6de26b95313f26af559251fc6c501f37",
+  "kind": "compositional",
+  "mismatches": 0,
+  "raw_calls_sha256": "ce38c605b79f1d22cbf9c92f5c1498e346c3202d00150da48eac9298f263c7bc",
+  "replayed_candidates_sha256": "133cc6339abe6d5962bc61d2aa511bd507398a379955de9269864c80fc71fa67",
+  "treatment_id": "deepseek_native",
+  "verified_rows": 288
+}
