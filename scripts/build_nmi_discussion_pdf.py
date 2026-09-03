@@ -1110,24 +1110,90 @@ def sensitivity_tables(st) -> list:
                 f'{100 * float(row["wilson_95_low"]):.1f}-{100 * float(row["wilson_95_high"]):.1f}%',
             ]
         )
-    wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in summary_data]
-    summary_table = Table(wrapped, colWidths=[39 * mm, 59 * mm, 20 * mm, 17 * mm, 30 * mm], repeatRows=1)
-    summary_table.setStyle(
-        TableStyle(
+    def table(data: list[list[str]], widths: list[float]) -> Table:
+        wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
+        result = Table(wrapped, colWidths=widths, repeatRows=1, hAlign="LEFT")
+        result.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 4),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                    ("TOPPADDING", (0, 0), (-1, -1), 4),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                ]
+            )
+        )
+        return result
+
+    with (analysis / "paired_world_differences.csv").open(newline="", encoding="utf-8") as handle:
+        paired = list(csv.DictReader(handle))
+    paired_data = [["Reference", "Comparison", "Both fail", "Both pass", "New only", "Old only", "JSR difference"]]
+    for row in paired:
+        paired_data.append(
             [
-                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-                ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
-                ("LEFTPADDING", (0, 0), (-1, -1), 4),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-                ("TOPPADDING", (0, 0), (-1, -1), 4),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                row["reference"].replace("_", " "),
+                row["comparison"].replace("_", " "),
+                row["both_fail"],
+                row["both_succeed"],
+                row["comparison_only_success"],
+                row["reference_only_success"],
+                f'{float(row["paired_jsr_difference"]):+.3f}',
             ]
         )
-    )
-    return [Paragraph("Sensitivity result table", st["h1"]), summary_table]
+
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition = list(csv.DictReader(handle))
+    attrition_data = [["Condition", "Unit", "Stage", "Passed", "Denominator", "Rate"]]
+    for row in attrition:
+        attrition_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row.get("unit", ""),
+                row["stage"],
+                row["passed"],
+                row["denominator"],
+                f'{100 * float(row["rate"]):.1f}%',
+            ]
+        )
+
+    with (analysis / "compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
+        ledger = list(csv.DictReader(handle))
+    ledger_data = [["Condition", "Calls", "Attempts", "Prompt tokens", "Completion tokens", "Reasoning text", "Latency (s)"]]
+    for row in ledger:
+        ledger_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row["llm_calls"],
+                row["transport_attempts"],
+                row["prompt_tokens"],
+                row["completion_tokens"],
+                row["reasoning_text_available_calls"],
+                f'{float(row["latency_seconds_sum"]):.1f}',
+            ]
+        )
+
+    return [
+        Paragraph("Sensitivity result table", st["h1"]),
+        table(summary_data, [39 * mm, 59 * mm, 20 * mm, 17 * mm, 30 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Paired world-level transitions", st["h1"]),
+        table(paired_data, [32 * mm, 32 * mm, 18 * mm, 18 * mm, 18 * mm, 18 * mm, 25 * mm]),
+        PageBreak(),
+        Paragraph("Complete cumulative gate attrition", st["h1"]),
+        table(attrition_data, [39 * mm, 48 * mm, 22 * mm, 19 * mm, 22 * mm, 18 * mm]),
+        PageBreak(),
+        Paragraph("Model-call and compute ledger", st["h1"]),
+        table(ledger_data, [39 * mm, 16 * mm, 17 * mm, 25 * mm, 28 * mm, 23 * mm, 23 * mm]),
+        Paragraph(
+            "Reasoning-token counts are reported only when exposed by the serving API; reasoning-text availability is not converted into an inferred token count.",
+            st["small"],
+        ),
+    ]
 
 
 def build_pdf() -> Path:
