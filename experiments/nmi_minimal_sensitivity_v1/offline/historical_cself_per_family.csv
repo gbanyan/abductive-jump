@@ -1,0 +1,9 @@
+family,worlds,responses,response_returned,parse_valid,strict_complete_json,schema_valid,executable,at_token_cap
+causal_ambiguity,50,150,150,150,0,0,0,150
+coordinate_transform,50,150,150,150,0,0,0,150
+hidden_regimes,50,150,150,150,0,0,0,150
+latent_common_cause,50,150,150,150,0,0,0,150
+meta_law,50,150,150,150,0,0,0,150
+property_to_relation,50,150,150,150,0,0,0,150
+state_invention,50,150,150,150,0,0,0,150
+unification,50,150,150,150,0,0,0,150

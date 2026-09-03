@@ -1,0 +1,690 @@
+{
+  "families": [
+    "latent_common_cause",
+    "unification",
+    "hidden_regimes",
+    "property_to_relation",
+    "state_invention",
+    "coordinate_transform",
+    "causal_ambiguity",
+    "meta_law"
+  ],
+  "outcome_fields_used": [],
+  "p2_positive_control": {
+    "reason": "DeepSeek max-reasoning calls are materially slower; 40 balanced worlds are the predeclared minimum positive control permitted by the targeted plan.",
+    "selected_seeds": [
+      30014,
+      30012,
+      30029,
+      30025,
+      30011
+    ],
+    "total_worlds": 40,
+    "worlds_per_family": 5
+  },
+  "panel_id": "NMI-MIN-SENS-V1-PANEL-96",
+  "schema_version": "nmi-minimal-sensitivity-panel-v1",
+  "selected_seeds": [
+    30014,
+    30012,
+    30029,
+    30025,
+    30011,
+    30023,
+    30000,
+    30032,
+    30001,
+    30037,
+    30002,
+    30015
+  ],
+  "selected_worlds": [
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": true,
+      "world_id": "w-10c3b7ff5eb85f4afd65",
+      "world_seed": 30014
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": true,
+      "world_id": "w-8c15b684b9b28d09f9e2",
+      "world_seed": 30012
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": true,
+      "world_id": "w-6d85c1e5e6cd53af61bc",
+      "world_seed": 30029
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": true,
+      "world_id": "w-a7911ef3193b0a29c5bc",
+      "world_seed": 30025
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": true,
+      "world_id": "w-4245f542719652d8f054",
+      "world_seed": 30011
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-64fa95f7f254428ef27c",
+      "world_seed": 30023
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-4684b23aa36d943a0f02",
+      "world_seed": 30000
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-99636a15b9e191f45280",
+      "world_seed": 30032
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-10cb5b9f3a61c6f6a1c1",
+      "world_seed": 30001
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-d9f7c5168ea848ce12c7",
+      "world_seed": 30037
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-296907b15c68c88be8c8",
+      "world_seed": 30002
+    },
+    {
+      "family": "latent_common_cause",
+      "p2_positive_control": false,
+      "world_id": "w-f13de31f42d1a1df4977",
+      "world_seed": 30015
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": true,
+      "world_id": "w-972c67f338d42011dd30",
+      "world_seed": 30014
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": true,
+      "world_id": "w-4faa021f7138ca566ff2",
+      "world_seed": 30012
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": true,
+      "world_id": "w-f816c088992716268902",
+      "world_seed": 30029
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": true,
+      "world_id": "w-b8089e484a943342e970",
+      "world_seed": 30025
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": true,
+      "world_id": "w-9891cc5144daaed04eed",
+      "world_seed": 30011
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-525cfbdc5033a162cc05",
+      "world_seed": 30023
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-4feff83e1369c2a14047",
+      "world_seed": 30000
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-ee3eb6708ddeee436099",
+      "world_seed": 30032
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-d28173525f60de58362d",
+      "world_seed": 30001
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-72366a0e4e4051f97b6c",
+      "world_seed": 30037
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-2a7f804da34920ce826a",
+      "world_seed": 30002
+    },
+    {
+      "family": "unification",
+      "p2_positive_control": false,
+      "world_id": "w-039ed735af918bf919aa",
+      "world_seed": 30015
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": true,
+      "world_id": "w-c15d5eaefc593205374d",
+      "world_seed": 30014
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": true,
+      "world_id": "w-38fd3a39088f3eafd90b",
+      "world_seed": 30012
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": true,
+      "world_id": "w-1c26ef19c8023598a650",
+      "world_seed": 30029
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": true,
+      "world_id": "w-9e554a92a912bfea5586",
+      "world_seed": 30025
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": true,
+      "world_id": "w-60c9c82d5f510ec3a309",
+      "world_seed": 30011
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-048a53f130950fbe6110",
+      "world_seed": 30023
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-d7d6a872011507675b36",
+      "world_seed": 30000
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-1150b392ee334dfaff32",
+      "world_seed": 30032
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-fd31ca88493a93ae2d94",
+      "world_seed": 30001
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-1241725fd49d4cde04ef",
+      "world_seed": 30037
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-b01ba9e31cd5f29e1553",
+      "world_seed": 30002
+    },
+    {
+      "family": "hidden_regimes",
+      "p2_positive_control": false,
+      "world_id": "w-02fb99940572ae5beade",
+      "world_seed": 30015
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": true,
+      "world_id": "w-3ea25ad5e53400df12fd",
+      "world_seed": 30014
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": true,
+      "world_id": "w-136550d319a8f16587bb",
+      "world_seed": 30012
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": true,
+      "world_id": "w-d13af9616bc7c61aa571",
+      "world_seed": 30029
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": true,
+      "world_id": "w-52c557677d111093bd30",
+      "world_seed": 30025
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": true,
+      "world_id": "w-28ba55d8fa6c91e78a4a",
+      "world_seed": 30011
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-9a37fe7ca3ed687089c6",
+      "world_seed": 30023
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-648fb9c0e7b4abb9a8da",
+      "world_seed": 30000
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-80c5c1d0aa598d3c2e66",
+      "world_seed": 30032
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-9203a5e9c0592c643e3a",
+      "world_seed": 30001
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-c5c61ac9dc24c72f68fc",
+      "world_seed": 30037
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-b3a4cf2af0d76fbc32ff",
+      "world_seed": 30002
+    },
+    {
+      "family": "property_to_relation",
+      "p2_positive_control": false,
+      "world_id": "w-2f87be8c8575ac8b98d5",
+      "world_seed": 30015
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": true,
+      "world_id": "w-7f63ac610e08e88d5fee",
+      "world_seed": 30014
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": true,
+      "world_id": "w-dc7d3a23cf6838862d13",
+      "world_seed": 30012
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": true,
+      "world_id": "w-91db8541c8f813de6d7b",
+      "world_seed": 30029
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": true,
+      "world_id": "w-6fe24a98f520d40e7027",
+      "world_seed": 30025
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": true,
+      "world_id": "w-54958ae5b71f71c82287",
+      "world_seed": 30011
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-850459539b0474054bba",
+      "world_seed": 30023
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-e631699034c9c5b05b92",
+      "world_seed": 30000
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-0dc104f1ac3c0b285ce4",
+      "world_seed": 30032
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-1ff0ace4fc5cdb9f027c",
+      "world_seed": 30001
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-6b0ee331027299a9bc4d",
+      "world_seed": 30037
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-658cf12f9f2e17cc2c9c",
+      "world_seed": 30002
+    },
+    {
+      "family": "state_invention",
+      "p2_positive_control": false,
+      "world_id": "w-ea32378f53d0e3d5b529",
+      "world_seed": 30015
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": true,
+      "world_id": "w-deeb32620de399aa3575",
+      "world_seed": 30014
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": true,
+      "world_id": "w-4870bde29f9fb3aa82a2",
+      "world_seed": 30012
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": true,
+      "world_id": "w-b11fdc61bd804fd73cb4",
+      "world_seed": 30029
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": true,
+      "world_id": "w-d39525bf3f6f6867cba4",
+      "world_seed": 30025
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": true,
+      "world_id": "w-14c3677d145c3979732c",
+      "world_seed": 30011
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-f6f23fa46d5e17a2c45c",
+      "world_seed": 30023
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-496f61b895b7b9063189",
+      "world_seed": 30000
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-04841d3a3ba4ff6a4ce0",
+      "world_seed": 30032
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-cc587a8f888edcc79071",
+      "world_seed": 30001
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-b1a4da5f199ac10a1d24",
+      "world_seed": 30037
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-3a6576149312544974e6",
+      "world_seed": 30002
+    },
+    {
+      "family": "coordinate_transform",
+      "p2_positive_control": false,
+      "world_id": "w-4ac33de7d2743fc734fa",
+      "world_seed": 30015
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": true,
+      "world_id": "w-968a2047d19ff8964ba6",
+      "world_seed": 30014
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": true,
+      "world_id": "w-c2650eecbb9a43497dd1",
+      "world_seed": 30012
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": true,
+      "world_id": "w-c37578e1178d3dc6966f",
+      "world_seed": 30029
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": true,
+      "world_id": "w-dc2d14fc89c0686ac229",
+      "world_seed": 30025
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": true,
+      "world_id": "w-d355c84d91cb02f22d1a",
+      "world_seed": 30011
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-0b3bfa55259ac0ca62e7",
+      "world_seed": 30023
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-0ef8c00bc63bfacf2411",
+      "world_seed": 30000
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-97345fd2d48fb5d1da55",
+      "world_seed": 30032
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-42e7a151c1716de227bd",
+      "world_seed": 30001
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-db3220acf794ceff5f0d",
+      "world_seed": 30037
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-7360e75eeffc062ed127",
+      "world_seed": 30002
+    },
+    {
+      "family": "causal_ambiguity",
+      "p2_positive_control": false,
+      "world_id": "w-fbac3a71d83652ed9fbe",
+      "world_seed": 30015
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": true,
+      "world_id": "w-24ce6e4e47ae95619233",
+      "world_seed": 30014
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": true,
+      "world_id": "w-b0d896bcd3c5cf9bef8a",
+      "world_seed": 30012
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": true,
+      "world_id": "w-4d803f13d028eb88085d",
+      "world_seed": 30029
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": true,
+      "world_id": "w-3fe09cc25fbe88a7f124",
+      "world_seed": 30025
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": true,
+      "world_id": "w-1ce31702da0266cb9d09",
+      "world_seed": 30011
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-6afe853f7c63a15a3583",
+      "world_seed": 30023
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-c0825e4b9728360f17f3",
+      "world_seed": 30000
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-83eae3b682a12b887317",
+      "world_seed": 30032
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-2febdbcd2c9f48db86f2",
+      "world_seed": 30001
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-b624602641c74675f6dd",
+      "world_seed": 30037
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-86fe5ce654e33a3d71f4",
+      "world_seed": 30002
+    },
+    {
+      "family": "meta_law",
+      "p2_positive_control": false,
+      "world_id": "w-affb5e4551c565f5d724",
+      "world_seed": 30015
+    }
+  ],
+  "selection_method": "12 lowest SHA-256 ranks over the 50 historical seeds",
+  "selection_salt": "NMI-MIN-SENS-V1|outcome-blind|sha256-rank|2026-09-03",
+  "selection_status": "frozen_before_new_model_calls",
+  "source": {
+    "eligible_families": [
+      "latent_common_cause",
+      "unification",
+      "hidden_regimes",
+      "property_to_relation",
+      "state_invention",
+      "coordinate_transform",
+      "causal_ambiguity",
+      "meta_law"
+    ],
+    "eligible_seeds": [
+      30000,
+      30001,
+      30002,
+      30003,
+      30004,
+      30005,
+      30006,
+      30007,
+      30008,
+      30009,
+      30010,
+      30011,
+      30012,
+      30013,
+      30014,
+      30015,
+      30016,
+      30017,
+      30018,
+      30019,
+      30020,
+      30021,
+      30022,
+      30023,
+      30024,
+      30025,
+      30026,
+      30027,
+      30028,
+      30029,
+      30030,
+      30031,
+      30032,
+      30033,
+      30034,
+      30035,
+      30036,
+      30037,
+      30038,
+      30039,
+      30040,
+      30041,
+      30042,
+      30043,
+      30044,
+      30045,
+      30046,
+      30047,
+      30048,
+      30049
+    ],
+    "historical_config": "configs/compositional-confirmatory-existing.json",
+    "historical_config_sha256": "4c3b1095d554d20f2c202db9b3e8aef3ee6d25a582653b1da1c1418a6c4f29f5"
+  },
+  "total_worlds": 96,
+  "worlds_per_family": 12
+}

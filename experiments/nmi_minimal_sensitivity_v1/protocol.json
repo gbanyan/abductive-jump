@@ -1,0 +1,127 @@
+{
+  "authored_at_utc": "2026-09-03T04:42:15Z",
+  "code_sha256": {
+    "scripts/analyze_historical_cself_attrition.py": "b6737456dbf31c6ec5d7d4909c3f4d29739604a3c82bed7aa5eb3ec5395999f0",
+    "scripts/materialize_nmi_minimal_sensitivity_v1.py": "c7b1b781f5e3a03cf9b840a1babb727b9395411365eb9101a067901f97ad8a8b",
+    "scripts/phi4_transformers_openai_server.py": "628313593c65632bc4a5360a709cd2310a925d3e985a2440527a8cbf70fd3398",
+    "scripts/verify_nmi_minimal_sensitivity_v1.py": "1861fed73f164c85e43a310c58dbb9711ef749889ff455af2ade60092ab0d58f",
+    "src/abductive_jump/compositional_experiment.py": "00ec29f129f91012796537cdc1f884fcdeb675a3cd78e92346a6e453393e0f45",
+    "src/abductive_jump/historical_attrition.py": "5837b910c7849cfe837c073cae9fc9e9f9530bf63c153da84ae0cfe66e8c97de",
+    "src/abductive_jump/llm.py": "8b4f62cabae8d147313895da28f36cd93d650862d14282e95c5f3dc85713ac7a",
+    "src/abductive_jump/minimal_sensitivity.py": "61d115d69b753a1c923cf4f9ab86c22a4c12c79477e7067c99e4115c4d3c2e0c",
+    "src/abductive_jump/supplied_representation_experiment.py": "9979b9a9ea4bdf46e389f2c12f97cfb793758f1c63e6e212aec801f9c07ae0ef"
+  },
+  "conditional_run": "phi8_cself_repair: same 96 worlds, exactly one structural-only replacement repair; enabled prospectively because frozen historical pre-executable failure was 100%",
+  "config_sha256": {
+    "deepseek_matched_cself": "993d5ca0adb11067fd3a59ac4b8578bd1c171d23007a12a83990d2fcb2679248",
+    "deepseek_native_cself": "1b7574fa49ce2b73e5190d6ca45f1ada6de26b95313f26af559251fc6c501f37",
+    "deepseek_p2": "8892b7e93eabcc4e08f941a3353b9a13398f9c2df493dedf556d62faa9c51c2b",
+    "phi8_cself": "d4e500ffa1372d51b5a8829e4872eec19fe88c94402ceee9580f06ed823c678c",
+    "phi8_cself_repair": "2a50011616fb3162ca752545968c8bcf4d9867847f1690ee58fb3bdefe3c88ac"
+  },
+  "core_runs": [
+    "phi8_cself: 96 worlds, C_self, no repair, 700 completion tokens",
+    "deepseek_matched_cself: same 96 worlds, reasoning_effort=none, 700 completion tokens",
+    "deepseek_native_cself: same 96 worlds, reasoning_effort=max, 4096 completion tokens",
+    "deepseek_p2: balanced 40-world causal oracle-representation positive control, reasoning_effort=max, one model-authored law/intervention call per slot"
+  ],
+  "historical_preservation": {
+    "branch": "nmi-phi4-frozen-archive-2026-09",
+    "commit": "ae1ede683fdef09f2bf60f6e1052b60394ad6cf8",
+    "policy": "No historical result, prompt, seed, gate, or artifact may be overwritten.",
+    "tag": "nmi-phi4-frozen-2026-09"
+  },
+  "interpretation_constraints": [
+    "Phi-4 8-bit differs jointly in numerical precision and serving engine.",
+    "DeepSeek native is not compute-matched to Phi-4 or DeepSeek matched.",
+    "The served checkpoint is identified only as deepseek-ai/DeepSeek-V4-Flash-Vision-Exp at the recorded local revision.",
+    "No result is invalidated for weakening the original narrative.",
+    "Stop after the listed core and triggered repair conditions; do not expand automatically."
+  ],
+  "invariants": {
+    "candidate_slots": 3,
+    "gates": "historical J0-J5 definitions and thresholds unchanged",
+    "hidden_information": "no outcome revealed before intervention commitment",
+    "interventions_per_retained_candidate": 1,
+    "primitives": "historical generic primitive vocabulary unchanged",
+    "quality_reruns": "forbidden",
+    "representation_opportunities_per_world": 48,
+    "self_plans_per_slot": 16,
+    "steps_per_plan": 4
+  },
+  "models": {
+    "deepseek": {
+      "api": "http://192.168.30.16:8888/v1",
+      "hf_repository": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "identity_caveat": "not claimed identical to any other DeepSeek release",
+      "model_alias": "deepseek-v4-flash-vision-exp",
+      "reasoning_field": "message.reasoning",
+      "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+      "supported_reasoning_effort": [
+        "none",
+        "low",
+        "high",
+        "max"
+      ]
+    },
+    "phi4_8bit": {
+      "caveat": "precision and serving engine differ jointly from historical vLLM 4-bit",
+      "hf_repository": "microsoft/phi-4",
+      "revision": "2db69c1c3e91a05d2c64a3185acfbaf36f744e25",
+      "runtime": "Transformers 4.56.1 + bitsandbytes 0.47.0 load_in_8bit"
+    }
+  },
+  "offline_attrition": {
+    "model_calls": 0,
+    "observed_pre_executable_failure_rate": 1.0,
+    "repair_trigger_threshold": 0.25,
+    "repair_triggered": true,
+    "report": "experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json",
+    "report_sha256": "4da8832b950d7a186504dbe136c1ac4e7a09e93122eaa0f68ab40fa849821626"
+  },
+  "panel_manifest_sha256": "2db121341f79c41c1c53cf4b61d4deba2af475f297dba0dc3106924e09b522b9",
+  "protocol_id": "NMI-MIN-SENS-V1",
+  "repair_feedback": {
+    "allowed": [
+      "JSON/schema error",
+      "unknown operation",
+      "invalid argument",
+      "invalid reference",
+      "type error",
+      "arity error",
+      "non-executable plan syntax"
+    ],
+    "attempts": 1,
+    "forbidden": [
+      "hidden truth",
+      "target distance",
+      "J3 direction",
+      "intervention outcome",
+      "J4",
+      "J5",
+      "simulator-derived semantic hints"
+    ],
+    "replacement_not_augmentation": true
+  },
+  "runtime_manifest_sha256": {
+    "experiments/nmi_extension_v1/runtime/deepseek_manifest.json": "f1fc1a59a51de6d4744f5ed6205a2ac450249bbdb322f7837b44183abd1de8dd",
+    "experiments/nmi_extension_v1/runtime/phi4_manifest.json": "8f9c59292e414163019a7ad78f65fe97b92372280ee243c75f5f6fdf75790486"
+  },
+  "schema_version": "nmi-minimal-targeted-sensitivity-v1",
+  "scope": "targeted sensitivity analysis; not a replacement confirmatory population",
+  "statistics": {
+    "candidate_level_significance_tests": false,
+    "distinction": "original n=400 confirmatory versus new n=96 sensitivity panel",
+    "primary": [
+      "exact counts",
+      "world-level JSR",
+      "Wilson 95% intervals",
+      "paired world-level differences",
+      "per-family descriptive results",
+      "gate attrition"
+    ],
+    "replicate": "world"
+  },
+  "status": "prospective_freeze",
+  "unlock_rule": "No new benchmark model call until protocol, panel, configs, code and tests are committed, pushed, tagged, and the remote tag is verified."
+}

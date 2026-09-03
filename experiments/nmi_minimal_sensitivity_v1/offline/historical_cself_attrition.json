@@ -1,0 +1,315 @@
+{
+  "analysis": "historical_phi4_cself_offline_attrition",
+  "diagnostics": {
+    "completion_token_cap": 700,
+    "historical_plan_trace_errors": {
+      "invalid_schema:plans_must_be_a_list": 19200
+    },
+    "nonempty_responses": 1200,
+    "responses_at_completion_token_cap": 1200,
+    "strict_complete_json_responses": 0
+  },
+  "fallback_exclusion": {
+    "candidate_rows": 1200,
+    "explanation": "When no self plan was executable, the historical runner inserted the incumbent as a default downstream candidate. Its gate values are not evidence about an LLM-proposed representation and are excluded from the proposal cascade.",
+    "fallback_gate_pass_counts": {
+      "J1": 0,
+      "J2": 900,
+      "J3": 0,
+      "J4": 0,
+      "J5": 0
+    }
+  },
+  "historical_population": {
+    "candidate_slots_per_world": 3,
+    "families": 8,
+    "plan_opportunities": 19200,
+    "plans_requested_per_response": 16,
+    "proposal_responses": 1200,
+    "worlds": 400
+  },
+  "interpretation": "The historical 0/400 C_self result is primarily confounded by output completion/serialization: all proposal responses hit the 700-token ceiling, none was complete whole-answer JSON, and none reached an executable representation. It therefore does not distinguish the quality of valid representation proposals from interface failure.",
+  "model_calls_made": 0,
+  "per_family": [
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "causal_ambiguity",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "coordinate_transform",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "hidden_regimes",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "latent_common_cause",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "meta_law",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "property_to_relation",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "state_invention",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    },
+    {
+      "at_token_cap": 150,
+      "executable": 0,
+      "family": "unification",
+      "parse_valid": 150,
+      "response_returned": 150,
+      "responses": 150,
+      "schema_valid": 0,
+      "strict_complete_json": 0,
+      "worlds": 50
+    }
+  ],
+  "plan_opportunity_cascade": [
+    {
+      "denominator": 19200,
+      "passed": 19200,
+      "rate": 1.0,
+      "reached": 19200,
+      "stage": "response_returned",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 19200,
+      "rate": 1.0,
+      "reached": 19200,
+      "stage": "parse_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "schema_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "operation_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "argument_type_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "executable",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J1",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J2",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J3",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J4",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 19200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J5",
+      "unit": "plan_opportunity"
+    }
+  ],
+  "registered_parser_semantics": "parse_valid means the historical extract_json_object routine found any decodable JSON object; it does not require the whole response or outer plans object to be complete",
+  "repair_trigger": {
+    "pre_executable_failure_rate": 1.0,
+    "threshold": 0.25,
+    "triggered": true
+  },
+  "response_cascade": [
+    {
+      "denominator": 1200,
+      "passed": 1200,
+      "rate": 1.0,
+      "reached": 1200,
+      "stage": "response_returned",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 1200,
+      "rate": 1.0,
+      "reached": 1200,
+      "stage": "parse_valid",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 1200,
+      "stage": "schema_valid",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "operation_valid",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "argument_type_valid",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "executable",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J1",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J2",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J3",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J4",
+      "unit": "proposal_response"
+    },
+    {
+      "denominator": 1200,
+      "passed": 0,
+      "rate": 0.0,
+      "reached": 0,
+      "stage": "J5",
+      "unit": "proposal_response"
+    }
+  ],
+  "source_sha256": {
+    "candidate_results.parquet": "1935ae11815c12c64f9f2c6beb633ddbac2cfcf99084d007e660c11953db9564",
+    "llm_calls.jsonl": "6e0f78222c809dfafc30ba0567dfcf469c75d3ebd34560c4a6d06498d8ae077d",
+    "llm_self_plans.parquet": "eb54375758ac1993ea2621719f185ad8a631cd40134a5d8df86f3351a09cdab8",
+    "summary.json": "f9458054fe27c58e5bd59ee43ac212f67b27871c1a3b0106cbee1a3d0edd6455"
+  }
+}
