@@ -173,11 +173,20 @@ def replay_all(root: Path) -> dict[str, Any]:
     reports = {}
     for name in CSSELF_RUNS:
         report = replay_compositional(base / "configs" / f"{name}.json", results / name)
+        if int(report["verified_rows"]) != int(report["candidate_rows"]):
+            raise ValueError(
+                f"{name} replay incomplete: {report['verified_rows']}/{report['candidate_rows']} rows verified"
+            )
         (results / name / "replay_report.json").write_text(
             json.dumps(report, indent=2, sort_keys=True) + "\n"
         )
         reports[name] = report
     p2_report = replay_p2(base / "configs" / "deepseek_p2.json", results / "deepseek_p2")
+    if int(p2_report["verified_rows"]) != int(p2_report["candidate_rows"]):
+        raise ValueError(
+            "deepseek_p2 replay incomplete: "
+            f"{p2_report['verified_rows']}/{p2_report['candidate_rows']} rows verified"
+        )
     (results / "deepseek_p2" / "replay_report.json").write_text(
         json.dumps(p2_report, indent=2, sort_keys=True) + "\n"
     )
@@ -190,6 +199,8 @@ def replay_all(root: Path) -> dict[str, Any]:
         "verified_rows": sum(int(report["verified_rows"]) for report in reports.values()),
         "mismatches": 0,
     }
+    if overall["verified_rows"] != overall["candidate_rows"]:
+        raise ValueError("overall minimal sensitivity replay did not verify every candidate row")
     analysis_dir = base / "analysis"
     analysis_dir.mkdir(parents=True, exist_ok=True)
     (analysis_dir / "replay_report.json").write_text(
