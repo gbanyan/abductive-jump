@@ -69,7 +69,7 @@ CJ5 used the same stratified bootstrap for effect intervals and paired random si
 
 An inference-free audit replaced both C3 model calls with a valid empty explanation while preserving only the archived deterministic representation, fitted expression and maximum-separation intervention. Every world was regenerated and every commitment and J0–J5 verdict recomputed. All 2,400 candidate verdicts matched, retaining 500/500 jump successes and 0/300 control false jumps. The audit is explicitly post-hoc and changes attribution, not the registered comparison.
 
-All 38,400 confirmatory C_self plan records failed `invalid_schema:plans_must_be_a_list`; no plan reached structural evaluation. C_self is therefore reported as a serialization-interface result.
+In the 400 known-family worlds, all 1,200 historical C_self responses were non-empty and the registered legacy parser extracted a JSON object, but the outer `plans` value was never a list. Thus 0/19,200 registered plan opportunities reached execution or structural evaluation. Every response reached the 700-token cap and strict whole-response JSON validity was 0/1,200. Incumbent fallback candidates inserted after empty self-search are excluded from proposal attrition. The analysis made no model calls.
 
 Retained jump gain was `rho_J=(JSR_C3−JSR_C0)/(JSR_C1−JSR_C0)`. It is undefined for a non-positive denominator. It compares observed rates and does not normalize unequal operator semantics.
 
@@ -78,6 +78,14 @@ Retained jump gain was `rho_J=(JSR_C3−JSR_C0)/(JSR_C1−JSR_C0)`. It is undefi
 Parse errors, invalid graphs, non-exact fits, absent discriminating interventions and failed falsification were outcomes, not exclusions. A whole shard could be rerun only for a configuration/hash mismatch, unavailable server, missing/duplicate rows or infrastructure interruption, using identical seeds and model configuration. Confirmatory exclusions and shard reruns were both zero.
 
 Replay rebuilt each selected representation from `R0` and its ancestry, recomputed canonical hashes and fitted expressions, reconstructed the frozen intervention, and recomputed J0–J5. AJ5 reproduced 10,800/10,800 selected candidates; CJ5 reproduced 16,800/16,800 with 35,533 ancestry records. There were no mismatches.
+
+### Minimal targeted sensitivity protocol
+
+Historical Phi-4 results were preserved on a dedicated tag and archive branch. The new protocol used a separate namespace and a commit-frozen panel selected by outcome-blind salted SHA-256 ranking. The same 12 existing seeds were applied to each of eight known families, yielding 96 paired worlds; no new generator or seed was introduced. A balanced supplied-representation positive control used five of those seeds per family (n=40).
+
+The only new model conditions were Phi-4 8-bit C_self, DeepSeek matched C_self (`reasoning_effort=none`, 700 output tokens), DeepSeek native C_self (`reasoning_effort=max`, 4,096 output tokens) and DeepSeek supplied-representation positive control (`reasoning_effort=max`, 4,096 output tokens). Offline attrition crossed the prospectively frozen 25% pre-execution trigger, enabling one Phi-4 8-bit repair condition. The repair replaced, rather than augmented, a structurally invalid response and received only validator error classes; it could not receive semantic or simulator feedback.
+
+Each shard had to match its frozen seed panel, model identity, revision, call cardinality and artifact schema before receiving `complete_verified` status. Replay was locked until all five shards were verified. Analysis was then locked until all outputs replayed with zero mismatches. Reported inference consists of counts, Wilson intervals, paired world transitions, paired JSR differences and per-family descriptions. DeepSeek native is explicitly not compute-matched, and the Phi-4 sensitivity changes serving engine together with precision.
 
 ## S12. Software and environment
 

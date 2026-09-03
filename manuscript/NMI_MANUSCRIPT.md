@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Scientific discovery can require changing not only a hypothesis but the language in which hypotheses are expressed. Existing evaluations rarely make that boundary, or the cost of crossing it, objectively testable. We introduce a prospective assay for bounded hypothesis-space expansion. A candidate must be structurally outside a frozen incumbent language, fit existing observations, commit to a discriminating intervention before its outcome is revealed, outperform the best incumbent predictor and survive independent falsification. Across synthetic mechanistic worlds, typed high-level proposals succeeded in 142 of 400 cases, whereas direct, sampled, fixed-space and attribute-only alternatives succeeded in 0–1. Compositions of generic local rewrites succeeded in 400 of 400 known-family and 100 of 100 held-out-family worlds. A post-hoc component audit reproduced all C3 verdicts without language-model outputs, locating this result in the deterministic search scaffold rather than the model. The assay enables auditable attribution of hypothesis-space expansion while exposing saturation and limited external validity.
+Scientific discovery can require changing not only a hypothesis but the language in which hypotheses are expressed. Existing evaluations rarely make that boundary, or the cost of crossing it, testable. We introduce a prospective assay for bounded hypothesis-space expansion. A candidate must be structurally outside a frozen incumbent language, fit existing observations, commit to a discriminating intervention before its outcome is revealed, outperform the best incumbent predictor and survive independent falsification. Across synthetic mechanistic worlds, typed high-level proposals succeeded in 142 of 400 cases, whereas direct, sampled, fixed-space and attribute-only alternatives succeeded in 0–1. Compositions of generic local rewrites succeeded in 400 of 400 known-family and 100 of 100 held-out-family worlds. A post-hoc component audit reproduced all C3 verdicts without language-model outputs, locating this result in the deterministic search scaffold rather than the model. The assay enables auditable attribution of hypothesis-space expansion while exposing saturation and limited external validity.
 
 ## Introduction
 
@@ -46,7 +46,7 @@ CJ5 replaced nine high-level mutations with 29 local graph and abstract-syntax-t
 
 Across eight known structural families with new seeds (n=400 worlds), fixed-space search (C0) and 192 generic depth-one alternatives (C2) succeeded in no worlds. The frozen atomic reference (C1) succeeded in 131 (32.75%), random four-step paths (C_rand) in 52 (13.0%), and C3 in all 400 (Fig. 3). C3 exceeded C_rand by 0.87 (95% CI 0.845–0.895; Holm-adjusted P=3.00×10−4). C3 was 100% in every family; this demonstrates within-generator reliability and assay separability, not eight statistically independent replications or an unsaturated frontier benchmark.
 
-C_self also scored 0/400, but its failure is narrower than initially anticipated. All 38,400 confirmatory plan records failed the same schema check because `plans` was not a list; no proposed four-step plan reached structural evaluation. C_self therefore measures the registered serialization interface, not conceptual inability to compose representations. Grammar-constrained decoding and validator repair remain necessary future controls.
+C_self also scored 0/400, but its failure is narrower than initially anticipated. Offline reconstruction made no new model calls. The 400 known-family worlds yielded 1,200 non-empty proposal responses, each carrying 16 registered plan opportunities. The legacy parser extracted a JSON object from every response, but none had a valid outer `plans` list; consequently 0/19,200 plan opportunities reached execution or J1. All 1,200 responses reached the 700-token completion cap, and none was strict whole-response JSON. The historical 0/400 therefore cannot distinguish weak representation proposals from truncation and serialization failure.
 
 ### A deterministic component audit removes the language model
 
@@ -92,6 +92,16 @@ AJ5 and CJ5 protocols were frozen in Git before their reported confirmatory mode
 
 Both studies used frozen `microsoft/phi-4` revision `2db69c1c3e91a05d2c64a3185acfbaf36f744e25`, vLLM 0.10.2, dynamic bitsandbytes 4-bit quantization, a 4,096-token context, temperature 0.2, top-p 0.95 and completion cap 700. AJ5 sampling proposals used temperature 0.7. Each request had a deterministic seed. No fine-tuning or cross-world adaptation occurred.
 
+### Minimal targeted sensitivity extension
+
+The original Phi-4 artifacts were preserved at commit `ae1ede683fdef09f2bf60f6e1052b60394ad6cf8`, tag `nmi-phi4-frozen-2026-09` and archive branch `nmi-phi4-frozen-archive-2026-09`. A separate extension protocol, panel, model configurations and generation code were frozen at commit `320eb29b33ddaed596b0fe7b3f1d5895c706f311` and amended only for operational execution at `f846c89287e379fe313551c47765c24f2abf4959`. New outputs used the `nmi_minimal_sensitivity_v1` namespace and could not overwrite historical files.
+
+An outcome-blind SHA-256 ranking selected 12 of the 50 historical CJ5 seeds before any new model call: 30014, 30012, 30029, 30025, 30011, 30023, 30000, 30032, 30001, 30037, 30002 and 30015. Applying the same seeds to all eight known families produced a fixed 96-world paired panel. The positive control used the first five selected seeds in each family (n=40). This extension is a targeted sensitivity analysis, not a replacement confirmatory population.
+
+The frozen run matrix contained Phi-4 8-bit C_self on 96 worlds; DeepSeek matched C_self with `reasoning_effort=none` on the same worlds; DeepSeek native C_self with `reasoning_effort=max`; and a supplied-correct-representation DeepSeek positive control. The DeepSeek service identified the checkpoint as `deepseek-ai/DeepSeek-V4-Flash-Vision-Exp`, revision `86f746b36186f0e567729a5c06a8c918caba82a9`, served as `deepseek-v4-flash-vision-exp` by vLLM `0.25.2.dev0+g752a3a504.d20260714`. We do not equate this checkpoint with any other DeepSeek release. The matched condition retained the historical 700-token output cap; the native and positive-control conditions froze a 4,096-token output cap. Reasoning text was returned separately in `message.reasoning`; a separate reasoning-token count was recorded only if exposed by the service.
+
+Worlds, primitive vocabulary, three candidate slots, 16 four-step plans per slot, representation opportunities, J0–J5, prospective interventions and hidden-information boundaries were unchanged. The matched condition received no additional semantic information. The positive control fixed only the correct representation; the model still authored the executable expression, explanation and intervention selection, so success could not be created by overwriting those fields. Because the offline historical cascade had 100% pre-executable attrition, exceeding the frozen 25% trigger, one additional Phi-4 8-bit condition permitted exactly one replacement repair response per structurally invalid slot. Validator feedback named only syntax, schema, operation, reference, type or arity errors and exposed no truth, target distance, outcome or gate value.
+
 ### Worlds, representations and search
 
 Generators returned public observations, redacted actions, a frozen incumbent `LanguageSpec`, hidden truth and independent intervention and falsification cases. AJ5 used eight families and 50 jump seeds per family; CJ5 used 50 new seeds per family. No-jump controls used 25 seeds per family in each phase. CJ5 added 100 held-out jump and 100 control seeds. Representations were canonical typed graphs with executable fitted programs.
@@ -108,13 +118,15 @@ The world was the replicate. AJ5 used 10,000 family-stratified paired bootstrap 
 
 The post-hoc component audit reconstructed all C3 candidates from archived deterministic representations, fitted expressions and selected interventions, replacing the model-derived explanation with an empty string. It then regenerated each world, froze a new commitment and recomputed J0–J5. No model inference was run.
 
+For the targeted sensitivity analysis, exact world counts, JSR and Wilson 95% intervals are primary. Comparisons use paired world transitions and paired JSR differences on the identical 96-world panel; family rates are descriptive. The n=40 positive control is shown separately. No candidate-level significance tests are performed and P values are not used as primary evidence. Response and plan attrition are reported with their denominators, followed by executable-candidate J1–J5 attrition.
+
 ### Integrity and replay
 
 Requests, representations, ancestry edges, fitted programs, commitments, gate values and configuration hashes were retained. Replay reconstructed representations and recomputed J0–J5. Infrastructure failures would have required whole-shard reruns; none occurred. There were no outcome-quality exclusions.
 
 ### AI assistance in research and writing
 
-Phi-4 generated the registered outputs described above. OpenAI Codex was used only after experiments to inspect artifacts, recompute inference-free audits, verify literature metadata and assist drafting. It did not choose confirmatory hypotheses, alter source data or run new model inference. Human authors verified the cited metadata and remain responsible for originality, accuracy and integrity.
+Phi-4 generated the original registered outputs described above. OpenAI Codex was used after the original confirmatory experiments to inspect artifacts, implement and orchestrate the separately frozen targeted sensitivity extension, recompute inference-free audits, verify literature metadata and assist drafting. It did not choose hypotheses using observed outcomes, alter historical source data or change the frozen evaluation rules. Human authors verified the cited metadata and remain responsible for originality, accuracy and integrity.
 
 ## Data availability
 
