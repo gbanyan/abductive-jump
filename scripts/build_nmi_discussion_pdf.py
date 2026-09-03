@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import html
 import re
 from pathlib import Path
@@ -36,8 +37,7 @@ from reportlab.platypus import (
 ROOT = Path(__file__).resolve().parents[1]
 ARTIFACTS = ROOT / "artifacts"
 TMP = ROOT / "tmp" / "pdfs"
-OUTPUT = ROOT / "output" / "pdf" / "NMI_discussion_draft.pdf"
-MANUSCRIPT_OUTPUT = ROOT / "output" / "pdf" / "NMI_manuscript_draft.pdf"
+OUTPUT = ROOT / "output" / "pdf" / "NMI_complete_discussion_manuscript.pdf"
 
 NAVY = "#17324D"
 BLUE = "#2978A0"
@@ -527,60 +527,82 @@ def figure_4() -> Path:
     ax.set_title("Composition transfers; random paths rarely do")
     panel_label(ax, "b")
 
+    analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
+    with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summary_rows = list(csv.DictReader(handle))
+    sensitivity_order = [
+        "historical_phi4_4bit_cself",
+        "phi8_cself",
+        "deepseek_matched_cself",
+        "deepseek_native_cself",
+        "phi8_cself_repair",
+        "deepseek_p2",
+    ]
+    sensitivity_labels = ["Phi4\n4-bit*", "Phi4\n8-bit", "DS\nmatched", "DS\nnative", "Phi4\nrepair", "DS\nP2†"]
+    summary_lookup = {row["condition"]: row for row in summary_rows}
+    sensitivity_values = np.array([float(summary_lookup[name]["jsr"]) for name in sensitivity_order]) * 100
+    sensitivity_low = np.array([float(summary_lookup[name]["wilson_95_low"]) for name in sensitivity_order]) * 100
+    sensitivity_high = np.array([float(summary_lookup[name]["wilson_95_high"]) for name in sensitivity_order]) * 100
     ax = axes[1, 0]
-    categories = ["Depth-one\nalternatives", "Successful C3\ncandidates"]
-    rates = [0, 100]
-    bars = ax.bar(categories, rates, color=[GREY, ORANGE], width=0.56)
-    ax.set_ylim(0, 116)
-    ax.set_ylabel("Validated / observed (%)")
-    ax.text(bars[0].get_x() + bars[0].get_width() / 2, 4, "0 / 17,280", ha="center", fontsize=8)
-    ax.text(
-        bars[1].get_x() + bars[1].get_width() / 2,
-        104,
-        "all at registered depth 4",
-        ha="center",
-        fontsize=8,
+    sx = np.arange(len(sensitivity_order))
+    ax.bar(sx, sensitivity_values, color=[GREY, BLUE, BLUE, ORANGE, RED, "#009E73"], width=0.7)
+    ax.errorbar(
+        sx,
+        sensitivity_values,
+        yerr=[np.maximum(0, sensitivity_values - sensitivity_low), np.maximum(0, sensitivity_high - sensitivity_values)],
+        fmt="none",
+        ecolor=INK,
+        capsize=2.5,
+        lw=1,
     )
-    ax.set_title("Depth is bounded within the registered system")
+    for index, name in enumerate(sensitivity_order):
+        row = summary_lookup[name]
+        ax.text(index, min(108, sensitivity_values[index] + 4), f'{row["successes"]}/{row["worlds"]}', ha="center", fontsize=6.8)
+    ax.axvline(4.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
+    ax.set_xticks(sx, sensitivity_labels)
+    ax.set_ylim(0, 116)
+    ax.set_ylabel("World-level JSR (%)")
+    ax.set_title("Fixed-panel targeted sensitivity")
     panel_label(ax, "c")
 
     ax = axes[1, 1]
-    ax.axis("off")
-    cards = [
-        ("2,400 / 2,400", "model-free gate matches"),
-        ("500 / 500", "jump worlds retained"),
-        ("0 / 300", "control false jumps"),
-        ("38,400 / 38,400", "Cself plans schema-invalid"),
-    ]
-    for i, (number, label) in enumerate(cards):
-        row, col = divmod(i, 2)
-        x0, y0 = 0.03 + col * 0.5, 0.57 - row * 0.42
-        ax.add_patch(
-            FancyBboxPatch(
-                (x0, y0), 0.44, 0.31, boxstyle="round,pad=0.02", fc=LIGHT, ec=BLUE, lw=1.3
-            )
-        )
-        ax.text(
-            x0 + 0.22,
-            y0 + 0.2,
-            number,
-            ha="center",
-            va="center",
-            fontsize=13,
-            weight="bold",
-            color=NAVY,
-        )
-        ax.text(x0 + 0.22, y0 + 0.08, label, ha="center", va="center", fontsize=8)
-    ax.set_title("Component audit changes the attribution")
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition_rows = list(csv.DictReader(handle))
+    stage_aliases = {
+        "response_returned": "response", "request_returned": "response",
+        "parse_valid": "parse", "json_parse_valid": "parse",
+        "schema_valid": "schema", "plan_schema_valid": "schema",
+        "operation_valid": "operation", "operation_names_valid": "operation",
+        "argument_type_valid": "types", "argument_types_valid": "types",
+        "executable": "execute", "J1": "J1", "J2": "J2", "J3": "J3", "J4": "J4", "J5": "J5",
+    }
+    attrition_stages = ["response", "parse", "schema", "operation", "types", "execute", "J1", "J2", "J3", "J4", "J5"]
+    attrition_lookup: dict[str, dict[str, float]] = {}
+    for row in attrition_rows:
+        stage = stage_aliases.get(row["stage"])
+        if stage:
+            attrition_lookup.setdefault(row["condition"], {})[stage] = float(row["rate"]) * 100
+    line_conditions = sensitivity_order[:-1]
+    line_labels = ["Phi4 4-bit*", "Phi4 8-bit", "DS matched", "DS native", "Phi4 repair"]
+    line_colours = [GREY, BLUE, CYAN, ORANGE, RED]
+    tx = np.arange(len(attrition_stages))
+    for name, label, colour in zip(line_conditions, line_labels, line_colours, strict=True):
+        ax.plot(tx, [attrition_lookup[name].get(stage, np.nan) for stage in attrition_stages], marker="o", ms=2.4, lw=1.25, color=colour, label=label)
+    ax.set_xticks(tx, attrition_stages, rotation=38, ha="right", fontsize=6.5)
+    ax.set_ylim(-3, 106)
+    ax.set_ylabel("Passing stage (%)")
+    ax.legend(frameon=False, fontsize=5.8, ncol=2, loc="upper right")
+    ax.text(0.02, 0.04, "Model-free C3 replay: 2,400/2,400 gate matches", transform=ax.transAxes, fontsize=6.2, color=NAVY)
+    ax.set_title("Response-to-verdict attrition")
     panel_label(ax, "d")
     fig.suptitle(
-        "Figure 4 | Transfer, depth and model-free replay",
+        "Figure 4 | Transfer, replay and targeted model sensitivity",
         fontsize=14,
         weight="bold",
         color=NAVY,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.93), h_pad=2.0, w_pad=1.5)
-    return save_figure(fig, "figure_4_heldout.png")
+    return save_figure(fig, "figure_4_sensitivity.png")
 
 
 def figure_5() -> Path:
@@ -778,9 +800,9 @@ def page_decor(canvas, doc) -> None:
     canvas.line(20 * mm, height - 15 * mm, width - 20 * mm, height - 15 * mm)
     canvas.setFont("DejaVu", 7.5)
     canvas.setFillColor(colors.HexColor(GREY))
-    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI DISCUSSION DRAFT | 3 SEPTEMBER 2026")
+    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI MANUSCRIPT WITH FIGURES | 3 SEPTEMBER 2026")
     canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
-    canvas.drawString(20 * mm, 11 * mm, "Not for submission - figures redraw frozen results")
+    canvas.drawString(20 * mm, 11 * mm, "Complete scientific discussion copy | not yet submitted")
     canvas.restoreState()
 
 
@@ -1005,7 +1027,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Held-out transfer, depth bounds and the post-hoc deterministic component audit. The model-free replay reproduced all 2,400 C3 candidate verdicts and retained 500/500 jump successes with 0/300 control false jumps. Cself never reached structural evaluation because every plan record failed the same schema check.",
+                            "Figure 4 | Held-out transfer, deterministic replay and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control. Error bars are Wilson 95% intervals. Panel d uses plan-opportunity rates for new C_self conditions and response-level rates for the historical interface; historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
                             st,
                         ),
                     ]
@@ -1032,11 +1054,89 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
     return story
 
 
+def markdown_appendix_story(path: Path, st) -> list:
+    story: list = []
+    paragraph: list[str] = []
+    in_fence = False
+
+    def flush() -> None:
+        if paragraph:
+            story.append(Paragraph(inline_markup(" ".join(paragraph)), st["body"]))
+            paragraph.clear()
+
+    for raw in path.read_text().splitlines():
+        line = raw.strip()
+        if line.startswith("```"):
+            flush()
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            paragraph.append(f"`{line}`")
+        elif line.startswith("# "):
+            flush()
+            story.append(Paragraph(inline_markup(line[2:]), st["title"]))
+        elif line.startswith("## "):
+            flush()
+            story.append(Paragraph(inline_markup(line[3:]), st["h1"]))
+        elif line.startswith("### "):
+            flush()
+            story.append(Paragraph(inline_markup(line[4:]), st["h2"]))
+        elif line.startswith("- "):
+            flush()
+            story.append(Paragraph(inline_markup(line[2:]), st["body"], bulletText="•"))
+        elif not line:
+            flush()
+        elif line.startswith("|"):
+            continue
+        else:
+            paragraph.append(line)
+    flush()
+    return story
+
+
+def sensitivity_tables(st) -> list:
+    analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
+    with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summaries = list(csv.DictReader(handle))
+    summary_data = [["Condition", "Population", "Success", "JSR", "Wilson 95% CI"]]
+    for row in summaries:
+        summary_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row["population"],
+                f'{row["successes"]}/{row["worlds"]}',
+                f'{100 * float(row["jsr"]):.1f}%',
+                f'{100 * float(row["wilson_95_low"]):.1f}-{100 * float(row["wilson_95_high"]):.1f}%',
+            ]
+        )
+    wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in summary_data]
+    summary_table = Table(wrapped, colWidths=[39 * mm, 59 * mm, 20 * mm, 17 * mm, 30 * mm], repeatRows=1)
+    summary_table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
+                ("LEFTPADDING", (0, 0), (-1, -1), 4),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+    )
+    return [Paragraph("Sensitivity result table", st["h1"]), summary_table]
+
+
 def build_pdf() -> Path:
+    from abductive_jump.minimal_sensitivity_reports import build as build_sensitivity_reports
+
     register_fonts()
     setup_plot()
     TMP.mkdir(parents=True, exist_ok=True)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    build_sensitivity_reports(ROOT)
     figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4(), 5: figure_5()}
     st = styles()
 
@@ -1058,182 +1158,38 @@ def build_pdf() -> Path:
         topMargin=18 * mm,
         bottomMargin=18 * mm,
         title="A prospective assay for hypothesis-space expansion in AI systems",
-        author="Discussion draft",
+        author="Complete scientific discussion copy",
     )
     doc.addPageTemplates(PageTemplate(id="content", frames=[frame], onPage=page_decor))
-
     story: list = [
-        Spacer(1, 36 * mm),
-        Paragraph("DISCUSSION DRAFT", st["subtitle"]),
-        Paragraph("A prospective assay for hypothesis-space expansion in AI systems", st["manuscript_title"]),
-        Rule(75 * mm, colors.HexColor(ORANGE), 3),
-        Spacer(1, 10 * mm),
-        Paragraph(
-            "A prospective, commit-frozen assay with a post-hoc component audit",
-            st["subtitle"],
-        ),
-        Spacer(1, 18 * mm),
-        Paragraph("The central result", st["h1"]),
-        Spacer(1, 3 * mm),
-        Paragraph(
-            "The prospective assay is valid, but the successful C3 escapes are attributable to the deterministic typed search scaffold: a model-free replay retained 500/500 jump successes and 0/300 control false jumps.",
-            st["callout"],
-        ),
-        Spacer(1, 12 * mm),
-        Paragraph("Prepared for scientific discussion | 3 September 2026", st["subtitle"]),
-        Paragraph(
-            "Status: major scientific revision completed from existing evidence. Multi-model and independently authored holdout extensions remain pre-submission experiments.",
-            st["small"],
-        ),
-        PageBreak(),
-        Paragraph("Discussion overview", st["h1"]),
-        Paragraph("What the experiments establish", st["h2"]),
-        Paragraph(
-            "AJ5 validates the assay: typed external proposals succeed in 142/400 worlds, while direct, sampling-matched, fixed-space and attribute-only conditions succeed in 0-1/400. CJ5 shows that deterministic four-step search succeeds in 400/400 known-family and 100/100 held-out-family worlds.",
-            st["body"],
-        ),
-        Paragraph("What makes the comparison informative", st["h2"]),
-        Paragraph(
-            "The incumbent grammar is frozen, the best incumbent predictor is explicit, interventions are committed before outcomes are observed, and every candidate must pass six deterministic gates. Proposal source changes while the reasoning path and final candidate opportunity remain controlled.",
-            st["body"],
-        ),
-        Paragraph("What the experiments do not establish", st["h2"]),
-        Paragraph(
-            "The study does not show language-model necessity, unrestricted discovery or concept-free invention. Cself is a serialization failure, the held-out family is conceptually adjacent, the no-jump null is exact by construction after J3, and C3 saturation indicates a well-aligned synthetic benchmark.",
-            st["body"],
-        ),
-        Spacer(1, 5 * mm),
-        Paragraph("Headline evidence", st["h2"]),
-    ]
-    headline = [
-        ["Phase", "Focal result", "Strong comparator", "Specificity", "Replay"],
-        [
-            "AJ5",
-            "142/400 B4 and B5",
-            "0-1/400 B0-B3",
-            "0/200 controls per condition",
-            "10,800/10,800",
-        ],
-        [
-            "CJ5 known",
-            "400/400 C3",
-            "52/400 random; 0/400 self",
-            "0/200 controls; model-free",
-            "part of 16,800/16,800",
-        ],
-        [
-            "CJ5 held out",
-            "100/100 C3",
-            "13/100 random; 0/100 self",
-            "0/100 controls; model-free",
-            "part of 16,800/16,800",
-        ],
-    ]
-    headline_wrapped = [
-        [Paragraph(inline_markup(cell), st["small"]) for cell in row] for row in headline
-    ]
-    htable = Table(
-        headline_wrapped, colWidths=[25 * mm, 39 * mm, 42 * mm, 40 * mm, 31 * mm], repeatRows=1
-    )
-    htable.setStyle(
-        TableStyle(
-            [
-                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-                ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#CDD7DD")),
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
-                ("LEFTPADDING", (0, 0), (-1, -1), 5),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 5),
-                ("TOPPADDING", (0, 0), (-1, -1), 6),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-            ]
-        )
-    )
-    story.extend(
-        [
-            htable,
-            Spacer(1, 8 * mm),
-            Paragraph("Controlled comparison design", st["h2"]),
-            design_table(st),
-            Paragraph(
-                "* C1 and C5 are conditional references; their operation semantics are not treated as compute-equivalent to C3.",
-                st["small"],
-            ),
-            PageBreak(),
-            Paragraph("Visual results", st["h1"]),
-            image_flow(figs[1]),
-            caption(
-                "Figure 1 | Bounded representation-level escape requires structural non-membership, observational adequacy, prospective intervention gain and independent falsification. The visual is a discussion schematic derived from the registered protocol.",
-                st,
-            ),
-            PageBreak(),
-            image_flow(figs[2]),
-            caption(
-                "Figure 2 | AJ5 world-level results. Exact counts and registered uncertainty are drawn from condition_summary.parquet and final_verdict.json.",
-                st,
-            ),
-            PageBreak(),
-            image_flow(figs[3]),
-            caption(
-                "Figure 3 | CJ5 known-family results. Generic composition separates from fixed, depth-one, self-composition and random controls.",
-                st,
-            ),
-            PageBreak(),
-            image_flow(figs[4]),
-            caption(
-                "Figure 4 | Held-out transfer, registered depth bounds and model-free replay. Zero controls is a specificity check in the exact simulator, not a noisy-science false-positive estimate.",
-                st,
-            ),
-            PageBreak(),
-            image_flow(figs[5]),
-            caption(
-                "Figure 5 | Complete worked example from correlated observations through four generic rewrites, prospective commitment, outcome reveal and independent falsification.",
-                st,
-            ),
-            PageBreak(),
-            Paragraph("Manuscript draft", st["title"]),
-            Paragraph(
-                "Formatted from the audited NMI manuscript source. Figures are repeated at their relevant Results subsections for discussion in context.",
-                st["subtitle"],
-            ),
-        ]
-    )
-    story.extend(manuscript_story(st, figs))
-    doc.build(story)
-
-    manuscript_frame = Frame(
-        20 * mm,
-        18 * mm,
-        A4[0] - 40 * mm,
-        A4[1] - 36 * mm,
-        leftPadding=0,
-        rightPadding=0,
-        topPadding=3 * mm,
-        bottomPadding=3 * mm,
-    )
-    manuscript_doc = BaseDocTemplate(
-        str(MANUSCRIPT_OUTPUT),
-        pagesize=A4,
-        leftMargin=20 * mm,
-        rightMargin=20 * mm,
-        topMargin=18 * mm,
-        bottomMargin=18 * mm,
-        title="A prospective assay for hypothesis-space expansion in AI systems",
-        author="Manuscript discussion copy",
-    )
-    manuscript_doc.addPageTemplates(
-        PageTemplate(id="manuscript", frames=[manuscript_frame], onPage=manuscript_page_decor)
-    )
-    clean_story: list = [
         Spacer(1, 18 * mm),
         Paragraph("A prospective assay for hypothesis-space expansion in AI systems", st["manuscript_title"]),
         Rule(75 * mm, colors.HexColor(ORANGE), 3),
         Spacer(1, 8 * mm),
         Paragraph("Article | manuscript for scientific discussion", st["subtitle"]),
     ]
-    clean_story.extend(manuscript_story(st, figs))
-    manuscript_doc.build(clean_story)
+    story.extend(manuscript_story(st, figs))
+    story.extend([PageBreak(), Paragraph("Supplementary Information", st["title"])])
+    story.extend(markdown_appendix_story(ROOT / "manuscript" / "NMI_SUPPLEMENTARY_METHODS.md", st))
+    story.extend([PageBreak(), Paragraph("Targeted sensitivity source data", st["title"])])
+    sensitivity_figures = ROOT / "reports" / "figures" / "minimal_sensitivity"
+    story.extend(
+        [
+            image_flow(sensitivity_figures / "figure1-world-jsr.png"),
+            caption("Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The supplied-representation control uses a distinct balanced n=40 subset.", st),
+            PageBreak(),
+            image_flow(sensitivity_figures / "figure2-gate-attrition.png"),
+            caption("Extended Data Figure 8b | Response-to-verdict attrition. Denominators and units are reported in the accompanying source-data tables.", st),
+            PageBreak(),
+            image_flow(sensitivity_figures / "figure3-per-family.png"),
+            caption("Extended Data Figure 8c | Per-family descriptive sensitivity results; no family-level or candidate-level significance test was performed.", st),
+            Spacer(1, 5 * mm),
+        ]
+    )
+    story.extend(sensitivity_tables(st))
+    story.extend([PageBreak(), Paragraph("Protocol and claim audit", st["title"])])
+    story.extend(markdown_appendix_story(ROOT / "docs" / "publication" / "NMI_CLAIM_MATRIX.md", st))
+    doc.build(story)
     return OUTPUT
 
 
