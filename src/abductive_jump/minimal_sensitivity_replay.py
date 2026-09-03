@@ -70,6 +70,54 @@ def load_calls(path: Path) -> dict[tuple[str, int], dict[str, Any]]:
     return result
 
 
+def require_exact_keys(actual: list[tuple[Any, ...]], expected: set[tuple[Any, ...]], label: str) -> None:
+    if len(actual) != len(set(actual)):
+        raise ValueError(f"{label} contains duplicate logical keys")
+    actual_set = set(actual)
+    if actual_set != expected:
+        missing = sorted(expected - actual_set)[:5]
+        extra = sorted(actual_set - expected)[:5]
+        raise ValueError(f"{label} panel mismatch; missing={missing}, extra={extra}")
+
+
+def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
+    config = json.loads(config_path.read_text())
+    candidate_rows = pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
+    world_rows = pq.read_table(run_dir / "world_results.parquet").to_pylist()
+    expected_worlds = {}
+    for family in config["families"]:
+        for seed in config["world_seeds"]:
+            world = (
+                generate_world(str(family), int(seed), no_jump=False)
+                if p2
+                else generate_world(str(family), int(seed), no_jump=bool(config["no_jump"]))
+            )
+            expected_worlds[(str(family), int(seed))] = world.world_id
+    expected_world_keys = {
+        (family, seed, world_id) for (family, seed), world_id in expected_worlds.items()
+    }
+    actual_world_keys = [
+        (str(row["family"]), int(row["world_seed"]), str(row["world_id"]))
+        for row in world_rows
+    ]
+    require_exact_keys(actual_world_keys, expected_world_keys, f"{run_dir.name} worlds")
+    expected_candidate_keys = {
+        (family, seed, world_id, slot)
+        for (family, seed), world_id in expected_worlds.items()
+        for slot in range(int(config["candidate_slots"]))
+    }
+    actual_candidate_keys = [
+        (
+            str(row["family"]),
+            int(row["world_seed"]),
+            str(row["world_id"]),
+            int(row["slot"]),
+        )
+        for row in candidate_rows
+    ]
+    require_exact_keys(actual_candidate_keys, expected_candidate_keys, f"{run_dir.name} candidates")
+
+
 def replay_p2(config_path: Path, run_dir: Path) -> dict[str, Any]:
     config = json.loads(config_path.read_text())
     saved_rows = pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
@@ -172,7 +220,9 @@ def replay_all(root: Path) -> dict[str, Any]:
     require_finalized(results)
     reports = {}
     for name in CSSELF_RUNS:
-        report = replay_compositional(base / "configs" / f"{name}.json", results / name)
+        config_path = base / "configs" / f"{name}.json"
+        require_exact_panel(config_path, results / name, p2=False)
+        report = replay_compositional(config_path, results / name)
         if int(report["verified_rows"]) != int(report["candidate_rows"]):
             raise ValueError(
                 f"{name} replay incomplete: {report['verified_rows']}/{report['candidate_rows']} rows verified"
@@ -181,7 +231,9 @@ def replay_all(root: Path) -> dict[str, Any]:
             json.dumps(report, indent=2, sort_keys=True) + "\n"
         )
         reports[name] = report
-    p2_report = replay_p2(base / "configs" / "deepseek_p2.json", results / "deepseek_p2")
+    p2_config = base / "configs" / "deepseek_p2.json"
+    require_exact_panel(p2_config, results / "deepseek_p2", p2=True)
+    p2_report = replay_p2(p2_config, results / "deepseek_p2")
     if int(p2_report["verified_rows"]) != int(p2_report["candidate_rows"]):
         raise ValueError(
             "deepseek_p2 replay incomplete: "

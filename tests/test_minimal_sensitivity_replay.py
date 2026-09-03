@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+import pytest
 
 from abductive_jump.conditions import Condition, ProposalSource, build_prompt
 from abductive_jump.executable import program_expression
@@ -12,6 +13,7 @@ from abductive_jump.minimal_sensitivity_replay import (
     normalized,
     p2_decoding_seed,
     replay_p2,
+    require_exact_keys,
 )
 from abductive_jump.supplied_representation_experiment import evaluate_model_output
 from abductive_jump.worlds import generate_world
@@ -28,6 +30,15 @@ def test_compare_saved_uses_float_tolerance() -> None:
 
 def test_compare_saved_reports_missing_fields() -> None:
     assert compare_saved("x", {}, {"j1": True}) == ["x:missing:j1"]
+
+
+def test_require_exact_keys_rejects_duplicates_and_panel_drift() -> None:
+    expected = {("a", 1), ("b", 2)}
+    require_exact_keys([("a", 1), ("b", 2)], expected, "toy")
+    with pytest.raises(ValueError, match="duplicate"):
+        require_exact_keys([("a", 1), ("a", 1)], expected, "toy")
+    with pytest.raises(ValueError, match="panel mismatch"):
+        require_exact_keys([("a", 1), ("c", 3)], expected, "toy")
 
 
 def test_p2_replay_reconstructs_a_saved_candidate(tmp_path: Path) -> None:
