@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import html
+import json
 import re
 from pathlib import Path
 
@@ -1453,13 +1454,29 @@ def sensitivity_tables(st) -> list:
 
 
 def build_pdf() -> Path:
-    from abductive_jump.minimal_sensitivity_reports import build as build_sensitivity_reports
-
     register_fonts()
     setup_plot()
     TMP.mkdir(parents=True, exist_ok=True)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    build_sensitivity_reports(ROOT)
+    analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
+    manifest_path = analysis / "postprocessing_manifest.json"
+    if not manifest_path.is_file():
+        raise ValueError("PDF build locked: run minimal sensitivity postprocessing first")
+    manifest = json.loads(manifest_path.read_text())
+    if (
+        manifest.get("status") != "complete_verified"
+        or int(manifest.get("replay_mismatches", -1)) != 0
+        or int(manifest.get("model_calls_made", -1)) != 0
+    ):
+        raise ValueError("PDF build locked: sensitivity postprocessing is not verified")
+    sensitivity_figures = ROOT / "reports" / "figures" / "minimal_sensitivity"
+    for name in (
+        "figure1-world-jsr.png",
+        "figure2-gate-attrition.png",
+        "figure3-per-family.png",
+    ):
+        if not (sensitivity_figures / name).is_file():
+            raise ValueError(f"PDF build locked: missing sensitivity figure {name}")
     figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4(), 5: figure_5()}
     st = styles()
 
@@ -1498,7 +1515,6 @@ def build_pdf() -> Path:
     story.extend([PageBreak(), Paragraph("Supplementary Information", st["title"])])
     story.extend(markdown_appendix_story(ROOT / "manuscript" / "NMI_SUPPLEMENTARY_METHODS.md", st))
     story.extend([PageBreak(), Paragraph("Targeted sensitivity source data", st["title"])])
-    sensitivity_figures = ROOT / "reports" / "figures" / "minimal_sensitivity"
     story.extend(
         [
             image_flow(sensitivity_figures / "figure1-world-jsr.png"),

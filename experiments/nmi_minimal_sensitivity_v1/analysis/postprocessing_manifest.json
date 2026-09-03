@@ -15,11 +15,11 @@
     "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json": "580e5b8b21e0366d2da7fe0b28383e63de3101cd6198d9777feb87233600ac18",
     "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv": "0ba2d121beb644100287cc7b9e0722cc4ab1f29ff4a3a44cfdaf247e5b7cefbf",
     "reports/figures/minimal_sensitivity/figure1-world-jsr.png": "37f229df94ad4def5ce79a466317d88f4d983d383923c4cda6e821bf42af5510",
-    "reports/figures/minimal_sensitivity/figure1-world-jsr.svg": "b2663c1cb74f59ef31467c9e4223a5aa99893f841379ef54fe1589d2d3299b14",
+    "reports/figures/minimal_sensitivity/figure1-world-jsr.svg": "3148ad3d358d53818abbfcf00c8de3c2c24365abebb15d06e01c4e8c5d30ad43",
     "reports/figures/minimal_sensitivity/figure2-gate-attrition.png": "09a8ee749f8b3f620e3c3db2c4966494edd04609ff47e06a5a5df49dcff0e5b2",
-    "reports/figures/minimal_sensitivity/figure2-gate-attrition.svg": "3ad9072cb09642cf9ff0e1106b5fc3f7011e4d1db1288c9ad3a7a796e40c06ba",
+    "reports/figures/minimal_sensitivity/figure2-gate-attrition.svg": "02009bf6944d4cf4fcfa1a628bc7c2d485a4bb617474e14505e80f3ff5535067",
     "reports/figures/minimal_sensitivity/figure3-per-family.png": "ec6f802ee5e864e4b8bcc3dfbefc8c9e9f67dadcbe7cbba0714ce7b0b4e4cb64",
-    "reports/figures/minimal_sensitivity/figure3-per-family.svg": "8753bffdeb2392e9eed90125496ea75defc5848725253ab1816de2f552b3fee9"
+    "reports/figures/minimal_sensitivity/figure3-per-family.svg": "7592149acf0c33eb2980c18494421cf7dcde7e0e6e0fc66220b26d522b608cd2"
   },
   "replay_candidate_rows": 2772,
   "replay_mismatches": 0,
