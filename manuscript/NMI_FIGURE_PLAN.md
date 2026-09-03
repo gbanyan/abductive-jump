@@ -36,14 +36,16 @@ Use a colour-blind-safe Okabe–Ito palette, Arial/Helvetica, 5–7 pt at final 
 
 **Primary values:** 0, 131, 0, 400, 0, 52 and 400 of 400; rho 3.053 [2.685, 3.540]. Visually separate C1/C5 reference ceilings because operation semantics differ.
 
-## Figure 4 — Transfer, depth and model-free replay
+## Figure 4 — Transfer, replay and targeted model sensitivity
 
 **Format:** 180 mm, four panels.
 
 - **a:** Held-out triadic relation construction without a dedicated operator.
 - **b:** Held-out JSR: C0 0, C1 0, C2 0, C3 100, C_self 0, C_rand 13, C5 100 of 100.
-- **c:** Depth summary: all successful C3 candidates at registered depth four; 0/17,280 depth-one alternatives validate.
-- **d:** Component audit: 2,400/2,400 model-free gate matches, 500/500 jump worlds retained, 0/300 controls and 38,400/38,400 C_self schema-invalid plans.
+- **c:** Targeted world-level JSR on the fixed 96-world panel: historical Phi-4 4-bit C_self, Phi-4 8-bit C_self, DeepSeek matched C_self and DeepSeek native C_self, plus the balanced 40-world DeepSeek supplied-representation positive control. Show exact counts and Wilson 95% intervals, and visually separate the n=40 control from paired n=96 conditions.
+- **d:** Response-to-verdict attrition for historical Phi-4 and the new C_self conditions: response, parse, schema, operation, arguments/types, executable, J1–J5. Mark the one-repair Phi-4 condition as a triggered sensitivity, not a replacement result. Include model-free replay totals in a compact inset.
+
+The new panels remain locked until all five extension shards are `complete_verified` and deterministic replay reports zero mismatches. The caption must distinguish the original n=400 confirmatory population, its fixed 96-world historical slice, the new n=96 sensitivity panel and the n=40 positive-control subset.
 
 ## Figure 5 — One complete prospective escape
 
@@ -57,4 +59,4 @@ Columns: executable hypothesis, frozen formal language, structural non-membershi
 
 ## Legend requirements
 
-Each legend begins with a short title sentence, defines JSR/FJR and every interval, states exact world n, names the resampling/test procedure and tails, and identifies which panels are schematics. Keep each under 250 words.
+Each legend begins with a short title sentence, defines JSR/FJR and every interval, states exact world n, names the resampling/test procedure and tails, and identifies which panels are schematics. Targeted sensitivity panels emphasize counts, Wilson intervals, paired world-level differences and family-descriptive results without candidate-level significance tests. Keep each under 250 words.

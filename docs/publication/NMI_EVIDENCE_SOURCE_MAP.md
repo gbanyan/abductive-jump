@@ -32,5 +32,8 @@ Verified 2 September 2026. The hierarchy used here is: frozen preregistration; c
 | CJ5 replay | 16,800/16,800 candidates; 0 mismatches; 35,533 ancestry rows | `artifacts/compositional-replay-validation.json` | 16,800 candidates | `compositional_replay.py` | `be3cf3b` | Yes |
 | CJ5 inference traces | 33,600 exact unique calls | `artifacts/compositional-reproducibility-manifest.json` | 33,600 calls | `compositional_reproducibility.py` | `be3cf3b` | Yes |
 | Held-out seal | unlock only after both known-family shards were terminal and audited | `research-ledger.md`; `artifacts/compositional-execution-source-audit.json` | chronology | ledger and verifier | `27ee542` unlock | Yes |
+| Historical Phi-4 C_self response attrition | 1,200/1,200 responses returned and non-empty; 0/1,200 strict complete JSON; 0/19,200 executable plan opportunities; all 1,200 responses reached the 700-token completion cap | `experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json`; historical `llm_calls.jsonl` and `llm_self_plans.parquet` | 400 worlds, 1,200 responses, 19,200 plans | `scripts/analyze_historical_cself_attrition.py` | `320eb29` protocol freeze | Yes |
+
+The five minimal-sensitivity conditions are intentionally absent from this evidence map until their shards are `complete_verified`, replayed and analyzed. No partial result may be promoted into a manuscript claim.
 
 No headline number may enter the manuscript unless it appears above or is added with equivalent canonical evidence.

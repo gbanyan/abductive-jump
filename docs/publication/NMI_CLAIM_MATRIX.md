@@ -12,10 +12,13 @@
 - C3 exceeded C_rand by 87 percentage points in both populations; both registered Holm-adjusted P values were 0.00029997.
 - No false jumps were observed for any condition in 200 known-family and 100 held-out no-jump worlds. This does not imply zero population risk.
 - All 10,800 AJ5 and 16,800 CJ5 selected candidates replayed deterministically with zero mismatches.
+- Offline reconstruction of the original known-family Phi-4 C_self interface found 1,200/1,200 non-empty responses but 0/1,200 strict whole-response JSON parses and 0/19,200 executable plan opportunities; all responses reached the registered 700-token completion cap. This is an interface-attrition result, not evidence about the quality of valid proposals.
+
+The minimal targeted sensitivity extension remains claim-locked until Phi-4 8-bit C_self, DeepSeek matched C_self, DeepSeek native C_self, the DeepSeek supplied-representation positive control and the triggered one-repair Phi-4 condition are all completion-verified and replayed. Its n=96 panel is a sensitivity analysis and must never be described as replacing the original n=400 confirmatory study.
 
 ## Interpretation, not directly proven
 
-- Representation proposal and search organization appear to be a major bottleneck for the tested frozen model.
+- Representation proposal and search organization may be a major bottleneck for the tested frozen model, but the original C_self result alone cannot separate that possibility from truncation and serialization failure.
 - Abductive reasoning may be usefully decomposed into representation proposal, downstream reasoning and prospective validation.
 - A phenomenologically discontinuous explanatory jump may sometimes be implemented as a sequence of computationally local representation transformations.
 - Structured search priors, rather than raw sampling volume alone, appear responsible for much of C3's advantage over random composition.
@@ -34,6 +37,7 @@ Any sentence expressing these points must use interpretive qualifiers and remain
 - World models or agents are unnecessary.
 - The representation meta-language is unconstrained.
 - The result applies to all models, domains or LLMs.
+- The targeted n=96 sensitivity panel is a new preregistered or replacement confirmatory population.
 - The held-out family is wholly conceptually novel.
 - The study proves Zahavy's position wrong or proves a computational impossibility claim.
 
