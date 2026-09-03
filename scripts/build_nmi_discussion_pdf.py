@@ -116,7 +116,7 @@ def setup_plot() -> None:
 
 
 def panel_label(ax, label: str) -> None:
-    ax.text(-0.13, 1.02, label, transform=ax.transAxes, weight="bold", fontsize=12)
+    ax.text(-0.11, 1.12, label, transform=ax.transAxes, weight="bold", fontsize=12)
 
 
 def save_figure(fig, name: str) -> Path:
@@ -269,8 +269,8 @@ def figure_2() -> Path:
         lw=1,
     )
     counts = [1, 1, 0, 0, 142, 142]
-    for i, (v, count) in enumerate(zip(vals, counts, strict=True)):
-        ax.text(i, v * 100 + 3.2, f"{count}/400", ha="center", fontsize=7.2)
+    for i, (v, upper, count) in enumerate(zip(vals, highs, counts, strict=True)):
+        ax.text(i, max(3.5, upper * 100 + 1.6), f"{count}/400", ha="center", fontsize=7.2)
     ax.set_xticks(np.arange(6), labels)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 46)
@@ -393,8 +393,8 @@ def figure_3() -> Path:
         lw=1,
     )
     counts = [0, 131, 0, 400, 0, 52, 400]
-    for i, (v, count) in enumerate(zip(values, counts, strict=True)):
-        ax.text(i, v + 4, f"{count}/400", ha="center", fontsize=7.2)
+    for i, (v, upper, count) in enumerate(zip(values, high, counts, strict=True)):
+        ax.text(i, max(4, upper + 1.8), f"{count}/400", ha="center", fontsize=7.2)
     ax.set_xticks(np.arange(7), labels)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 116)
