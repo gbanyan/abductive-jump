@@ -1,0 +1,34 @@
+{
+  "schema_version": "nmi-minimal-sensitivity-amendment-v1",
+  "amendment_id": "NMI-MIN-SENS-V1-AMENDMENT-001",
+  "authored_at_utc": "2026-09-03T04:55:00Z",
+  "base_protocol_commit": "320eb29b33ddaed596b0fe7b3f1d5895c706f311",
+  "base_protocol_tag": "nmi-minimal-sensitivity-v1-protocol-freeze",
+  "timing": "before every NMI-MIN-SENS-V1 benchmark model call",
+  "purpose": "Add fail-closed operational queues and per-shard integrity finalization.",
+  "scientific_changes": [],
+  "scientific_invariants_unchanged": [
+    "models and revisions",
+    "worlds and seeds",
+    "prompts and primitive vocabulary",
+    "candidate slots and representation opportunities",
+    "completion and reasoning budgets",
+    "repair trigger and exactly-one-repair rule",
+    "interventions and hidden-information boundaries",
+    "J0-J5 definitions and thresholds",
+    "analysis and interpretation rules"
+  ],
+  "operational_files_sha256": {
+    "scripts/finalize_nmi_minimal_sensitivity_v1.py": "76670103501593cf4de1d51e6ca34f77f8de50b44e726aa4d7cfd5a63790a937",
+    "scripts/run_nmi_minimal_deepseek_queue.sh": "569c17e027d8016f96028460e33ec02e14879381617f3efbfec98bfa1f86483e",
+    "scripts/run_nmi_minimal_phi8_queue.sh": "65b136c1567f109121529d6f75b6662386aba32162245122202117a1a6ade18c"
+  },
+  "fail_closed_rules": [
+    "Refuse to reuse an existing output directory.",
+    "Require exact world and candidate cardinalities.",
+    "Require the frozen seed panel and model identity.",
+    "Require exact no-repair call counts and bounded one-repair call counts.",
+    "Reject duplicate logical model-call keys and transport-error sentinels.",
+    "Hash every scientific output artifact before marking a shard complete_verified."
+  ]
+}
