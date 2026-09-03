@@ -131,11 +131,11 @@ Phi-4 generated the original registered outputs described above. OpenAI Codex wa
 
 ## Data availability
 
-Synthetic-world definitions, result tables, manifests and replay artifacts are included in the project repository. The submission release will archive an exact commit in a DOI-minting repository. No personal or restricted third-party data were used.
+Synthetic-world definitions, historical and extension result tables, raw call ledgers, manifests and replay artifacts are included in the project repository. The original confirmatory state and separate sensitivity namespace are identified by commits and tags. The submission release will archive an exact commit in a DOI-minting repository. No personal or restricted third-party data were used.
 
 ## Code availability
 
-Source code for generation, search, evaluation, statistics, component audit and replay is included in the project repository. The release will identify the exact commit and archival DOI. Model weights are not redistributed; identifier, revision and runtime are reported above.
+Source code for generation, search, evaluation, offline attrition, statistics, figure generation, component audit and replay is included in the project repository. The release will identify the exact commit and archival DOI. Model weights are not redistributed; repository identifier, revision and runtime are reported above.
 
 ## References
 
