@@ -532,24 +532,48 @@ def figure_4() -> Path:
         summary_rows = list(csv.DictReader(handle))
     sensitivity_order = [
         "historical_phi4_4bit_cself",
+        "phi4_4bit_budget_cself",
         "phi8_cself",
         "deepseek_matched_cself",
         "deepseek_native_cself",
         "phi8_cself_repair",
         "deepseek_p2",
     ]
-    sensitivity_labels = ["Phi4\n4-bit*", "Phi4\n8-bit", "DS\nmatched", "DS\nnative", "Phi4\nrepair", "DS\nP2†"]
+    sensitivity_labels = [
+        "Phi4\n700*",
+        "Phi4\n2,048",
+        "Phi4\n8-bit",
+        "DS\nmatched",
+        "DS\nnative",
+        "Phi4\nrepair",
+        "DS\nP2†",
+    ]
     summary_lookup = {row["condition"]: row for row in summary_rows}
-    sensitivity_values = np.array([float(summary_lookup[name]["jsr"]) for name in sensitivity_order]) * 100
-    sensitivity_low = np.array([float(summary_lookup[name]["wilson_95_low"]) for name in sensitivity_order]) * 100
-    sensitivity_high = np.array([float(summary_lookup[name]["wilson_95_high"]) for name in sensitivity_order]) * 100
+    sensitivity_values = (
+        np.array([float(summary_lookup[name]["jsr"]) for name in sensitivity_order]) * 100
+    )
+    sensitivity_low = (
+        np.array([float(summary_lookup[name]["wilson_95_low"]) for name in sensitivity_order]) * 100
+    )
+    sensitivity_high = (
+        np.array([float(summary_lookup[name]["wilson_95_high"]) for name in sensitivity_order])
+        * 100
+    )
     ax = axes[1, 0]
     sx = np.arange(len(sensitivity_order))
-    ax.bar(sx, sensitivity_values, color=[GREY, BLUE, BLUE, ORANGE, RED, "#009E73"], width=0.7)
+    ax.bar(
+        sx,
+        sensitivity_values,
+        color=[GREY, GOLD, BLUE, CYAN, ORANGE, RED, "#009E73"],
+        width=0.7,
+    )
     ax.errorbar(
         sx,
         sensitivity_values,
-        yerr=[np.maximum(0, sensitivity_values - sensitivity_low), np.maximum(0, sensitivity_high - sensitivity_values)],
+        yerr=[
+            np.maximum(0, sensitivity_values - sensitivity_low),
+            np.maximum(0, sensitivity_high - sensitivity_values),
+        ],
         fmt="none",
         ecolor=INK,
         capsize=2.5,
@@ -557,8 +581,14 @@ def figure_4() -> Path:
     )
     for index, name in enumerate(sensitivity_order):
         row = summary_lookup[name]
-        ax.text(index, min(108, sensitivity_values[index] + 4), f'{row["successes"]}/{row["worlds"]}', ha="center", fontsize=6.8)
-    ax.axvline(4.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
+        ax.text(
+            index,
+            min(108, sensitivity_values[index] + 4),
+            f"{row['successes']}/{row['worlds']}",
+            ha="center",
+            fontsize=6.8,
+        )
+    ax.axvline(5.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
     ax.set_xticks(sx, sensitivity_labels)
     ax.set_ylim(0, 116)
     ax.set_ylabel("World-level JSR (%)")
@@ -569,30 +599,74 @@ def figure_4() -> Path:
     with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
         attrition_rows = list(csv.DictReader(handle))
     stage_aliases = {
-        "response_returned": "response", "request_returned": "response",
-        "parse_valid": "parse", "json_parse_valid": "parse",
-        "schema_valid": "schema", "plan_schema_valid": "schema",
-        "operation_valid": "operation", "operation_names_valid": "operation",
-        "argument_type_valid": "types", "argument_types_valid": "types",
-        "executable": "execute", "J1": "J1", "J2": "J2", "J3": "J3", "J4": "J4", "J5": "J5",
+        "response_returned": "response",
+        "request_returned": "response",
+        "parse_valid": "parse",
+        "json_parse_valid": "parse",
+        "schema_valid": "schema",
+        "plan_schema_valid": "schema",
+        "operation_valid": "operation",
+        "operation_names_valid": "operation",
+        "argument_type_valid": "types",
+        "argument_types_valid": "types",
+        "executable": "execute",
+        "J1": "J1",
+        "J2": "J2",
+        "J3": "J3",
+        "J4": "J4",
+        "J5": "J5",
     }
-    attrition_stages = ["response", "parse", "schema", "operation", "types", "execute", "J1", "J2", "J3", "J4", "J5"]
+    attrition_stages = [
+        "response",
+        "parse",
+        "schema",
+        "operation",
+        "types",
+        "execute",
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+    ]
     attrition_lookup: dict[str, dict[str, float]] = {}
     for row in attrition_rows:
         stage = stage_aliases.get(row["stage"])
         if stage:
             attrition_lookup.setdefault(row["condition"], {})[stage] = float(row["rate"]) * 100
     line_conditions = sensitivity_order[:-1]
-    line_labels = ["Phi4 4-bit*", "Phi4 8-bit", "DS matched", "DS native", "Phi4 repair"]
-    line_colours = [GREY, BLUE, CYAN, ORANGE, RED]
+    line_labels = [
+        "Phi4 700*",
+        "Phi4 2,048",
+        "Phi4 8-bit",
+        "DS matched",
+        "DS native",
+        "Phi4 repair",
+    ]
+    line_colours = [GREY, GOLD, BLUE, CYAN, ORANGE, RED]
     tx = np.arange(len(attrition_stages))
     for name, label, colour in zip(line_conditions, line_labels, line_colours, strict=True):
-        ax.plot(tx, [attrition_lookup[name].get(stage, np.nan) for stage in attrition_stages], marker="o", ms=2.4, lw=1.25, color=colour, label=label)
+        ax.plot(
+            tx,
+            [attrition_lookup[name].get(stage, np.nan) for stage in attrition_stages],
+            marker="o",
+            ms=2.4,
+            lw=1.25,
+            color=colour,
+            label=label,
+        )
     ax.set_xticks(tx, attrition_stages, rotation=38, ha="right", fontsize=6.5)
     ax.set_ylim(-3, 106)
     ax.set_ylabel("Passing stage (%)")
     ax.legend(frameon=False, fontsize=5.8, ncol=2, loc="upper right")
-    ax.text(0.02, 0.04, "Model-free C3 replay: 2,400/2,400 gate matches", transform=ax.transAxes, fontsize=6.2, color=NAVY)
+    ax.text(
+        0.02,
+        0.04,
+        "Model-free C3 replay: 2,400/2,400 gate matches",
+        transform=ax.transAxes,
+        fontsize=6.2,
+        color=NAVY,
+    )
     ax.set_title("Response-to-verdict attrition")
     panel_label(ax, "d")
     fig.suptitle(
@@ -611,7 +685,15 @@ def figure_5() -> Path:
     stages = [
         (0.02, 0.61, 0.16, 0.25, "Observations", "x=z=w\ny=9x^3", BLUE),
         (0.22, 0.61, 0.16, 0.25, "Incumbent", "y = 9x^3\nexact fit", GREY),
-        (0.42, 0.57, 0.20, 0.33, "Four rewrites", "1 reify edge\n2 arity -> 3\n3 bind z\n4 bind w", ORANGE),
+        (
+            0.42,
+            0.57,
+            0.20,
+            0.33,
+            "Four rewrites",
+            "1 reify edge\n2 arity -> 3\n3 bind z\n4 bind w",
+            ORANGE,
+        ),
         (0.66, 0.61, 0.16, 0.25, "Candidate", "y = 9xzw\noutside grammar", BLUE),
         (0.84, 0.61, 0.14, 0.25, "Commit", "z: 6 -> 7\nx=w=6", RED),
     ]
@@ -631,7 +713,9 @@ def figure_5() -> Path:
     ]
     for x0, title, body, colour in outcomes:
         ax.add_patch(
-            FancyBboxPatch((x0, 0.16), 0.22, 0.24, boxstyle="round,pad=0.02", fc=LIGHT, ec=colour, lw=1.6)
+            FancyBboxPatch(
+                (x0, 0.16), 0.22, 0.24, boxstyle="round,pad=0.02", fc=LIGHT, ec=colour, lw=1.6
+            )
         )
         ax.text(x0 + 0.11, 0.32, title, ha="center", weight="bold", color=NAVY, fontsize=9)
         ax.text(x0 + 0.11, 0.22, body, ha="center", va="center", fontsize=8.5)
@@ -825,7 +909,9 @@ def manuscript_page_decor(canvas, doc) -> None:
     canvas.setFillColor(colors.HexColor(GREY))
     canvas.drawString(20 * mm, height - 11.5 * mm, "MANUSCRIPT FOR SCIENTIFIC DISCUSSION")
     canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
-    canvas.drawString(20 * mm, 11 * mm, "Nature Machine Intelligence Article format | not yet submitted")
+    canvas.drawString(
+        20 * mm, 11 * mm, "Nature Machine Intelligence Article format | not yet submitted"
+    )
     canvas.restoreState()
 
 
@@ -902,15 +988,60 @@ def design_table(st) -> Table:
 
 def literature_table(st) -> Table:
     data = [
-        ["Evaluation", "Exec", "Frozen", "Non-member", "Prospective", "Falsify", "Attribution / replay", "Breadth"],
+        [
+            "Evaluation",
+            "Exec",
+            "Frozen",
+            "Non-member",
+            "Prospective",
+            "Falsify",
+            "Attribution / replay",
+            "Breadth",
+        ],
         ["Hypothesis Search / HypoGen", "partial", "no", "no", "no", "no", "no", "language tasks"],
         ["POPPER", "partial", "no", "no", "yes", "yes", "limited", "literature"],
-        ["FunSearch", "yes", "skeleton", "no", "feedback", "tests", "proposer/evaluator", "mathematics"],
+        [
+            "FunSearch",
+            "yes",
+            "skeleton",
+            "no",
+            "feedback",
+            "tests",
+            "proposer/evaluator",
+            "mathematics",
+        ],
         ["PiEvo", "yes", "evolving", "no", "varies", "varies", "proposer/search", "4 benchmarks"],
-        ["Model Discovery Agent", "yes", "open set", "no", "Bayesian", "predictive", "proposer/inference", "3 sciences"],
+        [
+            "Model Discovery Agent",
+            "yes",
+            "open set",
+            "no",
+            "Bayesian",
+            "predictive",
+            "proposer/inference",
+            "3 sciences",
+        ],
         ["HypoArena", "judged", "no", "no", "context", "rubric", "no", "988 / 6 / 15"],
-        ["EvoSCM", "yes", "evolving", "no", "active", "prospective", "evolution/selection", "causal systems"],
-        ["This work", "yes", "yes", "canonical", "locked", "exact", "factorial / exact", "9 families / 1 model"],
+        [
+            "EvoSCM",
+            "yes",
+            "evolving",
+            "no",
+            "active",
+            "prospective",
+            "evolution/selection",
+            "causal systems",
+        ],
+        [
+            "This work",
+            "yes",
+            "yes",
+            "canonical",
+            "locked",
+            "exact",
+            "factorial / exact",
+            "9 families / 1 model",
+        ],
     ]
     wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
     table = Table(
@@ -1035,12 +1166,15 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     ]
                 )
                 inserted.add(3)
-            elif heading == "A deterministic component audit removes the language model" and 4 not in inserted:
+            elif (
+                heading == "A deterministic component audit removes the language model"
+                and 4 not in inserted
+            ):
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Held-out transfer, deterministic replay and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control. Error bars are Wilson 95% intervals. Panel d uses plan-opportunity rates for new C_self conditions and response-level rates for the historical interface; historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
+                            "Figure 4 | Held-out transfer, deterministic replay and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control. The Phi-4 2,048-token condition changes only the historical completion cap and is not compute-matched. Error bars are Wilson 95% intervals. Panel d uses plan-opportunity rates for new C_self conditions and response-level rates for the historical interface; historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
                             st,
                         ),
                     ]
@@ -1120,13 +1254,16 @@ def sensitivity_tables(st) -> list:
             [
                 row["condition"].replace("_", " "),
                 row["population"],
-                f'{row["successes"]}/{row["worlds"]}',
-                f'{100 * float(row["jsr"]):.1f}%',
-                f'{100 * float(row["wilson_95_low"]):.1f}-{100 * float(row["wilson_95_high"]):.1f}%',
+                f"{row['successes']}/{row['worlds']}",
+                f"{100 * float(row['jsr']):.1f}%",
+                f"{100 * float(row['wilson_95_low']):.1f}-{100 * float(row['wilson_95_high']):.1f}%",
             ]
         )
+
     def table(data: list[list[str]], widths: list[float]) -> Table:
-        wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
+        wrapped = [
+            [Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data
+        ]
         result = Table(wrapped, colWidths=widths, repeatRows=1, hAlign="LEFT")
         result.setStyle(
             TableStyle(
@@ -1135,7 +1272,12 @@ def sensitivity_tables(st) -> list:
                     ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
                     ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
                     ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F3F6F8")]),
+                    (
+                        "ROWBACKGROUNDS",
+                        (0, 1),
+                        (-1, -1),
+                        [colors.white, colors.HexColor("#F3F6F8")],
+                    ),
                     ("LEFTPADDING", (0, 0), (-1, -1), 4),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 4),
                     ("TOPPADDING", (0, 0), (-1, -1), 4),
@@ -1147,7 +1289,17 @@ def sensitivity_tables(st) -> list:
 
     with (analysis / "paired_world_differences.csv").open(newline="", encoding="utf-8") as handle:
         paired = list(csv.DictReader(handle))
-    paired_data = [["Reference", "Comparison", "Both fail", "Both pass", "New only", "Old only", "JSR difference"]]
+    paired_data = [
+        [
+            "Reference",
+            "Comparison",
+            "Both fail",
+            "Both pass",
+            "New only",
+            "Old only",
+            "JSR difference",
+        ]
+    ]
     for row in paired:
         paired_data.append(
             [
@@ -1157,7 +1309,7 @@ def sensitivity_tables(st) -> list:
                 row["both_succeed"],
                 row["comparison_only_success"],
                 row["reference_only_success"],
-                f'{float(row["paired_jsr_difference"]):+.3f}',
+                f"{float(row['paired_jsr_difference']):+.3f}",
             ]
         )
 
@@ -1172,13 +1324,23 @@ def sensitivity_tables(st) -> list:
                 row["stage"],
                 row["passed"],
                 row["denominator"],
-                f'{100 * float(row["rate"]):.1f}%',
+                f"{100 * float(row['rate']):.1f}%",
             ]
         )
 
     with (analysis / "compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
         ledger = list(csv.DictReader(handle))
-    ledger_data = [["Condition", "Calls", "Attempts", "Prompt tokens", "Completion tokens", "Reasoning text", "Latency (s)"]]
+    ledger_data = [
+        [
+            "Condition",
+            "Calls",
+            "Attempts",
+            "Prompt tokens",
+            "Completion tokens",
+            "Reasoning text",
+            "Latency (s)",
+        ]
+    ]
     for row in ledger:
         ledger_data.append(
             [
@@ -1188,7 +1350,70 @@ def sensitivity_tables(st) -> list:
                 row["prompt_tokens"],
                 row["completion_tokens"],
                 row["reasoning_text_available_calls"],
-                f'{float(row["latency_seconds_sum"]):.1f}',
+                f"{float(row['latency_seconds_sum']):.1f}",
+            ]
+        )
+
+    with (analysis / "phi_budget_world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        budget_summaries = list(csv.DictReader(handle))
+    budget_summary_data = [["Condition", "Population", "Success", "JSR", "Wilson 95% CI"]]
+    for row in budget_summaries:
+        budget_summary_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row["population"],
+                f"{row['successes']}/{row['worlds']}",
+                f"{100 * float(row['jsr']):.1f}%",
+                f"{100 * float(row['wilson_95_low']):.1f}-{100 * float(row['wilson_95_high']):.1f}%",
+            ]
+        )
+    with (analysis / "phi_budget_paired_differences.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        budget_paired = list(csv.DictReader(handle))
+    budget_paired_data = [
+        ["Reference", "Comparison", "Both fail", "Both pass", "New only", "Old only", "Difference"]
+    ]
+    for row in budget_paired:
+        budget_paired_data.append(
+            [
+                row["reference"].replace("_", " "),
+                row["comparison"].replace("_", " "),
+                row["both_fail"],
+                row["both_succeed"],
+                row["comparison_only_success"],
+                row["reference_only_success"],
+                f"{float(row['paired_jsr_difference']):+.3f}",
+            ]
+        )
+    with (analysis / "phi_budget_gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        budget_attrition = list(csv.DictReader(handle))
+    budget_attrition_data = [["Population", "Unit", "Stage", "Passed", "Denominator", "Rate"]]
+    for row in budget_attrition:
+        budget_attrition_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row["unit"],
+                row["stage"],
+                row["passed"],
+                row["denominator"],
+                f"{100 * float(row['rate']):.1f}%",
+            ]
+        )
+    with (analysis / "phi_budget_compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
+        budget_ledger = list(csv.DictReader(handle))
+    budget_ledger_data = [
+        ["Population", "Calls", "Attempts", "Prompt tokens", "Completion tokens", "Latency (s)"]
+    ]
+    for row in budget_ledger:
+        budget_ledger_data.append(
+            [
+                row["condition"].replace("_", " "),
+                row["llm_calls"],
+                row["transport_attempts"],
+                row["prompt_tokens"],
+                row["completion_tokens"],
+                f"{float(row['latency_seconds_sum']):.1f}",
             ]
         )
 
@@ -1208,6 +1433,21 @@ def sensitivity_tables(st) -> list:
             "Reasoning-token counts are reported only when exposed by the serving API; reasoning-text availability is not converted into an inferred token count.",
             st["small"],
         ),
+        PageBreak(),
+        Paragraph("Full Phi-4 completion-budget sensitivity", st["h1"]),
+        table(budget_summary_data, [42 * mm, 56 * mm, 20 * mm, 17 * mm, 30 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Full paired completion-budget transitions", st["h1"]),
+        table(
+            budget_paired_data,
+            [32 * mm, 32 * mm, 18 * mm, 18 * mm, 18 * mm, 18 * mm, 25 * mm],
+        ),
+        PageBreak(),
+        Paragraph("Full Phi-4 completion-budget gate attrition", st["h1"]),
+        table(budget_attrition_data, [42 * mm, 47 * mm, 22 * mm, 19 * mm, 22 * mm, 18 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Full Phi-4 completion-budget compute ledger", st["h1"]),
+        table(budget_ledger_data, [46 * mm, 18 * mm, 20 * mm, 29 * mm, 31 * mm, 24 * mm]),
     ]
 
 
@@ -1245,7 +1485,10 @@ def build_pdf() -> Path:
     doc.addPageTemplates(PageTemplate(id="content", frames=[frame], onPage=page_decor))
     story: list = [
         Spacer(1, 18 * mm),
-        Paragraph("A prospective assay for hypothesis-space expansion in AI systems", st["manuscript_title"]),
+        Paragraph(
+            "A prospective assay for hypothesis-space expansion in AI systems",
+            st["manuscript_title"],
+        ),
         Rule(75 * mm, colors.HexColor(ORANGE), 3),
         Spacer(1, 8 * mm),
         Paragraph("Article | manuscript for scientific discussion", st["subtitle"]),
@@ -1258,13 +1501,22 @@ def build_pdf() -> Path:
     story.extend(
         [
             image_flow(sensitivity_figures / "figure1-world-jsr.png"),
-            caption("Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The supplied-representation control uses a distinct balanced n=40 subset.", st),
+            caption(
+                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The supplied-representation control uses a distinct balanced n=40 subset.",
+                st,
+            ),
             PageBreak(),
             image_flow(sensitivity_figures / "figure2-gate-attrition.png"),
-            caption("Extended Data Figure 8b | Response-to-verdict attrition. Denominators and units are reported in the accompanying source-data tables.", st),
+            caption(
+                "Extended Data Figure 8b | Response-to-verdict attrition. Denominators and units are reported in the accompanying source-data tables.",
+                st,
+            ),
             PageBreak(),
             image_flow(sensitivity_figures / "figure3-per-family.png"),
-            caption("Extended Data Figure 8c | Per-family descriptive sensitivity results; no family-level or candidate-level significance test was performed.", st),
+            caption(
+                "Extended Data Figure 8c | Per-family descriptive sensitivity results; no family-level or candidate-level significance test was performed.",
+                st,
+            ),
             Spacer(1, 5 * mm),
         ]
     )
