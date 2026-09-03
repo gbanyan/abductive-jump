@@ -1,6 +1,10 @@
 import pytest
 
-from abductive_jump.minimal_sensitivity_analysis import paired_difference, wilson_interval
+from abductive_jump.minimal_sensitivity_analysis import (
+    cumulative_pass_count,
+    paired_difference,
+    wilson_interval,
+)
 
 
 def test_wilson_interval_bounds_extremes() -> None:
@@ -32,3 +36,13 @@ def test_paired_difference_rejects_nonidentical_panels() -> None:
             [{"family": "a", "world_seed": 1, "condition_success": False}],
             [{"family": "a", "world_seed": 2, "condition_success": False}],
         )
+
+
+def test_gate_attrition_definition_is_cumulative() -> None:
+    rows = [
+        {"j1": True, "j2": False, "j3": True},
+        {"j1": True, "j2": True, "j3": True},
+    ]
+    gates = ("j1", "j2", "j3")
+    counts = [cumulative_pass_count(rows, gates, index) for index in range(len(gates))]
+    assert counts == [2, 1, 1]

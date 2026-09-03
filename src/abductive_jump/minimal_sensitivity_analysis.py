@@ -78,6 +78,13 @@ def parquet_rows(path: Path) -> list[dict[str, Any]]:
     return pq.read_table(path).to_pylist()
 
 
+def cumulative_pass_count(
+    rows: Iterable[dict[str, Any]], stages: tuple[str, ...], stage_index: int
+) -> int:
+    required = stages[: stage_index + 1]
+    return sum(all(bool(row.get(stage)) for stage in required) for row in rows)
+
+
 def require_finalized(results_root: Path) -> dict[str, dict[str, Any]]:
     validations = {}
     for name in ALL_RUNS:
@@ -129,17 +136,19 @@ def cself_attrition(label: str, run_dir: Path) -> list[dict[str, Any]]:
         "executable",
         "representation_constructed",
     )
-    result = [
-        {
-            "condition": label,
-            "unit": "effective_plan_opportunity",
-            "stage": stage,
-            "passed": sum(bool(row.get(stage)) for row in plan_rows),
-            "denominator": len(plan_rows),
-            "rate": sum(bool(row.get(stage)) for row in plan_rows) / len(plan_rows),
-        }
-        for stage in stages
-    ]
+    result = []
+    for index, stage in enumerate(stages):
+        passed = cumulative_pass_count(plan_rows, stages, index)
+        result.append(
+            {
+                "condition": label,
+                "unit": "effective_plan_opportunity",
+                "stage": stage,
+                "passed": passed,
+                "denominator": len(plan_rows),
+                "rate": passed / len(plan_rows),
+            }
+        )
     executable_slots = {
         (str(row["world_id"]), int(row["slot"]))
         for row in plan_rows
@@ -150,8 +159,9 @@ def cself_attrition(label: str, run_dir: Path) -> list[dict[str, Any]]:
         for row in candidate_rows
         if (str(row["world_id"]), int(row["slot"])) in executable_slots
     ]
-    for stage in ("j1", "j2", "j3", "j4", "j5"):
-        passed = sum(bool(row.get(stage)) for row in proposed_candidates)
+    gates = ("j1", "j2", "j3", "j4", "j5")
+    for index, stage in enumerate(gates):
+        passed = cumulative_pass_count(proposed_candidates, gates, index)
         result.append(
             {
                 "condition": label,
