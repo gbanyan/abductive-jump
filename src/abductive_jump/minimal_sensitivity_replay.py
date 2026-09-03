@@ -11,6 +11,8 @@ from typing import Any
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from .compositional_experiment import _world
+from .compositional_worlds import HELD_OUT_FAMILY
 from .conditions import Condition, ProposalSource, build_prompt
 from .extension_replay import replay_compositional
 from .minimal_sensitivity_analysis import CSSELF_RUNS, require_finalized
@@ -98,7 +100,7 @@ def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
             world = (
                 generate_world(str(family), int(seed), no_jump=False)
                 if p2
-                else generate_world(str(family), int(seed), no_jump=bool(config["no_jump"]))
+                else _world(config, str(family), int(seed))
             )
             expected_worlds[(str(family), int(seed))] = world.world_id
     expected_world_keys = {
@@ -131,7 +133,7 @@ def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
         expected_call_keys = set()
         initial_seed_by_slot = {}
         for (family, seed), world_id in expected_worlds.items():
-            family_index = FAMILIES.index(family)
+            family_index = [*FAMILIES, HELD_OUT_FAMILY].index(family)
             for slot in range(int(config["candidate_slots"])):
                 initial_seed = (
                     int(config["decoding_seed_base"])
