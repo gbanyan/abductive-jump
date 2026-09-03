@@ -175,6 +175,25 @@ def cself_attrition(label: str, run_dir: Path) -> list[dict[str, Any]]:
     return result
 
 
+def p2_attrition(run_dir: Path) -> list[dict[str, Any]]:
+    rows = parquet_rows(run_dir / "candidate_results.parquet")
+    stages = ("parse_valid", "executable", "j1", "j2", "j3", "j4", "j5")
+    result = []
+    for index, stage in enumerate(stages):
+        passed = cumulative_pass_count(rows, stages, index)
+        result.append(
+            {
+                "condition": "deepseek_p2",
+                "unit": "model_authored_expression_and_intervention_candidate",
+                "stage": stage.upper() if stage.startswith("j") else stage,
+                "passed": passed,
+                "denominator": len(rows),
+                "rate": passed / len(rows),
+            }
+        )
+    return result
+
+
 def call_ledger(label: str, path: Path) -> dict[str, Any]:
     calls = []
     with path.open(encoding="utf-8") as handle:
@@ -260,6 +279,7 @@ def run(root: Path) -> dict[str, Any]:
     )
     for name in CSSELF_RUNS:
         attrition.extend(cself_attrition(name, results_root / name))
+    attrition.extend(p2_attrition(results_root / "deepseek_p2"))
     ledgers = [call_ledger(name, results_root / name / "llm_calls.jsonl") for name in ALL_RUNS]
 
     analysis_dir = base / "analysis"
