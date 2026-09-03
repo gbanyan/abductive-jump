@@ -116,6 +116,64 @@ def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
         for row in candidate_rows
     ]
     require_exact_keys(actual_candidate_keys, expected_candidate_keys, f"{run_dir.name} candidates")
+    if not p2:
+        call_rows = [json.loads(line) for line in (run_dir / "llm_calls.jsonl").read_text().splitlines()]
+        condition = Condition.C_SELF_LLM_COMPOSITION
+        expected_call_keys = set()
+        initial_seed_by_slot = {}
+        for (family, seed), world_id in expected_worlds.items():
+            family_index = FAMILIES.index(family)
+            for slot in range(int(config["candidate_slots"])):
+                initial_seed = (
+                    int(config["decoding_seed_base"])
+                    + list(Condition).index(condition) * 10_000_000
+                    + family_index * 100_000
+                    + seed * 100
+                    + slot * 2
+                )
+                initial_seed_by_slot[(world_id, slot)] = initial_seed
+                expected_call_keys.add(
+                    (
+                        condition.value,
+                        ProposalSource.LLM_COMPOSITION.value,
+                        world_id,
+                        initial_seed,
+                    )
+                )
+                expected_call_keys.add(
+                    (
+                        condition.value,
+                        ProposalSource.COMPOSITION_SEARCH.value,
+                        world_id,
+                        initial_seed + 1,
+                    )
+                )
+        if int(config.get("validator_repair_attempts", 0)) == 1:
+            plan_rows = pq.read_table(run_dir / "llm_self_plans.parquet").to_pylist()
+            repair_slots = {
+                (str(row["world_id"]), int(row["slot"]))
+                for row in plan_rows
+                if row.get("repair_stage") == "repair"
+            }
+            for world_slot in repair_slots:
+                expected_call_keys.add(
+                    (
+                        condition.value,
+                        ProposalSource.LLM_COMPOSITION.value,
+                        world_slot[0],
+                        initial_seed_by_slot[world_slot] + 50_000_000,
+                    )
+                )
+        actual_call_keys = [
+            (
+                str(row["condition"]),
+                str(row["proposal_source"]),
+                str(row["world_id"]),
+                int(row["decoding_seed"]),
+            )
+            for row in call_rows
+        ]
+        require_exact_keys(actual_call_keys, expected_call_keys, f"{run_dir.name} calls")
 
 
 def replay_p2(config_path: Path, run_dir: Path) -> dict[str, Any]:
