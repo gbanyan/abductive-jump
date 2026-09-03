@@ -1,0 +1,8 @@
+{
+  "status": "abandoned_incomplete",
+  "stopped_at_utc": "2026-09-03T04:42:15Z",
+  "reason": "Superseded by the user-requested minimal targeted sensitivity extension.",
+  "completed_llm_call_records": 404,
+  "eligible_for_scientific_analysis": false,
+  "preservation_policy": "Retained unchanged for provenance; never merge with confirmatory or minimal-sensitivity results."
+}

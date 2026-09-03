@@ -1,0 +1,8 @@
+{
+  "status": "superseded",
+  "stopped_at_utc": "2026-09-03T04:42:15Z",
+  "reason": "The broad 38-shard plan was replaced by a minimal targeted sensitivity extension.",
+  "completed_verified_shards_before_stop": 8,
+  "scientific_use": "Do not interpret this superseded extension matrix as a completed experiment. Completed artifacts remain preserved for provenance only unless explicitly incorporated under a later frozen protocol.",
+  "replacement_namespace": "experiments/nmi_minimal_sensitivity_v1"
+}
