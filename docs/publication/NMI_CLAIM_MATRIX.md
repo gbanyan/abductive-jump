@@ -14,7 +14,7 @@
 - All 10,800 AJ5 and 16,800 CJ5 selected candidates replayed deterministically with zero mismatches.
 - Offline reconstruction of the original known-family Phi-4 C_self interface found 1,200/1,200 non-empty responses but 0/1,200 strict whole-response JSON parses and 0/19,200 executable plan opportunities; all responses reached the registered 700-token completion cap. This is an interface-attrition result, not evidence about the quality of valid proposals.
 
-The minimal targeted sensitivity extension remains claim-locked until Phi-4 8-bit C_self, DeepSeek matched C_self, DeepSeek native C_self, the DeepSeek supplied-representation positive control and the triggered one-repair Phi-4 condition are all completion-verified and replayed. Its n=96 panel is a sensitivity analysis and must never be described as replacing the original n=400 confirmatory study.
+The minimal targeted sensitivity extension remains claim-locked until Phi-4 8-bit C_self, DeepSeek matched C_self, DeepSeek native C_self, the DeepSeek supplied-representation positive control and the triggered one-repair Phi-4 condition are all completion-verified and replayed. Its n=96 panel is a sensitivity analysis and must never be described as replacing the original n=400 confirmatory study. The separately frozen Phi-4 completion-budget condition retains the historical revision, 4-bit runtime, prompt, worlds, slots, attempts, interventions and J0-J5, changing only the completion cap from 700 to 2,048 tokens. Its fixed n=96 slice is the primary paired budget comparison; its complete known-family n=400 and held-out n=100 populations are supplementary descriptive sensitivities, not new confirmatory populations.
 
 ## Interpretation, not directly proven
 
