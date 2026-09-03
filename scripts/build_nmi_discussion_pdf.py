@@ -900,6 +900,7 @@ def literature_table(st) -> Table:
         ["PiEvo", "yes", "evolving", "no", "varies", "varies", "proposer/search", "4 benchmarks"],
         ["Model Discovery Agent", "yes", "open set", "no", "Bayesian", "predictive", "proposer/inference", "3 sciences"],
         ["HypoArena", "judged", "no", "no", "context", "rubric", "no", "988 / 6 / 15"],
+        ["EvoSCM", "yes", "evolving", "no", "active", "prospective", "evolution/selection", "causal systems"],
         ["This work", "yes", "yes", "canonical", "locked", "exact", "factorial / exact", "9 families / 1 model"],
     ]
     wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]

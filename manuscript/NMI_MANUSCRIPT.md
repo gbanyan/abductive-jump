@@ -8,7 +8,7 @@ Scientific discovery can require changing not only a hypothesis but the language
 
 Abduction selects an explanatory hypothesis, but scientific change sometimes alters the representational vocabulary in which hypotheses can be stated<sup>1–3</sup>. Computational creativity and constructive-induction research formalized related distinctions between exploration within a space and transformations of that space<sup>4–9</sup>. Symbolic regression, program search and language-model-guided systems can discover useful equations, algorithms and hypotheses<sup>10–17</sup>, while multi-agent systems increasingly automate broader scientific workflows<sup>18–20</sup>.
 
-Recent work now explicitly targets expanding principle or model spaces. PiEvo treats discovery as optimization over an evolving principle space across four benchmarks<sup>21</sup>. Model Discovery Agent couples a language-model proposer to Bayesian experiment design in an open model setting spanning physics, chemistry and biology<sup>22</sup>. HypoArena evaluates prospective hypothesis discovery in 988 cases across six domains and 15 frontier models<sup>23</sup>. These studies broaden the scientific tasks and models under evaluation. A complementary measurement problem remains: how can an evaluation prove that a candidate left a specified incumbent hypothesis language, charge it a prediction before seeing the answer, and separately identify which system component caused the escape?
+Recent work now explicitly targets expanding principle or model spaces. PiEvo treats discovery as optimization over an evolving principle space across four benchmarks<sup>21</sup>. Model Discovery Agent couples a language-model proposer to Bayesian experiment design in an open model setting spanning physics, chemistry and biology<sup>22</sup>. HypoArena evaluates prospective hypothesis discovery in 988 cases across six domains and 15 frontier models<sup>23</sup>. EvoSCM evolves structural causal models through intervention and prospective prediction<sup>24</sup>. These studies broaden the scientific tasks and models under evaluation. A complementary measurement problem remains: how can an evaluation prove that a candidate left a specified incumbent hypothesis language, charge it a prediction before seeing the answer, and separately identify which system component caused the escape?
 
 Here we operationalize **bounded hypothesis-space expansion**. We freeze an incumbent representational language, generate executable candidates and require a six-gate verdict: incumbent adequacy (J0), canonical structural non-membership (J1), candidate adequacy (J2), a discriminating committed prediction (J3), prospective intervention gain (J4) and independent falsification survival (J5; Fig. 1). Candidate prose, model confidence, embedding distance and semantic novelty do not enter the verdict.
 
@@ -24,6 +24,7 @@ Our experiments validate the assay and reveal a component-attribution limit. Typ
 | PiEvo | yes | evolving principle space | no formal certificate | benchmark dependent | benchmark dependent | proposer/search | no exact replay claim | 4 benchmarks, multiple backbones |
 | Model Discovery Agent | yes | open model set | no formal certificate | Bayesian experiment design | posterior predictive checks | proposer/inference | implementation dependent | physics, chemistry, biology |
 | HypoArena | judged text | no | no | context regression | rubric/judge | no | no | 988 cases, 6 domains, 15 models |
+| EvoSCM | yes | evolving causal models | no frozen-language certificate | active intervention | prospective prediction | model evolution / selection | implementation dependent | synthetic causal systems |
 | This work | yes | yes | canonical certificate | outcome locked | independent exact cases | factorial + component audit | exact | 9 synthetic families, 1 model |
 
 ## Results
@@ -161,10 +162,11 @@ Source code for generation, search, evaluation, statistics, component audit and 
 21. Pu, Y., Lin, T. & Chen, H. Principle-Evolvable Scientific Discovery via Uncertainty Minimization. In *ICML*, PMLR **306** (2026).
 22. Murphy, K. Model Discovery Agent: LLM-assisted Bayesian experiment design for data-efficient discovery of mechanistic world models. Preprint at https://arxiv.org/abs/2608.09696 (2026).
 23. Zhong, T. et al. Before the Action: Benchmarking LLMs on Prospective Hypothesis Discovery. Preprint at https://arxiv.org/abs/2607.15766 (2026).
-24. Chen, T. et al. HypoSpace. Preprint at https://arxiv.org/abs/2510.15614 (2025).
-25. Liu, Y. et al. ResearchBench. *Findings ACL* 13187–13207 (2026).
-26. Pearl, J. *Causality* (Cambridge Univ. Press, 2009).
-27. Peters, J., Janzing, D. & Schölkopf, B. *Elements of Causal Inference* (MIT Press, 2017).
+24. Zhao, Q. et al. Scientific Belief Revision Through Causal Model Evolution and Experimentation. Preprint at https://arxiv.org/abs/2609.01526 (2026).
+25. Chen, T. et al. HypoSpace. Preprint at https://arxiv.org/abs/2510.15614 (2025).
+26. Liu, Y. et al. ResearchBench. *Findings ACL* 13187–13207 (2026).
+27. Pearl, J. *Causality* (Cambridge Univ. Press, 2009).
+28. Peters, J., Janzing, D. & Schölkopf, B. *Elements of Causal Inference* (MIT Press, 2017).
 
 ## Acknowledgements
 
