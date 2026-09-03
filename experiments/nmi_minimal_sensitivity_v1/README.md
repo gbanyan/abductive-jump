@@ -8,7 +8,7 @@ This namespace contains a targeted sensitivity analysis and does not replace the
 - Positive-control panel: 40 of those worlds, comprising the same five predeclared seeds per family.
 - Original confirmatory population: n=400; unchanged and reported separately.
 
-The exact world IDs, selection salt and source hashes are in `panel_manifest.json`. The protocol and operational amendment are in `protocol.json` and `protocol_amendment_001.json`.
+The exact world IDs, selection salt and source hashes are in `panel_manifest.json`. The protocol and operational amendment are in `protocol.json` and `protocol_amendment_001.json`. Amendment 002 locks the outcome-blind integration of the separately frozen Phi-4 completion-budget sensitivity.
 
 ## Allowed run matrix
 
@@ -20,9 +20,16 @@ The exact world IDs, selection salt and source hashes are in `panel_manifest.jso
 
 No other model, budget, decoding, family or factorial condition belongs to this extension.
 
+The report also incorporates an already-completed `PHI-BUDGET-SENSITIVITY`
+condition from the separately frozen `NMI-EXT-V1` namespace. It changes only
+the historical Phi-4 4-bit completion cap (700 to 2,048), makes no new model
+calls, reports all 400 known-family worlds and 100 held-out worlds, and uses the
+same fixed 96-world panel for the primary paired comparison. This is an
+integration of preserved evidence, not an additional run in the matrix above.
+
 ## Completion and analysis
 
-Each run directory must contain `validation.json` with `status=complete_verified`. Partial raw calls must not be interpreted. After all five validations exist, run the zero-model-call postprocessing sequence:
+Each new run directory must contain `validation.json` with `status=complete_verified`; both imported budget shards must also pass their frozen validation hashes. Partial raw calls must not be interpreted. After all five new validations exist, run the zero-model-call postprocessing sequence:
 
 ```bash
 rtk proxy env PYTHONPATH=src .venv/bin/python scripts/run_nmi_minimal_postprocessing.py --root .

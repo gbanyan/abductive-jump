@@ -37,10 +37,17 @@ def main() -> None:
         base / "analysis" / "paired_world_differences.csv",
         base / "analysis" / "gate_attrition.csv",
         base / "analysis" / "compute_ledger.csv",
+        base / "analysis" / "phi_budget_world_summary.csv",
+        base / "analysis" / "phi_budget_paired_differences.csv",
+        base / "analysis" / "phi_budget_gate_attrition.csv",
+        base / "analysis" / "phi_budget_compute_ledger.csv",
         base / "analysis" / "minimal_sensitivity_report.md",
         root / "reports" / "figures" / "minimal_sensitivity" / "figure1-world-jsr.svg",
+        root / "reports" / "figures" / "minimal_sensitivity" / "figure1-world-jsr.png",
         root / "reports" / "figures" / "minimal_sensitivity" / "figure2-gate-attrition.svg",
+        root / "reports" / "figures" / "minimal_sensitivity" / "figure2-gate-attrition.png",
         root / "reports" / "figures" / "minimal_sensitivity" / "figure3-per-family.svg",
+        root / "reports" / "figures" / "minimal_sensitivity" / "figure3-per-family.png",
     ]
     missing = [str(path) for path in outputs if not path.is_file()]
     if missing:

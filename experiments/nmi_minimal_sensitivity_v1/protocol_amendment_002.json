@@ -1,0 +1,56 @@
+{
+  "schema_version": "nmi-minimal-sensitivity-amendment-v1",
+  "amendment_id": "NMI-MIN-SENS-V1-AMENDMENT-002",
+  "authored_at_utc": "2026-09-03T13:13:44Z",
+  "base_protocol_commit": "320eb29b33ddaed596b0fe7b3f1d5895c706f311",
+  "base_protocol_tag": "nmi-minimal-sensitivity-v1-protocol-freeze",
+  "timing": "after PHI-BUDGET-SENSITIVITY generation but before opening or analysing any minimal-sensitivity outcome",
+  "purpose": "Integrate an already prospectively frozen, complete Phi-4 4-bit completion-budget sensitivity without making another model call.",
+  "generation_changes": [],
+  "source_protocol": {
+    "commit": "4606413",
+    "tag": "nmi-extension-v1-protocol-freeze",
+    "condition_id": "PHI-BUDGET-SENSITIVITY",
+    "only_scientific_change": "generation.max_tokens: 700 -> 2048",
+    "known_config": "experiments/nmi_extension_v1/configs/phi_budget/known_jump.json",
+    "known_config_sha256": "cba0f9907f05f80f163c1571505bcaf2858673dc91ad7cd703bf82a62103a8ef",
+    "heldout_config": "experiments/nmi_extension_v1/configs/phi_budget/heldout_jump.json",
+    "heldout_config_sha256": "31a46eea60ed5c73be07f2217b5e03a5b1e1b8cbd85916d38d0b440812c4aa4b"
+  },
+  "source_results": {
+    "known_validation": "experiments/nmi_extension_v1/results/phi_budget/known_jump/validation.json",
+    "known_validation_sha256": "1d81b323877c396c1d15e27772ed847eec5ab50b22ce6d0d6e04b5d20bb4907d",
+    "known_worlds": 400,
+    "known_calls": 2400,
+    "heldout_validation": "experiments/nmi_extension_v1/results/phi_budget/heldout_jump/validation.json",
+    "heldout_validation_sha256": "fc9544f6b775568ceb8529aee1e2fee637179030a10bf5a93e3ed271981228ca",
+    "heldout_worlds": 100,
+    "heldout_calls": 600,
+    "transport_error_records": 0
+  },
+  "analysis_lock": {
+    "main_paired_panel": "NMI-MIN-SENS-V1-PANEL-96",
+    "panel_manifest_sha256": "2db121341f79c41c1c53cf4b61d4deba2af475f297dba0dc3106924e09b522b9",
+    "main_contrast": "historical Phi-4 4-bit C_self 700 tokens versus Phi-4 4-bit C_self 2048 tokens on the same fixed 96 worlds",
+    "full_known_descriptive": "report all 400 prospectively frozen known-family worlds separately",
+    "heldout_descriptive": "report all 100 prospectively frozen held-out worlds only as supplementary sensitivity evidence",
+    "statistics": [
+      "exact counts",
+      "world-level JSR",
+      "Wilson 95% intervals",
+      "paired world-level differences",
+      "per-family descriptive results",
+      "gate attrition",
+      "compute and token accounting"
+    ],
+    "candidate_level_significance_tests": false
+  },
+  "interpretation_rules": [
+    "This condition is not compute-matched to historical Phi-4 C_self.",
+    "No extra candidate slot, representation attempt, intervention, repair, or hidden information was introduced.",
+    "A large gain would require narrowing the original conclusion to acknowledge completion-budget sensitivity.",
+    "More executable plans without later-gate gain would identify serialization as a confound but not recover useful representation proposal.",
+    "Null or contradictory outcomes must be retained.",
+    "The n=96 extraction is a paired sensitivity view, not a replacement confirmatory population."
+  ]
+}

@@ -1,6 +1,10 @@
+import json
+from pathlib import Path
+
 import pytest
 
 from abductive_jump.minimal_sensitivity_analysis import (
+    call_ledger,
     cumulative_pass_count,
     paired_difference,
     wilson_interval,
@@ -46,3 +50,30 @@ def test_gate_attrition_definition_is_cumulative() -> None:
     gates = ("j1", "j2", "j3")
     counts = [cumulative_pass_count(rows, gates, index) for index in range(len(gates))]
     assert counts == [2, 1, 1]
+
+
+def test_call_ledger_can_extract_a_frozen_world_panel(tmp_path: Path) -> None:
+    path = tmp_path / "calls.jsonl"
+    rows = [
+        {
+            "world_id": "included",
+            "attempt_count": 1,
+            "prompt_tokens": 10,
+            "completion_tokens": 20,
+            "answer_tokens": 20,
+            "latency_seconds": 1.5,
+        },
+        {
+            "world_id": "excluded",
+            "attempt_count": 1,
+            "prompt_tokens": 100,
+            "completion_tokens": 200,
+            "answer_tokens": 200,
+            "latency_seconds": 15,
+        },
+    ]
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    ledger = call_ledger("panel", path, {"included"})
+    assert ledger["llm_calls"] == 1
+    assert ledger["prompt_tokens"] == 10
+    assert ledger["completion_tokens"] == 20

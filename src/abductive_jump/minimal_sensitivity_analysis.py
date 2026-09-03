@@ -13,6 +13,8 @@ from typing import Any
 
 import pyarrow.parquet as pq
 
+from .phi_budget_integration import budget_run_dir, require_phi_budget_finalized
+
 CSSELF_RUNS = (
     "phi8_cself",
     "deepseek_matched_cself",
@@ -22,7 +24,9 @@ CSSELF_RUNS = (
 ALL_RUNS = (*CSSELF_RUNS, "deepseek_p2")
 
 
-def wilson_interval(successes: int, total: int, z: float = 1.959963984540054) -> tuple[float, float]:
+def wilson_interval(
+    successes: int, total: int, z: float = 1.959963984540054
+) -> tuple[float, float]:
     if total <= 0:
         raise ValueError("Wilson interval requires a positive denominator")
     proportion = successes / total
@@ -119,13 +123,26 @@ def effective_plan_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     effective = []
     for group in grouped.values():
         repair = [row for row in group if row.get("repair_stage") == "repair"]
-        effective.extend(repair or [row for row in group if row.get("repair_stage", "initial") == "initial"])
+        effective.extend(
+            repair or [row for row in group if row.get("repair_stage", "initial") == "initial"]
+        )
     return effective
 
 
-def cself_attrition(label: str, run_dir: Path) -> list[dict[str, Any]]:
+def cself_attrition(
+    label: str,
+    run_dir: Path,
+    pairs: set[tuple[str, int]] | None = None,
+) -> list[dict[str, Any]]:
     plan_rows = effective_plan_rows(parquet_rows(run_dir / "llm_self_plans.parquet"))
     candidate_rows = parquet_rows(run_dir / "candidate_results.parquet")
+    if pairs is not None:
+        plan_rows = [
+            row for row in plan_rows if (str(row["family"]), int(row["world_seed"])) in pairs
+        ]
+        candidate_rows = [
+            row for row in candidate_rows if (str(row["family"]), int(row["world_seed"])) in pairs
+        ]
     stages = (
         "request_returned",
         "non_empty_answer",
@@ -150,9 +167,7 @@ def cself_attrition(label: str, run_dir: Path) -> list[dict[str, Any]]:
             }
         )
     executable_slots = {
-        (str(row["world_id"]), int(row["slot"]))
-        for row in plan_rows
-        if bool(row.get("executable"))
+        (str(row["world_id"]), int(row["slot"])) for row in plan_rows if bool(row.get("executable"))
     }
     proposed_candidates = [
         row
@@ -194,10 +209,12 @@ def p2_attrition(run_dir: Path) -> list[dict[str, Any]]:
     return result
 
 
-def call_ledger(label: str, path: Path) -> dict[str, Any]:
+def call_ledger(label: str, path: Path, world_ids: set[str] | None = None) -> dict[str, Any]:
     calls = []
     with path.open(encoding="utf-8") as handle:
         calls = [json.loads(line) for line in handle]
+    if world_ids is not None:
+        calls = [row for row in calls if str(row["world_id"]) in world_ids]
     reasoning_counts = [row.get("reasoning_tokens") for row in calls]
     return {
         "condition": label,
@@ -207,10 +224,14 @@ def call_ledger(label: str, path: Path) -> dict[str, Any]:
         "completion_tokens": sum(int(row.get("completion_tokens", 0)) for row in calls),
         "answer_tokens": sum(int(row.get("answer_tokens") or 0) for row in calls),
         "reasoning_tokens_reported": sum(int(value or 0) for value in reasoning_counts),
-        "reasoning_token_count_available_calls": sum(value is not None for value in reasoning_counts),
+        "reasoning_token_count_available_calls": sum(
+            value is not None for value in reasoning_counts
+        ),
         "reasoning_text_available_calls": sum(bool(row.get("reasoning_output")) for row in calls),
         "latency_seconds_sum": sum(float(row.get("latency_seconds", 0.0)) for row in calls),
-        "finish_reasons": json.dumps(Counter(str(row.get("finish_reason", "")) for row in calls), sort_keys=True),
+        "finish_reasons": json.dumps(
+            Counter(str(row.get("finish_reason", "")) for row in calls), sort_keys=True
+        ),
     }
 
 
@@ -218,18 +239,34 @@ def run(root: Path) -> dict[str, Any]:
     base = root / "experiments" / "nmi_minimal_sensitivity_v1"
     results_root = base / "results"
     validations = require_finalized(results_root)
+    budget_validations = require_phi_budget_finalized(root)
     panel = json.loads((base / "panel_manifest.json").read_text())
     pairs = {(row["family"], int(row["world_seed"])) for row in panel["selected_worlds"]}
 
-    historical = [
+    historical_full = [
         row
-        for row in parquet_rows(root / "artifacts/compositional/confirmatory-existing/world_results.parquet")
+        for row in parquet_rows(
+            root / "artifacts/compositional/confirmatory-existing/world_results.parquet"
+        )
         if row["condition"] == "C_SELF_LLM_COMPOSITION"
-        and (row["family"], int(row["world_seed"])) in pairs
+    ]
+    historical = [
+        row for row in historical_full if (row["family"], int(row["world_seed"])) in pairs
     ]
     if len(historical) != 96:
         raise ValueError("historical paired panel must contain 96 worlds")
-    conditions: dict[str, list[dict[str, Any]]] = {"historical_phi4_4bit_cself": historical}
+    budget_known_full = parquet_rows(budget_run_dir(root, "known_jump") / "world_results.parquet")
+    budget_panel = [
+        row for row in budget_known_full if (str(row["family"]), int(row["world_seed"])) in pairs
+    ]
+    if len(budget_known_full) != 400 or len(budget_panel) != 96:
+        raise ValueError(
+            "Phi budget known-family result must contain 400 worlds and the exact 96-world panel"
+        )
+    conditions: dict[str, list[dict[str, Any]]] = {
+        "historical_phi4_4bit_cself": historical,
+        "phi4_4bit_budget_cself": budget_panel,
+    }
     for name in CSSELF_RUNS:
         rows = parquet_rows(results_root / name / "world_results.parquet")
         if len(rows) != 96:
@@ -244,8 +281,14 @@ def run(root: Path) -> dict[str, Any]:
         condition_summary(
             name,
             rows,
-            "original confirmatory n=400, fixed paired subset shown" if name.startswith("historical") else (
-                "new balanced n=40 positive-control subset" if name == "deepseek_p2" else "new fixed n=96 sensitivity panel"
+            "original confirmatory n=400, fixed paired subset shown"
+            if name.startswith("historical")
+            else (
+                "previously frozen n=400 budget sensitivity, fixed paired subset shown"
+                if name == "phi4_4bit_budget_cself"
+                else "new balanced n=40 positive-control subset"
+                if name == "deepseek_p2"
+                else "new fixed n=96 sensitivity panel"
             ),
         )
         for name, rows in conditions.items()
@@ -260,6 +303,7 @@ def run(root: Path) -> dict[str, Any]:
             per_family.append(summary)
 
     contrasts = (
+        ("historical_phi4_4bit_cself", "phi4_4bit_budget_cself"),
         ("historical_phi4_4bit_cself", "phi8_cself"),
         ("historical_phi4_4bit_cself", "deepseek_matched_cself"),
         ("deepseek_matched_cself", "deepseek_native_cself"),
@@ -274,13 +318,83 @@ def run(root: Path) -> dict[str, Any]:
     attrition = []
     offline = json.loads((base / "offline" / "historical_cself_attrition.json").read_text())
     attrition.extend(
-        {"condition": "historical_phi4_4bit_cself", **row}
-        for row in offline["response_cascade"]
+        {"condition": "historical_phi4_4bit_cself", **row} for row in offline["response_cascade"]
     )
     for name in CSSELF_RUNS:
         attrition.extend(cself_attrition(name, results_root / name))
+    attrition.extend(
+        cself_attrition(
+            "phi4_4bit_budget_cself",
+            budget_run_dir(root, "known_jump"),
+            pairs,
+        )
+    )
     attrition.extend(p2_attrition(results_root / "deepseek_p2"))
     ledgers = [call_ledger(name, results_root / name / "llm_calls.jsonl") for name in ALL_RUNS]
+    budget_panel_world_ids = {str(row["world_id"]) for row in budget_panel}
+    ledgers.append(
+        call_ledger(
+            "phi4_4bit_budget_cself",
+            budget_run_dir(root, "known_jump") / "llm_calls.jsonl",
+            budget_panel_world_ids,
+        )
+    )
+
+    historical_heldout = [
+        row
+        for row in parquet_rows(
+            root / "artifacts/compositional/confirmatory-heldout/world_results.parquet"
+        )
+        if row["condition"] == "C_SELF_LLM_COMPOSITION"
+    ]
+    budget_heldout = parquet_rows(budget_run_dir(root, "heldout_jump") / "world_results.parquet")
+    if len(historical_full) != 400 or len(historical_heldout) != 100 or len(budget_heldout) != 100:
+        raise ValueError("full Phi budget comparison populations have unexpected cardinality")
+    budget_summaries = [
+        condition_summary(
+            "historical_phi4_4bit_cself_full", historical_full, "original confirmatory n=400"
+        ),
+        condition_summary(
+            "phi4_4bit_budget_cself_full", budget_known_full, "budget sensitivity n=400"
+        ),
+        condition_summary(
+            "historical_phi4_4bit_cself_heldout", historical_heldout, "original held-out n=100"
+        ),
+        condition_summary(
+            "phi4_4bit_budget_cself_heldout", budget_heldout, "budget sensitivity held-out n=100"
+        ),
+    ]
+    budget_paired = []
+    for reference_name, comparison_name, reference_rows, comparison_rows in (
+        (
+            "historical_phi4_4bit_cself_full",
+            "phi4_4bit_budget_cself_full",
+            historical_full,
+            budget_known_full,
+        ),
+        (
+            "historical_phi4_4bit_cself_heldout",
+            "phi4_4bit_budget_cself_heldout",
+            historical_heldout,
+            budget_heldout,
+        ),
+    ):
+        row = paired_difference(reference_rows, comparison_rows)
+        row.update({"reference": reference_name, "comparison": comparison_name})
+        budget_paired.append(row)
+    budget_attrition = cself_attrition(
+        "phi4_4bit_budget_cself_full", budget_run_dir(root, "known_jump")
+    ) + cself_attrition("phi4_4bit_budget_cself_heldout", budget_run_dir(root, "heldout_jump"))
+    budget_ledgers = [
+        call_ledger(
+            "phi4_4bit_budget_cself_full",
+            budget_run_dir(root, "known_jump") / "llm_calls.jsonl",
+        ),
+        call_ledger(
+            "phi4_4bit_budget_cself_heldout",
+            budget_run_dir(root, "heldout_jump") / "llm_calls.jsonl",
+        ),
+    ]
 
     analysis_dir = base / "analysis"
     analysis_dir.mkdir(parents=True, exist_ok=True)
@@ -289,14 +403,23 @@ def run(root: Path) -> dict[str, Any]:
     write_csv(analysis_dir / "paired_world_differences.csv", paired)
     write_csv(analysis_dir / "gate_attrition.csv", attrition)
     write_csv(analysis_dir / "compute_ledger.csv", ledgers)
+    write_csv(analysis_dir / "phi_budget_world_summary.csv", budget_summaries)
+    write_csv(analysis_dir / "phi_budget_paired_differences.csv", budget_paired)
+    write_csv(analysis_dir / "phi_budget_gate_attrition.csv", budget_attrition)
+    write_csv(analysis_dir / "phi_budget_compute_ledger.csv", budget_ledgers)
     report = {
         "analysis_scope": "minimal targeted sensitivity; world is the replicate",
         "candidate_level_significance_tests": False,
         "validations": validations,
+        "phi_budget_validations": budget_validations,
         "world_summary": summaries,
         "paired_world_differences": paired,
         "gate_attrition": attrition,
         "compute_ledger": ledgers,
+        "phi_budget_full_world_summary": budget_summaries,
+        "phi_budget_full_paired_differences": budget_paired,
+        "phi_budget_full_gate_attrition": budget_attrition,
+        "phi_budget_full_compute_ledger": budget_ledgers,
     }
     (analysis_dir / "analysis.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     return report

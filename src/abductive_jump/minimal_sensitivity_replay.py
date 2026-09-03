@@ -14,6 +14,12 @@ import pyarrow.parquet as pq
 from .conditions import Condition, ProposalSource, build_prompt
 from .extension_replay import replay_compositional
 from .minimal_sensitivity_analysis import CSSELF_RUNS, require_finalized
+from .phi_budget_integration import (
+    BUDGET_SHARDS,
+    budget_config_path,
+    budget_run_dir,
+    require_phi_budget_finalized,
+)
 from .primary_experiment import _thresholds
 from .supplied_representation_experiment import evaluate_model_output
 from .worlds import FAMILIES, generate_world
@@ -70,7 +76,9 @@ def load_calls(path: Path) -> dict[tuple[str, int], dict[str, Any]]:
     return result
 
 
-def require_exact_keys(actual: list[tuple[Any, ...]], expected: set[tuple[Any, ...]], label: str) -> None:
+def require_exact_keys(
+    actual: list[tuple[Any, ...]], expected: set[tuple[Any, ...]], label: str
+) -> None:
     if len(actual) != len(set(actual)):
         raise ValueError(f"{label} contains duplicate logical keys")
     actual_set = set(actual)
@@ -97,8 +105,7 @@ def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
         (family, seed, world_id) for (family, seed), world_id in expected_worlds.items()
     }
     actual_world_keys = [
-        (str(row["family"]), int(row["world_seed"]), str(row["world_id"]))
-        for row in world_rows
+        (str(row["family"]), int(row["world_seed"]), str(row["world_id"])) for row in world_rows
     ]
     require_exact_keys(actual_world_keys, expected_world_keys, f"{run_dir.name} worlds")
     expected_candidate_keys = {
@@ -117,7 +124,9 @@ def require_exact_panel(config_path: Path, run_dir: Path, *, p2: bool) -> None:
     ]
     require_exact_keys(actual_candidate_keys, expected_candidate_keys, f"{run_dir.name} candidates")
     if not p2:
-        call_rows = [json.loads(line) for line in (run_dir / "llm_calls.jsonl").read_text().splitlines()]
+        call_rows = [
+            json.loads(line) for line in (run_dir / "llm_calls.jsonl").read_text().splitlines()
+        ]
         condition = Condition.C_SELF_LLM_COMPOSITION
         expected_call_keys = set()
         initial_seed_by_slot = {}
@@ -180,8 +189,8 @@ def replay_p2(config_path: Path, run_dir: Path) -> dict[str, Any]:
     config = json.loads(config_path.read_text())
     saved_rows = pq.read_table(run_dir / "candidate_results.parquet").to_pylist()
     calls = load_calls(run_dir / "llm_calls.jsonl")
-    expected_rows = len(config["families"]) * len(config["world_seeds"]) * int(
-        config["candidate_slots"]
+    expected_rows = (
+        len(config["families"]) * len(config["world_seeds"]) * int(config["candidate_slots"])
     )
     if len(saved_rows) != expected_rows or len(calls) != expected_rows:
         raise ValueError("P2 replay cardinality mismatch")
@@ -301,6 +310,20 @@ def replay_all(root: Path) -> dict[str, Any]:
         json.dumps(p2_report, indent=2, sort_keys=True) + "\n"
     )
     reports["deepseek_p2"] = p2_report
+    require_phi_budget_finalized(root)
+    for name, (split, _expected_worlds, _expected_calls) in BUDGET_SHARDS.items():
+        config_path = budget_config_path(root, split)
+        run_dir = budget_run_dir(root, split)
+        require_exact_panel(config_path, run_dir, p2=False)
+        report = replay_compositional(config_path, run_dir)
+        if int(report["verified_rows"]) != int(report["candidate_rows"]):
+            raise ValueError(
+                f"{name} replay incomplete: {report['verified_rows']}/{report['candidate_rows']} rows verified"
+            )
+        (run_dir / "replay_report.json").write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n"
+        )
+        reports[name] = report
     overall = {
         "status": "complete_verified",
         "model_calls_made": 0,
