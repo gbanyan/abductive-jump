@@ -42,10 +42,10 @@ Use a colour-blind-safe Okabe–Ito palette, Arial/Helvetica, 5–7 pt at final 
 
 - **a:** Held-out triadic relation construction without a dedicated operator.
 - **b:** Held-out JSR: C0 0, C1 0, C2 0, C3 100, C_self 0, C_rand 13, C5 100 of 100.
-- **c:** Targeted world-level JSR on the fixed 96-world panel: historical Phi-4 4-bit C_self, Phi-4 8-bit C_self, DeepSeek matched C_self and DeepSeek native C_self, plus the balanced 40-world DeepSeek supplied-representation positive control. Show exact counts and Wilson 95% intervals, and visually separate the n=40 control from paired n=96 conditions.
+- **c:** Targeted world-level JSR on the fixed 96-world panel: historical Phi-4 4-bit C_self at 700 tokens, the separately frozen Phi-4 4-bit 2,048-token budget sensitivity, Phi-4 8-bit C_self, DeepSeek matched C_self and DeepSeek native C_self, plus the balanced 40-world DeepSeek supplied-representation positive control. Show exact counts and Wilson 95% intervals, and visually separate the n=40 control from paired n=96 conditions. Identify both higher-budget conditions as sensitivity tests rather than compute-matched replacements.
 - **d:** Response-to-verdict attrition for historical Phi-4 and the new C_self conditions: response, parse, schema, operation, arguments/types, executable, J1–J5. Mark the one-repair Phi-4 condition as a triggered sensitivity, not a replacement result. Include model-free replay totals in a compact inset.
 
-The new panels remain locked until all five extension shards are `complete_verified` and deterministic replay reports zero mismatches. The caption must distinguish the original n=400 confirmatory population, its fixed 96-world historical slice, the new n=96 sensitivity panel and the n=40 positive-control subset.
+The new panels remain locked until all five extension shards are `complete_verified` and deterministic replay reports zero mismatches. The caption must distinguish the original n=400 confirmatory population, its fixed 96-world historical slice, the separately frozen Phi-4 budget populations (known-family n=400 and held-out n=100), the fixed n=96 sensitivity comparisons and the n=40 positive-control subset.
 
 ## Figure 5 — One complete prospective escape
 
