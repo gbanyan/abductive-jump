@@ -768,6 +768,15 @@ def styles():
             leading=9.5,
             textColor=colors.HexColor(GREY),
         ),
+        "reference": ParagraphStyle(
+            "Reference",
+            parent=base["BodyText"],
+            fontName="DejaVu",
+            fontSize=7.8,
+            leading=10.2,
+            textColor=colors.HexColor(INK),
+            spaceAfter=3,
+        ),
         "callout": ParagraphStyle(
             "Callout",
             parent=base["BodyText"],
@@ -935,6 +944,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
     paragraph: list[str] = []
     inserted: set[int] = set()
     skipping_markdown_table = False
+    paragraph_style = "body"
 
     def flush() -> None:
         if paragraph:
@@ -942,7 +952,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
             paragraph.clear()
             if "[" in content and "REQUIRED BEFORE SUBMISSION" in content:
                 return
-            story.append(Paragraph(inline_markup(content), st["body"]))
+            story.append(Paragraph(inline_markup(content), st[paragraph_style]))
 
     for line in lines:
         stripped = line.strip()
@@ -959,6 +969,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
         if stripped.startswith("## "):
             flush()
             heading = stripped[3:]
+            paragraph_style = "abstract" if heading == "Abstract" else "body"
             if heading in {
                 "Acknowledgements",
                 "Author contributions",
@@ -974,6 +985,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                 story.append(Paragraph(inline_markup(heading), st["h1"]))
         elif stripped.startswith("### "):
             flush()
+            paragraph_style = "body"
             heading = stripped[4:]
             if heading.startswith("Table 1 |"):
                 story.extend([Paragraph(inline_markup(heading), st["h2"]), literature_table(st)])
@@ -1049,6 +1061,9 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
             flush()
         elif stripped.startswith("**["):
             continue
+        elif re.match(r"^\d+\.\s", stripped):
+            flush()
+            story.append(Paragraph(inline_markup(stripped), st["reference"]))
         else:
             paragraph.append(stripped)
     flush()
