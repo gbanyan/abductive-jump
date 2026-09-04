@@ -6,7 +6,7 @@ The tracked repository contains synthetic-world definitions, derived confirmator
 
 The repository includes `scripts/build_nmi_reviewer_archive.py`, which assembles a clean publication commit together with the ten historical confirmatory call ledgers, six completed superseded shards and three partial-run records. It writes an internal file-level SHA-256 manifest, excludes model weights and can stream-verify every member without extraction. It emits a byte-preserving package for DOI deposition and a separately manifested anonymous-review copy that redacts local account paths, repository email addresses and private LAN endpoints in a fixed audited file set without modifying source artifacts. These local packages are upload-ready but do not themselves constitute a public deposit.
 
-**Submission release:** build and verify both packages from the final tagged publication commit and attach them, with archive-level SHA-256 values, to an immutable GitHub release available to editors and reviewers. A DOI-minted preservation copy will be deposited and cited before publication; it is not treated as a prerequisite for initial submission.
+**Submission release:** the public repository is available at https://github.com/gbanyan/abductive-jump. Both verified packages and their archive-level SHA-256 values are attached to the immutable `nmi-github-submission-v2` release at https://github.com/gbanyan/abductive-jump/releases/tag/nmi-github-submission-v2. A DOI-minted preservation copy will be deposited and cited before publication; it is not treated as a prerequisite for initial submission.
 
 ## Code availability
 
