@@ -46,6 +46,7 @@ CYAN = "#55B5B1"
 ORANGE = "#E6863B"
 GOLD = "#E3B341"
 RED = "#C5524A"
+PURPLE = "#7B61A8"
 GREY = "#68737D"
 LIGHT = "#EEF3F6"
 INK = "#182026"
@@ -531,12 +532,16 @@ def figure_4() -> Path:
     analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
     with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
         summary_rows = list(csv.DictReader(handle))
+    fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
+    with (fair_analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summary_rows.extend(csv.DictReader(handle))
     sensitivity_order = [
         "historical_phi4_4bit_cself",
         "phi4_4bit_budget_cself",
         "phi8_cself",
         "deepseek_matched_cself",
         "deepseek_native_cself",
+        "deepseek_fair_interface_cself",
         "phi8_cself_repair",
         "deepseek_p2",
     ]
@@ -546,6 +551,7 @@ def figure_4() -> Path:
         "Phi4\n8-bit",
         "DS\nmatched",
         "DS\nnative",
+        "DS\nfair",
         "Phi4\nrepair",
         "DS\nP2†",
     ]
@@ -565,7 +571,7 @@ def figure_4() -> Path:
     ax.bar(
         sx,
         sensitivity_values,
-        color=[GREY, GOLD, BLUE, CYAN, ORANGE, RED, "#009E73"],
+        color=[GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, RED, "#009E73"],
         width=0.7,
     )
     ax.errorbar(
@@ -589,7 +595,7 @@ def figure_4() -> Path:
             ha="center",
             fontsize=6.8,
         )
-    ax.axvline(5.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
+    ax.axvline(6.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
     ax.set_xticks(sx, sensitivity_labels)
     ax.set_ylim(0, 116)
     ax.set_ylabel("World-level JSR (%)")
@@ -599,11 +605,18 @@ def figure_4() -> Path:
     ax = axes[1, 1]
     with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
         attrition_rows = list(csv.DictReader(handle))
+    with (fair_analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition_rows.extend(
+            {**row, "condition": "deepseek_fair_interface_cself"}
+            for row in csv.DictReader(handle)
+        )
     stage_aliases = {
         "response_returned": "response",
         "request_returned": "response",
+        "serialization_returned": "response",
         "parse_valid": "parse",
         "json_parse_valid": "parse",
+        "strict_whole_response_json": "parse",
         "schema_valid": "schema",
         "plan_schema_valid": "schema",
         "operation_valid": "operation",
@@ -642,9 +655,10 @@ def figure_4() -> Path:
         "Phi4 8-bit",
         "DS matched",
         "DS native",
+        "DS fair",
         "Phi4 repair",
     ]
-    line_colours = [GREY, GOLD, BLUE, CYAN, ORANGE, RED]
+    line_colours = [GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, RED]
     tx = np.arange(len(attrition_stages))
     for name, label, colour in zip(line_conditions, line_labels, line_colours, strict=True):
         ax.plot(
@@ -663,7 +677,7 @@ def figure_4() -> Path:
     ax.text(
         0.02,
         0.04,
-        "C3 audit: 2,400/2,400; extension replay: 2,772/2,772",
+        "C3 audit: 2,400/2,400; sensitivity replay: 3,060/3,060",
         transform=ax.transAxes,
         fontsize=5.9,
         color=NAVY,
@@ -1248,8 +1262,11 @@ def markdown_appendix_story(path: Path, st) -> list:
 
 def sensitivity_tables(st) -> list:
     analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
+    fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
     with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
         summaries = list(csv.DictReader(handle))
+    with (fair_analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summaries.extend(csv.DictReader(handle))
     summary_data = [["Condition", "Population", "Success", "JSR", "Wilson 95% CI"]]
     for row in summaries:
         summary_data.append(
@@ -1291,6 +1308,10 @@ def sensitivity_tables(st) -> list:
 
     with (analysis / "paired_world_differences.csv").open(newline="", encoding="utf-8") as handle:
         paired = list(csv.DictReader(handle))
+    with (fair_analysis / "paired_world_differences.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        paired.extend(csv.DictReader(handle))
     paired_data = [
         [
             "Reference",
@@ -1419,6 +1440,48 @@ def sensitivity_tables(st) -> list:
             ]
         )
 
+    with (fair_analysis / "per_family.csv").open(newline="", encoding="utf-8") as handle:
+        fair_families = list(csv.DictReader(handle))
+    fair_family_data = [["Family", "Success", "JSR", "Wilson 95% CI"]]
+    for row in fair_families:
+        fair_family_data.append(
+            [
+                row["family"].replace("_", " "),
+                f"{row['successes']}/{row['worlds']}",
+                f"{100 * float(row['jsr']):.1f}%",
+                f"{100 * float(row['wilson_95_low']):.1f}-{100 * float(row['wilson_95_high']):.1f}%",
+            ]
+        )
+    with (fair_analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        fair_attrition = list(csv.DictReader(handle))
+    fair_attrition_data = [["Unit", "Stage", "Passed", "Denominator", "Rate"]]
+    for row in fair_attrition:
+        fair_attrition_data.append(
+            [
+                row["unit"].replace("_", " "),
+                row["stage"],
+                row["passed"],
+                row["denominator"],
+                f"{100 * float(row['rate']):.1f}%",
+            ]
+        )
+    with (fair_analysis / "compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
+        fair_ledger = list(csv.DictReader(handle))
+    fair_ledger_data = [
+        ["Stage", "Calls", "Prompt tokens", "Completion tokens", "Cap hits", "Latency (s)"]
+    ]
+    for row in fair_ledger:
+        fair_ledger_data.append(
+            [
+                row["stage"],
+                row["calls"],
+                row["prompt_tokens"],
+                row["completion_tokens"],
+                row["cap_hits"],
+                f"{float(row['latency_seconds']):.1f}",
+            ]
+        )
+
     return [
         Paragraph("Sensitivity result table", st["h1"]),
         table(summary_data, [39 * mm, 59 * mm, 20 * mm, 17 * mm, 30 * mm]),
@@ -1450,6 +1513,15 @@ def sensitivity_tables(st) -> list:
         Spacer(1, 5 * mm),
         Paragraph("Full Phi-4 completion-budget compute ledger", st["h1"]),
         table(budget_ledger_data, [46 * mm, 18 * mm, 20 * mm, 29 * mm, 31 * mm, 24 * mm]),
+        PageBreak(),
+        Paragraph("Fair-interface DeepSeek sensitivity", st["h1"]),
+        table(fair_family_data, [62 * mm, 26 * mm, 25 * mm, 45 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Fair-interface compute ledger", st["h1"]),
+        table(fair_ledger_data, [31 * mm, 18 * mm, 31 * mm, 34 * mm, 20 * mm, 29 * mm]),
+        PageBreak(),
+        Paragraph("Fair-interface cumulative attrition", st["h1"]),
+        table(fair_attrition_data, [53 * mm, 42 * mm, 22 * mm, 26 * mm, 20 * mm]),
     ]
 
 
@@ -1469,6 +1541,23 @@ def build_pdf() -> Path:
         or int(manifest.get("model_calls_made", -1)) != 0
     ):
         raise ValueError("PDF build locked: sensitivity postprocessing is not verified")
+    fair_validation_path = (
+        ROOT
+        / "experiments"
+        / "nmi_fair_interface_v1"
+        / "results"
+        / "deepseek_fair_cself"
+        / "validation.json"
+    )
+    if not fair_validation_path.is_file():
+        raise ValueError("PDF build locked: fair-interface replay is missing")
+    fair_validation = json.loads(fair_validation_path.read_text())
+    if (
+        fair_validation.get("status") != "complete_verified"
+        or int(fair_validation.get("replay_mismatches", -1)) != 0
+        or int(fair_validation.get("model_calls_made", -1)) != 0
+    ):
+        raise ValueError("PDF build locked: fair-interface replay is not verified")
     sensitivity_figures = ROOT / "reports" / "figures" / "minimal_sensitivity"
     for name in (
         "figure1-world-jsr.png",
