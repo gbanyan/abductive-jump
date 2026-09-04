@@ -1,0 +1,40 @@
+{
+  "candidate_slots_per_world": 3,
+  "code_sha256": {
+    "scripts/finalize_nmi_fair_interface_v1.py": "f86c606d4b56f9651be1f03a02401fc098d9ffae407d3aba75c62f709fef01a6",
+    "scripts/materialize_nmi_fair_interface_v1.py": "c20ed8be4f2b29dca0fbf63d8a02c0e4cb34a91e2802edcbb7a11b9ddd81c752",
+    "src/abductive_jump/fair_interface.py": "f772cb0ff3939dbe494946d0afe7e318ea60fc0071aa385b68db002d58358527",
+    "src/abductive_jump/fair_interface_analysis.py": "ba8f57c86fb2888b7a70c2ccdbf4cf387fc7c017b282ede9a8e9cbaa8a6a4aab",
+    "src/abductive_jump/fair_interface_experiment.py": "c20b2ceeb8592e2b473eab32b470583e953863d8c5368c1e7047d757dc337fba"
+  },
+  "config": "experiments/nmi_fair_interface_v1/configs/deepseek_fair_cself.json",
+  "config_sha256": "82cc32f783534562ddf2804f42a8300b4c48dbf58806eb3fbcd3ee1aa2be3ec1",
+  "expected_model_calls": 576,
+  "fixed_worlds": 96,
+  "interpretation": {
+    "executable_then_late_gate_failure": "supports a bounded proposal-quality limitation",
+    "pre_executable_failure": "supports a remaining reference/operation planning limitation, not universal model incapacity",
+    "validated_success": "shows that prior autonomous zero rates were interface-bound"
+  },
+  "model_calls_per_world": 6,
+  "objective": "Test whether grammar-valid serialization with separate reasoning and answer budgets allows DeepSeek representation plans to reach executable and J1-J5 gates.",
+  "operational_probes": {
+    "excluded_from_analysis": true,
+    "json_schema_supported": true,
+    "one_of_supported": true,
+    "research_worlds_used": false
+  },
+  "panel_selected_worlds_sha256": "fc748cb781f5aa7c5ba3e854d9d4b967b3edb5f6cdfcbd54d661dafbc8e6ee13",
+  "plans_per_slot": 16,
+  "prohibited_claims": [
+    "LLMs generally cannot expand hypothesis spaces",
+    "frontier models are intrinsically incapable of scientific reasoning",
+    "other discovery systems misattribute model capability without direct audit"
+  ],
+  "representation_opportunities_per_world": 48,
+  "schema_version": "nmi-fair-interface-protocol-v1",
+  "scope": "one fixed-panel sensitivity; not a replacement confirmatory population",
+  "status": "frozen_before_inference",
+  "steps_per_plan": 4,
+  "worlds_per_family": 12
+}

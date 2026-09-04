@@ -1,0 +1,73 @@
+{
+  "analysis": "offline inspection; zero model calls",
+  "conditions": {
+    "deepseek_matched_cself": {
+      "calls": {
+        "finish_reasons": {
+          "length": 286,
+          "stop": 2
+        },
+        "legacy_extraction_with_plans_list": 8,
+        "legacy_object_extraction": 288,
+        "nonempty_content": 288,
+        "phase_one_calls": 288,
+        "prompt_contains_exact_change_edge_keys": false,
+        "prompt_contains_exact_node_type_keys": false,
+        "reasoning_present": 0,
+        "starts_with_outer_plans": 288,
+        "strict_whole_response_json": 0,
+        "uses_source_key": 288,
+        "uses_target_key": 288,
+        "uses_type_key": 288
+      },
+      "trace": {
+        "argument_type_valid": 0,
+        "errors": {
+          "invalid_schema:plans_must_be_a_list": 4480,
+          "missing_plan": 128
+        },
+        "executable": 0,
+        "operation_valid": 0,
+        "plan_opportunities": 4608,
+        "schema_valid": 0
+      }
+    },
+    "deepseek_native_cself": {
+      "calls": {
+        "finish_reasons": {
+          "length": 288
+        },
+        "legacy_extraction_with_plans_list": 0,
+        "legacy_object_extraction": 0,
+        "nonempty_content": 0,
+        "phase_one_calls": 288,
+        "prompt_contains_exact_change_edge_keys": false,
+        "prompt_contains_exact_node_type_keys": false,
+        "reasoning_present": 288,
+        "starts_with_outer_plans": 0,
+        "strict_whole_response_json": 0,
+        "uses_source_key": 0,
+        "uses_target_key": 0,
+        "uses_type_key": 0
+      },
+      "trace": {
+        "argument_type_valid": 0,
+        "errors": {
+          "invalid_output:ValueError:no JSON object in model output": 4608
+        },
+        "executable": 0,
+        "operation_valid": 0,
+        "plan_opportunities": 4608,
+        "schema_valid": 0
+      }
+    }
+  },
+  "finding": "The registered prompt omitted exact per-operator argument keys. Matched outputs were usually truncated outer JSON and used parser-incompatible source/target/type keys; native reasoning produced no answer content. Existing autonomous rates therefore cannot isolate conceptual representation-proposal quality.",
+  "schema_version": "nmi-interface-contract-audit-v1",
+  "sources_sha256": {
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_matched_cself/llm_calls.jsonl": "7267f8f006c99eb874ca02d414e7d7862baf9447bf1d66d51bd146947f10812a",
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_matched_cself/llm_self_plans.parquet": "479af1a487ec6d3342399d3aa0ab2800a5b17f2edacebaff5df985715736ad1b",
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_native_cself/llm_calls.jsonl": "ce38c605b79f1d22cbf9c92f5c1498e346c3202d00150da48eac9298f263c7bc",
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_native_cself/llm_self_plans.parquet": "ce702a679126879f39d1152470cc219710e937ea5ea965f73a2697c0d27145a3"
+  }
+}
