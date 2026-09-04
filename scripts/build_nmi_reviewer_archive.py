@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import io
 import json
+import re
 import subprocess
 import tarfile
 from pathlib import Path
@@ -44,6 +45,41 @@ SUPERSEDED_COMPLETE_DIRS = [
 UNTRACKED_PARTIAL_DIRS = [
     "experiments/nmi_extension_v1/results/deepseek_native/known_jump",
     "experiments/nmi_extension_v1/results/phi_budget/known_control",
+]
+
+ANONYMIZE_PATHS = {
+    "docs/deepseek_runtime_manifest.md",
+    "docs/nmi_extension_baseline.md",
+    "docs/phi4_runtime_extension_manifest.md",
+    "experiments/nmi_extension_v1/baseline_manifest.json",
+    "experiments/nmi_extension_v1/protocol.json",
+    "experiments/nmi_extension_v1/runtime/deepseek_manifest.json",
+    "experiments/nmi_extension_v1/runtime/phi4_manifest.json",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/postprocessing_manifest.json",
+    "experiments/nmi_minimal_sensitivity_v1/protocol.json",
+    "scripts/materialize_nmi_minimal_sensitivity_v1.py",
+    "scripts/run_nmi_minimal_deepseek_queue.sh",
+    "scripts/run_nmi_minimal_phi8_queue.sh",
+    "scripts/run_nmi_minimal_postprocess_queue.sh",
+    "scripts/run_phi4_4bit_queue.sh",
+    "scripts/run_phi8_queue_after_phi4.sh",
+    "src/abductive_jump/fair_interface_experiment.py",
+    "tests/test_llm_extension_transport.py",
+}
+
+ANONYMIZATION_RULES = [
+    (re.compile(rb"/Users/[^/\s\"']+"), b"/Users/REDACTED"),
+    (re.compile(rb"/home/[^/\s\"']+"), b"/home/REDACTED"),
+    (
+        re.compile(rb"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"),
+        b"REDACTED@example.invalid",
+    ),
+    (
+        re.compile(
+            rb"\b(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})\b"
+        ),
+        b"192.168.0.0",
+    ),
 ]
 
 
@@ -85,7 +121,16 @@ def expanded_extra_files() -> list[str]:
     return sorted(set(paths))
 
 
-def build() -> Path:
+def anonymized_payload(relative: str) -> tuple[bytes, int]:
+    data = (ROOT / relative).read_bytes()
+    replacements = 0
+    for pattern, replacement in ANONYMIZATION_RULES:
+        data, count = pattern.subn(replacement, data)
+        replacements += count
+    return data, replacements
+
+
+def build(*, anonymized: bool = False) -> Path:
     require_clean_tracked_tree()
     commit = run_git("rev-parse", "HEAD").decode().strip()
     short = commit[:12]
@@ -93,17 +138,32 @@ def build() -> Path:
     tracked_set = set(tracked)
     extras = [path for path in expanded_extra_files() if path not in tracked_set]
     records = []
+    payloads: dict[str, bytes] = {}
+    redaction_count = 0
     for provenance, paths in (("tracked", tracked), ("large-local-artifact", extras)):
         for relative in paths:
             path = ROOT / relative
-            records.append(
-                {
-                    "path": relative,
-                    "provenance": provenance,
-                    "sha256": sha256(path),
-                    "size_bytes": path.stat().st_size,
-                }
-            )
+            source_digest = sha256(path)
+            record = {
+                "path": relative,
+                "provenance": provenance,
+                "sha256": source_digest,
+                "size_bytes": path.stat().st_size,
+            }
+            if anonymized and relative in ANONYMIZE_PATHS:
+                payload, replacements = anonymized_payload(relative)
+                if replacements:
+                    payloads[relative] = payload
+                    redaction_count += replacements
+                    record.update(
+                        {
+                            "anonymization_replacements": replacements,
+                            "source_sha256": source_digest,
+                            "sha256": hashlib.sha256(payload).hexdigest(),
+                            "size_bytes": len(payload),
+                        }
+                    )
+            records.append(record)
     manifest = {
         "schema_version": "nmi-reviewer-deposit-v1",
         "release_commit": commit,
@@ -114,18 +174,26 @@ def build() -> Path:
             "experiments/nmi_extension_v1/results/_incomplete/phi_budget/known_jump_attempt_001_executor_session_terminated",
         ],
         "model_weights_included": False,
+        "anonymized_reviewer_copy": anonymized,
+        "anonymization_replacements": redaction_count,
         "files": records,
     }
     manifest_bytes = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    destination = OUTPUT_DIR / f"nmi-reviewer-deposit-{short}.tar.gz"
+    stem = "nmi-anonymous-reviewer-deposit" if anonymized else "nmi-preservation-archive"
+    destination = OUTPUT_DIR / f"{stem}-{short}.tar.gz"
     prefix = f"novelty-seeking-agent-{short}"
     with tarfile.open(destination, "w:gz", compresslevel=6) as archive:
         for record in records:
-            archive.add(
-                ROOT / record["path"], arcname=f"{prefix}/{record['path']}", recursive=False
-            )
+            relative = record["path"]
+            if relative in payloads:
+                info = tarfile.TarInfo(f"{prefix}/{relative}")
+                info.size = len(payloads[relative])
+                info.mode = (ROOT / relative).stat().st_mode & 0o777
+                archive.addfile(info, io.BytesIO(payloads[relative]))
+            else:
+                archive.add(ROOT / relative, arcname=f"{prefix}/{relative}", recursive=False)
         info = tarfile.TarInfo(f"{prefix}/ARCHIVE_MANIFEST.json")
         info.size = len(manifest_bytes)
         info.mode = 0o644
@@ -140,6 +208,8 @@ def build() -> Path:
             {
                 "archive": str(destination),
                 "archive_sha256": checksum,
+                "anonymized": anonymized,
+                "anonymization_replacements": redaction_count,
                 "files": len(records),
                 "large_local_files": len(extras),
                 "release_commit": commit,
@@ -194,11 +264,12 @@ def verify(archive_path: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--verify", type=Path)
+    parser.add_argument("--anonymized", action="store_true")
     args = parser.parse_args()
     if args.verify:
         verify(args.verify.resolve())
     else:
-        build()
+        build(anonymized=args.anonymized)
 
 
 if __name__ == "__main__":
