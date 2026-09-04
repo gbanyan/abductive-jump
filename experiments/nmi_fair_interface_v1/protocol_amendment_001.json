@@ -1,0 +1,55 @@
+{
+  "expected_calls_after_merge": 576,
+  "expected_unique_worlds_after_merge": 96,
+  "family_partition": [
+    [
+      "latent_common_cause",
+      "unification"
+    ],
+    [
+      "hidden_regimes",
+      "property_to_relation"
+    ],
+    [
+      "state_invention",
+      "coordinate_transform"
+    ],
+    [
+      "causal_ambiguity",
+      "meta_law"
+    ]
+  ],
+  "full_config": "experiments/nmi_fair_interface_v1/configs/deepseek_fair_cself.json",
+  "full_config_sha256": "82cc32f783534562ddf2804f42a8300b4c48dbf58806eb3fbcd3ee1aa2be3ec1",
+  "generator": "scripts/materialize_nmi_fair_interface_shards.py",
+  "generator_sha256": "812357d5dcd5b3872de3d1815760d4f6fa8027dd6a33e542cad09743ec64dca3",
+  "merge_script": "scripts/merge_nmi_fair_interface_shards.py",
+  "merge_script_sha256": "9ffc17a09fc1b640ad665b07fe1428152038608da6496aca94e5d60b91761beb",
+  "pilot_exclusion": {
+    "call_log_sha256": "519e7f2b530c40a0b37f12a486dbb0fa5b08ac60a09557b51d57b7903ba888a8",
+    "calls": 31,
+    "excluded_from_all_analysis": true,
+    "path": "experiments/nmi_fair_interface_v1/operational_pilots/serial_runner_excluded",
+    "reason": "interrupted operational throughput probe; no result parquet or world summary was produced"
+  },
+  "reason": "The serial operational pilot demonstrated severe client-side underutilization: four active requests used approximately 1.2% of available KV cache. Four disjoint family shards preserve per-run concurrency=4 while reducing idle wall time.",
+  "schema_version": "nmi-fair-interface-operational-amendment-v1",
+  "scientific_change": false,
+  "shards": {
+    "experiments/nmi_fair_interface_v1/shards/configs/shard_0.json": "1234b4e6563c3ddfb0b0c92f262829757d1fc169f0d77718cdfbc45e0beb2c48",
+    "experiments/nmi_fair_interface_v1/shards/configs/shard_1.json": "7df82d80b75442a8ecae448b8fa56fe0f868b4db97419621a406105eb1a00942",
+    "experiments/nmi_fair_interface_v1/shards/configs/shard_2.json": "623c0d61e4d66d74dd774b7688e28bd5f9075857a563283008299fdafc4b0aab",
+    "experiments/nmi_fair_interface_v1/shards/configs/shard_3.json": "137754a0f2b258aa51c3ff318cd56ee6cb898bf309ce2916d9fd67658ba2ff56"
+  },
+  "status": "frozen_before_formal_sharded_inference",
+  "unchanged": [
+    "96-world panel",
+    "world seeds and decoding seeds",
+    "model identity and revision",
+    "reasoning and serialization budgets",
+    "prompts and response schema",
+    "primitive vocabulary and 48 opportunities per world",
+    "candidate slots and J0-J5",
+    "hidden-information boundaries"
+  ]
+}
