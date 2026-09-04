@@ -142,7 +142,7 @@ Requests, representations, ancestry edges, fitted programs, commitments, gate va
 
 ### AI assistance in research and writing
 
-Phi-4 and DeepSeek generated the experimental outputs described above. OpenAI conversational and coding models were used during study development to discuss methodological alternatives, stress-test interpretations, inspect artifacts, implement and orchestrate separately frozen analyses, verify literature metadata and assist manuscript drafting. They did not alter historical confirmatory source data or change frozen evaluation rules. All protocols, code changes, statistical outputs, citations and interpretations were reviewed and approved by the human authors, who retain full responsibility for the work. Exact product names and use dates will be confirmed by all authors before submission.
+Phi-4 and DeepSeek generated the experimental outputs described above. OpenAI ChatGPT and Codex were used from 2 to 5 September 2026 to discuss methodological alternatives, stress-test interpretations, inspect artifacts, implement and orchestrate separately frozen analyses, verify literature metadata and assist manuscript drafting; the conversational service did not expose a stable deployed-build identifier, so no finer model-version claim is made. These systems did not alter historical confirmatory source data or change frozen evaluation rules. All protocols, code changes, statistical outputs, citations and interpretations were reviewed and approved by the human authors, who retain full responsibility for the work.
 
 ## Data availability
 
