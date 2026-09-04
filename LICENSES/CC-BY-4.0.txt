@@ -1,0 +1,15 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The original research data identified in LICENSE_SCOPE.md are licensed under
+the Creative Commons Attribution 4.0 International Public License.
+
+You are free to share and adapt the licensed material for any purpose,
+including commercially, provided that you give appropriate credit, provide a
+link to the licence, and indicate whether changes were made. No additional
+restrictions may be applied that legally restrict others from exercising the
+rights granted by the licence.
+
+This notice is a summary and does not replace the legal code. The complete,
+controlling licence is available at:
+
+https://creativecommons.org/licenses/by/4.0/legalcode

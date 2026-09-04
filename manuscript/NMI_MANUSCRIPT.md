@@ -146,11 +146,11 @@ Phi-4 and DeepSeek generated the experimental outputs described above. OpenAI Ch
 
 ## Data availability
 
-Synthetic-world definitions, historical and extension result tables, manifests and replay artifacts, including the inference-free realizer audit, are included in the project repository. Historical AJ5/CJ5 raw call ledgers and raw superseded-extension shards remain local, hash-addressed research artifacts and are not tracked in the current Git repository. A release utility combines these with a clean publication commit, writes a file-level SHA-256 manifest and stream-verifies the upload-ready archive; the verified package must still be deposited for anonymous reviewer access and assigned a DOI before submission. The original confirmatory state and separate sensitivity namespaces are identified by commits and tags. No personal or restricted third-party data were used.
+Synthetic-world definitions, historical and extension result tables, manifests and replay artifacts, including the inference-free realizer audit, are included in the project repository. Historical AJ5/CJ5 raw call ledgers and raw superseded-extension shards are not tracked directly in Git; a release utility combines them with the tagged publication commit, writes a file-level SHA-256 manifest and stream-verifies the archive. The exact submission snapshot and its checksum are provided as a tagged GitHub release for editor and reviewer access. The original confirmatory state and separate sensitivity namespaces are identified by commits and tags. No personal or restricted third-party data were used. A DOI-minted archival copy will be deposited before publication.
 
 ## Code availability
 
-Source code for generation, search, evaluation, offline attrition, statistics, figure generation, component audit, replay and reviewer-archive verification is included in the project repository. The release will identify the exact commit and archival DOI. Model weights are not redistributed; repository identifier, revision and runtime are reported above.
+Source code for generation, search, evaluation, offline attrition, statistics, figure generation, component audit, replay and reviewer-archive verification is included in the project repository and fixed by the tagged GitHub release. Original software is licensed under Apache-2.0 and original synthetic research data and derived artifacts under CC BY 4.0; path-level scope is stated in `LICENSE_SCOPE.md`. A DOI-minted archive will be cited in the accepted version. Model weights are not redistributed; repository identifier, revision and runtime are reported above.
 
 ## References
 

@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software or its research artifacts, please cite the associated paper and archived release."
+type: software
+title: "Abductive Jump: a prospective assay for hypothesis-space expansion"
+authors:
+  - name: "Abductive Jump contributors"
+repository-code: "https://github.com/gbanyan/abductive-jump"
+version: 0.1.0
+date-released: 2026-09-05
+license: Apache-2.0

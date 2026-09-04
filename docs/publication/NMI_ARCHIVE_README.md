@@ -21,4 +21,4 @@ rtk proxy .venv/bin/python scripts/build_nmi_reviewer_archive.py --verify output
 rtk proxy .venv/bin/python scripts/build_nmi_reviewer_archive.py --verify output/archive/nmi-anonymous-reviewer-deposit-<commit>.tar.gz
 ```
 
-The verification command streams every member from the compressed package and checks its size and digest against the internal manifest. Before submission, upload the anonymous copy to a reviewer-accessible deposit and the preservation copy to a DOI-minting repository, record the accession and DOI in the manuscript, and retain both archive-level SHA-256 values in the release notes. Creating the local packages does not itself mint a DOI.
+The verification command streams every member from the compressed package and checks its size and digest against the internal manifest. For submission, attach both verified packages and their archive-level SHA-256 values to the immutable tagged GitHub release available to editors and reviewers. Deposit the preservation package in a DOI-minting repository before publication and cite that record in the accepted manuscript. Creating the local packages or GitHub release does not itself mint a DOI.

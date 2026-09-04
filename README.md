@@ -1,6 +1,6 @@
 # Abductive Jump
 
-A mechanistic study of whether structured external representation mutation helps a frozen language model escape a locally adequate incumbent hypothesis space and reach prospectively validated explanatory models.
+A prospective, replayable assay for hypothesis-space expansion and causal component attribution in AI systems. Candidates must leave a frozen language, remain observationally adequate, commit to a discriminating intervention before outcome reveal, outperform the incumbent oracle and survive independent falsification.
 
 The project is executed in the fixed order documented in `research-ledger.md`: deterministic world engine and validation first, model calibration second, preregistration and configuration freeze third, and confirmatory inference only afterward.
 
@@ -24,4 +24,10 @@ The project is executed in the fixed order documented in `research-ledger.md`: d
 
 ## Status
 
-The original preregistered study is complete and retains **AJ5 — representation-mutation advantage**. Its final compositional generalization/falsification phase also returns **CJ5** under a separate preregistration: structured search composed generic local rewrites with 100% JSR on 400 existing-family and 100 held-out worlds, versus 0% for depth-one rewrites and 13% for matched random primitives. All conditions had 0/300 combined false jumps. The same-vocabulary LLM self-composition control remained at 0%, so the result supports bounded procedural composition of supplied primitives—not autonomous or vocabulary-free theory invention. See `reports/compositional-representation-jump-final.md`, `reports/compositional-representation-jump-reviewer2.md`, and the append-only `research-ledger.md`.
+The frozen AJ5 and CJ5 studies are complete. Subsequent code-path and counterfactual audits show that CJ5 success is attributable to deterministic typed search and a family-aligned motif realizer, not to model output. A separately frozen interface sensitivity produced validated edits in 15/96 worlds but did not outperform matched random composition. The resulting claim is system-level and methodological: the assay detects prospectively validated structural escape while exposing when successful scientific content is supplied by scaffolding rather than by a language model.
+
+See `manuscript/NMI_MANUSCRIPT.md`, `reports/compositional-representation-jump-final.md`, `experiments/nmi_fair_interface_v1/` and `experiments/nmi_realizer_audit_v1/`.
+
+## Licensing and citation
+
+Original software is available under Apache-2.0. Original synthetic research data and derived artifacts are available under CC BY 4.0. Manuscript and publication materials remain all rights reserved pending journal publication; third-party material and raw model outputs retain their applicable terms. See `LICENSE_SCOPE.md` for exact path-level scope and `CITATION.cff` for citation metadata.
