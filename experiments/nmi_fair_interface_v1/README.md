@@ -13,3 +13,8 @@ The response schema guarantees only JSON structure, plan count, depth, operation
 argument keys/types. Dynamic references and scientific usefulness remain model responsibilities.
 
 The protocol and code hashes must be committed and tagged before the formal 96-world run.
+
+Operational amendments 001 and 002 record the family sharding and the switch from concurrent to
+sequential shard scheduling after the server's four-active-sequence limit caused transport queue
+timeouts. Timeout-only directories contain no returned model responses and are archived under
+`operational_pilots/starved_parallel_shards_excluded`; they are excluded from every analysis.

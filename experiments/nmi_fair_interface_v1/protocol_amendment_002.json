@@ -1,0 +1,42 @@
+{
+  "affected_formal_results": [
+    "shard_0",
+    "shard_2",
+    "shard_3"
+  ],
+  "excluded_attempts": {
+    "excluded_from_all_analysis": true,
+    "files": {
+      "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_0/llm_calls.jsonl.transport-errors": {
+        "records": 4,
+        "sha256": "d4d89ea54dd66a22a6411ac61f28766c1ab408cd88821f3caed28401756872c0"
+      },
+      "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_2/llm_calls.jsonl.transport-errors": {
+        "records": 4,
+        "sha256": "6423cc052e5c0ad8e4efc883f468e40679c85b7cb844f33bb337100cc7a41640"
+      },
+      "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_3/llm_calls.jsonl.transport-errors": {
+        "records": 4,
+        "sha256": "94a50a7c8613e5bc9174e949612b6563988f896012b18a8141f8ecac7b20d82d"
+      }
+    },
+    "reason": "Concurrent shard clients starved behind the server's four-active-sequence limit and reached the 600-second transport timeout. These directories contained no returned model response, candidate result, world result or summary."
+  },
+  "new_schedule": "Allow shard_1 to finish, then run shards 0, 2 and 3 one at a time. Each unchanged shard retains concurrency=4, so no scientific configuration changes.",
+  "parent_amendment": "experiments/nmi_fair_interface_v1/protocol_amendment_001.json",
+  "reason": "Prevent infrastructure queue starvation from being treated as a model or interface outcome.",
+  "schema_version": "nmi-fair-interface-operational-amendment-v2",
+  "scientific_change": false,
+  "status": "frozen_before_restarting_timeout-only_shards",
+  "unchanged": [
+    "96-world panel and family partitions",
+    "world seeds and decoding seeds",
+    "model identity and revision",
+    "reasoning and serialization budgets",
+    "prompts and response schema",
+    "primitive vocabulary and 48 opportunities per world",
+    "candidate slots and J0-J5",
+    "hidden-information boundaries",
+    "formal shard_1 outputs already in progress"
+  ]
+}
