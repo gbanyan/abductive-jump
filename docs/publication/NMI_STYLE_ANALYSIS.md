@@ -39,7 +39,7 @@ Sample window: 2024–2026. Access date: 2 September 2026. Only pages labelled *
 - Open with the measurement problem: high-quality hypotheses can remain inside a supplied language, so novelty scores cannot identify representation escape.
 - Introduce “bounded representation-level escape” only after defining the incumbent grammar and prospective intervention criterion.
 - Keep AJ5 as the assay-validation result and CJ5 as the decisive compositional test.
-- Put the proposal–reasoning factorial in the main narrative because it supplies mechanism, not merely an ablation.
+- Put the proposal-source comparison in the main narrative, followed by the component audit that determines which downstream fields were actually model-derived.
 - State the main result with counts and uncertainty, then immediately scope it to the tested frozen model and synthetic families.
 - Reserve philosophical “jump” language for motivation and Discussion; never use it as a measured variable.
 - Use four main figures plus one compact design table; move family tables, dose curves, seed sensitivity and full replay provenance to Extended Data.
@@ -51,4 +51,3 @@ Sample window: 2024–2026. Access date: 2 September 2026. Only pages labelled *
 - Prefer “supports,” “is consistent with,” and “within this benchmark” over “proves.”
 - State registered operator depth, not global conceptual distance.
 - Repeat the three most important boundaries in Abstract, end of Results and Discussion: synthetic families, one frozen model/interface, and supplied meta-level operators.
-

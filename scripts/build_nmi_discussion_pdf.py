@@ -264,7 +264,14 @@ def figure_2() -> Path:
         "B4_REPRESENTATION_MUTATION",
         "B5_FULL_SYSTEM",
     ]
-    labels = ["B0\nDirect", "B1\nSampled", "B2\nFixed", "B3\nAttribute", "B4\nTyped", "B5\nFull"]
+    labels = [
+        "Direct\nmodel",
+        "More\nsamples",
+        "Fixed\nsearch",
+        "Local\nmutation",
+        "Typed\nproposal",
+        "Typed +\nattributes",
+    ]
     vals = np.array([lookup[k]["jsr"] for k in order])
     lows = np.array([lookup[k]["jsr_ci_low"] for k in order])
     highs = np.array([lookup[k]["jsr_ci_high"] for k in order])
@@ -285,14 +292,14 @@ def figure_2() -> Path:
     counts = [1, 1, 0, 0, 142, 142]
     for i, (v, upper, count) in enumerate(zip(vals, highs, counts, strict=True)):
         ax.text(i, max(3.5, upper * 100 + 1.6), f"{count}/400", ha="center", fontsize=7.2)
-    ax.set_xticks(np.arange(6), labels)
+    ax.set_xticks(np.arange(6), labels, fontsize=6.5)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 46)
     ax.set_title("World-level AJ5 success", pad=9)
     panel_label(ax, "a")
 
     ax = axes[0, 1]
-    fact_labels = ["P0\nLLM", "P1\nExternal", "P2\nOracle"]
+    fact_labels = ["Model\nproposal", "External typed\nproposal", "Oracle\nrepresentation"]
     fact = [0, 35.5, 100]
     bars = ax.bar(np.arange(3), fact, color=[GREY, BLUE, GOLD], width=0.65)
     for bar, text in zip(bars, ["0/400", "142/400", "400/400"], strict=True):
@@ -307,8 +314,22 @@ def figure_2() -> Path:
 
     ax = axes[1, 0]
     slots = [1, 2, 3]
-    ax.plot(slots, np.array([53, 101, 142]) / 4, marker="o", lw=2.5, color=BLUE, label="B4 typed")
-    ax.plot(slots, np.array([58, 96, 142]) / 4, marker="o", lw=2.5, color=ORANGE, label="B5 full")
+    ax.plot(
+        slots,
+        np.array([53, 101, 142]) / 4,
+        marker="o",
+        lw=2.5,
+        color=BLUE,
+        label="External typed",
+    )
+    ax.plot(
+        slots,
+        np.array([58, 96, 142]) / 4,
+        marker="o",
+        lw=2.5,
+        color=ORANGE,
+        label="Full typed",
+    )
     for x0, a, b in zip(slots, [53, 101, 142], [58, 96, 142], strict=True):
         ax.text(x0 - 0.05, a / 4 + 2.2, f"{a}/400", color=BLUE, fontsize=7, ha="right")
         ax.text(x0 + 0.05, b / 4 - 3.8, f"{b}/400", color=ORANGE, fontsize=7, ha="left")
@@ -325,8 +346,8 @@ def figure_2() -> Path:
     b4 = [1200, 823, 573, 270, 154, 154]
     b5 = [1200, 838, 562, 262, 145, 145]
     x = np.arange(len(gates))
-    ax.plot(x, np.array(b4) / 12, marker="o", lw=2.2, color=BLUE, label="B4")
-    ax.plot(x, np.array(b5) / 12, marker="o", lw=2.2, color=ORANGE, label="B5")
+    ax.plot(x, np.array(b4) / 12, marker="o", lw=2.2, color=BLUE, label="External typed")
+    ax.plot(x, np.array(b5) / 12, marker="o", lw=2.2, color=ORANGE, label="Full typed")
     for i, (a, b) in enumerate(zip(b4, b5, strict=True)):
         if i in {0, 3, 5}:
             ax.text(i - 0.05, a / 12 + 4, str(a), color=BLUE, fontsize=7, ha="right")
@@ -360,13 +381,13 @@ def figure_3() -> Path:
         "C5_ORACLE_REPRESENTATION",
     ]
     labels = [
-        "C0",
-        "C1*",
-        "C2",
-        "C3",
-        "Cself",
-        "Crand",
-        "C5*",
+        "Fixed\nlanguage",
+        "Atomic\nreference*",
+        "One-step\nedits",
+        "Deterministic\nsearch",
+        "Model-planned\nedits",
+        "Random\ncomposition",
+        "Oracle\nreference*",
     ]
     values = np.array([lookup[k]["jsr"] for k in order]) * 100
     low = np.array([lookup[k]["jsr_ci_low"] for k in order]) * 100
@@ -409,7 +430,7 @@ def figure_3() -> Path:
     counts = [0, 131, 0, 400, 0, 52, 400]
     for i, (v, upper, count) in enumerate(zip(values, high, counts, strict=True)):
         ax.text(i, max(4, upper + 1.8), f"{count}/400", ha="center", fontsize=7.2)
-    ax.set_xticks(np.arange(7), labels)
+    ax.set_xticks(np.arange(7), labels, fontsize=6.2)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 116)
     ax.set_title("Search plus motif realization reaches every world")
@@ -440,13 +461,13 @@ def figure_3() -> Path:
     c3 = np.array([r["c3_jsr"] for r in fam]) * 100
     x = np.arange(len(names))
     w = 0.36
-    ax.bar(x - w / 2, c1, w, color=GOLD, label="C1 atomic reference")
-    ax.bar(x + w / 2, c3, w, color=ORANGE, label="C3 generic composition")
+    ax.bar(x - w / 2, c1, w, color=GOLD, label="Atomic reference")
+    ax.bar(x + w / 2, c3, w, color=ORANGE, label="Deterministic composition")
     ax.set_xticks(x, names, fontsize=7.3, rotation=24, ha="right")
     ax.set_ylim(0, 112)
     ax.set_ylabel("Jump success rate (%)")
     ax.legend(frameon=False, ncol=2, loc="upper left")
-    ax.set_title("C3 search plus realizer saturates all eight generators", pad=10)
+    ax.set_title("Deterministic search plus realizer saturates all generators", pad=10)
     panel_label(ax, "c")
     fig.suptitle(
         "Figure 3 | Generic search with fixed motif realization",
@@ -947,7 +968,156 @@ def figure_5() -> Path:
     return save_figure(fig, "figure_5_realizer_audit.png")
 
 
-def figure_6() -> Path:
+def figure_4_editorial() -> Path:
+    analysis = ROOT / "experiments" / "nmi_realizer_audit_v1" / "analysis"
+    with (analysis / "condition_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summaries = list(csv.DictReader(handle))
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition = list(csv.DictReader(handle))
+    paired_path = (
+        ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis" / "paired_crand_comparison.csv"
+    )
+    with paired_path.open(newline="", encoding="utf-8") as handle:
+        paired = next(csv.DictReader(handle))
+
+    def row_for(source: str, population: str, policy: str) -> dict[str, str]:
+        return next(
+            row
+            for row in summaries
+            if row["source"] == source
+            and row["population"] == population
+            and row["policy"] == policy
+        )
+
+    fig, axes = plt.subplots(2, 2, figsize=(10.6, 6.8))
+
+    ax = axes[0, 0]
+    ax.axis("off")
+    boxes = [
+        (0.03, "Archived run", "2,400 candidate verdicts\n500/500 jump worlds", BLUE),
+        (0.55, "Model-free replay", "2,400/2,400 matched\n500/500 retained", ORANGE),
+    ]
+    for x0, title, detail, colour in boxes:
+        ax.add_patch(
+            FancyBboxPatch(
+                (x0, 0.30),
+                0.40,
+                0.42,
+                boxstyle="round,pad=0.02",
+                fc="white",
+                ec=colour,
+                lw=2,
+            )
+        )
+        ax.text(x0 + 0.20, 0.59, title, ha="center", weight="bold", color=NAVY)
+        ax.text(x0 + 0.20, 0.43, detail, ha="center", va="center", fontsize=8)
+    ax.add_patch(FancyArrowPatch((0.44, 0.51), (0.54, 0.51), arrowstyle="->", color=NAVY, lw=1.5))
+    ax.text(0.49, 0.58, "remove model output", ha="center", fontsize=6.3, color=GREY)
+    ax.set_title("Successful content was already deterministic")
+    panel_label(ax, "a")
+
+    ax = axes[0, 1]
+    groups = [
+        ("C3", "known", "Deterministic\nsearch"),
+        ("C_rand", "known", "Random\ncomposition"),
+        ("DeepSeek_grammar", "fixed_known_panel", "Grammar-constrained\nmodel proposal"),
+    ]
+    x = np.arange(len(groups))
+    width = 0.34
+    aligned_rows = [row_for(source, population, "aligned") for source, population, _ in groups]
+    disabled_rows = [
+        row_for(source, population, "motif_disabled") for source, population, _ in groups
+    ]
+    aligned = np.array([100 * float(row["jsr"]) for row in aligned_rows])
+    disabled = np.array([100 * float(row["jsr"]) for row in disabled_rows])
+    ax.bar(x - width / 2, aligned, width, color=NAVY, label="Aligned realizer")
+    ax.bar(x + width / 2, disabled, width, color=GREY, label="Realizer disabled")
+    for index, row in enumerate(aligned_rows):
+        ax.text(
+            index - width / 2,
+            aligned[index] + 3,
+            f"{row['successes']}/{row['worlds']}",
+            ha="center",
+            fontsize=7,
+        )
+        ax.text(index + width / 2, 2, "0", ha="center", fontsize=7, color=GREY)
+    ax.set_xticks(x, [label for _, _, label in groups], fontsize=7)
+    ax.set_ylim(0, 116)
+    ax.set_ylabel("World success rate (%)")
+    ax.legend(frameon=False, fontsize=7, loc="upper right")
+    ax.set_title("Disabling motif realization removes every success")
+    panel_label(ax, "b")
+
+    ax = axes[1, 0]
+    transition_labels = ["Both fail", "Random only", "Model only", "Both pass"]
+    transition_values = [
+        int(paired["both_fail"]),
+        int(paired["reference_only_success"]),
+        int(paired["comparison_only_success"]),
+        int(paired["both_succeed"]),
+    ]
+    colours = [GREY, CYAN, ORANGE, NAVY]
+    left = 0
+    for label, value, colour in zip(transition_labels, transition_values, colours, strict=True):
+        ax.barh([0], [value], left=left, color=colour, label=label, height=0.45)
+        if value >= 5:
+            ax.text(
+                left + value / 2,
+                0,
+                str(value),
+                ha="center",
+                va="center",
+                color="white",
+                weight="bold",
+            )
+        else:
+            ax.annotate(
+                str(value),
+                xy=(left + value / 2, 0.22),
+                xytext=(0, 7),
+                textcoords="offset points",
+                ha="center",
+                fontsize=7,
+                color=NAVY,
+            )
+        left += value
+    ax.set_xlim(0, 96)
+    ax.set_yticks([])
+    ax.set_xlabel("Paired worlds (n=96)")
+    ax.legend(frameon=False, fontsize=6.5, ncol=2, loc="upper center")
+    ax.set_title("Model proposals do not exceed random composition")
+    panel_label(ax, "c")
+
+    ax = axes[1, 1]
+    stages = ["J0", "J1", "J2", "J3"]
+    sources = ["C3", "C_rand", "DeepSeek_grammar"]
+    labels = ["Deterministic search", "Random composition", "Model proposals"]
+    for source, label, colour in zip(sources, labels, [NAVY, CYAN, ORANGE], strict=True):
+        rows = [
+            row
+            for row in attrition
+            if row["source"] == source and row["policy"] == "motif_disabled"
+        ]
+        lookup = {row["stage"]: row for row in rows}
+        values = [100 * float(lookup[stage]["rate"]) for stage in stages]
+        ax.plot(stages, values, marker="o", lw=1.8, ms=4, label=label, color=colour)
+    ax.set_ylim(-3, 106)
+    ax.set_ylabel("Candidate slots retained (%)")
+    ax.legend(frameon=False, fontsize=6.5, loc="lower left")
+    ax.set_title("Structurally valid candidates lose discrimination at J3")
+    panel_label(ax, "d")
+
+    fig.suptitle(
+        "Figure 4 | Component attribution of system-level escape",
+        fontsize=14,
+        weight="bold",
+        color=NAVY,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.94), h_pad=2.0, w_pad=1.5)
+    return save_figure(fig, "figure_4_component_attribution.png")
+
+
+def figure_5_worked() -> Path:
     fig, ax = plt.subplots(figsize=(10.4, 5.2))
     ax.axis("off")
     stages = [
@@ -977,7 +1147,7 @@ def figure_6() -> Path:
     outcomes = [
         (0.12, "Frozen predictions", "incumbent 1,944\ncandidate 2,268", NAVY),
         (0.40, "Reveal intervention", "observed 2,268\ncandidate wins", ORANGE),
-        (0.68, "Independent falsification", "z=5 -> 1,620\ncandidate exact", CYAN),
+        (0.68, "Held-out falsification", "z=5 -> 1,620\ncandidate exact", CYAN),
     ]
     for x0, title, body, colour in outcomes:
         ax.add_patch(
@@ -1000,13 +1170,13 @@ def figure_6() -> Path:
         color=ORANGE,
     )
     fig.suptitle(
-        "Figure 6 | One complete prospective escape",
+        "Figure 5 | One complete prospective escape",
         fontsize=14,
         weight="bold",
         color=NAVY,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.93))
-    return save_figure(fig, "figure_6_worked_example.png")
+    return save_figure(fig, "figure_5_worked_example.png")
 
 
 def extended_sensitivity_figures() -> dict[str, Path]:
@@ -1323,7 +1493,7 @@ def page_decor(canvas, doc) -> None:
     canvas.line(20 * mm, height - 15 * mm, width - 20 * mm, height - 15 * mm)
     canvas.setFont("DejaVu", 7.5)
     canvas.setFillColor(colors.HexColor(GREY))
-    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI MANUSCRIPT WITH FIGURES | 4 SEPTEMBER 2026")
+    canvas.drawString(20 * mm, height - 11.5 * mm, "NMI MANUSCRIPT WITH FIGURES | 5 SEPTEMBER 2026")
     canvas.drawRightString(width - 20 * mm, 11 * mm, f"{doc.page}")
     canvas.drawString(20 * mm, 11 * mm, "Complete scientific discussion copy | not yet submitted")
     canvas.restoreState()
@@ -1573,6 +1743,10 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
 
     for line in lines:
         stripped = line.strip()
+        if stripped == "<!-- INTRODUCTION -->":
+            flush()
+            paragraph_style = "body"
+            continue
         if skipping_markdown_table:
             if stripped.startswith("|") or not stripped:
                 continue
@@ -1634,14 +1808,14 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                 )
                 inserted.add(1)
             elif (
-                heading == "Typed proposals outperform fixed-space alternatives"
+                heading == "External typed proposals outperform fixed-space alternatives"
                 and 2 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[2]),
                         caption(
-                            "Figure 2 | Typed proposals and their gate attrition. Panels a and b report world-level jump success rate (JSR) for n=400 worlds per condition; intervals are registered family-stratified bootstrap 95% intervals. Panel c reports cumulative successful-world counts and rates as one, two and three slots are admitted. Panel d reports cumulative candidate retention from J0 to J5 for 1,200 candidates per condition; candidates are not independent replicates. All AJ5 conditions recorded 0/200 control-world false jumps.",
+                            "Figure 2 | External typed proposals and their gate attrition. Panels a and b report world-level jump success rate (JSR) for n=400 worlds per condition; intervals are registered family-stratified bootstrap 95% intervals. Panel c reports cumulative successful-world counts as one, two and three slots are admitted. Panel d reports cumulative candidate retention from J0 to J5 for 1,200 candidates per condition; candidates are not independent replicates. Internal condition codes are retained in Methods and source data. All AJ5 conditions recorded 0/200 control-world false jumps.",
                             st,
                         ),
                     ]
@@ -1656,51 +1830,37 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[3]),
                         caption(
-                            "Figure 3 | Generic search with fixed motif realization. Panel a is schematic. Panel b reports known-family JSR with Wilson 95% intervals for n=400 worlds per condition. C1 and C5 are reference conditions with different operation semantics. Panel c reports descriptive rates for 50 worlds per family. C3 combines generic edit search with a fixed motif-to-basis realizer; saturation is within-generator reliability, not independent family replication.",
+                            "Figure 3 | Generic search with fixed motif realization. Panel a is schematic. Panel b reports known-family JSR with Wilson 95% intervals for n=400 worlds per condition. Atomic and oracle conditions are references with different operation semantics. Panel c reports descriptive rates for 50 worlds per family. Deterministic composition combines generic edit search with a fixed, family-aligned motif-to-basis realizer; saturation is within-generator reliability, not independent family replication.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(3)
             elif (
-                heading == "Code-path ablation attributes C3 success to deterministic scaffolding"
+                heading == "Counterfactual replay localizes success to motif semantics"
                 and 4 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Component attribution, held-out transfer and targeted sensitivity. Panel a compares archived C3 verdicts with inference-free replay; all 2,400 candidate verdicts matched. Panel b reports held-out JSR with Wilson 95% intervals for n=100 worlds. Panel c reports the fixed n=96 sensitivity panel and archived C_rand/C3 controls; the supplied-representation control (dagger) uses a distinct balanced n=40 subset. Panel d reports response-to-verdict attrition; denominators change from responses or plan opportunities to executable selected candidates at J1. Connecting lines show stage order, not a common denominator. No candidate-level significance tests were performed.",
+                            "Figure 4 | Component attribution of system-level escape. Panel a compares archived deterministic-search verdicts with inference-free replay; all 2,400 candidate verdicts matched. Panel b compares aligned and motif-disabled realization for deterministic search and random composition on n=400 known-family worlds and grammar-constrained model proposals on the fixed n=96 sensitivity panel. Panel c pairs the model proposer with random composition on those same 96 worlds. Panel d reports cumulative candidate-slot attrition under motif-disabled replay; candidate slots are not independent replicates. The post-confirmatory counterfactual made zero model calls and fixed archived candidates rather than rerunning search.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(4)
-            elif (
-                heading == "Counterfactual replay localizes success to motif semantics"
-                and 5 not in inserted
-            ):
+            elif heading == "A worked prospective escape" and 5 not in inserted:
                 story.extend(
                     [
                         image_flow(figures[5]),
                         caption(
-                            "Figure 5 | Counterfactual dependence on motif semantics. Panel a reports exact world-level jump success rates with Wilson 95% intervals under aligned, motif-disabled and role/action-blind realization. Panel b gives paired transitions from aligned to role/action-blind binding; counts pool 400 known-family and 100 held-out worlds for C3 and C_rand, while DeepSeek uses the fixed n=96 panel. Panel c reports cumulative candidate-slot attrition when motif realization is disabled; candidate slots are not independent replicates. Panel d reports aligned successes lost when one detected signature is replaced by incumbent fallback. Candidate representations and slots were fixed from the aligned archive; the post-confirmatory audit made zero model calls and did not rerun search under counterfactual realizers.",
+                            "Figure 5 | Worked held-out example. Correlated observations make the cubic incumbent and triadic candidate observationally identical. A committed intervention separates them before outcome reveal, and a separate held-out case falsifies the incumbent.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(5)
-            elif heading == "A worked prospective escape" and 6 not in inserted:
-                story.extend(
-                    [
-                        image_flow(figures[6]),
-                        caption(
-                            "Figure 6 | Worked held-out example. Correlated observations make the cubic incumbent and triadic candidate observationally identical. A committed intervention separates them before outcome reveal, and an independent case falsifies the incumbent.",
-                            st,
-                        ),
-                    ]
-                )
-                inserted.add(6)
         elif not stripped:
             flush()
         elif stripped.startswith("**["):
@@ -2257,9 +2417,8 @@ def build_pdf() -> Path:
         1: figure_1(),
         2: figure_2(),
         3: figure_3(),
-        4: figure_4(),
-        5: figure_5(),
-        6: figure_6(),
+        4: figure_4_editorial(),
+        5: figure_5_worked(),
     }
     extended_figs = extended_sensitivity_figures()
     st = styles()
@@ -2281,14 +2440,14 @@ def build_pdf() -> Path:
         rightMargin=20 * mm,
         topMargin=18 * mm,
         bottomMargin=18 * mm,
-        title="A prospective assay for hypothesis-space expansion in AI systems",
+        title="A prospective assay reveals scaffold-driven hypothesis-space expansion",
         author="Complete scientific discussion copy",
     )
     doc.addPageTemplates(PageTemplate(id="content", frames=[frame], onPage=page_decor))
     story: list = [
         Spacer(1, 18 * mm),
         Paragraph(
-            "A prospective assay for hypothesis-space expansion in AI systems",
+            "A prospective assay reveals scaffold-driven hypothesis-space expansion",
             st["manuscript_title"],
         ),
         Rule(75 * mm, colors.HexColor(ORANGE), 3),

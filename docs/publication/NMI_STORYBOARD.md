@@ -2,7 +2,7 @@
 
 ## One-sentence paper
 
-A prospective assay certifies bounded hypothesis-space expansion, while a model-free replay shows that the successful generic compositions belong to the deterministic typed search scaffold rather than the language model.
+Prospective tests can verify that an AI system leaves a frozen hypothesis language, but end-to-end success does not identify the model as the source: here deterministic search and a hand-authored algebraic realizer supplied the decisive explanatory content.
 
 ## Reader journey
 
@@ -14,19 +14,17 @@ A prospective assay certifies bounded hypothesis-space expansion, while a model-
 6. **Specificity:** Random paths succeed only 52/400 and 13/100; C3 controls reach J3 but cannot beat an exact incumbent after outcome reveal.
 7. **Targeted sensitivity:** On one fixed 96-world panel, separate historical serialization failure, Phi-4 precision/serving sensitivity, stronger-model substitution, model-native reasoning and one triggered structural repair; use a balanced supplied-representation control to test downstream use.
 8. **Realizer dependence:** Counterfactual replay over 3,288 fixed candidate slots shows that removing motif semantics eliminates every success, whereas role/action-blind rebinding preserves most C3 successes but exposes family-specific losses.
-9. **Meaning:** The contribution is an assay and typed-search result whose success depends on a semantically aligned deterministic realizer; any language-model inference is limited to the separately identified sensitivity conditions rather than generalized to autonomous science.
+9. **Meaning:** The contribution is an assay and typed-search result whose success depends on a hand-authored, family-aligned motif-to-basis realizer; any language-model inference is limited to the separately identified sensitivity conditions rather than generalized to autonomous science.
 
 ## Main display sequence
 
 | Display | Reader question | Content | Claim supported |
 |---|---|---|---|
 | Fig. 1 | What exactly counts as escape? | Incumbent language, typed mutation, J0–J5 gates, prospective intervention, replay | Construct validity |
-| Fig. 2 | Does representation mutation matter? | AJ5 condition JSR/FJR; proposal–reasoning factorial; dose response | External representation proposals outperform matched fixed-space alternatives |
+| Fig. 2 | Does representation mutation matter? | AJ5 JSR/FJR; proposal-source comparison; dose response | External representation proposals outperform matched fixed-space alternatives |
 | Fig. 3 | Does the result survive removal of atomic answers? | CJ5 known-family rates, C3–controls contrasts, retained gain | Generic composition realizes the effect |
-| Fig. 4 | Does the attribution survive targeted model/interface checks? | Held-out family, model-free replay, fixed-panel JSR and response-to-verdict attrition | Correct system attribution and bounded sensitivity evidence |
-| Fig. 5 | Which deterministic semantics are causally necessary? | Aligned, motif-disabled and role/action-blind replay; gate attrition; signature masks | Successful fixed candidates depend on the motif realizer, especially prospective discrimination |
-| Fig. 6 | What does one escape look like? | Observations → incumbent → four rewrites → commitment → falsification | Concrete construct validity |
-| Table 1 | How does the assay differ from nearby work? | Formal membership, intervention, falsification, attribution, replay and breadth | Novelty and limits |
+| Fig. 4 | Which component caused the apparent escape? | Model-free replay; realizer disabling; model-versus-random paired worlds; attrition to J3 | Correct system attribution and bounded interface evidence |
+| Fig. 5 | What does one escape look like? | Observations → incumbent → four rewrites → commitment → held-out falsification | Concrete construct validity |
 
 ## Results subsections
 
@@ -35,7 +33,7 @@ A prospective assay certifies bounded hypothesis-space expansion, while a model-
 3. **Generic rewrites compose into validated representations** — CJ5 known-family results, retained gain and C_self schema attrition.
 4. **A deterministic component audit removes the language model** — model-free replay.
 5. **Transfer to one held-out structural family** — bounded held-out result.
-6. **A fixed-panel sensitivity analysis** — precision, stronger-model matched/native interfaces, supplied-representation control and triggered one-repair condition.
+6. **Interface controls separate serialization from executable proposal** — concise main-text result; full precision, model, repair and token-cap diagnostics in Supplementary Information.
 7. **Counterfactual replay localizes success to motif semantics** — fixed-candidate realizer ablations, paired transitions, family effects and signature masks.
 8. **A worked prospective escape** — concrete end-to-end case.
 
@@ -47,7 +45,7 @@ Answer first; relate to conceptual change, search and agentic science; explain w
 
 All are at or below 75 characters including spaces; ranking balances clarity, reach and claim safety.
 
-1. **A prospective assay for hypothesis-space expansion in AI systems** (64)
+1. **A prospective assay reveals scaffold-driven hypothesis-space expansion** (70)
 2. **A prospective test of representation change in language models** (62)
 3. **Representation search enables bounded jumps in language models** (62)
 4. **Testing representation change in language-model reasoning** (57)
@@ -58,4 +56,4 @@ All are at or below 75 characters including spaces; ranking balances clarity, re
 9. **Benchmarking representation-space escape in language models** (59)
 10. **Generic rewrites expand language-model hypothesis spaces** (55)
 
-Recommended title 1 makes the assay primary and does not imply that the language model caused C3 success. Final title requires author approval.
+Recommended title 1 makes the assay and attribution result jointly visible without implying that the language model caused deterministic-search success. Final title requires author approval.

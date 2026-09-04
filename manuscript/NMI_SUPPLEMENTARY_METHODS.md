@@ -8,7 +8,7 @@ The jump success rate is the proportion of jump worlds with a validated candidat
 
 ## S2. Procedural families
 
-AJ5 generated eight families: latent common cause, unification, hidden regimes, property-to-relation, state invention, coordinate transformation, causal ambiguity and meta-law. Each generator returned public observations, an incumbent representation and language, a hidden executable truth, a finite intervention domain and independent falsification cases. Generator validation checked deterministic output, truth redaction, exact incumbent observational fit, existence of a discriminating intervention and reachability of a valid escaped explanation.
+AJ5 generated eight families: latent common cause, unification, hidden regimes, property-to-relation, state invention, coordinate transformation, causal ambiguity and meta-law. Each generator returned public observations, an incumbent representation and language, a hidden executable truth, a finite intervention domain and separate held-out falsification cases. Generator validation checked deterministic output, truth redaction, exact incumbent observational fit, existence of a discriminating intervention and reachability of a valid escaped explanation.
 
 Jump seeds were 10000–10049 per family and controls 20000–20024 per family. CJ5 used reconstruction seeds 30000–30049, controls 50000–50024, held-out jump seeds 40000–40099 and held-out controls 60000–60099. World generation used no LLM output.
 
@@ -179,3 +179,19 @@ The audit fixed all three selected candidate slots from C3 and C_rand for 400 kn
 Eight leave-one-signature-out policies replaced only the named motif with incumbent fallback. For C3, masking `relation_arity_3` removed all 100 held-out worlds; masking `unobserved_dependency` removed 100 known-family worlds; and masking each of `bound_relation`, `multi_argument_function`, `self_composed_function`, `temporally_indexed_recurrence` and `unobserved_selector` removed 50. Masking `shared_rule_binding` removed no world because selected `multi_argument_function` candidates provided redundant coverage in unification worlds. For DeepSeek, only `multi_argument_function` supported validated candidates, so its removal changed 15/96 to zero. Exact Wilson intervals, paired transitions, per-family counts, signature distributions and gate attrition are stored in `experiments/nmi_realizer_audit_v1/analysis`.
 
 The audit fixes candidates that were originally selected under the aligned realizer and therefore does not estimate how search would adapt if rerun under a different realizer. It is a causal sensitivity of the archived end-to-end verdict, not a replacement confirmatory study, a model-conceptualization test or evidence of external scientific generalization.
+
+## S18. Position relative to adjacent discovery evaluations
+
+Supplementary Table 1 compares reported evaluation designs. “Not reported” describes the cited publication and does not imply that a feature is absent from unpublished implementations. The comparison is descriptive rather than a priority proof; recent systems already expand principle or model spaces, whereas the present contribution combines a frozen-language certificate, outcome-before-commitment evaluation, exact replay and component attribution.
+
+| Evaluation | Executable hypotheses | Hypothesis-space boundary | Canonical out-of-space test | Prospective test | Held-out check | Component attribution | Replay | Breadth |
+|---|---|---|---|---|---|---|---|---|
+| Hypothesis Search<sup>14</sup> | partial | not reported | not reported | not reported | held-out tasks | hypothesis source / program | not reported | ARC-style induction |
+| HypoGeniC<sup>15</sup> | text hypotheses | not reported | not reported | not reported | held-out examples | generation / ranking | not reported | hypothesis generation |
+| POPPER<sup>16</sup> | partial | not reported | not reported | sequential tests | agentic falsification | hypothesis / validator | not reported | six data domains |
+| FunSearch<sup>13</sup> | yes | fixed program skeleton | not reported | evaluator feedback | held-out tests | proposer / evaluator | partial | mathematics |
+| PiEvo<sup>21</sup> | yes | evolving principle space | not reported | task dependent | task dependent | proposer / search | not reported | four benchmarks, multiple backbones |
+| Model Discovery Agent<sup>22</sup> | yes | open model set | not reported | Bayesian design | posterior checks | proposer / inference | not reported | physics, chemistry and biology |
+| HypoArena<sup>23</sup> | judged text | not reported | not reported | context regression | rubric / judge | not reported | not reported | 988 cases, six domains, 15 models |
+| EvoSCM<sup>24</sup> | yes | evolving causal models | not reported | active intervention | prospective prediction | evolution / selection | not reported | simulated physical worlds |
+| This work | yes | frozen formal language | canonical certificate | outcome locked | separate exact cases | proposal-source comparison plus component audit | exact | nine synthetic families; two-checkpoint sensitivity |
