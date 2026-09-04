@@ -1,6 +1,6 @@
 # NMI Evidence Source Map
 
-Verified 2 September 2026. The hierarchy used here is: frozen preregistration; canonical raw artifact or manifest; deterministic synthesis script; final phase report; Reviewer #2 report; research ledger; summary prose. Canonical artifacts prevail over prose.
+Verified 4 September 2026. The hierarchy used here is: frozen preregistration; canonical raw artifact or manifest; deterministic synthesis script; final phase report; Reviewer #2 report; research ledger; summary prose. Canonical artifacts prevail over prose.
 
 | Claim | Exact number | Source file | Rows/worlds | Script | Commit | Verified? |
 | --- | ---: | --- | ---: | --- | --- | --- |
@@ -33,7 +33,11 @@ Verified 2 September 2026. The hierarchy used here is: frozen preregistration; c
 | CJ5 inference traces | 33,600 exact unique calls | `artifacts/compositional-reproducibility-manifest.json` | 33,600 calls | `compositional_reproducibility.py` | `be3cf3b` | Yes |
 | Held-out seal | unlock only after both known-family shards were terminal and audited | `research-ledger.md`; `artifacts/compositional-execution-source-audit.json` | chronology | ledger and verifier | `27ee542` unlock | Yes |
 | Historical Phi-4 C_self response attrition | 1,200/1,200 responses returned and non-empty; 0/1,200 strict complete JSON; 0/19,200 executable plan opportunities; all 1,200 responses reached the 700-token completion cap | `experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json`; historical `llm_calls.jsonl` and `llm_self_plans.parquet` | 400 worlds, 1,200 responses, 19,200 plans | `scripts/analyze_historical_cself_attrition.py` | `320eb29` protocol freeze | Yes |
+| Model-free C3 replay | 500/500 jump successes and 0/300 controls are unchanged when the model response is replaced by an empty explanation | `artifacts/nmi_component_audit.json`; `docs/nmi_component_audit.md` | 800 worlds | `scripts/audit_nmi_components.py` | post-confirmatory audit | Yes |
+| Fair grammar-constrained autonomous sensitivity | 15/96 worlds pass J1--J5; 21 validated candidates all use `multi_argument_function` | `experiments/nmi_fair_interface_v1/analysis/report.md`; `validated_signature_distribution.csv` | 96 worlds, 8 families | fair-interface analysis | post-confirmatory sensitivity | Yes |
+| Fair sensitivity versus historical random composition | fair 15/96; C_rand 16/96; paired outcomes: 66 neither, 15 C_rand only, 14 fair only, 1 both | `experiments/nmi_fair_interface_v1/analysis/paired_crand_comparison.csv` | same 96 worlds | deterministic paired join | post-confirmatory sensitivity | Yes |
+| Completed superseded broad-extension shards | DeepSeek matched: 0/400 known and 0/100 held out; Phi constrained: 0/400 and 0/100; Phi repair: 0/400 and 0/100 | `docs/publication/NMI_SUPERSEDED_EXTENSION_DISCLOSURE.md`; raw ledgers in `experiments/nmi_extension_v1/results/` | six completed shards | validation/replay scripts listed in disclosure | superseded extension | Yes |
 
-The five minimal-sensitivity conditions are intentionally absent from this evidence map until their shards are `complete_verified`, replayed and analyzed. No partial result may be promoted into a manuscript claim.
+Partial or infrastructure-terminated shards remain excluded from inferential claims. No partial result may be promoted into a manuscript claim.
 
 No headline number may enter the manuscript unless it appears above or is added with equivalent canonical evidence.

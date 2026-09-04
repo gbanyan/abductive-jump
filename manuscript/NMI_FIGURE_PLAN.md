@@ -26,24 +26,24 @@ Use a colour-blind-safe Okabe–Ito palette, Arial/Helvetica, 5–7 pt at final 
 
 **Primary values:** B0 1, B1 1, B2 0, B3 0, B4 142, B5 142 of 400; P0 0, P1 142, P2 400 of 400; B4 53/101/142 and B5 58/96/142 across slots.
 
-## Figure 3 — Generic composition removes the atomic answer menu
+## Figure 3 — Generic search with fixed motif realization
 
 **Format:** 180 mm, three panels.
 
 - **a:** Atomic AJ5 operator versus 29 generic primitives and four-step ancestry.
 - **b:** Known-family CJ5 JSR for C0, C1, C2, C3, C_self, C_rand and C5.
-- **c:** Retained jump gain rho with bootstrap interval and C3 per-family small multiples.
+- **c:** Retained jump gain rho with bootstrap interval and C3 per-family small multiples. State that the shared motif-to-basis realizer is fixed and family-aligned.
 
 **Primary values:** 0, 131, 0, 400, 0, 52 and 400 of 400; rho 3.053 [2.685, 3.540]. Visually separate C1/C5 reference ceilings because operation semantics differ.
 
-## Figure 4 — Transfer, replay and targeted model sensitivity
+## Figure 4 — Attribution, transfer and targeted model sensitivity
 
 **Format:** 180 mm, four panels.
 
-- **a:** Held-out triadic relation construction without a dedicated operator.
+- **a:** Archived C3 verdicts versus model-free replay, with 2,400/2,400 candidate agreement and pooled 500 jump worlds.
 - **b:** Held-out JSR: C0 0, C1 0, C2 0, C3 100, C_self 0, C_rand 13, C5 100 of 100.
-- **c:** Targeted world-level JSR on the fixed 96-world panel: historical Phi-4 4-bit C_self at 700 tokens, the separately frozen Phi-4 4-bit 2,048-token budget sensitivity, Phi-4 8-bit C_self, DeepSeek matched C_self, DeepSeek native C_self and the separately frozen fair-interface DeepSeek C_self, plus the balanced 40-world DeepSeek supplied-representation positive control. Visually separate the n=40 control from paired n=96 conditions and identify higher-budget and fair-interface conditions as sensitivities rather than replacements.
-- **d:** Response-to-verdict attrition for historical Phi-4 and the new C_self conditions: response, parse, schema, operation, arguments/types, executable, J1–J5. Mark the one-repair Phi-4 condition as a triggered sensitivity, not a replacement result. Explicitly show that fixed-panel Phi-budget reaches 993/4,608 schema-valid but 0 executable opportunities, whereas the registered matched and native interfaces fail before execution. Add the fair-interface cascade to distinguish grammar-guaranteed serialization from dynamic executability and downstream gates. Include model-free replay totals (3,060 candidate rows after fair-interface completion, zero mismatches, zero replay calls) in a compact inset.
+- **c:** Targeted world-level JSR on the fixed 96-world panel: historical Phi-4 4-bit C_self at 700 tokens, the separately frozen Phi-4 4-bit 2,048-token budget sensitivity, Phi-4 8-bit C_self, DeepSeek matched C_self, DeepSeek native C_self and grammar-constrained DeepSeek C_self. Include archived C_rand 16/96 and C3 96/96 panel controls, plus the balanced 40-world DeepSeek supplied-representation positive control. Visually separate the n=40 control and identify all sensitivities as non-confirmatory.
+- **d:** Response-to-verdict attrition for historical Phi-4 and the new C_self conditions: response, parse, schema, operation, arguments/types, executable, J1–J5. Mark the one-repair Phi-4 condition as a triggered sensitivity, not a replacement result. Explicitly show that fixed-panel Phi-budget reaches 993/4,608 schema-valid but 0 executable opportunities, whereas the registered matched and native interfaces fail before execution. Add the grammar-constrained cascade to distinguish grammar-guaranteed serialization from dynamic executability and downstream gates.
 
 The new panels were unlocked only after all five original extension shards and the fair-interface extension reached `complete_verified` and deterministic replay reported zero mismatches. The caption distinguishes the original n=400 confirmatory population, its fixed 96-world historical slice, the separately frozen Phi-4 budget populations (known-family n=400 and held-out n=100), the fixed n=96 sensitivity comparisons and the n=40 positive-control subset.
 

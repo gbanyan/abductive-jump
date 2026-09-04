@@ -1,21 +1,18 @@
-# Extended Data plan
+# Extended Data and Supplementary plan
 
-| Item | Content | Reason outside main display set |
+The submission package is capped at ten Extended Data display items in total. Dense protocols and source-data ledgers remain Supplementary Information or machine-readable source data rather than additional Extended Data items.
+
+| Item | Content | Purpose |
 |---|---|---|
-| Extended Data Fig. 1 | Eight AJ5 procedural families and matched no-jump controls | Validity detail |
-| Extended Data Fig. 2 | AJ5 per-family JSR for B4/B5 and seed-block sensitivity | Robustness |
-| Extended Data Fig. 3 | AJ5 compute–quality frontier and token/call accounting | Dense resource detail |
-| Extended Data Fig. 4 | AJ5 ablations A1–A6, accepted-candidate precision and archive diagnostics | Mechanistic secondary results |
-| Extended Data Fig. 5 | CJ5 generic primitive grammar, valid-use/malformed-plan rates and operation frontier | Implementation detail |
-| Extended Data Fig. 6 | CJ5 known-family rates and primitive-sequence diversity | Dense family detail |
-| Extended Data Fig. 7 | Held-out lock chronology, ancestry reconstruction and depth distribution | Integrity evidence |
-| Extended Data Fig. 8 | Fixed-panel per-family sensitivity results, paired world transitions and compute ledger, including the separately frozen Phi-4 completion-budget and fair-interface DeepSeek sensitivities | Targeted robustness without expanding the main display matrix |
-| Extended Data Table 1 | Every prospectively specified comparison, effect, 95% CI, raw and Holm-adjusted P | Complete inference |
-| Extended Data Table 5 | Candidate-level cumulative J0–J5 attrition and phase validity | Distinguishes conceptual, predictive and interface failures |
-| Extended Data Table 6 | Model-free C3 replay and C_self parser audit | Establishes component attribution |
-| Extended Data Table 2 | Every condition's jump/control counts, Wilson intervals, calls, tokens, operations and exclusions | Complete denominators |
-| Extended Data Table 3 | Hashes, model/runtime manifests, configuration IDs and replay totals | Reproducibility |
-| Extended Data Table 4 | Offline historical C_self response-to-execution cascade and exact parser error taxonomy | Separates serialization failure from downstream proposal quality |
-| Extended Data Table 7 | Minimal sensitivity exact counts, Wilson intervals, paired differences, per-family rates and call/token/latency ledger, with full Phi-4 completion-budget and fair-interface DeepSeek summaries | Distinguishes the original n=400 confirmatory study and separately frozen n=96 sensitivity conditions |
+| Extended Data Fig. 1 | AJ5 procedural families, matched controls and per-family B4/B5 rates | Generator validity and family heterogeneity |
+| Extended Data Fig. 2 | AJ5 candidate attrition including executable B0/B1 paths | Separates interface from later-gate failures |
+| Extended Data Fig. 3 | CJ5 primitive grammar, depth and operation frontier | Defines generic edit capacity |
+| Extended Data Fig. 4 | C3 component provenance and model-free replay | Central causal-attribution evidence |
+| Extended Data Fig. 5 | Held-out chronology, ancestry and search-side scope | Integrity and transfer boundary |
+| Extended Data Fig. 6 | Fixed-panel sensitivity JSR, including C_rand and C3 panel controls | Places 15/96 in its proper baseline context |
+| Extended Data Fig. 7 | Grammar-constrained attrition and per-family motif distribution | Interface and realizer diagnosis |
+| Extended Data Table 1 | Registered comparisons, effects, intervals and corrected P values | Complete inference |
+| Extended Data Table 2 | Motif-to-basis realizer, candidate-field provenance and intervention information boundary | Makes scaffold content explicit |
+| Extended Data Table 3 | Conditions, compute, hashes, replay, superseded shards and exclusions | Reproducibility and complete reporting |
 
-Small tables and compact plots should be Extended Data, not Supplementary Information. The Supplementary Methods should contain algorithms, generator definitions, prompt templates, statistical pseudocode and validation rules that are essential but too specialized for the print narrative.
+Supplementary Information contains algorithms, generator definitions, prompt templates, schema constraints, statistical procedures and validation rules. Large call ledgers and machine-readable source tables belong in the anonymized reviewer deposit and DOI archive, not in the typeset Extended Data count.

@@ -117,6 +117,18 @@ def setup_plot() -> None:
     )
 
 
+def wilson_interval(
+    successes: int, total: int, z: float = 1.959963984540054
+) -> tuple[float, float]:
+    if total <= 0:
+        return 0.0, 0.0
+    p = successes / total
+    denominator = 1 + z * z / total
+    centre = (p + z * z / (2 * total)) / denominator
+    half = z * ((p * (1 - p) / total + z * z / (4 * total * total)) ** 0.5) / denominator
+    return centre - half, centre + half
+
+
 def panel_label(ax, label: str) -> None:
     ax.text(-0.11, 1.12, label, transform=ax.transAxes, weight="bold", fontsize=12)
 
@@ -139,7 +151,7 @@ def figure_1() -> Path:
     escaped = np.where(x <= 2, x**2, x**2 + 3 * (x - 2))
     ax.plot(x, incumbent, color=GREY, lw=2, label="incumbent oracle")
     ax.plot(x, escaped, color=ORANGE, lw=2, label="escaped candidate")
-    ax.axvline(3, color=CYAN, ls="--", lw=1.5)
+    ax.axvline(3, color=CYAN, ls="--", lw=1.5, label="committed action")
     ax.scatter([3], [escaped[np.argmin(abs(x - 3))]], color=ORANGE, s=45)
     ax.set_title("Observations do not reveal the representation")
     ax.set_xlabel("public input / committed intervention")
@@ -232,7 +244,7 @@ def figure_1() -> Path:
     ax.set_title("All deterministic gates are required")
     panel_label(ax, "d")
     fig.suptitle(
-        "Figure 1 | A prospective assay for bounded representation escape",
+        "Figure 1 | A prospective assay for hypothesis-space expansion",
         fontsize=14,
         weight="bold",
         color=NAVY,
@@ -298,14 +310,14 @@ def figure_2() -> Path:
     ax.plot(slots, np.array([53, 101, 142]) / 4, marker="o", lw=2.5, color=BLUE, label="B4 typed")
     ax.plot(slots, np.array([58, 96, 142]) / 4, marker="o", lw=2.5, color=ORANGE, label="B5 full")
     for x0, a, b in zip(slots, [53, 101, 142], [58, 96, 142], strict=True):
-        ax.text(x0 - 0.05, a / 4 + 2.2, str(a), color=BLUE, fontsize=8, ha="right")
-        ax.text(x0 + 0.05, b / 4 - 3.8, str(b), color=ORANGE, fontsize=8, ha="left")
+        ax.text(x0 - 0.05, a / 4 + 2.2, f"{a}/400", color=BLUE, fontsize=7, ha="right")
+        ax.text(x0 + 0.05, b / 4 - 3.8, f"{b}/400", color=ORANGE, fontsize=7, ha="left")
     ax.set_xticks(slots)
     ax.set_xlabel("Candidate slots used")
-    ax.set_ylabel("Successful worlds (%)")
+    ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 43)
     ax.legend(frameon=False, fontsize=8)
-    ax.set_title("Success by candidate opportunity", pad=9)
+    ax.set_title("World success by candidate slots", pad=9)
     panel_label(ax, "c")
 
     ax = axes[1, 1]
@@ -400,7 +412,7 @@ def figure_3() -> Path:
     ax.set_xticks(np.arange(7), labels)
     ax.set_ylabel("Jump success rate (%)")
     ax.set_ylim(0, 116)
-    ax.set_title("Generic composition reaches every known-family world")
+    ax.set_title("Search plus motif realization reaches every world")
     ax.text(
         0.02,
         -0.29,
@@ -434,10 +446,10 @@ def figure_3() -> Path:
     ax.set_ylim(0, 112)
     ax.set_ylabel("Jump success rate (%)")
     ax.legend(frameon=False, ncol=2, loc="upper left")
-    ax.set_title("C3 saturates all eight generators; C1 varies by family", pad=10)
+    ax.set_title("C3 search plus realizer saturates all eight generators", pad=10)
     panel_label(ax, "c")
     fig.suptitle(
-        "Figure 3 | Generic rewrites compose into validated representations",
+        "Figure 3 | Generic search with fixed motif realization",
         fontsize=14,
         weight="bold",
         color=NAVY,
@@ -475,37 +487,32 @@ def figure_4() -> Path:
 
     ax = axes[0, 0]
     ax.axis("off")
-    positions = {
-        "x1": (0.12, 0.72),
-        "x2": (0.12, 0.5),
-        "x3": (0.12, 0.28),
-        "r3": (0.53, 0.5),
-        "y": (0.88, 0.5),
-    }
-    for key in ("x1", "x2", "x3"):
-        ax.add_patch(Circle(positions[key], 0.055, fc=LIGHT, ec=BLUE, lw=1.5))
-        ax.text(*positions[key], key, ha="center", va="center")
+    for x0, title, detail, colour in [
+        (0.04, "Archived C3", "2,400 candidates\n500/500 jump worlds\n0/300 controls", BLUE),
+        (
+            0.57,
+            "No-model replay",
+            "2,400 identical verdicts\n500/500 jump worlds\n0/300 controls",
+            ORANGE,
+        ),
+    ]:
         ax.add_patch(
-            FancyArrowPatch((0.18, positions[key][1]), (0.46, 0.5), arrowstyle="->", color=GREY)
+            FancyBboxPatch(
+                (x0, 0.30), 0.38, 0.42, boxstyle="round,pad=0.025", fc="white", ec=colour, lw=2
+            )
         )
-    ax.add_patch(
-        FancyBboxPatch(
-            (0.46, 0.4), 0.14, 0.2, boxstyle="round,pad=0.02", fc="#FFF3E8", ec=ORANGE, lw=2
-        )
-    )
-    ax.text(0.53, 0.5, "arity-3\nrelation", ha="center", va="center", weight="bold", color=NAVY)
-    ax.add_patch(FancyArrowPatch((0.61, 0.5), (0.82, 0.5), arrowstyle="->", color=GREY))
-    ax.add_patch(Circle(positions["y"], 0.06, fc=LIGHT, ec=NAVY, lw=1.5))
-    ax.text(*positions["y"], "y", ha="center", va="center")
+        ax.text(x0 + 0.19, 0.61, title, ha="center", weight="bold", color=NAVY)
+        ax.text(x0 + 0.19, 0.45, detail, ha="center", va="center", fontsize=8)
+    ax.add_patch(FancyArrowPatch((0.43, 0.51), (0.56, 0.51), arrowstyle="<->", color=NAVY))
     ax.text(
         0.5,
-        0.12,
-        "reify edge -> change arity -> bind arguments",
+        0.16,
+        "Model output was not semantically necessary",
         ha="center",
-        color=NAVY,
+        color=RED,
         weight="bold",
     )
-    ax.set_title("Held-out triadic relation needs multiple rewrites")
+    ax.set_title("Component audit reproduces every C3 verdict")
     panel_label(ax, "a")
 
     ax = axes[0, 1]
@@ -526,7 +533,7 @@ def figure_4() -> Path:
     ax.set_xticks(np.arange(7), labels)
     ax.set_ylim(0, 116)
     ax.set_ylabel("Held-out JSR (%)")
-    ax.set_title("Composition transfers; random paths rarely do")
+    ax.set_title("Search-side held-out result with fixed realizer")
     panel_label(ax, "b")
 
     analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
@@ -535,6 +542,28 @@ def figure_4() -> Path:
     fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
     with (fair_analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
         summary_rows.extend(csv.DictReader(handle))
+    crand_low, crand_high = wilson_interval(16, 96)
+    c3_low, c3_high = wilson_interval(96, 96)
+    summary_rows.extend(
+        [
+            {
+                "condition": "crand_panel",
+                "jsr": str(16 / 96),
+                "wilson_95_low": str(crand_low),
+                "wilson_95_high": str(crand_high),
+                "successes": "16",
+                "worlds": "96",
+            },
+            {
+                "condition": "c3_panel",
+                "jsr": "1.0",
+                "wilson_95_low": str(c3_low),
+                "wilson_95_high": str(c3_high),
+                "successes": "96",
+                "worlds": "96",
+            },
+        ]
+    )
     sensitivity_order = [
         "historical_phi4_4bit_cself",
         "phi4_4bit_budget_cself",
@@ -542,6 +571,8 @@ def figure_4() -> Path:
         "deepseek_matched_cself",
         "deepseek_native_cself",
         "deepseek_fair_interface_cself",
+        "crand_panel",
+        "c3_panel",
         "phi8_cself_repair",
         "deepseek_p2",
     ]
@@ -551,7 +582,9 @@ def figure_4() -> Path:
         "Phi4\n8-bit",
         "DS\nmatched",
         "DS\nnative",
-        "DS\nfair",
+        "DS\ngrammar",
+        "Crand\npanel",
+        "C3\npanel",
         "Phi4\nrepair",
         "DS\nP2†",
     ]
@@ -571,7 +604,7 @@ def figure_4() -> Path:
     ax.bar(
         sx,
         sensitivity_values,
-        color=[GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, RED, "#009E73"],
+        color=[GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, "#56B4E9", NAVY, RED, "#009E73"],
         width=0.7,
     )
     ax.errorbar(
@@ -595,11 +628,11 @@ def figure_4() -> Path:
             ha="center",
             fontsize=6.8,
         )
-    ax.axvline(6.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
-    ax.set_xticks(sx, sensitivity_labels)
+    ax.axvline(8.5, color="#A0A0A0", linestyle="--", linewidth=0.8)
+    ax.set_xticks(sx, sensitivity_labels, fontsize=6.2)
     ax.set_ylim(0, 116)
     ax.set_ylabel("World-level JSR (%)")
-    ax.set_title("Fixed-panel targeted sensitivity")
+    ax.set_title("Fixed-panel sensitivity and archived search controls")
     panel_label(ax, "c")
 
     ax = axes[1, 1]
@@ -607,8 +640,7 @@ def figure_4() -> Path:
         attrition_rows = list(csv.DictReader(handle))
     with (fair_analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
         attrition_rows.extend(
-            {**row, "condition": "deepseek_fair_interface_cself"}
-            for row in csv.DictReader(handle)
+            {**row, "condition": "deepseek_fair_interface_cself"} for row in csv.DictReader(handle)
         )
     stage_aliases = {
         "response_returned": "response",
@@ -648,14 +680,22 @@ def figure_4() -> Path:
         stage = stage_aliases.get(row["stage"])
         if stage:
             attrition_lookup.setdefault(row["condition"], {})[stage] = float(row["rate"]) * 100
-    line_conditions = sensitivity_order[:-1]
+    line_conditions = [
+        "historical_phi4_4bit_cself",
+        "phi4_4bit_budget_cself",
+        "phi8_cself",
+        "deepseek_matched_cself",
+        "deepseek_native_cself",
+        "deepseek_fair_interface_cself",
+        "phi8_cself_repair",
+    ]
     line_labels = [
         "Phi4 700*",
         "Phi4 2,048",
         "Phi4 8-bit",
         "DS matched",
         "DS native",
-        "DS fair",
+        "DS grammar",
         "Phi4 repair",
     ]
     line_colours = [GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, RED]
@@ -680,16 +720,7 @@ def figure_4() -> Path:
         facecolor="white",
         fontsize=5.8,
         ncol=2,
-        loc="upper right",
-    )
-    ax.text(
-        0.02,
-        0.13,
-        "C3 audit: 2,400/2,400; sensitivity replay: 3,060/3,060",
-        transform=ax.transAxes,
-        fontsize=5.9,
-        color=NAVY,
-        bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.9, "pad": 1.5},
+        loc="lower left",
     )
     ax.set_title("Response-to-verdict attrition")
     panel_label(ax, "d")
@@ -766,7 +797,7 @@ def figure_5() -> Path:
 
 
 def extended_sensitivity_figures() -> dict[str, Path]:
-    """Build fair-interface-inclusive source-data figures from verified CSVs."""
+    """Build grammar-constrained-interface source-data figures from verified CSVs."""
     analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
     fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
     with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
@@ -789,7 +820,7 @@ def extended_sensitivity_figures() -> dict[str, Path]:
         "Phi4\n8b / 700",
         "DeepSeek\nmatched",
         "DeepSeek\nnative",
-        "DeepSeek\nfair",
+        "DeepSeek\ngrammar",
         "Phi4 8b\none repair",
         "DeepSeek P2\nn=40",
     ]
@@ -826,8 +857,7 @@ def extended_sensitivity_figures() -> dict[str, Path]:
         attrition_rows = list(csv.DictReader(handle))
     with (fair_analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
         attrition_rows.extend(
-            {**row, "condition": "deepseek_fair_interface_cself"}
-            for row in csv.DictReader(handle)
+            {**row, "condition": "deepseek_fair_interface_cself"} for row in csv.DictReader(handle)
         )
     aliases = {
         "response_returned": "response",
@@ -849,7 +879,19 @@ def extended_sensitivity_figures() -> dict[str, Path]:
         "J4": "J4",
         "J5": "J5",
     }
-    stages = ["response", "parse", "schema", "operation", "types", "execute", "J1", "J2", "J3", "J4", "J5"]
+    stages = [
+        "response",
+        "parse",
+        "schema",
+        "operation",
+        "types",
+        "execute",
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+    ]
     attrition_lookup: dict[str, dict[str, float]] = {}
     for row in attrition_rows:
         stage = aliases.get(row["stage"])
@@ -857,7 +899,15 @@ def extended_sensitivity_figures() -> dict[str, Path]:
             attrition_lookup.setdefault(row["condition"], {})[stage] = 100 * float(row["rate"])
     fig, ax = plt.subplots(figsize=(10.6, 5.2))
     line_order = order[:-1]
-    line_labels = ["Phi4 700*", "Phi4 2,048", "Phi4 8-bit", "DS matched", "DS native", "DS fair", "Phi4 repair"]
+    line_labels = [
+        "Phi4 700*",
+        "Phi4 2,048",
+        "Phi4 8-bit",
+        "DS matched",
+        "DS native",
+        "DS grammar",
+        "Phi4 repair",
+    ]
     for name, label, colour in zip(line_order, line_labels, colours[:-1], strict=True):
         ax.plot(
             np.arange(len(stages)),
@@ -880,13 +930,10 @@ def extended_sensitivity_figures() -> dict[str, Path]:
         family_rows = list(csv.DictReader(handle))
     with (fair_analysis / "per_family.csv").open(newline="", encoding="utf-8") as handle:
         family_rows.extend(
-            {**row, "condition": "deepseek_fair_interface_cself"}
-            for row in csv.DictReader(handle)
+            {**row, "condition": "deepseek_fair_interface_cself"} for row in csv.DictReader(handle)
         )
     families = sorted({row["family"] for row in family_rows})
-    family_lookup = {
-        (row["family"], row["condition"]): float(row["jsr"]) for row in family_rows
-    }
+    family_lookup = {(row["family"], row["condition"]): float(row["jsr"]) for row in family_rows}
     matrix = np.array([[family_lookup[(family, name)] for name in order] for family in families])
     fig, ax = plt.subplots(figsize=(11.0, 5.4))
     image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
@@ -1160,63 +1207,119 @@ def literature_table(st) -> Table:
     data = [
         [
             "Evaluation",
-            "Exec",
-            "Frozen",
+            "Executable",
+            "Frozen language",
             "Canonical out-of-space test",
-            "Prospective",
-            "Falsify",
-            "Attribution / replay",
+            "Prospective intervention",
+            "Independent falsification",
+            "Proposal / reasoning separation",
+            "Replay",
             "Breadth",
         ],
-        ["Hypothesis Search / HypoGen", "partial", "no", "no", "no", "no", "no", "language tasks"],
-        ["POPPER", "partial", "no", "no", "yes", "yes", "limited", "literature"],
         [
-            "FunSearch",
+            "Hypothesis Search [14]",
+            "partial",
+            "NR",
+            "NR",
+            "NR",
+            "held-out tasks",
+            "language hypothesis / program",
+            "NR",
+            "ARC induction",
+        ],
+        [
+            "HypoGeniC [15]",
+            "text",
+            "NR",
+            "NR",
+            "NR",
+            "held-out examples",
+            "generation / ranking",
+            "NR",
+            "hypotheses",
+        ],
+        [
+            "POPPER [16]",
+            "partial",
+            "NR",
+            "NR",
+            "sequential tests",
+            "agentic falsification",
+            "hypothesis / validator",
+            "NR",
+            "6 domains",
+        ],
+        [
+            "FunSearch [13]",
             "yes",
-            "skeleton",
-            "no",
-            "feedback",
-            "tests",
-            "proposer/evaluator",
+            "program skeleton",
+            "NR",
+            "evaluator feedback",
+            "held-out tests",
+            "proposer / evaluator",
+            "partial",
             "mathematics",
         ],
-        ["PiEvo", "yes", "evolving", "no", "varies", "varies", "proposer/search", "4 benchmarks"],
         [
-            "Model Discovery Agent",
+            "PiEvo [21]",
+            "yes",
+            "evolving principles",
+            "NR",
+            "task dependent",
+            "task dependent",
+            "proposer / search",
+            "NR",
+            "4 benchmarks",
+        ],
+        [
+            "Model Discovery Agent [22]",
             "yes",
             "open set",
-            "no",
-            "Bayesian",
-            "predictive",
-            "proposer/inference",
-            "3 sciences",
+            "NR",
+            "Bayesian design",
+            "posterior checks",
+            "proposer / inference",
+            "NR",
+            "physics, chemistry, biology",
         ],
-        ["HypoArena", "judged", "no", "no", "context", "rubric", "no", "988 / 6 / 15"],
         [
-            "EvoSCM",
+            "HypoArena [23]",
+            "judged text",
+            "NR",
+            "NR",
+            "context regression",
+            "rubric / judge",
+            "NR",
+            "NR",
+            "988 cases; 6 domains; 15 models",
+        ],
+        [
+            "EvoSCM [24]",
             "yes",
-            "evolving",
-            "no",
-            "active",
-            "prospective",
-            "evolution/selection",
-            "causal systems",
+            "evolving causal models",
+            "NR",
+            "active intervention",
+            "prospective prediction",
+            "evolution / selection",
+            "NR",
+            "simulated physical worlds",
         ],
         [
             "This work",
             "yes",
             "yes",
-            "canonical",
-            "locked",
+            "canonical certificate",
+            "outcome locked",
+            "independent exact cases",
+            "factorial + component audit",
             "exact",
-            "factorial / exact",
-            "9 families / 2-checkpoint sensitivity",
+            "9 synthetic families; 2-checkpoint sensitivity",
         ],
     ]
     wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
     table = Table(
         wrapped,
-        colWidths=[26 * mm, 13 * mm, 16 * mm, 27 * mm, 19 * mm, 16 * mm, 29 * mm, 25 * mm],
+        colWidths=[22 * mm, 13 * mm, 15 * mm, 21 * mm, 18 * mm, 20 * mm, 23 * mm, 14 * mm, 25 * mm],
         repeatRows=1,
         hAlign="LEFT",
     )
@@ -1289,7 +1392,16 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
             paragraph_style = "body"
             heading = stripped[4:]
             if heading.startswith("Table 1 |"):
-                story.extend([Paragraph(inline_markup(heading), st["h2"]), literature_table(st)])
+                story.extend(
+                    [
+                        Paragraph(inline_markup(heading), st["h2"]),
+                        literature_table(st),
+                        Paragraph(
+                            "NR, not reported in the cited publication. Entries describe published evaluation designs and do not imply absence of an unreported feature.",
+                            st["small"],
+                        ),
+                    ]
+                )
                 skipping_markdown_table = True
                 continue
             story.append(Paragraph(inline_markup(heading), st["h2"]))
@@ -1302,7 +1414,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                         Spacer(1, 4),
                         image_flow(figures[1]),
                         caption(
-                            "Figure 1 | The assay combines canonical structural non-membership with a prospective intervention and independent falsification. Panel a is schematic; panels b-d summarize the registered pipeline.",
+                            "Figure 1 | A prospective assay for hypothesis-space expansion. Panel a illustrates observational equivalence and a committed action; panels b-d are schematics of structural escape, outcome-before-commitment ordering and the conjunctive J0-J5 gates. JSR denotes the proportion of worlds with at least one candidate passing every gate.",
                             st,
                         ),
                     ]
@@ -1316,36 +1428,36 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[2]),
                         caption(
-                            "Figure 2 | AJ5 world-level jump success. Error bars are registered family-stratified bootstrap 95% intervals. Counts are successful worlds; n=400 per jump condition. All conditions recorded 0/200 false jumps.",
+                            "Figure 2 | Typed proposals and their gate attrition. Panels a and b report world-level jump success rate (JSR) for n=400 worlds per condition; intervals are registered family-stratified bootstrap 95% intervals. Panel c reports cumulative successful-world counts and rates as one, two and three slots are admitted. Panel d reports cumulative candidate retention from J0 to J5 for 1,200 candidates per condition; candidates are not independent replicates. All AJ5 conditions recorded 0/200 control-world false jumps.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(2)
             elif (
-                heading == "Generic rewrites compose into validated representations"
+                heading
+                == "Generic rewrites and fixed motif realization produce validated representations"
                 and 3 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[3]),
                         caption(
-                            "Figure 3 | CJ5 known-family reconstruction. Error bars in panel b are Wilson 95% intervals; n=400 worlds per condition. C1 and C5 are reference conditions with different operation semantics. Per-family panels contain 50 worlds each.",
+                            "Figure 3 | Generic search with fixed motif realization. Panel a is schematic. Panel b reports known-family JSR with Wilson 95% intervals for n=400 worlds per condition. C1 and C5 are reference conditions with different operation semantics. Panel c reports descriptive rates for 50 worlds per family. C3 combines generic edit search with a fixed motif-to-basis realizer; saturation is within-generator reliability, not independent family replication.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(3)
             elif (
-                heading
-                == "Code-path ablation attributes C3 success to deterministic scaffolding"
+                heading == "Code-path ablation attributes C3 success to deterministic scaffolding"
                 and 4 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Component attribution, held-out transfer and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control (dagger); the asterisk marks the fixed historical slice of the original n=400 Phi-4 confirmatory population. The Phi-4 2,048-token condition changes only the historical completion cap and is not compute-matched. Error bars are Wilson 95% intervals. In panel d, response and structural-validity stages use their explicitly reported response or effective-plan denominators, whereas J1-J5 use executable self-proposed candidates; the connecting lines aid stage ordering but do not imply a common denominator across that boundary. Historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
+                            "Figure 4 | Component attribution, held-out transfer and targeted sensitivity. Panel a compares archived C3 verdicts with inference-free replay; all 2,400 candidate verdicts matched. Panel b reports held-out JSR with Wilson 95% intervals for n=100 worlds. Panel c reports the fixed n=96 sensitivity panel and archived C_rand/C3 controls; the supplied-representation control (dagger) uses a distinct balanced n=40 subset. Panel d reports response-to-verdict attrition; denominators change from responses or plan opportunities to executable selected candidates at J1. Connecting lines show stage order, not a common denominator. No candidate-level significance tests were performed.",
                             st,
                         ),
                     ]
@@ -1378,6 +1490,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
 def markdown_appendix_story(path: Path, st) -> list:
     story: list = []
     paragraph: list[str] = []
+    table_rows: list[list[str]] = []
     in_fence = False
 
     def flush() -> None:
@@ -1385,8 +1498,42 @@ def markdown_appendix_story(path: Path, st) -> list:
             story.append(Paragraph(inline_markup(" ".join(paragraph)), st["body"]))
             paragraph.clear()
 
+    def flush_table() -> None:
+        if not table_rows:
+            return
+        rows = [row for row in table_rows if not all(set(cell) <= {"-", ":"} for cell in row)]
+        table_rows.clear()
+        if not rows:
+            return
+        width = 165 * mm / len(rows[0])
+        wrapped = [[Paragraph(inline_markup(cell), st["small"]) for cell in row] for row in rows]
+        result = Table(wrapped, colWidths=[width] * len(rows[0]), repeatRows=1, hAlign="LEFT")
+        result.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    (
+                        "ROWBACKGROUNDS",
+                        (0, 1),
+                        (-1, -1),
+                        [colors.white, colors.HexColor("#F3F6F8")],
+                    ),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+                    ("TOPPADDING", (0, 0), (-1, -1), 3),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ]
+            )
+        )
+        story.extend([result, Spacer(1, 3 * mm)])
+
     for raw in path.read_text().splitlines():
         line = raw.strip()
+        if not line.startswith("|"):
+            flush_table()
         if line.startswith("```"):
             flush()
             in_fence = not in_fence
@@ -1404,20 +1551,36 @@ def markdown_appendix_story(path: Path, st) -> list:
             story.append(Paragraph(inline_markup(line[4:]), st["h2"]))
         elif line.startswith("- "):
             flush()
-            story.append(Paragraph(inline_markup(line[2:]), st["body"], bulletText="•"))
+            story.append(Paragraph(inline_markup(line[2:]), st["body"], bulletText="-"))
         elif not line:
             flush()
         elif line.startswith("|"):
-            continue
+            flush()
+            table_rows.append([cell.strip() for cell in line.strip("|").split("|")])
         else:
             paragraph.append(line)
     flush()
+    flush_table()
     return story
 
 
 def sensitivity_tables(st) -> list:
     analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
     fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
+
+    def condition_label(name: str) -> str:
+        labels = {
+            "historical_phi4_4bit_cself": "Historical Phi-4 4-bit C_self",
+            "phi4_4bit_budget_cself": "Phi-4 4-bit 2,048-token C_self",
+            "phi8_cself": "Phi-4 8-bit C_self",
+            "deepseek_matched_cself": "DeepSeek matched C_self",
+            "deepseek_native_cself": "DeepSeek native C_self",
+            "deepseek_fair_interface_cself": "DeepSeek grammar-constrained C_self",
+            "phi8_cself_repair": "Phi-4 8-bit one-repair C_self",
+            "deepseek_p2": "DeepSeek supplied-representation P2",
+        }
+        return labels.get(name, name.replace("_", " "))
+
     with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
         summaries = list(csv.DictReader(handle))
     with (fair_analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
@@ -1426,7 +1589,7 @@ def sensitivity_tables(st) -> list:
     for row in summaries:
         summary_data.append(
             [
-                row["condition"].replace("_", " "),
+                condition_label(row["condition"]),
                 row["population"],
                 f"{row['successes']}/{row['worlds']}",
                 f"{100 * float(row['jsr']):.1f}%",
@@ -1481,8 +1644,8 @@ def sensitivity_tables(st) -> list:
     for row in paired:
         paired_data.append(
             [
-                row["reference"].replace("_", " "),
-                row["comparison"].replace("_", " "),
+                condition_label(row["reference"]),
+                condition_label(row["comparison"]),
                 row["both_fail"],
                 row["both_succeed"],
                 row["comparison_only_success"],
@@ -1497,7 +1660,7 @@ def sensitivity_tables(st) -> list:
     for row in attrition:
         attrition_data.append(
             [
-                row["condition"].replace("_", " "),
+                condition_label(row["condition"]),
                 row.get("unit", ""),
                 row["stage"],
                 row["passed"],
@@ -1522,7 +1685,7 @@ def sensitivity_tables(st) -> list:
     for row in ledger:
         ledger_data.append(
             [
-                row["condition"].replace("_", " "),
+                condition_label(row["condition"]),
                 row["llm_calls"],
                 row["transport_attempts"],
                 row["prompt_tokens"],
@@ -1637,6 +1800,38 @@ def sensitivity_tables(st) -> list:
             ]
         )
 
+    with (fair_analysis / "paired_crand_comparison.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        crand = next(csv.DictReader(handle))
+    crand_data = [
+        ["Comparison", "Both fail", "C_rand only", "Grammar only", "Both pass", "Success counts"],
+        [
+            "C_rand vs grammar-constrained DeepSeek",
+            crand["both_fail"],
+            crand["reference_only_success"],
+            crand["comparison_only_success"],
+            crand["both_succeed"],
+            f"{crand['reference_successes']}/96 vs {crand['comparison_successes']}/96",
+        ],
+    ]
+    with (fair_analysis / "validated_signature_distribution.csv").open(
+        newline="", encoding="utf-8"
+    ) as handle:
+        signatures = list(csv.DictReader(handle))
+    signature_data = [
+        ["Realizer signature", "Executable selected", "Validated", "Successful worlds"]
+    ]
+    for row in signatures:
+        signature_data.append(
+            [
+                row["structural_signature"],
+                row["selected_executable_candidates"],
+                row["validated_candidates"],
+                row["successful_worlds"],
+            ]
+        )
+
     return [
         Paragraph("Sensitivity result table", st["h1"]),
         table(summary_data, [39 * mm, 59 * mm, 20 * mm, 17 * mm, 30 * mm]),
@@ -1669,13 +1864,19 @@ def sensitivity_tables(st) -> list:
         Paragraph("Full Phi-4 completion-budget compute ledger", st["h1"]),
         table(budget_ledger_data, [46 * mm, 18 * mm, 20 * mm, 29 * mm, 31 * mm, 24 * mm]),
         PageBreak(),
-        Paragraph("Fair-interface DeepSeek sensitivity", st["h1"]),
+        Paragraph("Grammar-constrained DeepSeek sensitivity", st["h1"]),
         table(fair_family_data, [62 * mm, 26 * mm, 25 * mm, 45 * mm]),
         Spacer(1, 5 * mm),
-        Paragraph("Fair-interface compute ledger", st["h1"]),
+        Paragraph("Paired comparison with archived random composition", st["h1"]),
+        table(crand_data, [45 * mm, 20 * mm, 22 * mm, 23 * mm, 20 * mm, 35 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Selected-candidate realizer signatures", st["h1"]),
+        table(signature_data, [62 * mm, 36 * mm, 30 * mm, 34 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Grammar-constrained compute ledger", st["h1"]),
         table(fair_ledger_data, [31 * mm, 18 * mm, 31 * mm, 34 * mm, 20 * mm, 29 * mm]),
         PageBreak(),
-        Paragraph("Fair-interface cumulative attrition", st["h1"]),
+        Paragraph("Grammar-constrained cumulative attrition", st["h1"]),
         table(fair_attrition_data, [53 * mm, 42 * mm, 22 * mm, 26 * mm, 20 * mm]),
     ]
 
@@ -1756,19 +1957,19 @@ def build_pdf() -> Path:
         [
             image_flow(extended_figs["world"]),
             caption(
-                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals, including the separately frozen fair-interface condition. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
+                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals, including the separately frozen grammar-constrained interface condition. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
                 st,
             ),
             PageBreak(),
             image_flow(extended_figs["attrition"]),
             caption(
-                "Extended Data Figure 8b | Response-to-verdict attrition, including the grammar-valid fair-interface cascade. Denominators and units change at the executable boundary and are reported in the accompanying source-data tables.",
+                "Extended Data Figure 8b | Response-to-verdict attrition, including the grammar-constrained interface cascade. Denominators and units change at the executable boundary and are reported in the accompanying source-data tables.",
                 st,
             ),
             PageBreak(),
             image_flow(extended_figs["family"]),
             caption(
-                "Extended Data Figure 8c | Per-family descriptive sensitivity results. Fair-interface successes were confined to meta-law and unification; no family-level or candidate-level significance test was performed.",
+                "Extended Data Figure 8c | Per-family descriptive sensitivity results. Grammar-constrained-interface successes were confined to meta-law and unification; the supplied-representation control used a different balanced subset. No family-level or candidate-level significance test was performed.",
                 st,
             ),
             Spacer(1, 5 * mm),
