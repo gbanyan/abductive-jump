@@ -1,0 +1,64 @@
+{
+  "analysis_unit": "world",
+  "candidate_policy_rows_expected": 36168,
+  "code_sha256": {
+    "scripts/run_nmi_realizer_audit_v1.py": "03d325173b2cfe7df3a159642a049f63206cb9748527ccc97849437e5550ecaa",
+    "src/abductive_jump/realizer_audit.py": "0dccda42f505e02295597846534c0b910598338b2bcbf43e28e2df1ad1966813"
+  },
+  "conditions": {
+    "C3": "archived selected candidates from 400 known-family and 100 held-out jump worlds",
+    "C_rand": "archived selected candidates from the same 500 jump worlds",
+    "DeepSeek_grammar": "reconstructed selected candidates from the frozen 96-world grammar-constrained sensitivity"
+  },
+  "input_sha256": {
+    "artifacts/compositional_candidates.parquet": "0949a9bd693e76f87bf04c0b0e836b199cc23669d28b24c62238fa17cd3c34ff",
+    "experiments/nmi_fair_interface_v1/configs/deepseek_fair_cself.json": "82cc32f783534562ddf2804f42a8300b4c48dbf58806eb3fbcd3ee1aa2be3ec1",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/candidate_results.parquet": "36348b5842fb9e1f1396bb46c45b0a2e3cfe781153cbceb64e145303c43827e2",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/llm_calls.jsonl": "54fa04512dda3f9915605c3e92e2b08b97257efd392fd9359a12184987cb5027"
+  },
+  "inputs": {
+    "fair_calls": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/llm_calls.jsonl",
+    "fair_candidates": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/candidate_results.parquet",
+    "fair_config": "experiments/nmi_fair_interface_v1/configs/deepseek_fair_cself.json",
+    "historical_candidates": "artifacts/compositional_candidates.parquet"
+  },
+  "model_calls": 0,
+  "objective": "Quantify whether archived validated escapes survive removal of motif semantics, removal of one motif at a time, or canonical field rebinding that ignores node roles and intervention-key changes.",
+  "policies": [
+    "aligned",
+    "motif_disabled",
+    "role_action_blind_binding",
+    "mask_signature:relation_arity_3",
+    "mask_signature:temporally_indexed_recurrence",
+    "mask_signature:unobserved_dependency",
+    "mask_signature:unobserved_selector",
+    "mask_signature:bound_relation",
+    "mask_signature:self_composed_function",
+    "mask_signature:shared_rule_binding",
+    "mask_signature:multi_argument_function"
+  ],
+  "policy_definitions": {
+    "aligned": "Replay the archived candidate with the historical motif-to-basis realizer.",
+    "mask_signature": "For candidates detected as the named signature, replace the realized expression with the exact incumbent expression while preserving the candidate representation; leave all other signatures aligned.",
+    "motif_disabled": "Replace every non-incumbent motif realization with the exact incumbent expression while preserving the archived candidate representation.",
+    "role_action_blind_binding": "Retain the detected motif's algebraic term shapes but rebind variables by public field type and lexical order, without node roles or intervention-key inspection; refit coefficients from public observations."
+  },
+  "prohibited_interpretations": [
+    "This post-hoc audit is a replacement confirmatory experiment.",
+    "Failure under a masked realizer proves that a model did not conceptualize the representation.",
+    "Success under role-blind binding establishes external scientific generalization.",
+    "Candidate rows are independent statistical replicates."
+  ],
+  "reporting": [
+    "exact successful-world counts and JSR",
+    "Wilson 95% intervals",
+    "paired world transitions from aligned to each counterfactual policy",
+    "per-family descriptive counts",
+    "candidate gate attrition with explicit denominators",
+    "detected and realized signature distributions"
+  ],
+  "schema_version": "nmi-realizer-audit-protocol-v1",
+  "selection": "All candidate representations and slots remain exactly as archived. Interventions are reselected deterministically from public action queries using counterfactual predictions before hidden outcomes are evaluated.",
+  "status": "frozen_before_replay",
+  "world_policy_rows_expected": 12056
+}
