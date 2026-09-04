@@ -1,0 +1,14 @@
+{
+  "candidate_slots": 288,
+  "config_sha256": "82cc32f783534562ddf2804f42a8300b4c48dbf58806eb3fbcd3ee1aa2be3ec1",
+  "executable_plan_opportunities": 3939,
+  "executable_slots": 280,
+  "formal_shards": 4,
+  "jsr": 0.15625,
+  "llm_calls": 576,
+  "operational_amendment_sha256": "f487bc6935c2aabf2ca3b66f3ac10110ee089e73b1f0b94bceb70bbc51cc3dee",
+  "plan_opportunities": 4608,
+  "successes": 15,
+  "validated_candidates": 21,
+  "worlds": 96
+}

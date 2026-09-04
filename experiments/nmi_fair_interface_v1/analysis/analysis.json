@@ -1,0 +1,206 @@
+{
+  "compute_ledger": [
+    {
+      "answer_tokens": 1179648,
+      "calls": 288,
+      "cap_hits": 288,
+      "completion_tokens": 1179648,
+      "finish_reasons": "{\"length\": 288}",
+      "latency_seconds": 87421.13746511057,
+      "prompt_tokens": 721860,
+      "reasoning_text_calls": 288,
+      "reasoning_tokens_reported": 0,
+      "stage": "deliberation"
+    },
+    {
+      "answer_tokens": 574538,
+      "calls": 288,
+      "cap_hits": 0,
+      "completion_tokens": 574538,
+      "finish_reasons": "{\"stop\": 288}",
+      "latency_seconds": 23363.101646420255,
+      "prompt_tokens": 1914226,
+      "reasoning_text_calls": 0,
+      "reasoning_tokens_reported": 0,
+      "stage": "serialization"
+    }
+  ],
+  "gate_attrition": [
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "deliberation_returned",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "serialization_returned",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "strict_whole_response_json",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "json_parse_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "plan_schema_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "operation_names_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 4608,
+      "rate": 1.0,
+      "stage": "argument_types_valid",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 3939,
+      "rate": 0.8548177083333334,
+      "stage": "executable",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 4608,
+      "passed": 3939,
+      "rate": 0.8548177083333334,
+      "stage": "representation_constructed",
+      "unit": "plan_opportunity"
+    },
+    {
+      "denominator": 280,
+      "passed": 236,
+      "rate": 0.8428571428571429,
+      "stage": "J1",
+      "unit": "executable_selected_candidate"
+    },
+    {
+      "denominator": 280,
+      "passed": 236,
+      "rate": 0.8428571428571429,
+      "stage": "J2",
+      "unit": "executable_selected_candidate"
+    },
+    {
+      "denominator": 280,
+      "passed": 21,
+      "rate": 0.075,
+      "stage": "J3",
+      "unit": "executable_selected_candidate"
+    },
+    {
+      "denominator": 280,
+      "passed": 21,
+      "rate": 0.075,
+      "stage": "J4",
+      "unit": "executable_selected_candidate"
+    },
+    {
+      "denominator": 280,
+      "passed": 21,
+      "rate": 0.075,
+      "stage": "J5",
+      "unit": "executable_selected_candidate"
+    }
+  ],
+  "model_calls_made": 0,
+  "per_family": [
+    {
+      "family": "causal_ambiguity",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "coordinate_transform",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "hidden_regimes",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "latent_common_cause",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "meta_law",
+      "jsr": 0.75,
+      "successes": 9,
+      "wilson_95_high": 0.9110583316059453,
+      "wilson_95_low": 0.46769466506643426,
+      "worlds": 12
+    },
+    {
+      "family": "property_to_relation",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "state_invention",
+      "jsr": 0.0,
+      "successes": 0,
+      "wilson_95_high": 0.24249400665524085,
+      "wilson_95_low": 2.7755575615628914e-17,
+      "worlds": 12
+    },
+    {
+      "family": "unification",
+      "jsr": 0.5,
+      "successes": 6,
+      "wilson_95_high": 0.7462184023662939,
+      "wilson_95_low": 0.2537815976337061,
+      "worlds": 12
+    }
+  ],
+  "replay_mismatches": 0,
+  "schema_version": "nmi-fair-interface-analysis-v1",
+  "world_summary": {
+    "condition": "deepseek_fair_interface_cself",
+    "jsr": 0.15625,
+    "population": "fixed n=96 sensitivity panel",
+    "successes": 15,
+    "wilson_95_high": 0.24191486674528626,
+    "wilson_95_low": 0.09703709990686579,
+    "worlds": 96
+  }
+}

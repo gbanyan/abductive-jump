@@ -1,0 +1,3 @@
+stage,calls,prompt_tokens,completion_tokens,answer_tokens,reasoning_tokens_reported,reasoning_text_calls,cap_hits,latency_seconds,finish_reasons
+deliberation,288,721860,1179648,1179648,0,288,288,87421.13746511057,"{""length"": 288}"
+serialization,288,1914226,574538,574538,0,0,0,23363.101646420255,"{""stop"": 288}"

@@ -1,0 +1,965 @@
+{
+  "candidate_slots": 72,
+  "config_sha256": "623c0d61e4d66d74dd774b7688e28bd5f9075857a563283008299fdafc4b0aab",
+  "executable_plan_opportunities": 1013,
+  "executable_slots": 72,
+  "jsr": 0.0,
+  "llm_calls": 144,
+  "model_manifests": {
+    "deliberation": {
+      "context_limit": 1048576,
+      "engine": "patched-vllm-openai",
+      "engine_version": "0.25.2.dev0+g752a3a504.d20260714",
+      "max_tokens": 4096,
+      "model": "deepseek-v4-flash-vision-exp",
+      "quantization": "fp8-weights+nvfp4-kv-cache",
+      "reasoning_effort": "max",
+      "response_format": null,
+      "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "transport_retries": 2
+    },
+    "serialization": {
+      "context_limit": 1048576,
+      "engine": "patched-vllm-openai",
+      "engine_version": "0.25.2.dev0+g752a3a504.d20260714",
+      "max_tokens": 4096,
+      "model": "deepseek-v4-flash-vision-exp",
+      "quantization": "fp8-weights+nvfp4-kv-cache",
+      "reasoning_effort": "none",
+      "response_format": {
+        "json_schema": {
+          "name": "fair_interface_plans_v1",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "plans": {
+                "items": {
+                  "items": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_NODE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_NODE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "relation"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_EDGE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "relation"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_EDGE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "relation"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REVERSE_EDGE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "kind": {
+                                "enum": [
+                                  "Primitive",
+                                  "Observable",
+                                  "LatentVariable",
+                                  "StateVariable",
+                                  "Entity",
+                                  "Property",
+                                  "Relation",
+                                  "Process",
+                                  "Context",
+                                  "Regime",
+                                  "Parameter",
+                                  "Function",
+                                  "Equation",
+                                  "Invariant",
+                                  "CausalEdge",
+                                  "Transition",
+                                  "Constraint"
+                                ],
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "kind"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "CHANGE_NODE_TYPE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from_relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "to_relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "from_relation",
+                              "to_relation"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "CHANGE_EDGE_TYPE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "observable": {
+                                "enum": [
+                                  "true",
+                                  "false"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "observable"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "CHANGE_OBSERVABILITY"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "arity": {
+                                "pattern": "^[0-8]$",
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "arity"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "CHANGE_ARITY"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "position": {
+                                "pattern": "^[0-8]$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "position"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "BIND_ARGUMENT"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "position": {
+                                "pattern": "^[0-8]$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "position"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "UNBIND_ARGUMENT"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_FUNCTION"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_FUNCTION"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_EQUATION"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_EQUATION"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "COMPOSE_FUNCTIONS"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "DECOMPOSE_FUNCTION"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_TEMPORAL_INDEX"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_TEMPORAL_INDEX"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_DEPENDENCY"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_DEPENDENCY"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "ADD_CONSTRAINT"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REMOVE_CONSTRAINT"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "MERGE_NODES"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "left": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "right": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "left",
+                              "right"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "SPLIT_NODE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "other": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "other",
+                              "relation",
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REIFY_EDGE_AS_NODE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "relation": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "relation"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "REIFY_NODE_AS_EDGE"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "node": {
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "node",
+                              "id"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "const": "SUBGRAPH_COPY"
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "arguments"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                },
+                "maxItems": 16,
+                "minItems": 16,
+                "type": "array"
+              }
+            },
+            "required": [
+              "plans"
+            ],
+            "type": "object"
+          },
+          "strict": true
+        },
+        "type": "json_schema"
+      },
+      "revision": "86f746b36186f0e567729a5c06a8c918caba82a9",
+      "temperature": 0.2,
+      "top_p": 0.95,
+      "transport_retries": 2
+    }
+  },
+  "plan_opportunities": 1152,
+  "successes": 0,
+  "validated_candidates": 0,
+  "worlds": 24
+}

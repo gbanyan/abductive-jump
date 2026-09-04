@@ -1,0 +1,2 @@
+condition,population,successes,worlds,jsr,wilson_95_low,wilson_95_high
+deepseek_fair_interface_cself,fixed n=96 sensitivity panel,15,96,0.15625,0.09703709990686579,0.24191486674528626

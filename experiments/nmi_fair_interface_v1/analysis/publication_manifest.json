@@ -1,0 +1,48 @@
+{
+  "excluded_throughput_pilot_calls": 31,
+  "excluded_timeout_attempts": 12,
+  "formal_transport_retry_logs": {},
+  "model_calls_made": 0,
+  "paired_world_differences": [
+    {
+      "both_fail": 81,
+      "both_succeed": 0,
+      "comparison": "deepseek_fair_interface_cself",
+      "comparison_only_success": 15,
+      "paired_jsr_difference": 0.15625,
+      "reference": "historical_phi4_4bit_cself",
+      "reference_only_success": 0,
+      "worlds": 96
+    },
+    {
+      "both_fail": 81,
+      "both_succeed": 0,
+      "comparison": "deepseek_fair_interface_cself",
+      "comparison_only_success": 15,
+      "paired_jsr_difference": 0.15625,
+      "reference": "deepseek_matched_cself",
+      "reference_only_success": 0,
+      "worlds": 96
+    },
+    {
+      "both_fail": 81,
+      "both_succeed": 0,
+      "comparison": "deepseek_fair_interface_cself",
+      "comparison_only_success": 15,
+      "paired_jsr_difference": 0.15625,
+      "reference": "deepseek_native_cself",
+      "reference_only_success": 0,
+      "worlds": 96
+    }
+  ],
+  "schema_version": "nmi-fair-interface-publication-data-v1",
+  "source_sha256": {
+    "artifacts/compositional/confirmatory-existing/world_results.parquet": "7afd0ce75f6a25c3ffb19db41b5c73f72c5a97ca225b70ba1ae0500fa9face46",
+    "experiments/nmi_fair_interface_v1/protocol_amendment_001.json": "f487bc6935c2aabf2ca3b66f3ac10110ee089e73b1f0b94bceb70bbc51cc3dee",
+    "experiments/nmi_fair_interface_v1/protocol_amendment_002.json": "9279051c04a472d57c1f2e270629a8a05c3e5342cf17a558633db64be51f0dd9",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/validation.json": "ece57c06e0518f4fad1101c298ff706c8e6e3ffffc6d84d68214204cb54a57a2",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet": "ed1271b2e1204ffe780e877e4b05b07c65677b6441740ebeb7d77135272dca55",
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_matched_cself/world_results.parquet": "b64ad88a499d0b7f67798b95fcda3d38a2d18913f38938774a995d6e3d22022a",
+    "experiments/nmi_minimal_sensitivity_v1/results/deepseek_native_cself/world_results.parquet": "229a78261de416756df763e3c10ae3d2a79172f1da59202d36b5fdec82ca1c6e"
+  }
+}

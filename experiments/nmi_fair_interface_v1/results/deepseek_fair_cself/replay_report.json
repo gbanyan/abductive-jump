@@ -1,0 +1,16 @@
+{
+  "candidate_rows": 288,
+  "mismatch_examples": [],
+  "model_calls_made": 0,
+  "replay_mismatches": 0,
+  "replay_verified": 288,
+  "source_sha256": {
+    "candidate_results.parquet": "36348b5842fb9e1f1396bb46c45b0a2e3cfe781153cbceb64e145303c43827e2",
+    "llm_calls.jsonl": "54fa04512dda3f9915605c3e92e2b08b97257efd392fd9359a12184987cb5027",
+    "llm_self_plans.parquet": "94eb2ad456511d014fdcb93aba92de29487c6653a59ef50c0c663528a19e7a87",
+    "summary.json": "c1e1d549c85bc6461172d71f7aac7fba07f43b9bd1406b464ae9cde85eb0b1d9",
+    "world_results.parquet": "ed1271b2e1204ffe780e877e4b05b07c65677b6441740ebeb7d77135272dca55"
+  },
+  "status": "complete_verified",
+  "verification_correction": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json"
+}

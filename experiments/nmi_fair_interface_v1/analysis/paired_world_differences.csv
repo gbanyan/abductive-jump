@@ -1,0 +1,4 @@
+worlds,both_fail,both_succeed,comparison_only_success,reference_only_success,paired_jsr_difference,reference,comparison
+96,81,0,15,0,0.15625,historical_phi4_4bit_cself,deepseek_fair_interface_cself
+96,81,0,15,0,0.15625,deepseek_matched_cself,deepseek_fair_interface_cself
+96,81,0,15,0,0.15625,deepseek_native_cself,deepseek_fair_interface_cself

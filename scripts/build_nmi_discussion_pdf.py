@@ -673,14 +673,23 @@ def figure_4() -> Path:
     ax.set_xticks(tx, attrition_stages, rotation=38, ha="right", fontsize=6.5)
     ax.set_ylim(-3, 106)
     ax.set_ylabel("Passing stage (%)")
-    ax.legend(frameon=False, fontsize=5.8, ncol=2, loc="upper right")
+    ax.legend(
+        frameon=True,
+        framealpha=0.9,
+        edgecolor="none",
+        facecolor="white",
+        fontsize=5.8,
+        ncol=2,
+        loc="upper right",
+    )
     ax.text(
         0.02,
-        0.04,
+        0.13,
         "C3 audit: 2,400/2,400; sensitivity replay: 3,060/3,060",
         transform=ax.transAxes,
         fontsize=5.9,
         color=NAVY,
+        bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.9, "pad": 1.5},
     )
     ax.set_title("Response-to-verdict attrition")
     panel_label(ax, "d")
@@ -754,6 +763,152 @@ def figure_5() -> Path:
     )
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     return save_figure(fig, "figure_5_worked_example.png")
+
+
+def extended_sensitivity_figures() -> dict[str, Path]:
+    """Build fair-interface-inclusive source-data figures from verified CSVs."""
+    analysis = ROOT / "experiments" / "nmi_minimal_sensitivity_v1" / "analysis"
+    fair_analysis = ROOT / "experiments" / "nmi_fair_interface_v1" / "analysis"
+    with (analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summary_rows = list(csv.DictReader(handle))
+    with (fair_analysis / "world_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summary_rows.extend(csv.DictReader(handle))
+    order = [
+        "historical_phi4_4bit_cself",
+        "phi4_4bit_budget_cself",
+        "phi8_cself",
+        "deepseek_matched_cself",
+        "deepseek_native_cself",
+        "deepseek_fair_interface_cself",
+        "phi8_cself_repair",
+        "deepseek_p2",
+    ]
+    labels = [
+        "Phi4\n4b / 700*",
+        "Phi4\n4b / 2,048",
+        "Phi4\n8b / 700",
+        "DeepSeek\nmatched",
+        "DeepSeek\nnative",
+        "DeepSeek\nfair",
+        "Phi4 8b\none repair",
+        "DeepSeek P2\nn=40",
+    ]
+    colours = [GREY, GOLD, BLUE, CYAN, ORANGE, PURPLE, RED, "#009E73"]
+    lookup = {row["condition"]: row for row in summary_rows}
+    values = np.array([100 * float(lookup[name]["jsr"]) for name in order])
+    low = np.array([100 * float(lookup[name]["wilson_95_low"]) for name in order])
+    high = np.array([100 * float(lookup[name]["wilson_95_high"]) for name in order])
+
+    fig, ax = plt.subplots(figsize=(10.6, 5.2))
+    x = np.arange(len(order))
+    ax.bar(x, values, color=colours, width=0.68)
+    ax.errorbar(
+        x,
+        values,
+        yerr=[np.maximum(0, values - low), np.maximum(0, high - values)],
+        fmt="none",
+        ecolor=INK,
+        capsize=3,
+        lw=1,
+    )
+    for index, name in enumerate(order):
+        row = lookup[name]
+        ax.text(index, values[index] + 3.2, f"{row['successes']}/{row['worlds']}", ha="center")
+    ax.axvline(6.5, color="#999999", linestyle="--", linewidth=0.9)
+    ax.set_xticks(x, labels)
+    ax.set_ylim(0, 105)
+    ax.set_ylabel("World-level jump success rate")
+    ax.set_title("Fixed-panel sensitivity and supplied-representation control", weight="bold")
+    fig.tight_layout()
+    world_path = save_figure(fig, "extended_sensitivity_world_jsr.png")
+
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition_rows = list(csv.DictReader(handle))
+    with (fair_analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition_rows.extend(
+            {**row, "condition": "deepseek_fair_interface_cself"}
+            for row in csv.DictReader(handle)
+        )
+    aliases = {
+        "response_returned": "response",
+        "request_returned": "response",
+        "serialization_returned": "response",
+        "parse_valid": "parse",
+        "json_parse_valid": "parse",
+        "strict_whole_response_json": "parse",
+        "schema_valid": "schema",
+        "plan_schema_valid": "schema",
+        "operation_valid": "operation",
+        "operation_names_valid": "operation",
+        "argument_type_valid": "types",
+        "argument_types_valid": "types",
+        "executable": "execute",
+        "J1": "J1",
+        "J2": "J2",
+        "J3": "J3",
+        "J4": "J4",
+        "J5": "J5",
+    }
+    stages = ["response", "parse", "schema", "operation", "types", "execute", "J1", "J2", "J3", "J4", "J5"]
+    attrition_lookup: dict[str, dict[str, float]] = {}
+    for row in attrition_rows:
+        stage = aliases.get(row["stage"])
+        if stage:
+            attrition_lookup.setdefault(row["condition"], {})[stage] = 100 * float(row["rate"])
+    fig, ax = plt.subplots(figsize=(10.6, 5.2))
+    line_order = order[:-1]
+    line_labels = ["Phi4 700*", "Phi4 2,048", "Phi4 8-bit", "DS matched", "DS native", "DS fair", "Phi4 repair"]
+    for name, label, colour in zip(line_order, line_labels, colours[:-1], strict=True):
+        ax.plot(
+            np.arange(len(stages)),
+            [attrition_lookup[name].get(stage, np.nan) for stage in stages],
+            marker="o",
+            ms=3.5,
+            lw=1.5,
+            color=colour,
+            label=label,
+        )
+    ax.set_xticks(np.arange(len(stages)), stages, rotation=30, ha="right")
+    ax.set_ylim(-3, 105)
+    ax.set_ylabel("Passing stage (%)")
+    ax.set_title("C_self response-to-verdict attrition", weight="bold")
+    ax.legend(frameon=False, ncol=4, fontsize=7.5, loc="upper right")
+    fig.tight_layout()
+    attrition_path = save_figure(fig, "extended_sensitivity_attrition.png")
+
+    with (analysis / "per_family.csv").open(newline="", encoding="utf-8") as handle:
+        family_rows = list(csv.DictReader(handle))
+    with (fair_analysis / "per_family.csv").open(newline="", encoding="utf-8") as handle:
+        family_rows.extend(
+            {**row, "condition": "deepseek_fair_interface_cself"}
+            for row in csv.DictReader(handle)
+        )
+    families = sorted({row["family"] for row in family_rows})
+    family_lookup = {
+        (row["family"], row["condition"]): float(row["jsr"]) for row in family_rows
+    }
+    matrix = np.array([[family_lookup[(family, name)] for name in order] for family in families])
+    fig, ax = plt.subplots(figsize=(11.0, 5.4))
+    image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
+    for row_index in range(len(families)):
+        for column_index in range(len(order)):
+            value = matrix[row_index, column_index]
+            ax.text(
+                column_index,
+                row_index,
+                f"{value:.2f}",
+                ha="center",
+                va="center",
+                color="white" if value < 0.65 else "black",
+                fontsize=7.5,
+            )
+    ax.set_xticks(np.arange(len(order)), labels, rotation=20, ha="right")
+    ax.set_yticks(np.arange(len(families)), [name.replace("_", " ") for name in families])
+    ax.set_title("Per-family descriptive sensitivity results", weight="bold")
+    fig.colorbar(image, ax=ax, label="JSR", fraction=0.028, pad=0.02)
+    fig.tight_layout()
+    family_path = save_figure(fig, "extended_sensitivity_per_family.png")
+    return {"world": world_path, "attrition": attrition_path, "family": family_path}
 
 
 class Rule(Flowable):
@@ -1558,15 +1713,8 @@ def build_pdf() -> Path:
         or int(fair_validation.get("model_calls_made", -1)) != 0
     ):
         raise ValueError("PDF build locked: fair-interface replay is not verified")
-    sensitivity_figures = ROOT / "reports" / "figures" / "minimal_sensitivity"
-    for name in (
-        "figure1-world-jsr.png",
-        "figure2-gate-attrition.png",
-        "figure3-per-family.png",
-    ):
-        if not (sensitivity_figures / name).is_file():
-            raise ValueError(f"PDF build locked: missing sensitivity figure {name}")
     figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4(), 5: figure_5()}
+    extended_figs = extended_sensitivity_figures()
     st = styles()
 
     frame = Frame(
@@ -1606,21 +1754,21 @@ def build_pdf() -> Path:
     story.extend([PageBreak(), Paragraph("Targeted sensitivity source data", st["title"])])
     story.extend(
         [
-            image_flow(sensitivity_figures / "figure1-world-jsr.png"),
+            image_flow(extended_figs["world"]),
             caption(
-                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
+                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals, including the separately frozen fair-interface condition. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
                 st,
             ),
             PageBreak(),
-            image_flow(sensitivity_figures / "figure2-gate-attrition.png"),
+            image_flow(extended_figs["attrition"]),
             caption(
-                "Extended Data Figure 8b | Response-to-verdict attrition. Denominators and units are reported in the accompanying source-data tables.",
+                "Extended Data Figure 8b | Response-to-verdict attrition, including the grammar-valid fair-interface cascade. Denominators and units change at the executable boundary and are reported in the accompanying source-data tables.",
                 st,
             ),
             PageBreak(),
-            image_flow(sensitivity_figures / "figure3-per-family.png"),
+            image_flow(extended_figs["family"]),
             caption(
-                "Extended Data Figure 8c | Per-family descriptive sensitivity results; no family-level or candidate-level significance test was performed.",
+                "Extended Data Figure 8c | Per-family descriptive sensitivity results. Fair-interface successes were confined to meta-law and unification; no family-level or candidate-level significance test was performed.",
                 st,
             ),
             Spacer(1, 5 * mm),

@@ -1,0 +1,15 @@
+unit,stage,passed,denominator,rate
+plan_opportunity,deliberation_returned,4608,4608,1.0
+plan_opportunity,serialization_returned,4608,4608,1.0
+plan_opportunity,strict_whole_response_json,4608,4608,1.0
+plan_opportunity,json_parse_valid,4608,4608,1.0
+plan_opportunity,plan_schema_valid,4608,4608,1.0
+plan_opportunity,operation_names_valid,4608,4608,1.0
+plan_opportunity,argument_types_valid,4608,4608,1.0
+plan_opportunity,executable,3939,4608,0.8548177083333334
+plan_opportunity,representation_constructed,3939,4608,0.8548177083333334
+executable_selected_candidate,J1,236,280,0.8428571428571429
+executable_selected_candidate,J2,236,280,0.8428571428571429
+executable_selected_candidate,J3,21,280,0.075
+executable_selected_candidate,J4,21,280,0.075
+executable_selected_candidate,J5,21,280,0.075
