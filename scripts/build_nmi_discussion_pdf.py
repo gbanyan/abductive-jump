@@ -671,7 +671,7 @@ def figure_4() -> Path:
     ax.set_title("Response-to-verdict attrition")
     panel_label(ax, "d")
     fig.suptitle(
-        "Figure 4 | Transfer, replay and targeted model sensitivity",
+        "Figure 4 | Component attribution, transfer and model sensitivity",
         fontsize=14,
         weight="bold",
         color=NAVY,
@@ -993,7 +993,7 @@ def literature_table(st) -> Table:
             "Evaluation",
             "Exec",
             "Frozen",
-            "Non-member",
+            "Canonical out-of-space test",
             "Prospective",
             "Falsify",
             "Attribution / replay",
@@ -1047,7 +1047,7 @@ def literature_table(st) -> Table:
     wrapped = [[Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data]
     table = Table(
         wrapped,
-        colWidths=[27 * mm, 14 * mm, 17 * mm, 20 * mm, 20 * mm, 17 * mm, 31 * mm, 25 * mm],
+        colWidths=[26 * mm, 13 * mm, 16 * mm, 27 * mm, 19 * mm, 16 * mm, 29 * mm, 25 * mm],
         repeatRows=1,
         hAlign="LEFT",
     )
@@ -1169,14 +1169,14 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                 inserted.add(3)
             elif (
                 heading
-                == "Targeted sensitivities do not remove the proposal-interface bottleneck"
+                == "Code-path ablation attributes C3 success to deterministic scaffolding"
                 and 4 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Held-out transfer, deterministic replay and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control (dagger); the asterisk marks the fixed historical slice of the original n=400 Phi-4 confirmatory population. The Phi-4 2,048-token condition changes only the historical completion cap and is not compute-matched. Error bars are Wilson 95% intervals. In panel d, response and structural-validity stages use their explicitly reported response or effective-plan denominators, whereas J1-J5 use executable self-proposed candidates; the connecting lines aid stage ordering but do not imply a common denominator across that boundary. Historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
+                            "Figure 4 | Component attribution, held-out transfer and the minimal targeted sensitivity extension. Panel c reports the fixed 96-world paired panel, except the predeclared n=40 supplied-representation control (dagger); the asterisk marks the fixed historical slice of the original n=400 Phi-4 confirmatory population. The Phi-4 2,048-token condition changes only the historical completion cap and is not compute-matched. Error bars are Wilson 95% intervals. In panel d, response and structural-validity stages use their explicitly reported response or effective-plan denominators, whereas J1-J5 use executable self-proposed candidates; the connecting lines aid stage ordering but do not imply a common denominator across that boundary. Historical parse validity denotes legacy object extraction, not strict whole-response JSON. No candidate-level significance tests were performed.",
                             st,
                         ),
                     ]
@@ -1538,8 +1538,6 @@ def build_pdf() -> Path:
         ]
     )
     story.extend(sensitivity_tables(st))
-    story.extend([PageBreak(), Paragraph("Protocol and claim audit", st["title"])])
-    story.extend(markdown_appendix_story(ROOT / "docs" / "publication" / "NMI_CLAIM_MATRIX.md", st))
     doc.build(story)
     return OUTPUT
 
