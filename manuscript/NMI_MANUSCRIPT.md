@@ -1,5 +1,13 @@
 # A prospective assay reveals scaffold-driven hypothesis-space expansion
 
+**Jing-Rung Huang**<sup>1,*</sup> and **Wen-Hsiang Lu**<sup>1</sup>
+
+<sup>1</sup> Department of Computer Science and Information Engineering, National Cheng Kung University, Tainan 701, Taiwan
+
+<sup>*</sup> Corresponding author: Jing-Rung Huang (p78084063@mail.ncku.edu.tw)
+
+ORCID: Jing-Rung Huang, 0000-0003-4776-3550; Wen-Hsiang Lu, 0009-0002-5149-6790
+
 ## Abstract
 
 Scientific discovery can require changing not only a hypothesis but the language in which hypotheses are expressed. We introduce a prospective, replayable assay for bounded hypothesis-space expansion: candidates must leave a frozen language, fit observations, commit to an intervention before outcome reveal, outperform the best incumbent predictor and survive held-out falsification. Externally typed proposals succeeded in 142 of 400 synthetic worlds. Deterministic compositional search paired with a frozen, family-aligned motif-to-basis realizer succeeded in all 400 known-family worlds and 100 worlds from one search-side holdout. Yet model-free replay reproduced every verdict, and disabling the realizer eliminated every success, including those from random and model-proposed edits. A grammar-constrained model proposer produced validated edits in 15 of 96 worlds but did not outperform random composition. The assay therefore measures system-level representational escape while showing that causal attribution requires field-level provenance across model and scaffold components.
@@ -146,11 +154,11 @@ Phi-4 and DeepSeek generated the experimental outputs described above. OpenAI Ch
 
 ## Data availability
 
-Synthetic-world definitions, historical and extension result tables, manifests and replay artifacts, including the inference-free realizer audit, are included in the project repository (https://github.com/gbanyan/abductive-jump). Historical AJ5/CJ5 raw call ledgers and raw superseded-extension shards are not tracked directly in Git; a release utility combines them with the tagged publication commit, writes a file-level SHA-256 manifest and stream-verifies the archive. The exact submission snapshot and its checksum are provided in release `nmi-github-submission-v2` (https://github.com/gbanyan/abductive-jump/releases/tag/nmi-github-submission-v2). The original confirmatory state and separate sensitivity namespaces are identified by commits and tags. No personal or restricted third-party data were used. A DOI-minted archival copy will be deposited before publication.
+Synthetic-world definitions, historical and extension result tables, manifests and replay artifacts, including the inference-free realizer audit, are included in the project repository (https://github.com/gbanyan/abductive-jump). Historical AJ5/CJ5 raw call ledgers and raw superseded-extension shards are not tracked directly in Git; a release utility combines them with the tagged publication commit, writes a file-level SHA-256 manifest and stream-verifies the archive. The exact submission snapshot and its checksum are provided in release `nmi-github-submission-v3` (https://github.com/gbanyan/abductive-jump/releases/tag/nmi-github-submission-v3). The original confirmatory state and separate sensitivity namespaces are identified by commits and tags. No personal or restricted third-party data were used. A DOI-minted archival copy will be deposited before publication.
 
 ## Code availability
 
-Source code for generation, search, evaluation, offline attrition, statistics, figure generation, component audit, replay and reviewer-archive verification is included in the public project repository and fixed by release `nmi-github-submission-v2`. Original software is licensed under Apache-2.0 and original synthetic research data and derived artifacts under CC BY 4.0; path-level scope is stated in `LICENSE_SCOPE.md`. A DOI-minted archive will be cited in the accepted version. Model weights are not redistributed; repository identifier, revision and runtime are reported above.
+Source code for generation, search, evaluation, offline attrition, statistics, figure generation, component audit, replay and reviewer-archive verification is included in the public project repository and fixed by release `nmi-github-submission-v3`. Original software is licensed under Apache-2.0 and original synthetic research data and derived artifacts under CC BY 4.0; path-level scope is stated in `LICENSE_SCOPE.md`. A DOI-minted archive will be cited in the accepted version. Model weights are not redistributed; repository identifier, revision and runtime are reported above.
 
 ## References
 
@@ -188,16 +196,20 @@ Source code for generation, search, evaluation, offline attrition, statistics, f
 
 ## Acknowledgements
 
-To be completed by the authors before submission.
+No additional acknowledgements.
 
 ## Author contributions
 
-To be completed using the CRediT taxonomy before submission.
+J.-R.H. performed conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, project administration and writing of the original draft. W.-H.L. performed supervision and writing - review and editing. Both authors reviewed and approved the manuscript.
+
+## Funding
+
+This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors.
 
 ## Competing interests
 
-To be completed by the authors before submission.
+The authors declare no competing interests.
 
 ## Correspondence
 
-To be completed by the corresponding author before submission.
+Correspondence and requests for materials should be addressed to Jing-Rung Huang (p78084063@mail.ncku.edu.tw).

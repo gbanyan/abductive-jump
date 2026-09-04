@@ -3,7 +3,14 @@ message: "If you use this software or its research artifacts, please cite the as
 type: software
 title: "Abductive Jump: a prospective assay for hypothesis-space expansion"
 authors:
-  - name: "Abductive Jump contributors"
+  - family-names: "Huang"
+    given-names: "Jing-Rung"
+    orcid: "https://orcid.org/0000-0003-4776-3550"
+    affiliation: "Department of Computer Science and Information Engineering, National Cheng Kung University"
+  - family-names: "Lu"
+    given-names: "Wen-Hsiang"
+    orcid: "https://orcid.org/0009-0002-5149-6790"
+    affiliation: "Department of Computer Science and Information Engineering, National Cheng Kung University"
 repository-code: "https://github.com/gbanyan/abductive-jump"
 version: 0.1.0
 date-released: 2026-09-05

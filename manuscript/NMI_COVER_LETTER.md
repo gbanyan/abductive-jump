@@ -1,5 +1,10 @@
 Dear Editors,
 
+Jing-Rung Huang, MD  
+PhD Candidate, Department of Computer Science and Information Engineering  
+National Cheng Kung University, Tainan 701, Taiwan  
+p78084063@mail.ncku.edu.tw | ORCID: 0000-0003-4776-3550
+
 Please consider our Article, “A prospective assay reveals scaffold-driven hypothesis-space expansion,” for publication in *Nature Machine Intelligence*.
 
 The paper addresses a measurement and attribution gap in evaluations of AI-assisted scientific discovery. We freeze an incumbent hypothesis language and its best admissible predictor, certify structural non-membership, and require a candidate to outperform that predictor on an intervention committed before its outcome is observed and on separate held-out falsification cases.
@@ -14,8 +19,14 @@ The work complements recent open-space discovery systems by combining a canonica
 
 The study does not claim autonomous scientific discovery, broad model competence or a model-independent conceptual incapacity. The deterministic search is saturated, grammar-constrained success occurred in only two of eight families, and the single held-out family is conceptually adjacent and search-side only. Independently authored noisy families, deeper compositions and broader model comparisons remain future experiments.
 
-Before submission, the corresponding author must add author details and confirm exclusive submission, related manuscripts, preprint status, conflicts and approval by all authors.
+This manuscript is original, has not been published previously and is not under consideration by another journal. The public GitHub research release does not constitute a formally published article, and there is no separate preprint. The authors declare no competing interests, report no specific funding and have approved the submission and the disclosed use of AI assistance.
 
 Sincerely,
 
-The authors
+Jing-Rung Huang, MD  
+Corresponding author, on behalf of both authors
+
+Wen-Hsiang Lu, PhD  
+Professor, Department of Computer Science and Information Engineering  
+National Cheng Kung University, Tainan 701, Taiwan  
+ORCID: 0009-0002-5149-6790

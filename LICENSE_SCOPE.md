@@ -28,8 +28,8 @@ release identified in `CITATION.cff` and indicate whether changes were made.
 ## Manuscript and publication materials
 
 Files in `manuscript/` and rendered publication files in `output/pdf/`,
-including article text and figures, are Copyright © 2026 Abductive Jump
-contributors. All rights are reserved pending the licence selected for journal
+including article text and figures, are Copyright © 2026 Jing-Rung Huang and
+Wen-Hsiang Lu. All rights are reserved pending the licence selected for journal
 publication. Their presence in this repository does not place them under the
 Apache-2.0 or CC BY 4.0 licences.
 

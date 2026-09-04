@@ -4,4 +4,4 @@ The original experiments used a frozen `microsoft/phi-4` model as a registered e
 
 OpenAI ChatGPT and Codex were used from 2 to 5 September 2026 to discuss methodological alternatives, stress-test interpretations, inspect artifacts, implement and orchestrate separately commit-frozen sensitivity and counterfactual replay extensions, recompute inference-free audits, verify literature metadata and journal guidance, and assist manuscript drafting and consistency checks. The conversational service did not expose a stable deployed-build identifier, so no finer model-version claim is made. These systems did not generate or modify historical confirmatory source data, change frozen evaluation rules or determine authorship. All protocols, code changes, statistical outputs, citations and interpretations were reviewed and approved by the human authors, who retain full responsibility for originality, accuracy, interpretation and integrity.
 
-All authors must review and approve this disclosure before submission.
+Both authors reviewed and approved this disclosure and retain full responsibility for the work.

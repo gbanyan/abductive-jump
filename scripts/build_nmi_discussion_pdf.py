@@ -1732,6 +1732,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
     inserted: set[int] = set()
     skipping_markdown_table = False
     paragraph_style = "body"
+    reached_abstract = False
 
     def flush() -> None:
         if paragraph:
@@ -1743,6 +1744,11 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
 
     for line in lines:
         stripped = line.strip()
+        if not reached_abstract:
+            if stripped == "## Abstract":
+                reached_abstract = True
+            else:
+                continue
         if stripped == "<!-- INTRODUCTION -->":
             flush()
             paragraph_style = "body"
@@ -1761,13 +1767,6 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
             flush()
             heading = stripped[3:]
             paragraph_style = "abstract" if heading == "Abstract" else "body"
-            if heading in {
-                "Acknowledgements",
-                "Author contributions",
-                "Competing interests",
-                "Correspondence",
-            }:
-                break
             if heading == "Abstract":
                 story.append(Paragraph("Abstract", st["h1"]))
             elif heading == "Results":
@@ -2441,7 +2440,7 @@ def build_pdf() -> Path:
         topMargin=18 * mm,
         bottomMargin=18 * mm,
         title="A prospective assay reveals scaffold-driven hypothesis-space expansion",
-        author="Complete scientific discussion copy",
+        author="Jing-Rung Huang and Wen-Hsiang Lu",
     )
     doc.addPageTemplates(PageTemplate(id="content", frames=[frame], onPage=page_decor))
     story: list = [
@@ -2449,6 +2448,22 @@ def build_pdf() -> Path:
         Paragraph(
             "A prospective assay reveals scaffold-driven hypothesis-space expansion",
             st["manuscript_title"],
+        ),
+        Paragraph(
+            "<b>Jing-Rung Huang</b><sup>1,*</sup> and <b>Wen-Hsiang Lu</b><sup>1</sup>",
+            st["body"],
+        ),
+        Paragraph(
+            "<sup>1</sup> Department of Computer Science and Information Engineering, "
+            "National Cheng Kung University, Tainan 701, Taiwan",
+            st["subtitle"],
+        ),
+        Paragraph(
+            "<sup>*</sup> Corresponding author: Jing-Rung Huang "
+            "(p78084063@mail.ncku.edu.tw)<br/>"
+            "ORCID: Jing-Rung Huang, 0000-0003-4776-3550; "
+            "Wen-Hsiang Lu, 0009-0002-5149-6790",
+            st["subtitle"],
         ),
         Rule(75 * mm, colors.HexColor(ORANGE), 3),
         Spacer(1, 8 * mm),
