@@ -47,7 +47,18 @@ Use a colour-blind-safe Okabe–Ito palette, Arial/Helvetica, 5–7 pt at final 
 
 The new panels were unlocked only after all five original extension shards and the fair-interface extension reached `complete_verified` and deterministic replay reported zero mismatches. The caption distinguishes the original n=400 confirmatory population, its fixed 96-world historical slice, the separately frozen Phi-4 budget populations (known-family n=400 and held-out n=100), the fixed n=96 sensitivity comparisons and the n=40 positive-control subset.
 
-## Figure 5 — One complete prospective escape
+## Figure 5 — Counterfactual dependence on motif semantics
+
+**Format:** 180 mm, four panels.
+
+- **a:** World-level JSR under aligned, motif-disabled and role/action-blind realization for C3 known-family, C3 held-out, C_rand known-family, C_rand held-out and grammar-constrained DeepSeek.
+- **b:** Paired aligned-to-counterfactual world transitions, emphasizing that motif disabling removes every archived success while role/action-blind binding preserves a subset.
+- **c:** Cumulative candidate attrition for motif-disabled replay. Show that 1,168/1,500 C3, 1,040/1,500 C_rand and 236/288 DeepSeek slots retain J1–J2 but none reaches J3.
+- **d:** Leave-one-signature-out world losses. Identify `relation_arity_3` as necessary for all 100 held-out C3 worlds and `multi_argument_function` as necessary for all 15 grammar-constrained DeepSeek worlds.
+
+The caption states that the audit fixes candidates originally selected under the aligned realizer, makes zero model calls and is post-confirmatory. Candidate rows are attrition units rather than independent replicates.
+
+## Figure 6 — One complete prospective escape
 
 **Format:** 180 mm, single worked-example flow.
 

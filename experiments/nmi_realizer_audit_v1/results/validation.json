@@ -1,0 +1,9 @@
+{
+  "aligned_replay_mismatch_count": 0,
+  "aligned_replay_mismatches": [],
+  "candidate_results_sha256": "202d52c7fee2a162bc84567e7cda00cadf919b30d1f0c662bc59e2c41367cbd1",
+  "status": "complete_verified",
+  "summary_sha256": "49ca415bc03b3c0799e06200c998eba6b87be22b1d72e450d887a38196e3bbbc",
+  "world_results_sha256": "de8bf3ef53769d4a9d07d7059109540688f95a660d00a8580255ad96d6d0107c",
+  "zero_model_calls": true
+}

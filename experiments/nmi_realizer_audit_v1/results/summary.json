@@ -1,0 +1,181 @@
+{
+  "aligned_replay_mismatches": 0,
+  "analysis": "counterfactual replay of archived candidates; zero model calls",
+  "candidate_policy_rows": 36168,
+  "counts": {
+    "C3": {
+      "aligned": {
+        "jsr": 1.0,
+        "successes": 500,
+        "worlds": 500
+      },
+      "mask_signature:bound_relation": {
+        "jsr": 0.9,
+        "successes": 450,
+        "worlds": 500
+      },
+      "mask_signature:multi_argument_function": {
+        "jsr": 0.9,
+        "successes": 450,
+        "worlds": 500
+      },
+      "mask_signature:relation_arity_3": {
+        "jsr": 0.8,
+        "successes": 400,
+        "worlds": 500
+      },
+      "mask_signature:self_composed_function": {
+        "jsr": 0.9,
+        "successes": 450,
+        "worlds": 500
+      },
+      "mask_signature:shared_rule_binding": {
+        "jsr": 1.0,
+        "successes": 500,
+        "worlds": 500
+      },
+      "mask_signature:temporally_indexed_recurrence": {
+        "jsr": 0.9,
+        "successes": 450,
+        "worlds": 500
+      },
+      "mask_signature:unobserved_dependency": {
+        "jsr": 0.8,
+        "successes": 400,
+        "worlds": 500
+      },
+      "mask_signature:unobserved_selector": {
+        "jsr": 0.9,
+        "successes": 450,
+        "worlds": 500
+      },
+      "motif_disabled": {
+        "jsr": 0.0,
+        "successes": 0,
+        "worlds": 500
+      },
+      "role_action_blind_binding": {
+        "jsr": 0.894,
+        "successes": 447,
+        "worlds": 500
+      }
+    },
+    "C_rand": {
+      "aligned": {
+        "jsr": 0.13,
+        "successes": 65,
+        "worlds": 500
+      },
+      "mask_signature:bound_relation": {
+        "jsr": 0.064,
+        "successes": 32,
+        "worlds": 500
+      },
+      "mask_signature:multi_argument_function": {
+        "jsr": 0.106,
+        "successes": 53,
+        "worlds": 500
+      },
+      "mask_signature:relation_arity_3": {
+        "jsr": 0.104,
+        "successes": 52,
+        "worlds": 500
+      },
+      "mask_signature:self_composed_function": {
+        "jsr": 0.118,
+        "successes": 59,
+        "worlds": 500
+      },
+      "mask_signature:shared_rule_binding": {
+        "jsr": 0.13,
+        "successes": 65,
+        "worlds": 500
+      },
+      "mask_signature:temporally_indexed_recurrence": {
+        "jsr": 0.13,
+        "successes": 65,
+        "worlds": 500
+      },
+      "mask_signature:unobserved_dependency": {
+        "jsr": 0.13,
+        "successes": 65,
+        "worlds": 500
+      },
+      "mask_signature:unobserved_selector": {
+        "jsr": 0.128,
+        "successes": 64,
+        "worlds": 500
+      },
+      "motif_disabled": {
+        "jsr": 0.0,
+        "successes": 0,
+        "worlds": 500
+      },
+      "role_action_blind_binding": {
+        "jsr": 0.14,
+        "successes": 70,
+        "worlds": 500
+      }
+    },
+    "DeepSeek_grammar": {
+      "aligned": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:bound_relation": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:multi_argument_function": {
+        "jsr": 0.0,
+        "successes": 0,
+        "worlds": 96
+      },
+      "mask_signature:relation_arity_3": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:self_composed_function": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:shared_rule_binding": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:temporally_indexed_recurrence": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:unobserved_dependency": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "mask_signature:unobserved_selector": {
+        "jsr": 0.15625,
+        "successes": 15,
+        "worlds": 96
+      },
+      "motif_disabled": {
+        "jsr": 0.0,
+        "successes": 0,
+        "worlds": 96
+      },
+      "role_action_blind_binding": {
+        "jsr": 0.08333333333333333,
+        "successes": 8,
+        "worlds": 96
+      }
+    }
+  },
+  "protocol_sha256": "f3fe6c0da3383ef45c5d5e8f7229f63ebfd445e6ece64e45be3ee4770a893069",
+  "schema_version": "nmi-realizer-audit-summary-v1",
+  "world_policy_rows": 12056
+}

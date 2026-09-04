@@ -1,0 +1,12 @@
+{
+  "outputs": {
+    "condition_summary.csv": "4daeb3c5bfd1663e91f86b530bce3a74e6864e8e2226b893c20d6c89dbc118d6",
+    "gate_attrition.csv": "248bc5124f915407128b08d806f6ccc846aafa7b7318a481849be77c5f141140",
+    "paired_transitions.csv": "4adc3c4bb22c3c041cd3d5593f0d8f5492514f234f0ac1381afca60eefee283e",
+    "per_family.csv": "d3f3ac7e2d2f87927ae79424bbc31c71b66dbfcc92888eae54fa35b5629fe866",
+    "report.md": "a690e39d1eb6e1f6953cea32542a21cde89c0407b17aeb3a5fd4b40920d35f59",
+    "signature_distribution.csv": "824a164807e2a569f6f5e0091a1b8a33647e0b2f9abdcf45b3eaff6c1c56ffdc"
+  },
+  "schema_version": "nmi-realizer-audit-analysis-v1",
+  "source_validation_sha256": "7f283d948df5a2cebe06b47b862883614437353edf22e1ea3384e3d97bf7c334"
+}

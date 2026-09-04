@@ -10,7 +10,7 @@ The submission package is capped at ten Extended Data display items in total. De
 | Extended Data Fig. 4 | C3 component provenance and model-free replay | Central causal-attribution evidence |
 | Extended Data Fig. 5 | Held-out chronology, ancestry and search-side scope | Integrity and transfer boundary |
 | Extended Data Fig. 6 | Fixed-panel sensitivity JSR, including C_rand and C3 panel controls | Places 15/96 in its proper baseline context |
-| Extended Data Fig. 7 | Grammar-constrained attrition and per-family motif distribution | Interface and realizer diagnosis |
+| Extended Data Fig. 7 | Grammar-constrained attrition, per-family motif distribution and realizer-audit source tables | Interface and realizer diagnosis |
 | Extended Data Table 1 | Registered comparisons, effects, intervals and corrected P values | Complete inference |
 | Extended Data Table 2 | Motif-to-basis realizer, candidate-field provenance and intervention information boundary | Makes scaffold content explicit |
 | Extended Data Table 3 | Conditions, compute, hashes, replay, superseded shards and exclusions | Reproducibility and complete reporting |

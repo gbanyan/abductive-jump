@@ -735,6 +735,219 @@ def figure_4() -> Path:
 
 
 def figure_5() -> Path:
+    analysis = ROOT / "experiments" / "nmi_realizer_audit_v1" / "analysis"
+    with (analysis / "condition_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summaries = list(csv.DictReader(handle))
+    with (analysis / "paired_transitions.csv").open(newline="", encoding="utf-8") as handle:
+        transitions = list(csv.DictReader(handle))
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition = list(csv.DictReader(handle))
+
+    def summary(source: str, population: str, policy: str) -> dict[str, str]:
+        return next(
+            row
+            for row in summaries
+            if row["source"] == source
+            and row["population"] == population
+            and row["policy"] == policy
+        )
+
+    groups = [
+        ("C3", "known", "C3\nknown"),
+        ("C3", "heldout", "C3\nheld out"),
+        ("C_rand", "known", "Crand\nknown"),
+        ("C_rand", "heldout", "Crand\nheld out"),
+        ("DeepSeek_grammar", "fixed_known_panel", "DS grammar\npanel"),
+    ]
+    policies = ["aligned", "motif_disabled", "role_action_blind_binding"]
+    policy_labels = ["Aligned", "Motif disabled", "Role/action blind"]
+    policy_colours = [NAVY, GREY, ORANGE]
+
+    fig, axes = plt.subplots(2, 2, figsize=(10.6, 7.0))
+    ax = axes[0, 0]
+    x = np.arange(len(groups))
+    width = 0.24
+    for offset, (policy, label, colour) in enumerate(
+        zip(policies, policy_labels, policy_colours, strict=True)
+    ):
+        rows = [summary(source, population, policy) for source, population, _ in groups]
+        values = np.array([100 * float(row["jsr"]) for row in rows])
+        lows = np.array([100 * float(row["wilson_95_low"]) for row in rows])
+        highs = np.array([100 * float(row["wilson_95_high"]) for row in rows])
+        positions = x + (offset - 1) * width
+        ax.bar(positions, values, width=width, color=colour, label=label)
+        ax.errorbar(
+            positions,
+            values,
+            yerr=[np.maximum(0, values - lows), np.maximum(0, highs - values)],
+            fmt="none",
+            ecolor=INK,
+            capsize=2,
+            lw=0.8,
+        )
+        for position, value, row in zip(positions, values, rows, strict=True):
+            if value >= 40:
+                ax.text(
+                    position,
+                    value - 5,
+                    f"{row['successes']}/{row['worlds']}",
+                    ha="center",
+                    va="top",
+                    fontsize=5.6,
+                    color="white",
+                    weight="bold",
+                    rotation=90,
+                )
+            elif value > 0:
+                ax.text(
+                    position,
+                    value + 2.5,
+                    f"{row['successes']}/{row['worlds']}",
+                    ha="center",
+                    fontsize=5.5,
+                    rotation=90,
+                )
+    ax.set_xticks(x, [label for _, _, label in groups], fontsize=7)
+    ax.set_ylim(0, 125)
+    ax.set_ylabel("World-level JSR (%)")
+    ax.set_title("Motif semantics are necessary for archived success")
+    ax.legend(
+        frameon=False,
+        fontsize=6.3,
+        ncol=3,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.96),
+    )
+    panel_label(ax, "a")
+
+    ax = axes[0, 1]
+    sources = ["C3", "C_rand", "DeepSeek_grammar"]
+    source_labels = ["C3", "Crand", "DS grammar"]
+    transition_lookup = {(row["source"], row["comparison"]): row for row in transitions}
+    blind_comparison = "aligned_vs_role_action_blind_binding"
+    lost = np.array(
+        [int(transition_lookup[(source, blind_comparison)]["aligned_only"]) for source in sources]
+    )
+    gained = np.array(
+        [
+            int(transition_lookup[(source, blind_comparison)]["counterfactual_only"])
+            for source in sources
+        ]
+    )
+    retained = np.array(
+        [int(transition_lookup[(source, blind_comparison)]["both_pass"]) for source in sources]
+    )
+    y = np.arange(len(sources))
+    ax.barh(y, -lost, color=RED, label="Lost")
+    ax.barh(y, gained, color=CYAN, label="Gained")
+    for index, value in enumerate(lost):
+        ax.text(-value - 1, index, str(value), va="center", ha="right", fontsize=7)
+    for index, value in enumerate(gained):
+        ax.text(value + 1, index, str(value), va="center", ha="left", fontsize=7)
+    for index, value in enumerate(retained):
+        ax.text(0, index + 0.24, f"{value} retained", ha="center", fontsize=6.5, color=NAVY)
+    bound = max(max(lost), max(gained), 1) * 1.3
+    ax.set_xlim(-bound, bound)
+    ax.axvline(0, color=INK, lw=0.8)
+    ax.set_yticks(y, source_labels)
+    ax.set_xlabel("Paired world transitions under role/action-blind binding")
+    ax.set_title("Field rebinding has a selective effect")
+    ax.legend(frameon=False, fontsize=7, loc="lower right")
+    panel_label(ax, "b")
+
+    ax = axes[1, 0]
+    stages = ["J0", "J1", "J2", "J3", "J4", "J5"]
+    annotation_offsets = {"C3": (6, 5), "C_rand": (0, -11), "DeepSeek_grammar": (-8, 7)}
+    for source, label, colour in zip(sources, source_labels, [NAVY, ORANGE, PURPLE], strict=True):
+        rows = [
+            row
+            for row in attrition
+            if row["source"] == source and row["policy"] == "motif_disabled"
+        ]
+        lookup = {row["stage"]: row for row in rows}
+        values = [100 * float(lookup[stage]["rate"]) for stage in stages]
+        ax.plot(stages, values, marker="o", lw=1.6, ms=3.5, label=label, color=colour)
+        ax.annotate(
+            f"{lookup['J2']['passed']}/{lookup['J2']['denominator']}",
+            xy=(2, values[2]),
+            xytext=annotation_offsets[source],
+            textcoords="offset points",
+            color=colour,
+            fontsize=6.2,
+            ha="center",
+        )
+    ax.set_ylim(-3, 108)
+    ax.set_ylabel("Cumulative candidate retention (%)")
+    ax.set_title("Most slots reach J1-J2, none reaches J3")
+    ax.legend(frameon=False, fontsize=7, loc="upper right")
+    panel_label(ax, "c")
+
+    ax = axes[1, 1]
+    signatures = [
+        "relation_arity_3",
+        "unobserved_dependency",
+        "bound_relation",
+        "multi_argument_function",
+        "self_composed_function",
+        "temporally_indexed_recurrence",
+        "unobserved_selector",
+        "shared_rule_binding",
+    ]
+    matrix = []
+    for source in sources:
+        matrix.append(
+            [
+                int(
+                    transition_lookup[(source, f"aligned_vs_mask_signature:{signature}")][
+                        "aligned_only"
+                    ]
+                )
+                for signature in signatures
+            ]
+        )
+    matrix_array = np.array(matrix)
+    image_plot = ax.imshow(matrix_array, cmap="Oranges", aspect="auto", vmin=0, vmax=100)
+    for row_index in range(matrix_array.shape[0]):
+        for column_index in range(matrix_array.shape[1]):
+            value = matrix_array[row_index, column_index]
+            ax.text(
+                column_index,
+                row_index,
+                str(value),
+                ha="center",
+                va="center",
+                fontsize=6.5,
+                color="white" if value >= 55 else INK,
+            )
+    short_signatures = [
+        "arity 3",
+        "latent dep.",
+        "bound rel.",
+        "multi-arg",
+        "self-comp.",
+        "temporal",
+        "selector",
+        "shared rule",
+    ]
+    ax.set_xticks(
+        np.arange(len(signatures)), short_signatures, rotation=35, ha="right", fontsize=6.3
+    )
+    ax.set_yticks(np.arange(len(sources)), source_labels)
+    ax.set_title("Worlds lost when one signature is masked")
+    fig.colorbar(image_plot, ax=ax, label="Aligned-only successes", fraction=0.036, pad=0.02)
+    panel_label(ax, "d")
+
+    fig.suptitle(
+        "Figure 5 | Counterfactual dependence on motif semantics",
+        fontsize=14,
+        weight="bold",
+        color=NAVY,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.94), h_pad=2.1, w_pad=1.5)
+    return save_figure(fig, "figure_5_realizer_audit.png")
+
+
+def figure_6() -> Path:
     fig, ax = plt.subplots(figsize=(10.4, 5.2))
     ax.axis("off")
     stages = [
@@ -787,13 +1000,13 @@ def figure_5() -> Path:
         color=ORANGE,
     )
     fig.suptitle(
-        "Figure 5 | One complete prospective escape",
+        "Figure 6 | One complete prospective escape",
         fontsize=14,
         weight="bold",
         color=NAVY,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.93))
-    return save_figure(fig, "figure_5_worked_example.png")
+    return save_figure(fig, "figure_6_worked_example.png")
 
 
 def extended_sensitivity_figures() -> dict[str, Path]:
@@ -1463,17 +1676,31 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     ]
                 )
                 inserted.add(4)
-            elif heading == "A worked prospective escape" and 5 not in inserted:
+            elif (
+                heading == "Counterfactual replay localizes success to motif semantics"
+                and 5 not in inserted
+            ):
                 story.extend(
                     [
                         image_flow(figures[5]),
                         caption(
-                            "Figure 5 | Worked held-out example. Correlated observations make the cubic incumbent and triadic candidate observationally identical. A committed intervention separates them before outcome reveal, and an independent case falsifies the incumbent.",
+                            "Figure 5 | Counterfactual dependence on motif semantics. Panel a reports exact world-level jump success rates with Wilson 95% intervals under aligned, motif-disabled and role/action-blind realization. Panel b gives paired transitions from aligned to role/action-blind binding; counts pool 400 known-family and 100 held-out worlds for C3 and C_rand, while DeepSeek uses the fixed n=96 panel. Panel c reports cumulative candidate-slot attrition when motif realization is disabled; candidate slots are not independent replicates. Panel d reports aligned successes lost when one detected signature is replaced by incumbent fallback. Candidate representations and slots were fixed from the aligned archive; the post-confirmatory audit made zero model calls and did not rerun search under counterfactual realizers.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(5)
+            elif heading == "A worked prospective escape" and 6 not in inserted:
+                story.extend(
+                    [
+                        image_flow(figures[6]),
+                        caption(
+                            "Figure 6 | Worked held-out example. Correlated observations make the cubic incumbent and triadic candidate observationally identical. A committed intervention separates them before outcome reveal, and an independent case falsifies the incumbent.",
+                            st,
+                        ),
+                    ]
+                )
+                inserted.add(6)
         elif not stripped:
             flush()
         elif stripped.startswith("**["):
@@ -1881,6 +2108,106 @@ def sensitivity_tables(st) -> list:
     ]
 
 
+def realizer_audit_tables(st) -> list:
+    analysis = ROOT / "experiments" / "nmi_realizer_audit_v1" / "analysis"
+    with (analysis / "condition_summary.csv").open(newline="", encoding="utf-8") as handle:
+        summaries = list(csv.DictReader(handle))
+    with (analysis / "paired_transitions.csv").open(newline="", encoding="utf-8") as handle:
+        transitions = list(csv.DictReader(handle))
+    with (analysis / "gate_attrition.csv").open(newline="", encoding="utf-8") as handle:
+        attrition = list(csv.DictReader(handle))
+
+    def table(data: list[list[str]], widths: list[float]) -> Table:
+        wrapped = [
+            [Paragraph(inline_markup(str(cell)), st["small"]) for cell in row] for row in data
+        ]
+        result = Table(wrapped, colWidths=widths, repeatRows=1, hAlign="LEFT")
+        result.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(NAVY)),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                    ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#CDD7DD")),
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    (
+                        "ROWBACKGROUNDS",
+                        (0, 1),
+                        (-1, -1),
+                        [colors.white, colors.HexColor("#F3F6F8")],
+                    ),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 4),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                    ("TOPPADDING", (0, 0), (-1, -1), 4),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                ]
+            )
+        )
+        return result
+
+    key_policies = {"aligned", "motif_disabled", "role_action_blind_binding"}
+    summary_data = [["Source", "Population", "Policy", "Success", "JSR", "Wilson 95% CI"]]
+    for row in summaries:
+        if row["policy"] not in key_policies:
+            continue
+        summary_data.append(
+            [
+                row["source"],
+                row["population"],
+                row["policy"],
+                f"{row['successes']}/{row['worlds']}",
+                f"{100 * float(row['jsr']):.1f}%",
+                f"{100 * float(row['wilson_95_low']):.1f}-{100 * float(row['wilson_95_high']):.1f}%",
+            ]
+        )
+
+    mask_data = [
+        ["Source", "Masked signature", "Aligned only", "Mask only", "Both pass", "Difference"]
+    ]
+    for row in transitions:
+        if "mask_signature:" not in row["comparison"]:
+            continue
+        signature = row["comparison"].split("mask_signature:", 1)[1]
+        if int(row["aligned_only"]) == 0 and int(row["counterfactual_only"]) == 0:
+            continue
+        mask_data.append(
+            [
+                row["source"],
+                signature,
+                row["aligned_only"],
+                row["counterfactual_only"],
+                row["both_pass"],
+                f"{float(row['paired_jsr_difference']):+.3f}",
+            ]
+        )
+
+    disabled_gate_data = [["Source", "Stage", "Passed", "Denominator", "Rate"]]
+    for row in attrition:
+        if row["policy"] != "motif_disabled":
+            continue
+        disabled_gate_data.append(
+            [
+                row["source"],
+                row["stage"],
+                row["passed"],
+                row["denominator"],
+                f"{100 * float(row['rate']):.1f}%",
+            ]
+        )
+
+    return [
+        PageBreak(),
+        Paragraph("Realizer-dependence source data", st["title"]),
+        Paragraph("Aligned, disabled and role/action-blind policies", st["h1"]),
+        table(summary_data, [28 * mm, 32 * mm, 43 * mm, 19 * mm, 17 * mm, 29 * mm]),
+        PageBreak(),
+        Paragraph("Leave-one-signature-out paired transitions", st["h1"]),
+        table(mask_data, [28 * mm, 51 * mm, 22 * mm, 18 * mm, 22 * mm, 22 * mm]),
+        Spacer(1, 5 * mm),
+        Paragraph("Motif-disabled cumulative candidate attrition", st["h1"]),
+        table(disabled_gate_data, [45 * mm, 25 * mm, 25 * mm, 30 * mm, 25 * mm]),
+    ]
+
+
 def build_pdf() -> Path:
     register_fonts()
     setup_plot()
@@ -1914,7 +2241,26 @@ def build_pdf() -> Path:
         or int(fair_validation.get("model_calls_made", -1)) != 0
     ):
         raise ValueError("PDF build locked: fair-interface replay is not verified")
-    figs = {1: figure_1(), 2: figure_2(), 3: figure_3(), 4: figure_4(), 5: figure_5()}
+    realizer_base = ROOT / "experiments" / "nmi_realizer_audit_v1"
+    realizer_validation_path = realizer_base / "results" / "validation.json"
+    realizer_analysis_path = realizer_base / "analysis" / "manifest.json"
+    if not realizer_validation_path.is_file() or not realizer_analysis_path.is_file():
+        raise ValueError("PDF build locked: realizer audit is missing")
+    realizer_validation = json.loads(realizer_validation_path.read_text())
+    if (
+        realizer_validation.get("status") != "complete_verified"
+        or not bool(realizer_validation.get("zero_model_calls"))
+        or int(realizer_validation.get("aligned_replay_mismatch_count", -1)) != 0
+    ):
+        raise ValueError("PDF build locked: realizer audit is not verified")
+    figs = {
+        1: figure_1(),
+        2: figure_2(),
+        3: figure_3(),
+        4: figure_4(),
+        5: figure_5(),
+        6: figure_6(),
+    }
     extended_figs = extended_sensitivity_figures()
     st = styles()
 
@@ -1976,6 +2322,7 @@ def build_pdf() -> Path:
         ]
     )
     story.extend(sensitivity_tables(st))
+    story.extend(realizer_audit_tables(st))
     doc.build(story)
     return OUTPUT
 
