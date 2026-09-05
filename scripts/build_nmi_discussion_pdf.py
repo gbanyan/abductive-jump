@@ -475,15 +475,6 @@ def figure_3() -> Path:
         weight="bold",
         color=NAVY,
     )
-    fig.text(
-        0.98,
-        0.015,
-        "Retained jump gain rho = 3.053 (95% CI 2.685-3.540)",
-        ha="right",
-        fontsize=8,
-        color=NAVY,
-        weight="bold",
-    )
     fig.tight_layout(rect=(0, 0.05, 1, 0.93))
     return save_figure(fig, "figure_3_cj5.png")
 
@@ -1019,19 +1010,19 @@ def figure_4_editorial() -> Path:
     ax = axes[0, 1]
     groups = [
         ("C3", "known", "Deterministic\nsearch"),
-        ("C_rand", "known", "Random\ncomposition"),
+        ("C3", "heldout", "Deterministic\nheld out"),
         ("DeepSeek_grammar", "fixed_known_panel", "Grammar-constrained\nmodel proposal"),
     ]
     x = np.arange(len(groups))
     width = 0.34
     aligned_rows = [row_for(source, population, "aligned") for source, population, _ in groups]
     disabled_rows = [
-        row_for(source, population, "motif_disabled") for source, population, _ in groups
+        row_for(source, population, "role_action_blind_binding") for source, population, _ in groups
     ]
     aligned = np.array([100 * float(row["jsr"]) for row in aligned_rows])
     disabled = np.array([100 * float(row["jsr"]) for row in disabled_rows])
     ax.bar(x - width / 2, aligned, width, color=NAVY, label="Aligned realizer")
-    ax.bar(x + width / 2, disabled, width, color=GREY, label="Realizer disabled")
+    ax.bar(x + width / 2, disabled, width, color=ORANGE, label="Role/action-blind")
     for index, row in enumerate(aligned_rows):
         ax.text(
             index - width / 2,
@@ -1040,12 +1031,14 @@ def figure_4_editorial() -> Path:
             ha="center",
             fontsize=7,
         )
-        ax.text(index + width / 2, 2, "0", ha="center", fontsize=7, color=GREY)
+        blind_row = disabled_rows[index]
+        ax.text(index + width / 2, disabled[index] + 3,
+                f"{blind_row['successes']}/{blind_row['worlds']}", ha="center", fontsize=7)
     ax.set_xticks(x, [label for _, _, label in groups], fontsize=7)
     ax.set_ylim(0, 116)
     ax.set_ylabel("World success rate (%)")
-    ax.legend(frameon=False, fontsize=7, loc="upper right")
-    ax.set_title("Incumbent substitution: zero by construction")
+    ax.legend(frameon=False, fontsize=7, loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=2)
+    ax.set_title("Field binding changes a subset of successes")
     panel_label(ax, "b")
 
     ax = axes[1, 0]
@@ -1822,7 +1815,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[2]),
                         caption(
-                            "Figure 2 | External typed proposals and their gate attrition. Panels a and b report world-level jump success rate (JSR) for n=400 worlds per condition; intervals are registered family-stratified bootstrap 95% intervals. Panel c reports cumulative successful-world counts as one, two and three slots are admitted. Panel d reports cumulative candidate retention from J0 to J5 for 1,200 candidates per condition; candidates are not independent replicates. Internal condition codes are retained in Methods and source data. All AJ5 conditions recorded 0/200 control-world false jumps.",
+                            "Figure 2 | External typed proposals and their gate attrition. Panels a and b report world-level jump success rate (JSR) for n=400 worlds per condition; intervals are prospectively specified family-stratified bootstrap 95% intervals. Panel c reports cumulative successful-world counts as one, two and three slots are admitted. Panel d reports cumulative candidate retention from J0 to J5 for 1,200 candidates per condition; candidates are not independent replicates. Internal condition codes are retained in Methods and source data. All AJ5 conditions recorded 0/200 control-world false jumps.",
                             st,
                         ),
                     ]
@@ -1851,7 +1844,7 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Component attribution of system-level escape. Panel a compares archived deterministic-search verdicts with inference-free replay; all 2,400 candidate verdicts matched. Incumbent substitution forces zero prediction separation and J3 failure by construction; it does not establish that the basis library is irreplaceable. Panel b compares aligned and motif-disabled realization for deterministic search and random composition on n=400 known-family worlds and grammar-constrained model proposals on the fixed n=96 sensitivity panel. Panel c pairs the model proposer with random composition on those same 96 worlds. Panel d reports cumulative candidate-slot attrition under motif-disabled replay; candidate slots are not independent replicates. The post-confirmatory counterfactual made zero model calls and fixed archived candidates rather than rerunning search.",
+                            "Figure 4 | Component attribution of system-level escape. Panel a compares archived deterministic-search verdicts with inference-free replay; all 2,400 candidate verdicts matched. Incumbent substitution forces zero prediction separation and J3 failure by construction; it does not establish that the basis library is irreplaceable. Panel b compares aligned and role/action-blind binding for C3 on 400 known-family and 100 held-out worlds, and grammar-constrained model proposals on the fixed 96-world panel. Panel c pairs the model proposer with random composition on those same 96 worlds; similar aggregate success does not establish policy equivalence. Panel d reports cumulative candidate-slot attrition under motif-disabled replay; candidate slots are not independent replicates. The post-confirmatory counterfactual made zero model calls and fixed archived candidates rather than rerunning search.",
                             st,
                         ),
                     ]
