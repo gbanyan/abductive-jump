@@ -1,18 +1,12 @@
-# Extended Data and Supplementary plan
+# Extended Data and Supplementary inventory
 
-The submission package is capped at ten Extended Data display items in total. Dense protocols and source-data ledgers remain Supplementary Information or machine-readable source data rather than additional Extended Data items.
+The complete discussion PDF contains five main figures and the following supplementary material:
 
-| Item | Content | Purpose |
-|---|---|---|
-| Extended Data Fig. 1 | AJ5 procedural families, matched controls and per-family B4/B5 rates | Generator validity and family heterogeneity |
-| Extended Data Fig. 2 | AJ5 candidate attrition including executable B0/B1 paths | Separates interface from later-gate failures |
-| Extended Data Fig. 3 | CJ5 primitive grammar, depth and operation frontier | Defines generic edit capacity |
-| Extended Data Fig. 4 | C3 component provenance and model-free replay | Central causal-attribution evidence |
-| Extended Data Fig. 5 | Held-out chronology, ancestry and search-side scope | Integrity and transfer boundary |
-| Extended Data Fig. 6 | Fixed-panel sensitivity JSR, including C_rand and C3 panel controls | Places 15/96 in its proper baseline context |
-| Extended Data Fig. 7 | Grammar-constrained attrition, per-family motif distribution and realizer-audit source tables | Interface and realizer diagnosis |
-| Extended Data Table 1 | Registered comparisons, effects, intervals and corrected P values | Complete inference |
-| Extended Data Table 2 | Motif-to-basis realizer, candidate-field provenance and intervention information boundary | Makes scaffold content explicit |
-| Extended Data Table 3 | Conditions, compute, hashes, replay, superseded shards and exclusions | Reproducibility and complete reporting |
+1. Supplementary Methods S1-S18, including Supplementary Table 1 in S18.
+2. Targeted sensitivity source tables: world counts, paired comparisons, gate attrition and compute.
+3. Extended Data Figure 1: world-level sensitivity results and Wilson intervals.
+4. Extended Data Figure 2: response-to-verdict attrition.
+5. Extended Data Figure 3: per-family descriptive sensitivity results.
+6. Realizer-audit source tables: policy counts, paired transitions, signature masks and cumulative attrition.
 
-Supplementary Information contains algorithms, generator definitions, prompt templates, schema constraints, statistical procedures and validation rules. Large call ledgers and machine-readable source tables belong in the anonymized reviewer deposit and DOI archive, not in the typeset Extended Data count.
+No other numbered Extended Data display items are supplied in this version. Historical raw ledgers and machine-readable tables are included in the release preservation archive. Rates with denominator zero are NA; positive rates below 0.1% retain three decimal places.

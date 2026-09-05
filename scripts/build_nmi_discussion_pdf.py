@@ -180,7 +180,7 @@ def figure_1() -> Path:
     ax.text(
         0.5,
         0.19,
-        "Canonical membership failure proves R is outside H(R0)",
+        "Canonical membership failure proves R is outside A0",
         ha="center",
         color=NAVY,
         weight="bold",
@@ -385,7 +385,7 @@ def figure_3() -> Path:
         "Atomic\nreference*",
         "One-step\nedits",
         "Deterministic\nsearch",
-        "Model-planned\nedits",
+        "Legacy model\nedits [L]",
         "Random\ncomposition",
         "Oracle\nreference*",
     ]
@@ -700,7 +700,7 @@ def figure_4() -> Path:
     for row in attrition_rows:
         stage = stage_aliases.get(row["stage"])
         if stage:
-            attrition_lookup.setdefault(row["condition"], {})[stage] = float(row["rate"]) * 100
+            attrition_lookup.setdefault(row["condition"], {})[stage] = (float(row["rate"]) * 100 if int(row["denominator"]) else np.nan)
     line_conditions = [
         "historical_phi4_4bit_cself",
         "phi4_4bit_budget_cself",
@@ -831,7 +831,7 @@ def figure_5() -> Path:
     ax.set_xticks(x, [label for _, _, label in groups], fontsize=7)
     ax.set_ylim(0, 125)
     ax.set_ylabel("World-level JSR (%)")
-    ax.set_title("Motif semantics are necessary for archived success")
+    ax.set_title("Incumbent substitution removes discrimination by design")
     ax.legend(
         frameon=False,
         fontsize=6.3,
@@ -1045,7 +1045,7 @@ def figure_4_editorial() -> Path:
     ax.set_ylim(0, 116)
     ax.set_ylabel("World success rate (%)")
     ax.legend(frameon=False, fontsize=7, loc="upper right")
-    ax.set_title("Disabling motif realization removes every success")
+    ax.set_title("Incumbent substitution: zero by construction")
     panel_label(ax, "b")
 
     ax = axes[1, 0]
@@ -1279,7 +1279,7 @@ def extended_sensitivity_figures() -> dict[str, Path]:
     for row in attrition_rows:
         stage = aliases.get(row["stage"])
         if stage:
-            attrition_lookup.setdefault(row["condition"], {})[stage] = 100 * float(row["rate"])
+            attrition_lookup.setdefault(row["condition"], {})[stage] = (100 * float(row["rate"]) if int(row["denominator"]) else np.nan)
     fig, ax = plt.subplots(figsize=(10.6, 5.2))
     line_order = order[:-1]
     line_labels = [
@@ -1353,6 +1353,14 @@ class Rule(Flowable):
         self.canv.setStrokeColor(self.colour)
         self.canv.setLineWidth(self.thickness)
         self.canv.line(0, 1, self.width, 1)
+
+
+def publication_rate(row):
+    denominator = int(row["denominator"])
+    if denominator == 0:
+        return "NA"
+    rate = 100 * int(row["passed"]) / denominator
+    return f"{rate:.3f}%" if 0 < rate < 0.1 else f"{rate:.1f}%"
 
 
 def styles():
@@ -1644,7 +1652,7 @@ def literature_table(st) -> Table:
             "mathematics",
         ],
         [
-            "PiEvo [21]",
+            "PiEvo [23]",
             "yes",
             "evolving principles",
             "NR",
@@ -1655,7 +1663,7 @@ def literature_table(st) -> Table:
             "4 benchmarks",
         ],
         [
-            "Model Discovery Agent [22]",
+            "Model Discovery Agent [24]",
             "yes",
             "open set",
             "NR",
@@ -1666,7 +1674,7 @@ def literature_table(st) -> Table:
             "physics, chemistry, biology",
         ],
         [
-            "HypoArena [23]",
+            "HypoArena [25]",
             "judged text",
             "NR",
             "NR",
@@ -1677,7 +1685,7 @@ def literature_table(st) -> Table:
             "988 cases; 6 domains; 15 models",
         ],
         [
-            "EvoSCM [24]",
+            "EvoSCM [26]",
             "yes",
             "evolving causal models",
             "NR",
@@ -1800,14 +1808,14 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                         Spacer(1, 4),
                         image_flow(figures[1]),
                         caption(
-                            "Figure 1 | A prospective assay for hypothesis-space expansion. Panel a illustrates observational equivalence and a committed action; panels b-d are schematics of structural escape, outcome-before-commitment ordering and the conjunctive J0-J5 gates. JSR denotes the proportion of worlds with at least one candidate passing every gate.",
+                            "Figure 1 | A prospective assay for hypothesis-space expansion. Panel a illustrates observational equivalence and a committed action; panels b-d are schematics of structural escape, commitment-before-outcome-reveal ordering and the conjunctive J0-J5 gates. JSR denotes the proportion of worlds with at least one candidate passing every gate.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(1)
             elif (
-                heading == "External typed proposals outperform fixed-space alternatives"
+                heading == "Typed proposals and fixed-language structural controls"
                 and 2 not in inserted
             ):
                 story.extend(
@@ -1829,21 +1837,21 @@ def manuscript_story(st, figures: dict[int, Path]) -> list:
                     [
                         image_flow(figures[3]),
                         caption(
-                            "Figure 3 | Generic search with fixed motif realization. Panel a is schematic. Panel b reports known-family JSR with Wilson 95% intervals for n=400 worlds per condition. Atomic and oracle conditions are references with different operation semantics. Panel c reports descriptive rates for 50 worlds per family. Deterministic composition combines generic edit search with a fixed, family-aligned motif-to-basis realizer; saturation is within-generator reliability, not independent family replication.",
+                            "Figure 3 | Generic search with fixed motif realization. Panel a is schematic. Panel b reports known-family JSR with Wilson 95% intervals for n=400 worlds per condition. Atomic and oracle conditions are references with different operation semantics. [L] The legacy model interface failed before executable proposal evaluation; its zero does not isolate conceptual proposal ability. C3 and random composition compare complete search-and-selection policies. Panel c reports descriptive rates for 50 worlds per family. Deterministic composition combines generic edit search with a fixed, family-aligned motif-to-basis realizer; saturation is within-generator reliability, not independent family replication.",
                             st,
                         ),
                     ]
                 )
                 inserted.add(3)
             elif (
-                heading == "Counterfactual replay localizes success to motif semantics"
+                heading == "Counterfactual replay tests predictive content and field binding"
                 and 4 not in inserted
             ):
                 story.extend(
                     [
                         image_flow(figures[4]),
                         caption(
-                            "Figure 4 | Component attribution of system-level escape. Panel a compares archived deterministic-search verdicts with inference-free replay; all 2,400 candidate verdicts matched. Panel b compares aligned and motif-disabled realization for deterministic search and random composition on n=400 known-family worlds and grammar-constrained model proposals on the fixed n=96 sensitivity panel. Panel c pairs the model proposer with random composition on those same 96 worlds. Panel d reports cumulative candidate-slot attrition under motif-disabled replay; candidate slots are not independent replicates. The post-confirmatory counterfactual made zero model calls and fixed archived candidates rather than rerunning search.",
+                            "Figure 4 | Component attribution of system-level escape. Panel a compares archived deterministic-search verdicts with inference-free replay; all 2,400 candidate verdicts matched. Incumbent substitution forces zero prediction separation and J3 failure by construction; it does not establish that the basis library is irreplaceable. Panel b compares aligned and motif-disabled realization for deterministic search and random composition on n=400 known-family worlds and grammar-constrained model proposals on the fixed n=96 sensitivity panel. Panel c pairs the model proposer with random composition on those same 96 worlds. Panel d reports cumulative candidate-slot attrition under motif-disabled replay; candidate slots are not independent replicates. The post-confirmatory counterfactual made zero model calls and fixed archived candidates rather than rerunning search.",
                             st,
                         ),
                     ]
@@ -2051,7 +2059,7 @@ def sensitivity_tables(st) -> list:
                 row["stage"],
                 row["passed"],
                 row["denominator"],
-                f"{100 * float(row['rate']):.1f}%",
+                publication_rate(row),
             ]
         )
 
@@ -2124,7 +2132,7 @@ def sensitivity_tables(st) -> list:
                 row["stage"],
                 row["passed"],
                 row["denominator"],
-                f"{100 * float(row['rate']):.1f}%",
+                publication_rate(row),
             ]
         )
     with (analysis / "phi_budget_compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
@@ -2166,7 +2174,7 @@ def sensitivity_tables(st) -> list:
                 row["stage"],
                 row["passed"],
                 row["denominator"],
-                f"{100 * float(row['rate']):.1f}%",
+                publication_rate(row),
             ]
         )
     with (fair_analysis / "compute_ledger.csv").open(newline="", encoding="utf-8") as handle:
@@ -2349,7 +2357,7 @@ def realizer_audit_tables(st) -> list:
                 row["stage"],
                 row["passed"],
                 row["denominator"],
-                f"{100 * float(row['rate']):.1f}%",
+                publication_rate(row),
             ]
         )
 
@@ -2470,26 +2478,26 @@ def build_pdf() -> Path:
         Paragraph("Article | manuscript for scientific discussion", st["subtitle"]),
     ]
     story.extend(manuscript_story(st, figs))
-    story.extend([PageBreak(), Paragraph("Supplementary Information", st["title"])])
+    story.extend([PageBreak(), Paragraph("Supplementary Information", st["title"]), Paragraph("Contents: Supplementary Methods S1-S18 (including Supplementary Table 1); targeted sensitivity source tables; Extended Data Figures 1-3 (world success, attrition, per-family results); realizer-audit source tables. Conditional rates with no executable candidates are NA.", st["body"])])
     story.extend(markdown_appendix_story(ROOT / "manuscript" / "NMI_SUPPLEMENTARY_METHODS.md", st))
     story.extend([PageBreak(), Paragraph("Targeted sensitivity source data", st["title"])])
     story.extend(
         [
             image_flow(extended_figs["world"]),
             caption(
-                "Extended Data Figure 8a | Exact world-level sensitivity results and Wilson 95% intervals, including the separately frozen grammar-constrained interface condition. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
+                "Extended Data Figure 1 | Exact world-level sensitivity results and Wilson 95% intervals, including the separately frozen grammar-constrained interface condition. The asterisk identifies the fixed historical slice of the original n=400 confirmation; the supplied-representation control uses a distinct balanced n=40 subset.",
                 st,
             ),
             PageBreak(),
             image_flow(extended_figs["attrition"]),
             caption(
-                "Extended Data Figure 8b | Response-to-verdict attrition, including the grammar-constrained interface cascade. Denominators and units change at the executable boundary and are reported in the accompanying source-data tables.",
+                "Extended Data Figure 2 | Response-to-verdict attrition, including the grammar-constrained interface cascade. Denominators and units change at the executable boundary and are reported in the accompanying source-data tables.",
                 st,
             ),
             PageBreak(),
             image_flow(extended_figs["family"]),
             caption(
-                "Extended Data Figure 8c | Per-family descriptive sensitivity results. Grammar-constrained-interface successes were confined to meta-law and unification; the supplied-representation control used a different balanced subset. No family-level or candidate-level significance test was performed.",
+                "Extended Data Figure 3 | Per-family descriptive sensitivity results. Grammar-constrained-interface successes were confined to meta-law and unification; the supplied-representation control used a different balanced subset. No family-level or candidate-level significance test was performed.",
                 st,
             ),
             Spacer(1, 5 * mm),

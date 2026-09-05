@@ -2,9 +2,11 @@
 
 ## S1. Formal estimand
 
-Let `R0` denote a world’s incumbent typed representation and `H(R0)` the frozen set of executable hypotheses admitted by its `LanguageSpec`. The incumbent oracle `h0*` minimizes observation loss over `H(R0)`. A candidate representation `R` is an escape only when it is DSL-valid and `R ∉ H(R0)` under canonical membership checks. A world-level validated jump requires at least one of three candidates to pass J0–J5; semantic similarity and model judgment are excluded.
+Let `R0` denote the incumbent representation and `A0` the set of representations admitted by the frozen `LanguageSpec`. Let `P0 = world.incumbent_programs` denote the finite frozen executable comparator set. The oracle selects `h0* = argmin_h (L_obs(h), canonical_json(h))` over `P0`, using lexicographic ordering of the pair. Thus ties in observation loss are broken deterministically by canonical JSON, not by intervention performance. We do not assume that all observational optima are intervention-equivalent, nor claim a universal optimum over every function expressible by the language. J4 and J5 compare against this selected observational optimum.
 
-The jump success rate is the proportion of jump worlds with a validated candidate. The false-jump rate applies the identical decision to control worlds whose truth is in `H(R0)`. Abductive precision is the number of validated candidates divided by candidates passing J0–J3. These quantities answer different questions and are never substituted for one another.
+A candidate theory contains a representation `R` and an executable expression `f`. J1 requires a valid representation with `R` outside `A0`; the later gates evaluate `f`. The canonical membership certificate concerns explicit structural constraints, not a general proof that no functionally equivalent incumbent expression exists. A world-level validated jump requires at least one of three candidates to pass all J0–J5 gates.
+
+The jump success rate is the proportion of jump worlds with a validated candidate. The false-jump rate applies the identical decision to control worlds whose truth is in the frozen incumbent program set. Abductive precision is the number of validated candidates divided by candidates passing J0–J3. These quantities answer different questions and are never substituted for one another.
 
 ## S2. Procedural families
 
@@ -16,20 +18,22 @@ Jump seeds were 10000–10049 per family and controls 20000–20024 per family. 
 
 A representation is a canonical graph of typed nodes and edges plus executable equations, dependencies, constraints, observability, arity, temporal indices and argument bindings. Canonical serialization sorts unordered fields before hashing. `LanguageSpec.contains` checks node kinds, edge/relation forms, equation families and other frozen admissibility constraints. J1 records at least one concrete membership failure and cannot be satisfied by renaming or paraphrase. The public world supplied candidate intervention actions and input settings to proposers and fitters, but withheld every intervention outcome.
 
-The incumbent oracle is exhaustive where the admissible grid is finite and bounded by a registered exact procedure otherwise. Any failure of J0 invalidates a world rather than removing it as difficult. No such confirmatory failure occurred.
+The implementation exhausts `world.incumbent_programs`, sorts by observation loss and canonical program JSON, and returns the first program. Exactness refers to this finite comparator set. Any failure of J0 invalidates a world rather than removing it as difficult. No such confirmatory failure occurred.
 
 ## S4. AJ5 conditions
 
 - **B0 direct LLM:** directly emits a typed theory graph.
 - **B1 sample matched:** high-temperature independent samples propose at most three typed operations.
 - **B2 fixed-space agent:** representation remains `R0`; calls may reason and revise inside it.
-- **B3 attribute mutation:** an external mechanism changes only values/equation attributes allowed by `H(R0)`.
+- **B3 attribute mutation:** an external mechanism changes only values/equation attributes allowed by the frozen incumbent language.
 - **B4 representation mutation:** three proposals sampled with replacement from a nine-member typed portfolio.
 - **B5 full system:** three structurally distinct portfolio proposals, archive accounting and deterministic falsification.
 
 The portfolio contained latent, invariant, sign-contrast regime, additive relation, additive state, square-function, affine-context, causal-edge and transition variants. This high-level alignment motivated CJ5 and is not hidden as a limitation.
 
-The P0/P1/P2 factorial reused the same reasoning code and world populations. Only the proposal source differed: LLM, external portfolio or oracle-correct representation. P2 did not receive fitted parameters, truth-program output or intervention outcomes.
+The P0/P1/P2 factorial reused the same reasoning code and world populations. Only the proposal source differed: LLM, external portfolio or oracle-correct representation. At the proposal stage, P2 received the target representation but not fitted coefficients, truth-program output or hidden outcomes. Downstream fitting and maximum-separation intervention selection were supplied by the deterministic scaffold, shown in the second call and enforced in the evaluated artifact. The later DeepSeek supplied-representation sensitivity is a distinct control: its expression and selected intervention are model-authored.
+
+B2 and B3 are structural negative controls that cannot pass J1 by design; their zero JSR does not establish a general search or reasoning limitation.
 
 ## S5. CJ5 generic primitive language
 
@@ -42,6 +46,8 @@ Every record binds the parent hash, child hash, operator, canonical arguments, s
 C3 traversed 48 branches of four local edits. Fixed allocations covered generic topologies for typed nodes, function composition, argument-bound functions, relations and reified edges. Ranking used only DSL validity, incumbent non-membership, observational compatibility, existence of an outcome-blind discriminating query, structural novelty and ancestry diversity.
 
 C0 evaluated 192 within-space candidates. C2 evaluated 192 depth-one alternatives. C_rand drew 48 four-step paths and selected final candidates by seed-fixed structural hash. C_self supplied the identical manifest to Phi-4 and requested 16 plans in each of three slots; invalid plans consumed capacity and were not externally completed. C1 retained the AJ5 atomic portfolio as a reference. C5 supplied the target representation and deterministic truth compiler as a conditional ceiling. Because the operation semantics of C1 and C5 differ, they are shown separately in cost comparisons.
+
+C3 and C_rand differ in both traversal and final selection. Their contrast estimates a difference between complete search-and-selection policies, not a proposal-only effect.
 
 ## S7. Held-out family and lock
 
@@ -116,6 +122,8 @@ Three partial runs were also preserved and excluded from inference: native DeepS
 
 Each shard had to match its frozen seed panel, model identity, revision, call cardinality and artifact schema before receiving `complete_verified` status. Replay was locked until all five shards were verified. Analysis was then locked until all outputs replayed with zero mismatches. Reported inference consists of counts, Wilson intervals, paired world transitions, paired JSR differences and per-family descriptions. DeepSeek native is explicitly not compute-matched, and the Phi-4 sensitivity changes serving engine together with precision.
 
+Conditional attrition rates with denominator zero are reported as NA (no executable candidates); positive rates below 0.1% retain three decimal places. Archived raw tables are preserved; publication tables apply this display convention.
+
 ## S12. Minimal sensitivity results and attrition
 
 All legacy-interface autonomous fixed-panel conditions produced 0/96 successful worlds (Wilson 95% interval 0–3.8%): the historical Phi-4 4-bit slice, Phi-4 4-bit with the 2,048-token cap, Phi-4 8-bit, DeepSeek matched, DeepSeek native and Phi-4 8-bit with one validator-only repair. The five registered paired contrasts therefore contained 96 joint failures, no successes unique to either member and a paired JSR difference of 0.000. Each of the eight families contributed 12 worlds and had 0/12 in every legacy-interface autonomous condition; these family counts are descriptive.
@@ -146,7 +154,7 @@ Deterministic replay verified all 288 candidate rows with zero scientific, promp
 
 ## S15. Software and environment
 
-The repository records package versions, configuration hashes, prompt identifiers, model revision, vLLM image digest, GPU class and random seeds in reproducibility manifests. DeepSeek used FP8 weights with an NVFP4 key-value cache under patched vLLM `0.25.2.dev0+g752a3a504.d20260714`; Phi-4 8-bit used Transformers 4.56.1 and bitsandbytes 0.47.0. Tests cover world determinism, public-field redaction, DSL membership, primitive legality, budget invariants, reachability, statistics and replay. Historical raw call ledgers and raw superseded-extension shards are hash-addressed local artifacts that must be included in the reviewer deposit and DOI archive; they are not present in the tracked Git tree. The publication phase did not call the model or generate new experimental rows.
+The repository records package versions, configuration hashes, prompt identifiers, model revision, vLLM image digest, GPU class and random seeds in reproducibility manifests. DeepSeek used FP8 weights with an NVFP4 key-value cache under patched vLLM `0.25.2.dev0+g752a3a504.d20260714`; Phi-4 8-bit used Transformers 4.56.1 and bitsandbytes 0.47.0. Tests cover world determinism, public-field redaction, DSL membership, primitive legality, budget invariants, reachability, statistics and replay. Historical raw call ledgers and raw superseded-extension shards are included in the public release preservation archive with file-level hashes; they are not tracked directly in Git. The publication phase did not call the model or generate new experimental rows.
 
 ## S16. Grammar-constrained prompt and analysis templates
 
@@ -174,6 +182,8 @@ The audit fixed all three selected candidate slots from C3 and C_rand for 400 kn
 
 `motif_disabled` replaced the expression of every detected non-incumbent motif with the exact incumbent expression while retaining the archived candidate representation. The maximum-separation action was then reselected from the unchanged public action set and committed before hidden outcomes were evaluated. Cumulative candidate attrition remained 1,168/1,500 through J2 for C3, 1,040/1,500 for C_rand and 236/288 for grammar-constrained DeepSeek, but all three reached 0 at J3. World success consequently changed from 400/400 known plus 100/100 held out to zero for C3, from 52/400 plus 13/100 to zero for C_rand, and from 15/96 to zero for DeepSeek.
 
+Because incumbent substitution sets candidate and comparator predictions equal, maximum separation is zero, below the J3 threshold of 0.5. J3 failure follows by construction. This is a structural negative control for removal of non-incumbent predictive content, not evidence that this specific basis library is irreplaceable. Signature masking has the same built-in effect on affected candidates; world losses describe coverage among the fixed archived slots.
+
 `role_action_blind_binding` retained the algebraic terms supplied by each detected motif but replaced their variable identities with type-compatible, non-nuisance public fields in lexical order. It did not use representation roles or inspect which fields changed in intervention queries. Coefficients were refitted using public observations. This policy retained 347/400 known-family and 100/100 held-out C3 worlds, 57/400 and 13/100 C_rand worlds, and 8/96 DeepSeek worlds. C3 retained 26/50 hidden-regime and 21/50 meta-law worlds and all worlds in the other seven families; DeepSeek retained 5/12 meta-law and 3/12 unification worlds. Because motif algebra remained intact, this condition isolates field-binding information but is not a semantics-free realizer.
 
 Eight leave-one-signature-out policies replaced only the named motif with incumbent fallback. For C3, masking `relation_arity_3` removed all 100 held-out worlds; masking `unobserved_dependency` removed 100 known-family worlds; and masking each of `bound_relation`, `multi_argument_function`, `self_composed_function`, `temporally_indexed_recurrence` and `unobserved_selector` removed 50. Masking `shared_rule_binding` removed no world because selected `multi_argument_function` candidates provided redundant coverage in unification worlds. For DeepSeek, only `multi_argument_function` supported validated candidates, so its removal changed 15/96 to zero. Exact Wilson intervals, paired transitions, per-family counts, signature distributions and gate attrition are stored in `experiments/nmi_realizer_audit_v1/analysis`.
@@ -182,7 +192,7 @@ The audit fixes candidates that were originally selected under the aligned reali
 
 ## S18. Position relative to adjacent discovery evaluations
 
-Supplementary Table 1 compares reported evaluation designs. “Not reported” describes the cited publication and does not imply that a feature is absent from unpublished implementations. The comparison is descriptive rather than a priority proof; recent systems already expand principle or model spaces, whereas the present contribution combines a frozen-language certificate, outcome-before-commitment evaluation, exact replay and component attribution.
+Supplementary Table 1 compares reported evaluation designs. “Not reported” describes the cited publication and does not imply that a feature is absent from unpublished implementations. The comparison is descriptive rather than a priority proof; recent systems already expand principle or model spaces, whereas the present contribution combines a frozen-language certificate, commitment-before-outcome-reveal evaluation, exact replay and component attribution.
 
 | Evaluation | Executable hypotheses | Hypothesis-space boundary | Canonical out-of-space test | Prospective test | Held-out check | Component attribution | Replay | Breadth |
 |---|---|---|---|---|---|---|---|---|
@@ -190,8 +200,8 @@ Supplementary Table 1 compares reported evaluation designs. “Not reported” d
 | HypoGeniC<sup>15</sup> | text hypotheses | not reported | not reported | not reported | held-out examples | generation / ranking | not reported | hypothesis generation |
 | POPPER<sup>16</sup> | partial | not reported | not reported | sequential tests | agentic falsification | hypothesis / validator | not reported | six data domains |
 | FunSearch<sup>13</sup> | yes | fixed program skeleton | not reported | evaluator feedback | held-out tests | proposer / evaluator | partial | mathematics |
-| PiEvo<sup>21</sup> | yes | evolving principle space | not reported | task dependent | task dependent | proposer / search | not reported | four benchmarks, multiple backbones |
-| Model Discovery Agent<sup>22</sup> | yes | open model set | not reported | Bayesian design | posterior checks | proposer / inference | not reported | physics, chemistry and biology |
-| HypoArena<sup>23</sup> | judged text | not reported | not reported | context regression | rubric / judge | not reported | not reported | 988 cases, six domains, 15 models |
-| EvoSCM<sup>24</sup> | yes | evolving causal models | not reported | active intervention | prospective prediction | evolution / selection | not reported | simulated physical worlds |
+| PiEvo<sup>23</sup> | yes | evolving principle space | not reported | task dependent | task dependent | proposer / search | not reported | four benchmarks, multiple backbones |
+| Model Discovery Agent<sup>24</sup> | yes | open model set | not reported | Bayesian design | posterior checks | proposer / inference | not reported | physics, chemistry and biology |
+| HypoArena<sup>25</sup> | judged text | not reported | not reported | context regression | rubric / judge | not reported | not reported | 988 cases, six domains, 15 models |
+| EvoSCM<sup>26</sup> | yes | evolving causal models | not reported | active intervention | prospective prediction | evolution / selection | not reported | simulated physical worlds |
 | This work | yes | frozen formal language | canonical certificate | outcome locked | separate exact cases | proposal-source comparison plus component audit | exact | nine synthetic families; two-checkpoint sensitivity |
