@@ -1,0 +1,2621 @@
+{
+  "checks": [
+    {
+      "claim": "B0_DIRECT_LLM success",
+      "actual": 1,
+      "expected": 1,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B0_DIRECT_LLM worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B0_DIRECT_LLM controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B1_SAMPLE_MATCHED success",
+      "actual": 1,
+      "expected": 1,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B1_SAMPLE_MATCHED worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B1_SAMPLE_MATCHED controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B2_FIXED_SPACE_AGENT success",
+      "actual": 0,
+      "expected": 0,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B2_FIXED_SPACE_AGENT worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B2_FIXED_SPACE_AGENT controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B3_ATTRIBUTE_MUTATION success",
+      "actual": 0,
+      "expected": 0,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B3_ATTRIBUTE_MUTATION worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B3_ATTRIBUTE_MUTATION controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B4_REPRESENTATION_MUTATION success",
+      "actual": 142,
+      "expected": 142,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B4_REPRESENTATION_MUTATION worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B4_REPRESENTATION_MUTATION controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B5_FULL_SYSTEM success",
+      "actual": 142,
+      "expected": 142,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B5_FULL_SYSTEM worlds",
+      "actual": 400,
+      "expected": 400,
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B5_FULL_SYSTEM controls",
+      "actual": [
+        200,
+        0.0
+      ],
+      "expected": [
+        200,
+        0.0
+      ],
+      "source": "artifacts/condition_summary.parquet",
+      "pass": true
+    },
+    {
+      "claim": "P0_LLM factorial",
+      "actual": [
+        400,
+        0
+      ],
+      "expected": [
+        400,
+        0
+      ],
+      "source": "artifacts/proposal_reasoning_factorial.parquet",
+      "pass": true
+    },
+    {
+      "claim": "P1_EXTERNAL factorial",
+      "actual": [
+        400,
+        142
+      ],
+      "expected": [
+        400,
+        142
+      ],
+      "source": "artifacts/proposal_reasoning_factorial.parquet",
+      "pass": true
+    },
+    {
+      "claim": "P2_ORACLE factorial",
+      "actual": [
+        400,
+        400
+      ],
+      "expected": [
+        400,
+        400
+      ],
+      "source": "artifacts/proposal_reasoning_factorial.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C0 known/heldout",
+      "actual": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "expected": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C1 known/heldout",
+      "actual": [
+        400,
+        131,
+        100,
+        0
+      ],
+      "expected": [
+        400,
+        131,
+        100,
+        0
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C2 known/heldout",
+      "actual": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "expected": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3 known/heldout",
+      "actual": [
+        400,
+        400,
+        100,
+        100
+      ],
+      "expected": [
+        400,
+        400,
+        100,
+        100
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C_RAND known/heldout",
+      "actual": [
+        400,
+        52,
+        100,
+        13
+      ],
+      "expected": [
+        400,
+        52,
+        100,
+        13
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C_SELF known/heldout",
+      "actual": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "expected": [
+        400,
+        0,
+        100,
+        0
+      ],
+      "source": "artifacts/compositional_cost_frontier.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random SECONDARY_EXISTING estimate",
+      "actual": 0.87,
+      "expected": 0.87,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random SECONDARY_EXISTING ci_low",
+      "actual": 0.845,
+      "expected": 0.845,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random SECONDARY_EXISTING ci_high",
+      "actual": 0.895,
+      "expected": 0.895,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random HELDOUT estimate",
+      "actual": 0.87,
+      "expected": 0.87,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random HELDOUT ci_low",
+      "actual": 0.8,
+      "expected": 0.8,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3/random HELDOUT ci_high",
+      "actual": 0.93,
+      "expected": 0.93,
+      "source": "artifacts/compositional_comparisons.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B0 cumulative gates",
+      "actual": [
+        65,
+        22,
+        4,
+        1,
+        1
+      ],
+      "expected": [
+        65,
+        22,
+        4,
+        1,
+        1
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B1 cumulative gates",
+      "actual": [
+        546,
+        375,
+        118,
+        1,
+        1
+      ],
+      "expected": [
+        546,
+        375,
+        118,
+        1,
+        1
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B4 cumulative gates",
+      "actual": [
+        823,
+        573,
+        270,
+        154,
+        154
+      ],
+      "expected": [
+        823,
+        573,
+        270,
+        154,
+        154
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B5 cumulative gates",
+      "actual": [
+        838,
+        562,
+        262,
+        145,
+        145
+      ],
+      "expected": [
+        838,
+        562,
+        262,
+        145,
+        145
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B4 control attrition",
+      "actual": [
+        600,
+        112,
+        0
+      ],
+      "expected": [
+        600,
+        112,
+        0
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "B5 control attrition",
+      "actual": [
+        600,
+        110,
+        0
+      ],
+      "expected": [
+        600,
+        110,
+        0
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3 control attrition",
+      "actual": [
+        900,
+        283,
+        0
+      ],
+      "expected": [
+        900,
+        283,
+        0
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3 controls J1/J2",
+      "actual": [
+        800,
+        567
+      ],
+      "expected": [
+        800,
+        567
+      ],
+      "source": "artifacts/nmi_gate_attrition.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay candidate_gate_matches",
+      "actual": 2400,
+      "expected": 2400,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay candidate_rows",
+      "actual": 2400,
+      "expected": 2400,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay jump_successes",
+      "actual": 500,
+      "expected": 500,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay jump_worlds",
+      "actual": 500,
+      "expected": 500,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay control_worlds",
+      "actual": 300,
+      "expected": 300,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "C3 replay false_jumps",
+      "actual": 0,
+      "expected": 0,
+      "source": "artifacts/nmi_component_audit.json",
+      "pass": true
+    },
+    {
+      "claim": "artifacts/replay-validation.json verified_theories",
+      "actual": 10800,
+      "expected": 10800,
+      "source": "artifacts/replay-validation.json",
+      "pass": true
+    },
+    {
+      "claim": "artifacts/compositional-replay-validation.json verified_candidates",
+      "actual": 16800,
+      "expected": 16800,
+      "source": "artifacts/compositional-replay-validation.json",
+      "pass": true
+    },
+    {
+      "claim": "artifacts/compositional-replay-validation.json ancestry_rows",
+      "actual": 35533,
+      "expected": 35533,
+      "source": "artifacts/compositional-replay-validation.json",
+      "pass": true
+    },
+    {
+      "claim": "artifacts/compositional-replay-validation.json mismatches",
+      "actual": 0,
+      "expected": 0,
+      "source": "artifacts/compositional-replay-validation.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json candidate_rows",
+      "actual": 2772,
+      "expected": 2772,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json mismatches",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json model_calls_made",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json candidate_rows",
+      "actual": 288,
+      "expected": 288,
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json mismatches",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json model_calls_made",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "Historical responses/plan opportunities",
+      "actual": [
+        400,
+        1200,
+        19200
+      ],
+      "expected": [
+        400,
+        1200,
+        19200
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json",
+      "pass": true
+    },
+    {
+      "claim": "Historical cap/strict JSON",
+      "actual": [
+        1200,
+        1200,
+        0
+      ],
+      "expected": [
+        1200,
+        1200,
+        0
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar plan_schema_valid",
+      "actual": 4608,
+      "expected": 4608,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar executable",
+      "actual": 3939,
+      "expected": 3939,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar J1",
+      "actual": 236,
+      "expected": 236,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar J2",
+      "actual": 236,
+      "expected": 236,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar J3",
+      "actual": 21,
+      "expected": 21,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar J4",
+      "actual": 21,
+      "expected": 21,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "Grammar J5",
+      "actual": 21,
+      "expected": 21,
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "deliberation calls/tokens",
+      "actual": [
+        288,
+        1179648
+      ],
+      "expected": [
+        288,
+        1179648
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "serialization calls/tokens",
+      "actual": [
+        288,
+        574538
+      ],
+      "expected": [
+        288,
+        574538
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/analysis.json",
+      "pass": true
+    },
+    {
+      "claim": "96-world paired table",
+      "actual": [
+        66,
+        15,
+        14,
+        1,
+        16,
+        15,
+        96
+      ],
+      "expected": [
+        66,
+        15,
+        14,
+        1,
+        16,
+        15,
+        96
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/paired_crand_comparison.csv",
+      "pass": true
+    },
+    {
+      "claim": "Selected executable signature counts",
+      "actual": {
+        "incumbent_basis": 258,
+        "bound_relation": 1,
+        "multi_argument_function": 21
+      },
+      "expected": {
+        "incumbent_basis": 258,
+        "bound_relation": 1,
+        "multi_argument_function": 21
+      },
+      "source": "experiments/nmi_fair_interface_v1/analysis/validated_signature_distribution.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair sensitivity successes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 sensitivity successes",
+      "actual": 3,
+      "expected": 3,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself calls/tokens",
+      "actual": [
+        576,
+        231773
+      ],
+      "expected": [
+        576,
+        231773
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself calls/tokens",
+      "actual": [
+        576,
+        237792
+      ],
+      "expected": [
+        576,
+        237792
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself calls/tokens",
+      "actual": [
+        576,
+        2249518
+      ],
+      "expected": [
+        576,
+        2249518
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair calls/tokens",
+      "actual": [
+        864,
+        433373
+      ],
+      "expected": [
+        864,
+        433373
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 calls/tokens",
+      "actual": [
+        120,
+        485312
+      ],
+      "expected": [
+        120,
+        485312
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself calls/tokens",
+      "actual": [
+        576,
+        528976
+      ],
+      "expected": [
+        576,
+        528976
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "Native length/stop",
+      "actual": {
+        "length": 518,
+        "stop": 58
+      },
+      "expected": {
+        "length": 518,
+        "stop": 58
+      },
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 capped calls",
+      "actual": 116,
+      "expected": 116,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself_full plan_schema_valid",
+      "actual": 4642,
+      "expected": 4642,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself_full executable",
+      "actual": 9,
+      "expected": 9,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself_heldout plan_schema_valid",
+      "actual": 1289,
+      "expected": 1289,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself_heldout executable",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "Fixed-panel budget schema",
+      "actual": 993,
+      "expected": 993,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 parse_valid",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 executable",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 J1",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 J2",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 J3",
+      "actual": 3,
+      "expected": 3,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 J4",
+      "actual": 3,
+      "expected": 3,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "P2 J5",
+      "actual": 3,
+      "expected": 3,
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 known blind binding",
+      "actual": 347,
+      "expected": 347,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 heldout blind binding",
+      "actual": 100,
+      "expected": 100,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C_rand known blind binding",
+      "actual": 57,
+      "expected": 57,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C_rand heldout blind binding",
+      "actual": 13,
+      "expected": 13,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "DeepSeek_grammar fixed_known_panel blind binding",
+      "actual": 8,
+      "expected": 8,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss relation_arity_3",
+      "actual": 100,
+      "expected": 100,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss unobserved_dependency",
+      "actual": 100,
+      "expected": 100,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss bound_relation",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss multi_argument_function",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss self_composed_function",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss temporally_indexed_recurrence",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss unobserved_selector",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 signature loss shared_rule_binding",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv",
+      "pass": true
+    },
+    {
+      "claim": "realizer rows",
+      "actual": 36168,
+      "expected": 36168,
+      "source": "experiments/nmi_realizer_audit_v1/results/candidate_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "realizer rows",
+      "actual": 12056,
+      "expected": 12056,
+      "source": "experiments/nmi_realizer_audit_v1/results/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "C3 incumbent substitution J2",
+      "actual": 1168,
+      "expected": 1168,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "C3 incumbent substitution J3",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "C_rand incumbent substitution J2",
+      "actual": 1040,
+      "expected": 1040,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "C_rand incumbent substitution J3",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "DeepSeek_grammar incumbent substitution J2",
+      "actual": 236,
+      "expected": 236,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "DeepSeek_grammar incumbent substitution J3",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv",
+      "pass": true
+    },
+    {
+      "claim": "Panel ordered seeds",
+      "actual": [
+        30014,
+        30012,
+        30029,
+        30025,
+        30011,
+        30023,
+        30000,
+        30032,
+        30001,
+        30037,
+        30002,
+        30015
+      ],
+      "expected": [
+        30014,
+        30012,
+        30029,
+        30025,
+        30011,
+        30023,
+        30000,
+        30032,
+        30001,
+        30037,
+        30002,
+        30015
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json",
+      "pass": true
+    },
+    {
+      "claim": "Panel cardinality",
+      "actual": 96,
+      "expected": 96,
+      "source": "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json",
+      "pass": true
+    },
+    {
+      "claim": "P2 panel",
+      "actual": 40,
+      "expected": 40,
+      "source": "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json",
+      "pass": true
+    },
+    {
+      "claim": "Historical generation",
+      "actual": {
+        "max_tokens": 700,
+        "temperature": 0.2,
+        "top_p": 0.95
+      },
+      "expected": {
+        "max_tokens": 700,
+        "temperature": 0.2,
+        "top_p": 0.95
+      },
+      "source": "configs/confirmatory-primary-jump.json",
+      "pass": true
+    },
+    {
+      "claim": "Historical context/temperature",
+      "actual": [
+        4096,
+        0.7
+      ],
+      "expected": [
+        4096,
+        0.7
+      ],
+      "source": "configs/confirmatory-primary-jump.json",
+      "pass": true
+    },
+    {
+      "claim": "Gate thresholds",
+      "actual": {
+        "delta_cf": 0.1,
+        "delta_falsification": 0.1,
+        "epsilon_candidate_obs": 1e-12,
+        "epsilon_falsification": 1e-12,
+        "epsilon_obs": 1e-12,
+        "min_prediction_separation": 0.5
+      },
+      "expected": {
+        "delta_cf": 0.1,
+        "delta_falsification": 0.1,
+        "epsilon_candidate_obs": 1e-12,
+        "epsilon_falsification": 1e-12,
+        "epsilon_obs": 1e-12,
+        "min_prediction_separation": 0.5
+      },
+      "source": "configs/confirmatory-primary-jump.json",
+      "pass": true
+    },
+    {
+      "claim": "Control worlds/cases",
+      "actual": [
+        [
+          200,
+          1125,
+          0
+        ],
+        [
+          200,
+          1125,
+          0
+        ],
+        [
+          100,
+          500,
+          0
+        ]
+      ],
+      "expected": [
+        [
+          200,
+          1125,
+          0
+        ],
+        [
+          200,
+          1125,
+          0
+        ],
+        [
+          100,
+          500,
+          0
+        ]
+      ],
+      "source": "scripts/audit_nmi_control_comparator.py",
+      "pass": true
+    },
+    {
+      "claim": "Worked example outcomes",
+      "actual": [
+        40000,
+        2268.0,
+        1620.0
+      ],
+      "expected": [
+        40000,
+        2268,
+        1620
+      ],
+      "source": "manuscript/figures/aij/source_data.json",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "historical_phi4_4bit_cself unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi4_4bit_budget_cself unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_matched_cself unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_native_cself unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair meta_law",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "phi8_cself_repair unification",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 causal_ambiguity",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 coordinate_transform",
+      "actual": [
+        1,
+        5
+      ],
+      "expected": [
+        1,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 hidden_regimes",
+      "actual": [
+        2,
+        5
+      ],
+      "expected": [
+        2,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 latent_common_cause",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 meta_law",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 property_to_relation",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 state_invention",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "deepseek_p2 unification",
+      "actual": [
+        0,
+        5
+      ],
+      "expected": [
+        0,
+        5
+      ],
+      "source": "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family causal_ambiguity",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family coordinate_transform",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family hidden_regimes",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family latent_common_cause",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family meta_law",
+      "actual": [
+        9,
+        12
+      ],
+      "expected": [
+        9,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family property_to_relation",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family state_invention",
+      "actual": [
+        0,
+        12
+      ],
+      "expected": [
+        0,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Grammar family unification",
+      "actual": [
+        6,
+        12
+      ],
+      "expected": [
+        6,
+        12
+      ],
+      "source": "experiments/nmi_fair_interface_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 causal_ambiguity",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 coordinate_transform",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 hidden_regimes",
+      "actual": 26,
+      "expected": 26,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 latent_common_cause",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 meta_law",
+      "actual": 21,
+      "expected": 21,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 property_to_relation",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 state_invention",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 triadic_relation_reification",
+      "actual": 100,
+      "expected": 100,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding C3 unification",
+      "actual": 50,
+      "expected": 50,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar causal_ambiguity",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar coordinate_transform",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar hidden_regimes",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar latent_common_cause",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar meta_law",
+      "actual": 5,
+      "expected": 5,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar property_to_relation",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar state_invention",
+      "actual": 0,
+      "expected": 0,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Binding DeepSeek_grammar unification",
+      "actual": 3,
+      "expected": 3,
+      "source": "experiments/nmi_realizer_audit_v1/analysis/per_family.csv",
+      "pass": true
+    },
+    {
+      "claim": "Superseded complete shards",
+      "actual": 8,
+      "expected": 8,
+      "source": "experiments/nmi_extension_v1/results/EXTENSION_TERMINATED.json",
+      "pass": true
+    },
+    {
+      "claim": "Excluded deepseek_matched known_jump worlds",
+      "actual": [
+        400,
+        0
+      ],
+      "expected": [
+        400,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/deepseek_matched/known_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded deepseek_matched known_jump plans",
+      "actual": [
+        19200,
+        0
+      ],
+      "expected": [
+        19200,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/deepseek_matched/known_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded deepseek_matched heldout_jump worlds",
+      "actual": [
+        100,
+        0
+      ],
+      "expected": [
+        100,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/deepseek_matched/heldout_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded deepseek_matched heldout_jump plans",
+      "actual": [
+        4800,
+        0
+      ],
+      "expected": [
+        4800,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/deepseek_matched/heldout_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_constrained known_jump worlds",
+      "actual": [
+        400,
+        0
+      ],
+      "expected": [
+        400,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_constrained/known_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_constrained known_jump plans",
+      "actual": [
+        19200,
+        28
+      ],
+      "expected": [
+        19200,
+        28
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_constrained/known_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_constrained heldout_jump worlds",
+      "actual": [
+        100,
+        0
+      ],
+      "expected": [
+        100,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_constrained/heldout_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_constrained heldout_jump plans",
+      "actual": [
+        4800,
+        1
+      ],
+      "expected": [
+        4800,
+        1
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_constrained/heldout_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_repair known_jump worlds",
+      "actual": [
+        400,
+        0
+      ],
+      "expected": [
+        400,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_repair/known_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_repair known_jump plans",
+      "actual": [
+        38400,
+        0
+      ],
+      "expected": [
+        38400,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_repair/known_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_repair heldout_jump worlds",
+      "actual": [
+        100,
+        0
+      ],
+      "expected": [
+        100,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_repair/heldout_jump/world_results.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded phi_repair heldout_jump plans",
+      "actual": [
+        9600,
+        0
+      ],
+      "expected": [
+        9600,
+        0
+      ],
+      "source": "experiments/nmi_extension_v1/results/phi_repair/heldout_jump/llm_self_plans.parquet",
+      "pass": true
+    },
+    {
+      "claim": "Excluded partial call records",
+      "actual": 404,
+      "expected": 404,
+      "source": "experiments/nmi_extension_v1/results/deepseek_native/known_jump/llm_calls.jsonl",
+      "pass": true
+    },
+    {
+      "claim": "Excluded partial call records",
+      "actual": 1043,
+      "expected": 1043,
+      "source": "experiments/nmi_extension_v1/results/phi_budget/known_control/llm_calls.jsonl",
+      "pass": true
+    },
+    {
+      "claim": "Excluded partial call records",
+      "actual": 202,
+      "expected": 202,
+      "source": "experiments/nmi_extension_v1/results/_incomplete/phi_budget/known_jump_attempt_001_executor_session_terminated/llm_calls.jsonl",
+      "pass": true
+    },
+    {
+      "claim": "Excluded throughput pilot",
+      "actual": [
+        31,
+        8,
+        15
+      ],
+      "expected": [
+        31,
+        8,
+        15
+      ],
+      "source": "experiments/nmi_fair_interface_v1/operational_pilots/serial_runner_excluded/llm_calls.jsonl",
+      "pass": true
+    },
+    {
+      "claim": "Timeout-only shard 0",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_0/llm_calls.jsonl.transport-errors",
+      "pass": true
+    },
+    {
+      "claim": "Timeout-only shard 2",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_2/llm_calls.jsonl.transport-errors",
+      "pass": true
+    },
+    {
+      "claim": "Timeout-only shard 3",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_3/llm_calls.jsonl.transport-errors",
+      "pass": true
+    },
+    {
+      "claim": "Initial metadata mismatches",
+      "actual": 576,
+      "expected": 576,
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/initial_replay_report.json",
+      "pass": true
+    },
+    {
+      "claim": "Corrected manifests",
+      "actual": 4,
+      "expected": 4,
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json",
+      "pass": true
+    },
+    {
+      "claim": "DeepSeek runtime deliberation",
+      "actual": [
+        "0.25.2.dev0+g752a3a504.d20260714",
+        "fp8-weights+nvfp4-kv-cache"
+      ],
+      "expected": [
+        "0.25.2.dev0+g752a3a504.d20260714",
+        "fp8-weights+nvfp4-kv-cache"
+      ],
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json",
+      "pass": true
+    },
+    {
+      "claim": "DeepSeek runtime serialization",
+      "actual": [
+        "0.25.2.dev0+g752a3a504.d20260714",
+        "fp8-weights+nvfp4-kv-cache"
+      ],
+      "expected": [
+        "0.25.2.dev0+g752a3a504.d20260714",
+        "fp8-weights+nvfp4-kv-cache"
+      ],
+      "source": "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json",
+      "pass": true
+    },
+    {
+      "claim": "Phi8 runtime",
+      "actual": "transformers-4.56.1+bitsandbytes-0.47.0",
+      "expected": "transformers-4.56.1+bitsandbytes-0.47.0",
+      "source": "experiments/nmi_minimal_sensitivity_v1/results/phi8_cself/summary.json",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 27ee542",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 320eb29b33ddaed596b0fe7b3f1d5895c706f311",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 4606413",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 65f20874e16bddf8a7ae36996395ff52b27153b7",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 6bab5fb",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 7753db8",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 7ecb977",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit 895ebb9118ffd0046825b88868621f2a70f69f61",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit a65974f",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit ae1ede683fdef09f2bf60f6e1052b60394ad6cf8",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit b6e1561",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    },
+    {
+      "claim": "Freeze commit f846c89287e379fe313551c47765c24f2abf4959",
+      "actual": true,
+      "expected": true,
+      "source": "Git object database",
+      "pass": true
+    }
+  ],
+  "input_sha256": {
+    "artifacts/condition_summary.parquet": "b9a098697e6bc51fdaf2b4d12e6539653d2e1c249b22e8ea963fd7cbfbe88700",
+    "artifacts/proposal_reasoning_factorial.parquet": "2981b9f51a9799d08ccef0ad0a823902f9f1850d700fc9d44c3c65983e57f9c8",
+    "artifacts/compositional_cost_frontier.parquet": "ffbf03364fc176d361c623e8e7c5689f85d6f9f16cb03efda695d62bc879c07a",
+    "artifacts/compositional_comparisons.parquet": "229cea78f02e52888e5404e91110db3c4051f7af6246ac9449de8c71879cc156",
+    "artifacts/nmi_gate_attrition.parquet": "cbb9de97b97ab2e53cd2c50c0f017eb1345fc96a8cd4b133cd19dcb97cb51a16",
+    "artifacts/nmi_component_audit.json": "8db13020a227460556fac04897f8af115fe4621cd202bba239af6179a16fc447",
+    "artifacts/replay-validation.json": "bf9bd3dfcc0d9874006ed16739bae075dbad25ce727dd9b86be88744a0c24d09",
+    "artifacts/compositional-replay-validation.json": "54b6a1d2c4a67ff4a049911c4c3f63f3ee26795b062e31a781b6175cd6ceba21",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/replay_report.json": "580e5b8b21e0366d2da7fe0b28383e63de3101cd6198d9777feb87233600ac18",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json": "ece57c06e0518f4fad1101c298ff706c8e6e3ffffc6d84d68214204cb54a57a2",
+    "experiments/nmi_minimal_sensitivity_v1/offline/historical_cself_attrition.json": "4da8832b950d7a186504dbe136c1ac4e7a09e93122eaa0f68ab40fa849821626",
+    "experiments/nmi_fair_interface_v1/analysis/analysis.json": "36c20cbc7baeda3af22fb7f13ff39ecb0af448770ba24a75f6ed80c6cbd165bc",
+    "experiments/nmi_fair_interface_v1/analysis/paired_crand_comparison.csv": "ae52d73a18346cf00d4b9830f353869723cf5da9ccec5e26c8fa8b7f51fa0280",
+    "experiments/nmi_fair_interface_v1/analysis/validated_signature_distribution.csv": "4d8463dcbdca4e77a80b08b874faab37f6352982d00476487187d1c5df118dce",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/world_summary.csv": "0ba2d121beb644100287cc7b9e0722cc4ab1f29ff4a3a44cfdaf247e5b7cefbf",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv": "1f654caeb3dac1d7bb01818bdec7e4f74280281bd8f0f7c02abf99f477e321f7",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/phi_budget_gate_attrition.csv": "b32f2711626b05263b9989d3b0e0c391ebb9ea7d64631c2598fd2b8a29d29841",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv": "9a4e3bb6e61403f11ca82273055c2d7766e86ad08d8ba1416e554205e0099880",
+    "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv": "4daeb3c5bfd1663e91f86b530bce3a74e6864e8e2226b893c20d6c89dbc118d6",
+    "experiments/nmi_realizer_audit_v1/results/candidate_results.parquet": "202d52c7fee2a162bc84567e7cda00cadf919b30d1f0c662bc59e2c41367cbd1",
+    "experiments/nmi_realizer_audit_v1/results/world_results.parquet": "de8bf3ef53769d4a9d07d7059109540688f95a660d00a8580255ad96d6d0107c",
+    "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv": "248bc5124f915407128b08d806f6ccc846aafa7b7318a481849be77c5f141140",
+    "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json": "2db121341f79c41c1c53cf4b61d4deba2af475f297dba0dc3106924e09b522b9",
+    "configs/confirmatory-primary-jump.json": "9c83d26b5faf4d3795d99949c5f4aae2762f66f1454e7f8a93d24444ea9d0699",
+    "manuscript/figures/aij/source_data.json": "3afdcdf505c9ab9e947a107ebbfe5499140b64602582c7571b6bf39f6b76aef9",
+    "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv": "799374a531aa141fc3736e7a5e575c2be70a2ba7f9b3d5117a569814b999caca",
+    "experiments/nmi_fair_interface_v1/analysis/per_family.csv": "2c39449027951e241f328ae2f285544486efd26fea49ab8d18c2ac5b04612832",
+    "experiments/nmi_realizer_audit_v1/analysis/per_family.csv": "d3f3ac7e2d2f87927ae79424bbc31c71b66dbfcc92888eae54fa35b5629fe866",
+    "experiments/nmi_extension_v1/results/EXTENSION_TERMINATED.json": "67ce3fadf877f685f52e75e3b4307201e89c82da39036fe3342f9ab483d03457",
+    "experiments/nmi_extension_v1/results/deepseek_matched/known_jump/world_results.parquet": "d33e4d9f70e7f171248fae1681824a59b91a0b31de331ff8fa560d5b9be22511",
+    "experiments/nmi_extension_v1/results/deepseek_matched/known_jump/llm_self_plans.parquet": "c42c58f89b5b92415a51e30954f62079c34ed2df0e6026813177faede8cd449d",
+    "experiments/nmi_extension_v1/results/deepseek_matched/heldout_jump/world_results.parquet": "a92bb692f4e271a93d86acc3c5092eb8cf33110176077683642529368d1de4ac",
+    "experiments/nmi_extension_v1/results/deepseek_matched/heldout_jump/llm_self_plans.parquet": "048bbd95f408aadeac6d760f71f09238627da9ba2d454fcc5e308ee293e3cae3",
+    "experiments/nmi_extension_v1/results/phi_constrained/known_jump/world_results.parquet": "a167011e3cfd9e829a262b67f29b8c8e252dca16b4058ba774871816e21d8e0a",
+    "experiments/nmi_extension_v1/results/phi_constrained/known_jump/llm_self_plans.parquet": "02a73f25cf5918f300ef2b946738c8d16ab0082581db926216f1282e45c1917f",
+    "experiments/nmi_extension_v1/results/phi_constrained/heldout_jump/world_results.parquet": "c226291514f6c63bf48c7afc2b13fbe41a701ff653ce46630b0a33f77123a539",
+    "experiments/nmi_extension_v1/results/phi_constrained/heldout_jump/llm_self_plans.parquet": "71e06d3eb7aac7bee261f41205669d9cc7e67f8e34c549c3ec0800212f0d6c0a",
+    "experiments/nmi_extension_v1/results/phi_repair/known_jump/world_results.parquet": "6fbe864a8cd4d11b38c9bc3aa7bfc7873e6f4dfb8654848c2b30d8acbd0de1ab",
+    "experiments/nmi_extension_v1/results/phi_repair/known_jump/llm_self_plans.parquet": "3748673514514019bcdd331abf422058ac88da5d4b8f197a03b7eb6dda1a52d5",
+    "experiments/nmi_extension_v1/results/phi_repair/heldout_jump/world_results.parquet": "47ad560770ecdb1daaac4735cd019600c348de1e5b71e649aa3ab431bc66108c",
+    "experiments/nmi_extension_v1/results/phi_repair/heldout_jump/llm_self_plans.parquet": "0b858bc75fbd91e2462a58e8571d4c36595f5dd8675076e7162c5a133270af20",
+    "experiments/nmi_extension_v1/results/deepseek_native/known_jump/llm_calls.jsonl": "2e01fa25ba5ba2a1df17551139294240677a03ba7b1dd86ad3bb32d89b388473",
+    "experiments/nmi_extension_v1/results/phi_budget/known_control/llm_calls.jsonl": "53bde76ea42f494026e5d240cb31ece486c6ba28710dec4a809e62c564fd62cc",
+    "experiments/nmi_extension_v1/results/_incomplete/phi_budget/known_jump_attempt_001_executor_session_terminated/llm_calls.jsonl": "4c6abe366e695f8e3649af0362533f28372bdccf52d5b6149aed35317dbadadc",
+    "experiments/nmi_fair_interface_v1/operational_pilots/serial_runner_excluded/llm_calls.jsonl": "519e7f2b530c40a0b37f12a486dbb0fa5b08ac60a09557b51d57b7903ba888a8",
+    "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_0/llm_calls.jsonl.transport-errors": "d4d89ea54dd66a22a6411ac61f28766c1ab408cd88821f3caed28401756872c0",
+    "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_2/llm_calls.jsonl.transport-errors": "6423cc052e5c0ad8e4efc883f468e40679c85b7cb844f33bb337100cc7a41640",
+    "experiments/nmi_fair_interface_v1/operational_pilots/starved_parallel_shards_excluded/shard_3/llm_calls.jsonl.transport-errors": "94a50a7c8613e5bc9174e949612b6563988f896012b18a8141f8ecac7b20d82d",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/initial_replay_report.json": "d45d0066d4bb4791d4b4d5360dcfecb9757fa4551fd6d2c1d562a30b95154fbd",
+    "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json": "2d939e3bffd39824ffec87de7825459c4d25b2bd9f8a5199f031d6839b637d94",
+    "experiments/nmi_minimal_sensitivity_v1/results/phi8_cself/summary.json": "eaefa3b3344fea9da4f34411e3e73f7514088e31c6441c6afd844bcfcac13ba8"
+  }
+}

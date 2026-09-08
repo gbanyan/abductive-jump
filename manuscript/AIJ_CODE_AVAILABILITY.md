@@ -1,0 +1,3 @@
+# Code availability
+
+The public repository https://github.com/gbanyan/abductive-jump and frozen evidence release https://github.com/gbanyan/abductive-jump/releases/tag/nmi-github-submission-v4 provide world generation, search, evaluation, fitting, offline attrition, statistics, plotting, component replay and archive-verification code. Original software is licensed under Apache-2.0 as scoped in `LICENSE_SCOPE.md`. Model weights are not redistributed; checkpoint identifiers, revisions and serving configurations are reported in the methods and supplement. AIJ manuscript-generation and audit utilities accompany the manuscript source revision.

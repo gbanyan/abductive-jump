@@ -1,0 +1,16 @@
+{
+  "output": "output/pdf/AIJ_manuscript_and_supplement.pdf",
+  "sha256": "70bb31962e02a90ea2852282e2657503a3c92d4dd71fa96b2cdb3b09cbf84cdf",
+  "input_sha256": {
+    "manuscript/AIJ_MANUSCRIPT.md": "86383af5ae23b94ed7986a532985ffcf78b7185fbb6f76abfd2d773b6c9e7798",
+    "manuscript/AIJ_SUPPLEMENTARY_METHODS.md": "d3c62ca6e2ea24fb054352fb4d982296c22d4975ce20e494c21fc05ae6299fd0",
+    "manuscript/figures/aij/figure_1_assay.png": "c6eda24ca409f8c71c0fec8d269199010764d26ef1bf2218a387135c7f18cc1c",
+    "manuscript/figures/aij/figure_2_aj5.png": "ec9c2f3b6dac6d12f8c0cd82d51906b27de4c9ac20d0f18f42b2993069b1d34d",
+    "manuscript/figures/aij/figure_3_cj5.png": "a729b5933a80b0b76c16752ce970121270dff075c370a4e33f1eb8a9e3e0aec4",
+    "manuscript/figures/aij/figure_4_provenance.png": "749a33d085b4efdde77323e549e7db6d76dd10d8daa1e9bc2a31b921065897d4",
+    "manuscript/figures/aij/figure_5_interface.png": "d3b3a3435f879d99fef96410e9fbe55425e97434d8e18a6182dcb45d2c606f38",
+    "manuscript/figures/aij/figure_6_realizer.png": "0bcc86f65fe883c03a31a7c5ec876cb26908ed53178363dd40e860d15da42211",
+    "manuscript/figures/aij/figure_7_worked.png": "1502c0a6cec2e60f516ecb6b6b7f31be84e311f1ecfd73492fa1577536b941e3",
+    "scripts/build_aij_manuscript.py": "044bed09ad8bbb74e3bcbe0f671dcd10ee34ab6c17ac1f60181fd8cd77c41f60"
+  }
+}

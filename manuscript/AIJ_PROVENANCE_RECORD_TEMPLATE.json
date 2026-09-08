@@ -1,0 +1,63 @@
+{
+  "record_kind": "unfilled_template_not_experimental_evidence",
+  "schema_version": "aij-provenance-1",
+  "world": {"id": null, "public_split_hash": null, "hidden_split_hash": null},
+  "frozen_contract": {
+    "language_hash": null,
+    "finite_comparator_set_hash": null,
+    "comparator_selection_rule": "observation_loss_then_canonical_program",
+    "selected_comparator_hash": null,
+    "gate_configuration_hash": null
+  },
+  "supplied_knowledge_inventory": {
+    "operator_semantics_hash": null,
+    "realization_library_hash": null,
+    "basis_signatures": [],
+    "fitter_hash": null,
+    "ranking_policy_hash": null,
+    "intervention_selector_hash": null
+  },
+  "fields": {
+    "representation": null,
+    "executable_expression": null,
+    "fitted_parameters": null,
+    "ranking": null,
+    "intervention": null,
+    "prediction": null,
+    "explanation": null
+  },
+  "field_record_definition": {
+    "producer": "model|deterministic_component|human|mixed",
+    "producer_version_or_hash": null,
+    "source_record_id": null,
+    "raw_value_hash": null,
+    "parse_status": null,
+    "transformations_in_order": [],
+    "overwritten": null,
+    "final_value_hash": null,
+    "read_by_evaluator": null
+  },
+  "commitment": {
+    "artifact_hash": null,
+    "action_hash": null,
+    "prediction_hash": null,
+    "commit_event_id": null,
+    "reveal_event_id": null,
+    "ordering_verified": null
+  },
+  "evaluation": {"J0": null, "J1": null, "J2": null, "J3": null, "J4": null, "J5": null},
+  "replay_intervention": {
+    "target_fields": [],
+    "replacement_rule": null,
+    "fixed_components": [],
+    "refit": null,
+    "rerank": null,
+    "reselect_action": null,
+    "adaptive_research": false,
+    "model_calls": null,
+    "replacement_artifact_hash": null,
+    "gate_changes": null,
+    "world_verdict_change": null,
+    "failure_by_construction": null
+  }
+}
