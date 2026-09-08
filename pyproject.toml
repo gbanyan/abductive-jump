@@ -11,7 +11,7 @@ license = {file = "LICENSE"}
 dependencies = ["pyarrow>=17"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff>=0.6", "jsonschema>=4.18,<5"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

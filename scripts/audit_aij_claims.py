@@ -28,8 +28,6 @@ def main():
                     disposition = "MANUAL REVIEW"
                     if re.search(r"not .*independent replication|not a measured zero false-positive|not .*representation invention|rather than.*invention", line, re.I):
                         disposition = "Necessary scope qualifier; retained"
-                    elif "Representation invention beyond supplied forms" in line:
-                        disposition = "Evidence requirement in Table 2, not an achieved result"
                     elif "unlock" in pattern:
                         disposition = "Literal held-out protocol unlock; not promotional prose"
                     elif "representation invention" in line.lower():
@@ -53,7 +51,7 @@ def main():
                "", "## Prose audit", "",
                "NECESSARY QUALIFIER: structural/function distinction (3.2), control construction (3.3/5.1), complete-policy contrast (4.3/5.3), field provenance (5.4), interface allocation (4.4/5.5), fixed-slot intervention (5.6), synthetic/generalization boundaries (7).",
                "",
-               "REPEATED DEFENSIVE PROSE: consolidated in Section 7 rather than appended to every count. Discussion 6.4 now gives an application procedure and four diagnostic paths. Terms such as 'not evidence' remain only where they delimit a different estimand; no global disclaimer stripping was performed.",
+               "REPEATED DEFENSIVE PROSE: consolidated in Section 7. Discussion 6.2 distinguishes four provenance paths; 6.4 concerns reuse of the schema and adapter. Table 2 records explanatory-form origins without requiring invention to exceed a meta-language. Necessary scientific qualifiers remain.",
                "", "## Audited source hashes", ""]
     for file in files:
         report.append(f"- `{file.relative_to(ROOT)}`: `{hashlib.sha256(file.read_bytes()).hexdigest()}`")

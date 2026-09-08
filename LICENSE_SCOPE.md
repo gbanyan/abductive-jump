@@ -12,6 +12,7 @@ License, Version 2.0, reproduced in `LICENSE`:
 - `scripts/`
 - `tests/`
 - `configs/`
+- `schemas/` (original machine-readable software schemas)
 - project packaging and executable configuration files at the repository root
 
 ## Original research data — CC BY 4.0

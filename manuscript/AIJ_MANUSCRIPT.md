@@ -38,11 +38,11 @@ Theory revision also includes several distinct operations. Belief update and rev
 
 ### 2.2. Constructive induction and representation change
 
-Predicate invention introduces useful predicates beyond those initially supplied [7,8]. Constructive induction generates descriptors that change how examples and hypotheses are represented [40]. Donoho and Rendell distinguish limitations of a representation language from limitations of a theory's structure, showing why local revisions can be inadequate [9]. Meta-interpretive learning further provides executable predicate invention and recursive program induction under metarules [32]. These methods establish that search over representations is neither new nor specific to language models.
+Predicate invention introduces useful predicates beyond those initially supplied [7,8]. Constructive induction generates descriptors that change how examples and hypotheses are represented [40]. Donoho and Rendell distinguish limitations of a representation language from limitations of a theory's structure, showing why local revisions can be inadequate [9]. Meta-interpretive learning further provides executable predicate invention and recursive program induction under metarules [32]. These methods provide the foundations for representation-changing search examined here.
 
 Boden's exploratory/transformational distinction and Wiggins's formal accounts of creative spaces provide a related conceptual vocabulary [4–6]. We use a narrower operational boundary. Whether a graph is admitted by a declared structural language is decidable in our implementation; whether its predictive function is inexpressible by every possible incumbent expression is a different question. Our membership certificate addresses the former.
 
-Open-world AI gives this distinction a system-level setting. HYDRA repairs environment models through heuristic search [34], while a neurosymbolic architecture evaluates both components and integrated novelty accommodation [35]. Recent online causal-model learning uses dynamic predicate invention in a predict–verify–refine loop [39]. These systems address richer adaptation problems than the present exact assay. They also establish that representation repair and component evaluation already coexist in AI research. Here we focus on the provenance of the particular executable artifact receiving a prospective escape verdict.
+Open-world AI gives this distinction a system-level setting. HYDRA repairs environment models through heuristic search [34], while a neurosymbolic architecture evaluates both components and integrated novelty accommodation [35]. Recent online causal-model learning uses dynamic predicate invention in a predict–verify–refine loop [39]. Their evaluation targets adaptation to changing environments; ours is the provenance of the particular executable artifact receiving a prospective escape verdict. Representation repair and component evaluation already coexist in these research programs.
 
 ### 2.3. Search-based AI discovery
 
@@ -56,13 +56,13 @@ Hypothesis Search compiles hypotheses into executable programs, and other langua
 
 Recent work is not uniformly restricted to a static hypothesis set. PiEvo evolves a principle space [23]. Model Discovery Agent couples model-proposed mechanistic structures to Bayesian fitting and experimental design, reports an expansion-component ablation and explicitly separates the proposer from numerical inference [24]. EvoSCM revises causal structures and mechanisms through discriminating interventions and committed predictions [26]. HypoArena evaluates open-ended hypotheses from reconstructed pre-conclusion contexts using reference separation and structured judging [25]. Its temporal construction is different from committing an executable candidate before revealing a simulator outcome.
 
-HypoSpace and ResearchBench provide complementary diagnostics for underdetermination and task decomposition [27,28]. Creativity-task scores and historical discovery reconstructions likewise measure useful but distinct outcomes [21,29]. Zahavy's position on abductive “jumps” is a contemporary motivation, not an impossibility theorem or the theoretical foundation of our assay [22]. We test the declared structural and executable boundary rather than infer broad capacity from a particular task score.
+HypoSpace and ResearchBench provide complementary diagnostics for underdetermination and task decomposition [27,28]. Creativity-task scores and historical discovery reconstructions likewise measure useful but distinct outcomes [21,29]. Zahavy's position motivates the question of generating explanatory premises [22]; our assay evaluates a bounded, executable instance of representational change.
 
 ### 2.5. Evaluation and attribution of hybrid systems
 
 Harness-aware evaluation directly challenges treating agent scores as properties of model weights alone [36,37]. Standardized interfaces and environments expose failures caused by parsers or execution conventions, while complete-trace benchmarks study the responsible agent and decisive step of a failure [38]. We adopt this concern with observability but target a particular object: the explanatory content of a prospectively evaluated theory.
 
-The distinction matters even when every component is documented. Documentation can show that an LLM is called without establishing that its output enters the scored artifact. Provenance can show that a field entered the artifact without establishing that the field affected success. Replay can test a specified dependency without establishing invention beyond supplied knowledge. Our procedure joins these forms of evidence while preserving their separate interpretations.
+Harness-level evaluation asks how system configurations affect scores, whereas failure attribution identifies where an execution went wrong. Our target is the committed explanatory artifact: which components supplied its representation, predictive expression and intervention, and what a specified replay intervention changes in its prospective verdict. This distinguishes evaluation targets, without claiming that adjacent work excludes artifact provenance. The concrete record in Supplementary S20 links raw responses to the scored theory and its replay.
 
 ## 3. Formal framework
 
@@ -92,7 +92,7 @@ Before outcome reveal, the system commits a record containing the canonical cand
 a^*\in\arg\max_{a\in\mathcal U}|f(a)-h_0^*(a)|.
 \]
 
-The deterministic implementation resolves ties reproducibly. This is outcome-blind prediction separation, not selection using the realized gain. Let L_int denote error on the committed intervention evaluation and L_fal error on the separate falsification cases. Define G_int=L_int(h₀*)−L_int(f) and G_fal=L_fal(h₀*)−L_fal(f). Let V(T) denote joint validity of the graph, executable expression and their consistency checks. The implementation conjoins V(T) with each of J1-J5; the table shows the additional gate-specific requirements. The frozen gates are:
+The deterministic implementation resolves ties reproducibly. This is outcome-blind prediction separation, not selection using the realized gain. Let L_int denote error on the committed intervention evaluation and L_fal error on the separate falsification cases. Define G_int=L_int(h₀*)−L_int(f) and G_fal=L_fal(h₀*)−L_fal(f). Let V(T) denote joint validity of the graph, executable expression and bounded feature-support checks. Supplementary S19 lists the exact checks and their limits; they do not establish graph/expression semantic equivalence. The implementation conjoins V(T) with each of J1-J5; the table shows the additional gate-specific requirements. The frozen gates are:
 
 | Gate | Executable requirement | Role |
 |---|---|---|
@@ -128,10 +128,12 @@ The reusable audit combines five records: (1) the pre-reveal commitment, (2) fie
 | System-level validated escape | Frozen language and comparator rule; committed executable theory/action/prediction; all six gates |
 | Model contributed the evaluated representation | Model-authored structural content survives parsing and transformations into the scored representation |
 | Model content affects success | A specified field/component intervention changes the evaluated outcome, with fixed components and replacement semantics reported |
-| Representation invention beyond supplied forms | Decisive structure or predictive form is outside the declared supplied realizer/meta-language; audit the inventory as well as provenance |
+| Origin of the explanatory form | Identify whether the form was directly supplied as a template, constructed compositionally or generated by a learned proposer; document the supplied library and derivation |
 | Autonomous theory revision | The claimed autonomous boundary covers proposal, realization and validation; external theory content and human interventions are explicitly accounted for |
 
-Table 2. Evidence required for different AI discovery claims. These are evidential requirements, not a claim that the strongest categories are demonstrated here. Ordinary authorship of a field and causal dependence of the success indicator are different estimands.
+Table 2. Evidence required for different AI discovery claims. Records of origin and construction do not by themselves establish scientific novelty. Construction within supplied primitives is compatible with invention; exceeding the expressive capacity of the entire meta-language is not a necessary criterion. Ordinary authorship of a field and causal dependence of the success indicator are different estimands.
+
+Procedure box. Freeze the evaluated object and public/hidden contract; trace each scored field through parsing, realization, fitting and overwrites; label runtime records separately from code-inspected or reconstructed provenance; specify the replacement and fixed components; recompute the commitment and gates; report the changed fields, verdict and supplied forms. Schema `schemas/aij-evidence-record-v1.schema.json` and tools `scripts/build_aij_evidence_record.py` and `scripts/validate_aij_evidence_record.py` implement record version 1.0.0. Supplementary S20 illustrates the procedure with the archived candidate used in Section 5.1.
 
 ## 4. Experimental framework
 
@@ -205,26 +207,30 @@ The worked triadic world makes the distinction concrete. Public observations sat
 
 Before outcome reveal, the system commits to changing z from 6 to 7 while x=w=6. The incumbent predicts 1,944 and the candidate 2,268; the revealed value is 2,268. A separate falsification case at z=5 yields 1,620, again matching the candidate. Structural membership fails on the recorded relation constraints, and all six gates pass. The example demonstrates validated escape under a supplied algebra, not algebraic invention.
 
+![Archived worked example](figures/aij/figure_7_worked.png)
+
+Figure 2. Reconstructing the worked prospective example in Section 5.1. Archived held-out seed 40000 supplies the observations, committed test-0 and separate fals-0 outcome. The plotted slice fixes x=w=6. The complete falsification split also includes a second case, used in the all-gate verdict. The graph leaves the structural language; its product basis is supplied by the realizer. Figure prepared with AI-assisted code from the archived candidate and deterministic world reconstruction.
+
 Controls show why the prospective gates matter. Among 900 C3 control candidates, 800 pass J1, 567 pass J2 and 283 pass J3, yet none passes J4. In AJ5, B4/B5 likewise retain 112/110 control candidates through J3, with none surviving J4. Thus fit plus structural departure plus predicted separation is insufficient.
 
 An offline check verifies that the selected comparator exactly matches every scored control outcome: 1,125 intervention/falsification cases in 200 AJ5 controls and 1,625 in 300 CJ5 controls. Under this construction no candidate can achieve strictly positive error reduction. The zero control verdicts are therefore construction-specific checks of the assay, not a measured zero false-positive rate for noisy scientific discovery.
 
 ### 5.2. Representation-level proposals cross the declared boundary
 
-| AJ5 condition | Successful worlds / 400 | Interpretation |
-|---|---:|---|
-| B0 direct model | 1 | Evaluated direct-proposal path |
-| B1 additional sampling | 1 | Evaluated higher-temperature proposal path |
-| B2 fixed-space reasoning | 0 | Structural control: J1 unreachable |
-| B3 within-language attribute mutation | 0 | Structural control: J1 unreachable |
-| B4 typed portfolio proposals | 142 | Representation-level external proposals |
-| B5 distinct typed portfolio proposals | 142 | Representation-level external proposals with archive accounting |
+| AJ5 condition | Reachable representation input | Selection / control role |
+|---|---|---|
+| B0 direct model | Model-emitted typed graphs | Direct proposal path |
+| B1 additional sampling | Model-emitted typed graphs | Higher-temperature sampling |
+| B2 fixed-space reasoning | Incumbent graph only | Structural control: J1 unreachable |
+| B3 attribute mutation | Within-language attributes | Structural control: J1 unreachable |
+| B4 typed portfolio | Nine supplied transformations | Three draws with replacement |
+| B5 distinct portfolio | Same supplied transformations | Three structurally distinct proposals; archive accounting |
 
-Table 4. AJ5 world-level results under the frozen prospective assay.
+Table 4. AJ5 reachable inputs and selection roles; Figure 3 reports counts and uncertainty.
 
 ![AJ5 outcomes and attrition](figures/aij/figure_2_aj5.png)
 
-Figure 2. Representation-level proposals under the prospective assay. (a) World success counts, n=400 per condition. Asterisks mark fixed-language structural controls whose reachable graphs cannot pass J1. (b) Cumulative gate retention among 1,200 candidates per condition; candidates are not independent replicates. Rates and bootstrap intervals are available in the source data. Figures 2, 3, 5 and 6 are reproducible plots of frozen artifacts, prepared with AI-assisted plotting code.
+Figure 3. Representation-level proposals under the prospective assay. (a) World success counts, n=400 per condition. Asterisks mark fixed-language structural controls whose reachable graphs cannot pass J1. (b) Cumulative gate retention among 1,200 candidates per condition; candidates are not independent replicates. Whiskers show the existing 95% family-stratified bootstrap intervals. Figures 3, 4, 6 and 7 are reproducible plots of frozen artifacts, prepared with AI-assisted plotting code.
 
 Both external proposal conditions achieve 35.5% world success. Their shared aggregate does not imply identical candidate trajectories. Among 1,200 jump-world candidates each, B4 retains 823 at J1, 573 at J2, 270 at J3 and 154 at J4–J5; B5 retains 838, 562, 262 and 145. Direct proposals retain 65, 22, 4 and 1; additional sampling retains 546, 375, 118 and 1. These executed proposal paths fail at different stages, which a world-level rate alone conceals.
 
@@ -232,20 +238,20 @@ The representation-source factorial yields 0/400 for model-proposed representati
 
 ### 5.3. Search organization matters under the fixed realizer
 
-| CJ5 condition | Known-family successes / 400 | Search-side held-out successes / 100 |
-|---|---:|---:|
-| C0 fixed-space control | 0 | 0 |
-| C1 atomic reference | 131 | 0 |
-| C2 depth-one alternatives | 0 | 0 |
-| C_rand random composition and hash selection | 52 | 13 |
-| C3 structured composition and diversity-aware selection | 400 | 100 |
-| Historical C_self | 0 | 0 |
+| CJ5 policy | Reachable construction | Selection / control role |
+|---|---|---|
+| C0 fixed space | Incumbent language | J1 structural control |
+| C1 atomic reference | High-level supplied transformations | Atomic-proposal reference |
+| C2 depth one | One generic edit | Local-rewrite control |
+| C_rand | 48 four-step sampled paths | Seed-fixed structural-hash selection |
+| C3 structured | 48 four-step structured branches | Intermediate fit/separation scoring; diversity-aware retention |
+| Historical C_self | Requested model four-step plans | Best evaluated plan per slot; historical pre-execution attrition |
 
-Table 5. Complete CJ5 policies under a shared, fixed realizer.
+Table 5. Reachable constructions and selection policies under the fixed realizer; Figure 4 gives exact counts.
 
 ![CJ5 policy outcomes](figures/aij/figure_3_cj5.png)
 
-Figure 3. Generic search under a fixed realization language. Known-family and search-side held-out world counts have different denominators. C0 (*) is a structural control; historical self-composition (†) is interface-confounded. The C3/random contrast includes traversal and selection, not proposal source alone. The held-out algebraic basis was already supplied.
+Figure 4. Generic search under a fixed realization language. Known-family and search-side held-out world counts have different denominators. C0 (*) is a structural control; historical self-composition (†) is interface-confounded. The C3/random contrast includes traversal and selection, not proposal source alone. The held-out algebraic basis was already supplied.
 
 C3 saturates the known-family generators and the single search-side holdout. Its paired success-rate difference from C_rand is 0.87 in each population, with bootstrap 95% intervals [0.845, 0.895] and [0.80, 0.93], respectively. This estimates a complete-policy contrast: organized traversal and outcome-blind fitted ranking together access successful motif triggers more reliably than random paths with structural-hash selection.
 
@@ -268,7 +274,7 @@ Table 6. Final evaluated-field provenance differs across implemented paths.
 
 ![Field provenance and replay](figures/aij/figure_4_provenance.png)
 
-Figure 4. C3 evaluated-field provenance and post-hoc replay. Scientific model fields are overwritten before scoring; the retained explanation does not enter the gates. Removing model outputs preserves all candidate verdicts and all jump-world successes, alongside zero control successes. Schematic prepared with ChatGPT/Codex assistance and rendered programmatically.
+Figure 5. C3 evaluated-field provenance and post-hoc replay. Scientific model fields are overwritten before scoring; the retained explanation does not enter the gates. Removing model outputs preserves all candidate verdicts and all jump-world successes, alongside zero control successes. Schematic prepared with ChatGPT/Codex assistance and rendered programmatically.
 
 Removing the C3 model outputs reproduces all 2,400 candidate verdicts, retains all 500 jump-world successes and retains 0/300 control successes. This post-hoc intervention establishes that evaluated C3 success is independent of the removed model text in this implemented path. The successful artifact is authored by typed search, the supplied realizer, fitting and selection.
 
@@ -280,7 +286,7 @@ Historical C_self failures occur before executable plan evaluation. All 1,200 kn
 
 The legacy prompt omits exact executor argument keys. Targeted legacy-interface sensitivities remain at 0/96, including matched and native DeepSeek paths; native reasoning appears in a separate field without a usable final parser answer. These observations identify an execution boundary, not the absence of an internally useful conceptual proposal.
 
-The two-stage grammar-constrained interface makes all 4,608 opportunities schema-valid and 3,939 dynamically executable. At least one executable plan survives in 280/288 slots; 236 selected candidates pass J1–J2 and 21 pass J3–J5, yielding 15 successful worlds. Successes occur in meta-law (9/12) and unification (6/12). The model thus supplies evaluated graph topology, while the realizer still supplies the predictive law.
+The two-stage grammar-constrained interface makes all 4,608 opportunities schema-valid and 3,939 dynamically executable. At least one executable plan survives in 280/288 slots; 236 selected candidates pass J1–J2 and 21 pass J3–J5, yielding 15/96 successful worlds (15.6%; existing Wilson 95% interval 9.7-24.2%). Successes occur in meta-law (9/12) and unification (6/12). The model thus supplies evaluated graph topology, while the realizer still supplies the predictive law.
 
 Random composition succeeds in 16/96 worlds on the same panel. The paired outcomes are 66 joint failures, 15 random-only successes, 14 model-only successes and one joint success. The aggregate provides no model advantage over that comparator.
 
@@ -288,7 +294,7 @@ The separate supplied-representation DeepSeek control succeeds in 3/40 worlds. I
 
 ![Grammar-interface attrition](figures/aij/figure_5_interface.png)
 
-Figure 5. Grammar-interface sensitivity. Plan opportunities (a), selected candidate slots (b) and paired worlds (c) are distinct units. Of 288 slots, 280 contain an executable selected plan; 236 pass J1-J2 and 21 pass J3-J5. The paired panel contains 96 worlds, with model and random successes in 15 and 16 respectively. Format repair exposes evaluated topology without an aggregate model advantage.
+Figure 6. Grammar-interface sensitivity. Plan opportunities (a), selected candidate slots (b) and paired worlds (c) are distinct units. Of 288 slots, 280 contain an executable selected plan; 236 pass J1-J2 and 21 pass J3-J5. The paired panel contains 96 worlds, with model and random successes in 15 and 16 respectively. Format repair exposes evaluated topology without an aggregate model advantage.
 
 ### 5.6. Binding and signature interventions localize dependence
 
@@ -300,21 +306,17 @@ Replacing every candidate expression with the incumbent expression forces J3 fai
 
 ![Binding and signature sensitivity](figures/aij/figure_6_realizer.png)
 
-Figure 6. Dependence on binding information and supplied signatures. (a) Aligned versus role/action-blind binding; annotations are successful-world counts and denominators appear in labels. (b) C3 world successes lost under each individual signature mask, combining 400 known and 100 held-out worlds. The triadic loss is confined to the holdout. All interventions fix archived candidate slots; no adaptive re-search occurs. Incumbent substitution is retained only as a structural negative control in the supplement.
+Figure 7. Dependence on binding information and supplied signatures. (a) Aligned versus role/action-blind binding; annotations are successful-world counts and denominators appear in labels. (b) C3 world successes lost under each individual signature mask, combining 400 known and 100 held-out worlds. The triadic loss is confined to the holdout. All interventions fix archived candidate slots; no adaptive re-search occurs. Incumbent substitution is retained only as a structural negative control in the supplement.
 
 ### 5.7. Reproducibility of the evaluated artifacts
 
 Historical replay reconstructs 10,800/10,800 AJ5 and 16,800/16,800 CJ5 selected candidates, including 35,533 CJ5 ancestry records, with no mismatches. The realizer audit contains 36,168 candidate-policy rows and 12,056 world-policy rows from the fixed slots and policies; it makes no model calls. These row counts establish reconstruction coverage, not independent experimental replication. No historical confirmatory world was excluded or confirmatory shard rerun. Separately disclosed interface pilots and partial extension runs do not contribute inferential denominators.
 
-![Archived worked example](figures/aij/figure_7_worked.png)
-
-Figure 7. Reconstructing the worked prospective example in Section 5.1. Archived held-out seed 40000 supplies the observations, committed test-0 and separate fals-0 outcome. The plotted slice fixes x=w=6. The complete falsification split also includes a second case, used in the all-gate verdict. The graph leaves the structural language; its product basis is supplied by the realizer. Figure prepared with AI-assisted code from the archived candidate and deterministic world reconstruction.
-
 ## 6. Discussion
 
 ### 6.1. Representation revision is relative to a declared language
 
-The assay gives an executable interpretation to a longstanding distinction. Search can change values or select hypotheses inside A₀, or it can construct a valid R outside A₀. Predictive validation then asks whether that change matters against h₀* on committed hidden tests. Neither operation alone is sufficient for the bounded event.
+The assay gives an executable interpretation to a longstanding distinction. Search can change values or select executable theories whose representations remain in A₀, or it can construct a valid R outside A₀. Predictive validation then asks whether that change matters against h₀* on committed hidden tests. Neither operation alone is sufficient for the bounded event.
 
 The same candidate can escape an incumbent structural language and remain expressible in a supplied meta-language, as in CJ5. Reporting both languages distinguishes representation revision from access to a hand-authored basis. Structural controls check the incumbent boundary; alternative compositional policies test search under a shared realization inventory.
 
@@ -322,7 +324,7 @@ The same candidate can escape an incumbent structural language and remain expres
 
 The appropriate unit of attribution is the content that reaches the evaluator. In C3, deterministic overwrite separates model text from the artifact receiving the score. In grammar-constrained composition, model topology reaches the artifact but predictive algebra comes from the realizer. In the supplied-representation control, the graph is external while the expression and action are model-authored. An architecture diagram labeling each system “LLM-assisted” cannot distinguish these cases.
 
-The proposed record is portable across hybrid systems containing retrieval, symbolic transformations, program synthesis, fitters, verifiers or learned proposers. An application can first freeze its evaluation boundary, then trace each scored field backward to its producer, specify a meaningful replacement intervention and replay the resulting artifact. Finally, it can compare the surviving content with the inventory supplied by designers. This is a practical decomposition of evidence, not a universal scalar allocation of credit.
+Historical self-composition supplies a fourth path: the model proposal never reaches executable evaluation. These paths distinguish pre-execution attrition, evaluated topology, evaluated expression authorship and deterministic theory construction. Only the supplied-representation control establishes evaluated model-authored expressions here; estimating their effect on success still requires a specified intervention. The C3 record in Supplementary S20 shows why deleting an unscored explanation can change a theory hash while preserving every gate.
 
 ### 6.3. Success and failure require symmetric care
 
@@ -332,11 +334,9 @@ The appropriate response to pre-execution failure is an attrition diagnosis, not
 
 ### 6.4. What the combined procedure adds
 
-Each ingredient has precedent. The value of combining them is that the final claim can be checked against a concrete evidential requirement. A commitment establishes timing; membership establishes declared structural departure; hidden tests establish bounded predictive value; provenance establishes authorship of evaluated fields; replay interventions establish specified dependencies; the inventory bounds an invention claim. No single ingredient substitutes for the others.
+Each ingredient has precedent. Their combination makes a claim checkable against a specific artifact: membership records declared structural departure, hidden tests establish bounded predictive value, provenance identifies field origins and replay tests specified dependencies. The supplied inventory documents whether explanatory forms were provided directly or constructed from available primitives.
 
-To apply the procedure to another system, first identify the exact object read by its evaluator and freeze the public/hidden boundary. Trace each scored field through parsing, transformations and overwrites, rather than stopping at the model response. Specify a replacement that answers the intended dependency question, reconstruct the committed artifact and compare verdicts. Finally, check the decisive content against the supplied-knowledge inventory. The accompanying JSON record template specifies the fields to capture; it does not imply that all other systems already expose these logs.
-
-This procedure separates four paths. In historical self-composition, a model proposal never reaches executable evaluation. In grammar-constrained composition, model topology reaches evaluation but a realizer supplies the law. In the supplied-representation control, a model-authored expression and action are scored. In C3, deterministic components supply the entire evaluated theory. Only the third path establishes evaluated expression authorship; even there, a separate intervention is needed to estimate its effect on the success indicator. A system-level score can therefore be read alongside its executable theory, production history and the precise dependency tested.
+Another system can adopt the procedure box in Section 3.4 and the versioned schema in Supplementary S20 by replacing the local trace adapter and evaluator. It must preserve the distinctions between recorded facts, code-inspected transformations, offline reconstructions and unavailable events. The validator checks record structure, source hashes and reproduction of this example; it does not certify scientific novelty or manufacture missing timing evidence. In the historical CJ5 runner, commitment precedes hidden-loss evaluation in control flow, but the original commitment timestamp and digest were not retained in the candidate result. Recording those events at runtime would strengthen a future implementation.
 
 ## 7. Limitations
 

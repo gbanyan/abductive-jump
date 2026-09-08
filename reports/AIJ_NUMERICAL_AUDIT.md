@@ -313,4 +313,4 @@ No empirical estimate required a new experiment. The inherited phrase 'DOI archi
 - `experiments/nmi_realizer_audit_v1/analysis/per_family.csv`: `d3f3ac7e2d2f87927ae79424bbc31c71b66dbfcc92888eae54fa35b5629fe866`
 - `experiments/nmi_realizer_audit_v1/results/candidate_results.parquet`: `202d52c7fee2a162bc84567e7cda00cadf919b30d1f0c662bc59e2c41367cbd1`
 - `experiments/nmi_realizer_audit_v1/results/world_results.parquet`: `de8bf3ef53769d4a9d07d7059109540688f95a660d00a8580255ad96d6d0107c`
-- `manuscript/figures/aij/source_data.json`: `3afdcdf505c9ab9e947a107ebbfe5499140b64602582c7571b6bf39f6b76aef9`
+- `manuscript/figures/aij/source_data.json`: `bc70da7720036d0da8c146549637a7f81ac8568d2f0a9370b8ecd8cac4adba9d`

@@ -2590,7 +2590,7 @@
     "experiments/nmi_realizer_audit_v1/analysis/gate_attrition.csv": "248bc5124f915407128b08d806f6ccc846aafa7b7318a481849be77c5f141140",
     "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json": "2db121341f79c41c1c53cf4b61d4deba2af475f297dba0dc3106924e09b522b9",
     "configs/confirmatory-primary-jump.json": "9c83d26b5faf4d3795d99949c5f4aae2762f66f1454e7f8a93d24444ea9d0699",
-    "manuscript/figures/aij/source_data.json": "3afdcdf505c9ab9e947a107ebbfe5499140b64602582c7571b6bf39f6b76aef9",
+    "manuscript/figures/aij/source_data.json": "bc70da7720036d0da8c146549637a7f81ac8568d2f0a9370b8ecd8cac4adba9d",
     "experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv": "799374a531aa141fc3736e7a5e575c2be70a2ba7f9b3d5117a569814b999caca",
     "experiments/nmi_fair_interface_v1/analysis/per_family.csv": "2c39449027951e241f328ae2f285544486efd26fea49ab8d18c2ac5b04612832",
     "experiments/nmi_realizer_audit_v1/analysis/per_family.csv": "d3f3ac7e2d2f87927ae79424bbc31c71b66dbfcc92888eae54fa35b5629fe866",

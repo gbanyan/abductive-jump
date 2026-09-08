@@ -71,8 +71,12 @@ def main():
     labels=["B0 direct","B1 sampling","B2 fixed space*","B3 attributes*","B4 portfolio","B5 distinct"]
     vals=[r["jsr"]*100 for r in aj]
     axes[0].barh(labels,vals,color=[BLUE,BLUE,GREY,GREY,ORANGE,ORANGE])
+    axes[0].errorbar(vals, range(len(aj)),
+                     xerr=[[100*(r["jsr"]-r["jsr_ci_low"]) for r in aj],
+                           [100*(r["jsr_ci_high"]-r["jsr"]) for r in aj]],
+                     fmt="none", ecolor="#192b3b", capsize=3)
     for i,r in enumerate(aj):
-        axes[0].text(vals[i]+1,i,f'{round(r["jsr"]*r["jump_worlds"])}/400',va="center",fontsize=9)
+        axes[0].text(100*r["jsr_ci_high"]+1,i,f'{round(r["jsr"]*r["jump_worlds"])}/400',va="center",fontsize=9)
     axes[0].invert_yaxis(); axes[0].set_xlim(0,49); axes[0].set_xlabel("Successful worlds (%)")
     axes[0].set_title("a  World-level outcomes")
     for prefix,color in [("B0",BLUE),("B1",GREY),("B4",ORANGE),("B5","#65519A")]:

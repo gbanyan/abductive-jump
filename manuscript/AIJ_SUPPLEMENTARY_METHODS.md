@@ -212,3 +212,48 @@ References correspond to the main manuscript. Representation repair has classica
 Model Discovery Agent explicitly separates proposal from Bayesian inference, reports an expansion-component ablation and caches calls [24]. EvoSCM combines model revision, discriminating interventions and committed predictions [26]. Harness-aware evaluation and complete-trace failure attribution address model/scaffold confounding directly [36–38]. The contribution here is therefore the implemented coupling of canonical structural escape, committed executable theory, hidden tests, decisive-field provenance, specified replay interventions and supplied-knowledge inventory. We make no priority claim for any individual ingredient or for the first combination across all AI literature.
 
 A field entering the evaluator is evidence of authorship, not by itself an effect on success. The historical C3 deletion replay, grammar-constrained topology path and separate supplied-representation expression/action control instantiate different provenance paths. Their evidence and limits are reported separately in the main-text claim/evidence table.
+
+## S19. Implemented joint validity V(T)
+
+V(T) is the absence of errors from the three checks below. It is a bounded syntactic and feature-support check, not a semantic correspondence proof. Locations refer to the source files whose hashes accompany the evidence record; no evaluator was changed for this revision.
+
+| Check and source location | Checks performed | Not established |
+|---|---|---|
+| Graph: `representation.py:78`, `Representation.validate` | Unique node IDs; nonempty, whitespace-free IDs; JSON-normalizable finite attributes; existing edge endpoints; nonempty edge relations; no duplicate edges. `parse_theory` converts kind labels to `NodeKind`. | Complete semantic typing, argument compatibility, causal correctness or connectedness of the whole graph |
+| Expression: `expressions.py:17`, `Expression.validate` | Allowed operations const, var, raw_var, add, sub, mul, div, pow, neg, history_sum and if_eq; recursive required operands; at most 64 nodes and depth 12; finite non-boolean numerical constants; allowed variable names | Algebraic correctness, dimensional types, graph dependency equivalence or guaranteed execution. The prompt's tighter 32-node/depth-8 limits are not these evaluator defaults |
+| Feature support: `executable.py:109`, `theory_consistency` | history_sum or history requires a connected StateVariable; pow requires a connected Function unless the incumbent equation is polynomial2; regime requires Regime; environment requires Relation; raw_var requires LatentVariable. If the incumbent has Context, context use requires Function, otherwise Invariant | Exact correspondence between expression operands and graph edges, argument ordering, graph-to-expression derivation, full type inference or semantic equivalence. Connected support means a matching node kind with degree greater than zero |
+
+Paths above are relative to `src/abductive_jump/`. `allowed_variables` (`executable.py:69`) collects non-private input names across all splits and intervention keys, not hidden outcome values. It does not infer argument types. The expression traversal for feature support visits arg, left, right, then and else. Structural non-membership is checked separately by `LanguageSpec.membership_failures` (`representation.py:128`) against allowed kinds, counts, relations, edge signatures and equation families.
+
+Execution checks are also separate from V(T): `Expression.evaluate` rejects division by near-zero denominators, invalid powers and non-finite results; `expression_loss` converts specified evaluation exceptions to infinite loss. Thus an expression can pass static validation yet fail execution or predictive gates. `evaluate_executable` (`executable.py:166`) conjoins V(T) with J1-J5. Commitment verification compares world, theory and split hashes, predictions and digest, but does not authenticate the timestamp. `freeze_theory` (`executable.py:143`) requires exactly one public intervention and calculates its prediction before hidden losses are computed.
+
+## S20. A traceable evidence record and reusable adapter
+
+The full record is `manuscript/AIJ_EVIDENCE_RECORD_EXAMPLE.json`, version 1.0.0, validated against `schemas/aij-evidence-record-v1.schema.json` (JSON Schema draft 2020-12). `scripts/build_aij_evidence_record.py` is the CJ5 trace adapter; `scripts/validate_aij_evidence_record.py` checks its schema and, with `--reproduce`, verifies source hashes and exact deterministic reconstruction. Both tools implement version 1.0.0. The earlier unfilled template remains a capture checklist, not experimental evidence or a substitute for the schema.
+
+The example is held-out world `h-52dfdb7df153f50fdcb0`, seed 40000, C3 slot 0, also shown in Section 5.1. The raw candidate result is in `artifacts/compositional/confirmatory-heldout/candidate_results.parquet`; reconstructed graph/expression columns are in `artifacts/compositional_candidates.parquet`. The two model responses are lines 6 and 20 of `artifacts/compositional/confirmatory-heldout/llm_calls.jsonl`, with decoding seeds 614800001 and 614800002. The ledger is supplied in the frozen evidence release. File-level hashes and the complete model output strings are retained in the JSON record.
+
+The phase-one response proposed an unscaled product and was used only for a JSON-validity diagnostic. Phase two returned `USE_SUPPLIED_REPRESENTATION`, `USE_SUPPLIED_FITTED_EXPRESSION` and test-0. The runner had already fitted the retained graph and selected test-0 using public prediction separation. After JSON extraction, it overwrote representation, expression and selected intervention IDs, then translated public variable names to internal names. Only the explanation text survived from the model into the theory. These transformation statements are post-hoc code inspection of `compositional_experiment.py:493-590`, not a runtime event trace.
+
+The evaluator reads the six-node, seven-edge graph in the record, internal expression 9·w·x·z, test-0 and predicted outcome 2268. The public aliases are dax=w, suv=x and wug=z. The supplied triadic-product basis has a refitted coefficient of 9.0. A separate integrity refit reproduces the archived public expression; the deletion replay itself fixes that expression, coefficient, selected slot and action, with no refit, reranking, reselection or adaptive search.
+
+This compact excerpt contains actual record values; it is not the full schema-valid record:
+
+```json
+{
+  "schema_version": "1.0.0",
+  "candidate": {"world_id": "h-52dfdb7df153f50fdcb0",
+    "world_seed": 40000, "condition": "C3_GENERIC_COMPOSITION", "slot": 0},
+  "raw_call_lines": [6, 20], "action": ["test-0"],
+  "prediction": [["test-0", 2268.0]], "coefficient": 9.0,
+  "archived_theory_hash":
+    "def8cd0bed4456a38c6e3135a51209dad17053edaaa132d74cb738b1f17efabe",
+  "original_timestamp": null, "original_digest": null,
+  "replay": {"model_calls": 0, "gates_unchanged": true,
+    "theory_hash_changed": true, "validated_jump": true}
+}
+```
+
+The archived theory hash includes explanation text. Replacing that text with an empty string changes the theory hash and commitment digest but preserves all six gates and the candidate verdict. The full record stores both recomputed commitment payloads, including theory/split hashes and intervention predictions. It labels these as post-hoc reconstruction. Original commitment digest and timestamp were not persisted in the result or call ledger and remain null. Commit-before-hidden-loss ordering is supported by runner control flow; it is not an independently timestamped reveal event. No new timestamp is presented as historical evidence.
+
+From the repository root, install the development extra, then run `.venv/bin/python scripts/build_aij_evidence_record.py` and `.venv/bin/python scripts/validate_aij_evidence_record.py --reproduce`. The second command requires the raw release ledger. Without `--reproduce`, validation checks record structure only. Another system can reuse the field/evidence schema and replace the adapter, source identifiers and evaluator. Neither mode establishes scientific novelty or verifies unavailable timing facts.

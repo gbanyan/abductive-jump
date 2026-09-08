@@ -1,5 +1,9 @@
 {
   "record_kind": "unfilled_template_not_experimental_evidence",
+  "status": "Legacy capture checklist; not a schema-valid evidence record",
+  "current_schema": "schemas/aij-evidence-record-v1.schema.json",
+  "current_schema_version": "1.0.0",
+  "worked_example": "manuscript/AIJ_EVIDENCE_RECORD_EXAMPLE.json",
   "schema_version": "aij-provenance-1",
   "world": {"id": null, "public_split_hash": null, "hidden_split_hash": null},
   "frozen_contract": {

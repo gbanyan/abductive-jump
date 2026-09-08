@@ -51,18 +51,21 @@ def inline(value):
 
 
 def styles():
-    base = dict(fontName="Article", fontSize=9.5, leading=14, textColor=INK, spaceAfter=7, splitLongWords=True, allowWidows=0, allowOrphans=0)
+    base = dict(fontName="Article", fontSize=11, leading=16, textColor=INK, spaceAfter=8, splitLongWords=True, allowWidows=0, allowOrphans=0)
     body = ParagraphStyle("body", **base, alignment=TA_JUSTIFY)
     return {
         "body":body,
         "title":ParagraphStyle("title", parent=body, fontName="Article-Bold", fontSize=18, leading=23, alignment=0, spaceAfter=16),
         "h2":ParagraphStyle("h2", parent=body, fontName="Article-Bold", fontSize=12.5, leading=17, alignment=0, spaceBefore=13, spaceAfter=8, keepWithNext=True),
-        "h3":ParagraphStyle("h3", parent=body, fontName="Article-Bold", fontSize=10.5, leading=15, alignment=0, spaceBefore=10, keepWithNext=True),
+        "h3":ParagraphStyle("h3", parent=body, fontName="Article-Bold", fontSize=11, leading=16, alignment=0, spaceBefore=10, keepWithNext=True),
         "caption":ParagraphStyle("caption", parent=body, fontSize=8, leading=11.5, alignment=0, spaceAfter=10),
         "cell":ParagraphStyle("cell", parent=body, fontSize=8, leading=11.5, alignment=0, spaceAfter=0),
         "ref":ParagraphStyle("ref", parent=body, fontSize=8.5, leading=12.5, alignment=0, leftIndent=18, firstLineIndent=-18, spaceAfter=5),
         "list":ParagraphStyle("list", parent=body, leftIndent=11, firstLineIndent=-8, alignment=0),
         "code":ParagraphStyle("code", parent=body, fontSize=8.2, leading=12, alignment=0, leftIndent=10, rightIndent=10, backColor=colors.HexColor("#f1f4f6"), borderPadding=7),
+        "box":ParagraphStyle("box", parent=body, alignment=0, leftIndent=10, rightIndent=10,
+                             backColor=colors.HexColor("#f1f4f6"), borderPadding=8,
+                             spaceBefore=12, spaceAfter=14),
     }
 
 
@@ -78,6 +81,8 @@ def markdown(path, s):
     while i<len(lines):
         line=lines[i].strip(); i+=1
         if not line: continue
+        if line.startswith("Procedure box."):
+            story.append(KeepTogether([Paragraph(inline(line), s["box"])])); continue
         if line.startswith("# "):
             story.append(Paragraph(inline(line[2:]),s["title"])); continue
         if line.startswith("## "):
@@ -129,7 +134,8 @@ def markdown(path, s):
             prefix=[]
             if story and isinstance(story[-1],Paragraph) and story[-1].style.name in ("h2","h3"):
                 prefix=[story.pop()]
-            story.append(KeepTogether(prefix+[preceding,Paragraph(inline(" ".join(block)),s["code"])])); continue
+            rendered = "<br/>".join(inline(value).replace("  ", "&#160;&#160;") for value in block)
+            story.append(KeepTogether(prefix+[preceding,Paragraph(rendered,s["code"])])); continue
         if line.startswith("- "):
             story.append(Paragraph("• "+inline(line[2:]),s["list"])); continue
         paragraph=[line]

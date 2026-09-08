@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/gbanyan/abductive-jump/blob/main/schemas/aij-evidence-record-v1.schema.json",
+  "title": "Executable-theory evidence record 1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "candidate",
+    "sources",
+    "raw_calls",
+    "transformations",
+    "fields",
+    "commitment",
+    "evaluation",
+    "replay",
+    "supplied_knowledge"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_kind": {
+      "enum": [
+        "mixed_archival_and_reconstructed_evidence"
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "world_id",
+        "condition",
+        "world_seed",
+        "slot"
+      ],
+      "properties": {
+        "world_id": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string"
+        },
+        "world_seed": {
+          "type": "integer"
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "raw_calls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "basis",
+          "ledger_path",
+          "line",
+          "decoding_seed",
+          "prompt_hash",
+          "output",
+          "parsed"
+        ],
+        "properties": {
+          "basis": {
+            "const": "runtime_recorded"
+          },
+          "ledger_path": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "decoding_seed": {
+            "type": "integer"
+          },
+          "prompt_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "output": {
+            "type": "string"
+          },
+          "parsed": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "transformations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "order",
+          "operation",
+          "basis",
+          "source"
+        ],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "operation": {
+            "type": "string"
+          },
+          "basis": {
+            "const": "posthoc_code_inspection"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "fields": {
+      "type": "object",
+      "required": [
+        "representation",
+        "expression",
+        "parameters",
+        "ranking",
+        "action",
+        "prediction",
+        "explanation"
+      ],
+      "additionalProperties": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "commitment": {
+      "type": "object",
+      "required": [
+        "archived_theory_hash",
+        "reconstructed",
+        "original_timestamp",
+        "original_digest",
+        "ordering"
+      ],
+      "properties": {
+        "archived_theory_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reconstructed": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/evidence"
+            },
+            {
+              "properties": {
+                "value": {
+                  "$ref": "#/$defs/commitment"
+                }
+              }
+            }
+          ]
+        },
+        "original_timestamp": {
+          "$ref": "#/$defs/evidence"
+        },
+        "original_digest": {
+          "$ref": "#/$defs/evidence"
+        },
+        "ordering": {
+          "$ref": "#/$defs/evidence"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/evidence"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": "object",
+              "required": [
+                "j0",
+                "j1",
+                "j2",
+                "j3",
+                "j4",
+                "j5",
+                "validated_jump"
+              ],
+              "properties": {
+                "j0": {
+                  "type": "boolean"
+                },
+                "j1": {
+                  "type": "boolean"
+                },
+                "j2": {
+                  "type": "boolean"
+                },
+                "j3": {
+                  "type": "boolean"
+                },
+                "j4": {
+                  "type": "boolean"
+                },
+                "j5": {
+                  "type": "boolean"
+                },
+                "validated_jump": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "replay": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/evidence"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": "object",
+              "required": [
+                "replacement",
+                "fixed",
+                "recomputed",
+                "commitment",
+                "gates",
+                "gates_unchanged",
+                "validated_jump",
+                "theory_hash_changed",
+                "model_calls"
+              ],
+              "properties": {
+                "replacement": {
+                  "type": "string"
+                },
+                "fixed": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "recomputed": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "commitment": {
+                  "$ref": "#/$defs/commitment"
+                },
+                "gates": {
+                  "$ref": "#/$defs/gates"
+                },
+                "gates_unchanged": {
+                  "type": "boolean"
+                },
+                "validated_jump": {
+                  "type": "boolean"
+                },
+                "theory_hash_changed": {
+                  "type": "boolean"
+                },
+                "model_calls": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "refit_in_replay": {
+                  "type": "boolean"
+                },
+                "refit_as_separate_integrity_check": {
+                  "type": "boolean"
+                },
+                "rerank": {
+                  "type": "boolean"
+                },
+                "reselect_action": {
+                  "type": "boolean"
+                },
+                "adaptive_research": {
+                  "type": "boolean"
+                },
+                "interpretation": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
+    "supplied_knowledge": {
+      "$ref": "#/$defs/evidence"
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "value",
+        "source"
+      ],
+      "properties": {
+        "basis": {
+          "enum": [
+            "runtime_recorded",
+            "posthoc_code_inspection",
+            "posthoc_reconstruction",
+            "unavailable"
+          ]
+        },
+        "value": {},
+        "source": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "unavailable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "producer",
+        "basis",
+        "source",
+        "value",
+        "read_by_gate"
+      ],
+      "properties": {
+        "producer": {
+          "enum": [
+            "deterministic_component",
+            "model"
+          ]
+        },
+        "basis": {
+          "enum": [
+            "runtime_recorded",
+            "posthoc_code_inspection",
+            "posthoc_reconstruction"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "value": {},
+        "read_by_gate": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "j0",
+        "j1",
+        "j2",
+        "j3",
+        "j4",
+        "j5"
+      ],
+      "properties": {
+        "j0": {
+          "type": "boolean"
+        },
+        "j1": {
+          "type": "boolean"
+        },
+        "j2": {
+          "type": "boolean"
+        },
+        "j3": {
+          "type": "boolean"
+        },
+        "j4": {
+          "type": "boolean"
+        },
+        "j5": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "commitment": {
+      "type": "object",
+      "required": [
+        "world_id",
+        "theory_hash",
+        "split_hash",
+        "intervention_predictions",
+        "digest"
+      ],
+      "properties": {
+        "world_id": {
+          "type": "string"
+        },
+        "theory_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "split_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "intervention_predictions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "items": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

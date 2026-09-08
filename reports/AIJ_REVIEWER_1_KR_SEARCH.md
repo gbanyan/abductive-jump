@@ -32,7 +32,7 @@ This is an adversarial editorial simulation by the drafting agent, not independe
 
 **Answer.** Code inspection identifies a candidate dependency; it does not verify which archived committed artifact was scored. Replay supplies reconstruction coverage, not a new inferential sample. The combined method distinguishes authored fields, score dependence and supplied forms. An expression can be model-authored but irrelevant to the binary verdict; a topology can be model-authored while algebra is supplied. The supplied-knowledge inventory is essential to separating those claims.
 
-**Required strengthening implemented.** Section 6.4 should give a concrete transfer procedure and a four-path classification, rather than merely listing the ingredients. Include a portable schema but label it as a template rather than an implemented universal logger.
+**Focused revision follow-up.** Section 6.2 now distinguishes four paths and Section 6.4 addresses reuse. A versioned JSON Schema, trace adapter, validator and real record replace reliance on an unfilled checklist. The example is archival-plus-reconstructed evidence, not a universal runtime logger. Table 2 records the origin of explanatory forms without requiring invention to exceed an entire supplied meta-language.
 
 ## 5. Formal precision versus mathematical ornament
 
