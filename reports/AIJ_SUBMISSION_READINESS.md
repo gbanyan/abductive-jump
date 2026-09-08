@@ -37,7 +37,7 @@ These holds do not require new experiments. No publication-critical numerical co
 
 - `manuscript/AIJ_MANUSCRIPT.md`: rewritten title, abstract, introduction, related work, formal framework, question-led results, discussion, limitations and declarations.
 - `manuscript/AIJ_SUPPLEMENTARY_METHODS.md`: S1-S20, retaining frozen methods and adding implemented-validity checks and a traceable record example.
-- `output/pdf/AIJ_manuscript_and_supplement.pdf`: 41-page A4 review PDF, 11 pt narrative body, seven figures, six main tables, 20 supplementary sections and 42 references. Main text/end matter/references occupy pages 1-25; supplement occupies pages 26-41.
+- `output/pdf/AIJ_manuscript_and_supplement.pdf`: 42-page A4 review PDF, 11 pt narrative body, seven figures, six main tables, 20 supplementary sections and 42 references. Main text/end matter/references occupy pages 1-25; supplement occupies pages 26-42.
 - `manuscript/AIJ_COVER_LETTER.md` and separate AI/data/code statements: ready for the author checks above, not an assertion of completed human approval.
 - `schemas/aij-evidence-record-v1.schema.json`, `scripts/build_aij_evidence_record.py`, `scripts/validate_aij_evidence_record.py` and `manuscript/AIJ_EVIDENCE_RECORD_EXAMPLE.json`: version 1.0.0 schema/adapter/validator and actual archival-plus-reconstructed record. The earlier template remains explicitly a legacy unfilled checklist.
 - `docs/publication/AIJ_*`: scientific freeze, author-guide audit, 12-article structural-style analysis, title/storyboard and claim matrix.
@@ -45,9 +45,9 @@ These holds do not require new experiments. No publication-critical numerical co
 
 The style sample includes author/pre-proof versions and one partially accessible current article; exact portal-level Regular Paper labels were not consistently exposed. This supports structural editorial choices, not a claim that all production metadata were verified. Twelve title candidates were considered in the storyboard. No `.tex` source was created because the existing project has no LaTeX manuscript workflow. Highlights were not created because a current AIJ requirement could not be verified.
 
-The PDF workflow used rendered-page inspection as well as text/bounds checks. All 41 pages were inspected, including the revised pages after keeping the procedure box together. Final automated QA reports zero page-bounds or unmapped-glyph failures. The worked example is Figure 2 beside Section 5.1; subsequent figures are renumbered. AJ5 whiskers reuse existing bootstrap intervals, and Results restores the existing grammar-interface Wilson interval. Tables 4-5 now add reachable-input and selection/control information instead of duplicating counts. The build manifest binds the PDF to its manuscript, supplement, figures and builder hashes. Humanizer-zh-tw guided positive, focused prose while preserving numerical claims and disclosure; PDF skill guided render-and-verify QA.
+The PDF workflow used rendered-page inspection as well as text/bounds checks. All 42 pages of the consistency revision were inspected. Final automated QA reports zero page-bounds or unmapped-glyph failures. The worked example remains Figure 2 beside Section 5.1. AJ5 whiskers show bootstrap intervals, and Results reports the grammar-interface Wilson interval. Tables 4-5 add reachable-input and selection/control information; Table 4 now identifies B1's operation contract. The build manifest binds the PDF to its manuscript, supplement, figures and builder hashes. Humanizer-zh-tw guided positive, focused prose while preserving numerical claims and disclosure; PDF skill guided render-and-verify QA. The Table 6/Figure 5 page break is retained to keep both objects readable; body type was not reduced.
 
-The focused revision passes 203 repository tests, including eight evidence-record tests, plus the unchanged 244 numerical/configuration checks. The new record reconstructs the archived candidate's theory hash, public fitted expression and each of J0-J5; `--reproduce` also compares the complete record and all listed source hashes. Schema checks reject missing fields, unrecognized provenance labels, non-boolean gates and fabricated values for unavailable events. No runtime evaluator, experimental artifact, model call or supplied realization rule was changed.
+The consistency revision passes 208 repository tests, including eight evidence-record tests and five interface/metadata tests, plus the unchanged 244 numerical/configuration checks. The record reconstructs the archived candidate's theory hash, public fitted expression and each of J0-J5; `--reproduce` also compares the complete record and all listed source hashes. Schema checks reject missing fields, unrecognized provenance labels, non-boolean gates and fabricated values for unavailable events. The new offline audit checks all 1,800 B1 slots and all 1,400 AJ5/CJ5 worlds' public variable-name boundary. No runtime evaluator, experimental artifact, model call or supplied realization rule was changed. See `AIJ_CONSISTENCY_REVISION.md` for the requirement-by-requirement disposition.
 
 Verification commands (repository environment):
 
@@ -56,6 +56,7 @@ rtk proxy .venv/bin/python scripts/audit_aij_claims.py
 rtk proxy .venv/bin/python scripts/audit_aij_numbers.py
 rtk proxy .venv/bin/python scripts/build_aij_evidence_record.py
 rtk proxy .venv/bin/python scripts/validate_aij_evidence_record.py --reproduce
+rtk proxy .venv/bin/python scripts/audit_aij_contracts.py
 rtk proxy .venv/bin/pytest
 rtk proxy .venv/bin/python scripts/build_aij_figures.py
 rtk proxy .venv/bin/python scripts/build_aij_manuscript.py
@@ -68,7 +69,7 @@ The archive must be downloaded from the public evidence release if absent locall
 
 ## Version-control scope
 
-The AIJ conversion and this focused revision are separate commits on `nmi-minimal-targeted-sensitivity-v1`. Existing modified NMI manuscript/PDF/builder files and unrelated raw experiment outputs are excluded. The requested `docs/publication/NMI_REJECTION_LESSON.md` remains local-only because it was designated internal; it is not included in the public push. The evidence release is not rebuilt or replaced. This readiness report's containing commit identifies the manuscript revision; remote push verification is reported in the handoff.
+The AIJ conversion, focused revision and consistency revision are separate commits on `nmi-minimal-targeted-sensitivity-v1`. Code tag `aij-review-package-v1` identifies this manuscript and its utilities; data release `nmi-github-submission-v4` remains unchanged. `docs/publication/AIJ_REPRODUCTION.md` gives the exact pairing and clean-environment commands. Existing modified NMI manuscript/PDF/builder files and unrelated raw experiment outputs are excluded. The requested `docs/publication/NMI_REJECTION_LESSON.md` remains local-only because it was designated internal; it is not included in the public push. The evidence release is not rebuilt or replaced. Remote tag and final clean-checkout verification are reported in the handoff.
 
 ## Two-sentence scientific center
 

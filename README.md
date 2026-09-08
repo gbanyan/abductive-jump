@@ -39,7 +39,7 @@ python scripts/build_aij_evidence_record.py
 python scripts/validate_aij_evidence_record.py --reproduce
 ```
 
-Generation and reproduction require the raw held-out call ledger from the frozen evidence release. Omitting `--reproduce` checks record structure only. Neither command makes model calls. [Revision checks and remaining author-side upload holds](reports/AIJ_SUBMISSION_READINESS.md) are recorded separately.
+Generation and reproduction require the raw held-out call ledger from the frozen evidence release. For exact versions, pair code tag `aij-review-package-v1` with data release `nmi-github-submission-v4` using the [clean-environment reproduction instructions](docs/publication/AIJ_REPRODUCTION.md). Omitting `--reproduce` checks record structure only. Neither command makes model calls. [Revision checks and remaining author-side upload holds](reports/AIJ_SUBMISSION_READINESS.md) are recorded separately.
 
 ## Licensing and citation
 

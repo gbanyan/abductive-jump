@@ -68,7 +68,7 @@ def main():
     gates = read("artifacts/nmi_gate_attrition.parquet")
     DATA["AJ5"] = aj
     fig, axes = plt.subplots(1,2,figsize=(10,4.6),gridspec_kw={"width_ratios":[1,1.3]})
-    labels=["B0 direct","B1 sampling","B2 fixed space*","B3 attributes*","B4 portfolio","B5 distinct"]
+    labels=["B0 direct","B1 plans","B2 fixed space*","B3 attributes*","B4 portfolio","B5 distinct"]
     vals=[r["jsr"]*100 for r in aj]
     axes[0].barh(labels,vals,color=[BLUE,BLUE,GREY,GREY,ORANGE,ORANGE])
     axes[0].errorbar(vals, range(len(aj)),

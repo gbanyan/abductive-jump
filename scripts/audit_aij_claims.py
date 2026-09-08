@@ -36,7 +36,7 @@ def main():
                     report.append(f"| {file.name}:{i} | `{pattern}` | {context} | {disposition} |")
     report += ["", f"Flagged occurrences: {count}. All flags above were inspected in context during the AIJ audit.", "",
                "## Manual regression checklist", "",
-               "- PASS: commitment is before outcome reveal, not post-outcome optimization.",
+               "- PASS: the contract requires commitment before reveal; historical CJ5 ordering is supported by code flow, not independently authenticated original events. Missing original digest/timestamp remain unavailable.",
                "- PASS: selected observation-optimal finite-set comparator; no universal oracle or tie-equivalence claim.",
                "- PASS: structural non-membership is explicitly distinct from functional inexpressibility.",
                "- PASS: AJ5 uncentered bootstrap tails are not treated as calibrated P values.",

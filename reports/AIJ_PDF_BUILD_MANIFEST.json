@@ -1,11 +1,11 @@
 {
   "output": "output/pdf/AIJ_manuscript_and_supplement.pdf",
-  "sha256": "69017a7871014b6307ee84bb0eac1e62b3c438d5a829bf5e5a89460a5105cf30",
+  "sha256": "2c4da0f703de7c78bb8f94cedd22ae0ecea235d0f71c6fe3a1b0b6c4a67909dc",
   "input_sha256": {
-    "manuscript/AIJ_MANUSCRIPT.md": "ac40033378cab32dff9ef589b5e169d14ab9b4691f5120058a26a1f8208d3866",
-    "manuscript/AIJ_SUPPLEMENTARY_METHODS.md": "8e9d53b4604ac1ff3eecb0b7124c7664f681109dea621a28631a9dcc81f460d4",
+    "manuscript/AIJ_MANUSCRIPT.md": "3481c1145fab9a581de3c495162b63dff29bdf7e29864c2215b19dda695c98df",
+    "manuscript/AIJ_SUPPLEMENTARY_METHODS.md": "aeb2ffe3497eb7b62ebf0e5df7a0645bceda8e30b527a50df926f19854d7e9d4",
     "manuscript/figures/aij/figure_1_assay.png": "c6eda24ca409f8c71c0fec8d269199010764d26ef1bf2218a387135c7f18cc1c",
-    "manuscript/figures/aij/figure_2_aj5.png": "73818b7b09edbd7f9ac1cb7d83536ce9483237bec0b6fad1639dd092344a4208",
+    "manuscript/figures/aij/figure_2_aj5.png": "74b512f2546b19136452325ab832d0377514fd06a952a17853b657e395d5356a",
     "manuscript/figures/aij/figure_3_cj5.png": "a729b5933a80b0b76c16752ce970121270dff075c370a4e33f1eb8a9e3e0aec4",
     "manuscript/figures/aij/figure_4_provenance.png": "749a33d085b4efdde77323e549e7db6d76dd10d8daa1e9bc2a31b921065897d4",
     "manuscript/figures/aij/figure_5_interface.png": "d3b3a3435f879d99fef96410e9fbe55425e97434d8e18a6182dcb45d2c606f38",

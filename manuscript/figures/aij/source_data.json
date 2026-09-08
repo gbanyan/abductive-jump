@@ -9,7 +9,7 @@
     "experiments/nmi_realizer_audit_v1/analysis/condition_summary.csv": "4daeb3c5bfd1663e91f86b530bce3a74e6864e8e2226b893c20d6c89dbc118d6",
     "artifacts/compositional/confirmatory-heldout/candidate_results.parquet": "b20901955744c9cf4487d219f10c87e56f5248e826cc9e2c4f3f63eac1c01263",
     "src/abductive_jump/compositional_worlds.py": "27ac9105f0ae84ab75ce1c171b4a4aa065693a2f63ccfb614eaf2d14bbe11c36",
-    "scripts/build_aij_figures.py": "d93094cbdfd5a0ce0d771779f67e25c7ff0df7451119c89ad036d6778ba6456b"
+    "scripts/build_aij_figures.py": "e0d123ca5abb457c0f3b1642b75cc94d33b0cb99fd5df5b924ef6e4c256df522"
   },
   "data": {
     "AJ5": [

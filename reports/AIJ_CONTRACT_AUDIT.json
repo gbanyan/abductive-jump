@@ -1,0 +1,167 @@
+{
+  "analysis": "post-hoc interface and metadata audit; no model calls",
+  "b1": [
+    {
+      "candidate_rows": 1200,
+      "counts": {
+        "final_representation_hash_matches": 1200,
+        "has_mutation_plan": 1183,
+        "json_extractable": 1199,
+        "mutation_plan_prompt_contract": 1200,
+        "phase_one_valid": 1024
+      },
+      "example": {
+        "decoding_seed": 131600003,
+        "ledger": "artifacts/confirmatory/primary-jump/llm_calls.jsonl",
+        "line": 4194,
+        "prompt_hash": "b18cb47562f9287dd709ff7d3e688eadcfeedb6a5ddf241052b066b2f3aa5e29",
+        "raw_mutation_plan": [
+          {
+            "arguments": {
+              "attr_transform": "multiply_by_4",
+              "id": "inv1",
+              "node": "bim"
+            },
+            "operator": "ADD_INVARIANT"
+          }
+        ],
+        "representation_hash": "e6b14d830a99be1f3ff6e74021644bff5e12f143638eed572b1350ebf7654a88",
+        "slot": 1,
+        "world_id": "w-9d06e1445bf2bddf9c9d"
+      },
+      "population": "jump"
+    },
+    {
+      "candidate_rows": 600,
+      "counts": {
+        "final_representation_hash_matches": 600,
+        "has_mutation_plan": 589,
+        "json_extractable": 600,
+        "mutation_plan_prompt_contract": 600,
+        "phase_one_valid": 522
+      },
+      "example": {
+        "decoding_seed": 142600001,
+        "ledger": "artifacts/confirmatory/primary-control/llm_calls.jsonl",
+        "line": 2093,
+        "prompt_hash": "07a016a41116d3d1f054c473c0c6feb9000771dbecf4ea63eeb62100451c9287",
+        "raw_mutation_plan": [
+          {
+            "arguments": {
+              "id": "new_const_8",
+              "kind": "Constant",
+              "node": "8"
+            },
+            "operator": "CONSTANT_TO_VARIABLE"
+          }
+        ],
+        "representation_hash": "5ebcffd7371ab22abf0becd3e35a809e0ee272288afc8f4d78f386cbd8fe673e",
+        "slot": 0,
+        "world_id": "w-6fc0a1b921195f3a18cd"
+      },
+      "population": "control"
+    }
+  ],
+  "source_sha256": {
+    "artifacts/candidate_theories.parquet": "56ad0a35a0701ed850761439c2e77b1c0fc38a358649106b650687b5cacb45a5",
+    "artifacts/compositional_candidates.parquet": "0949a9bd693e76f87bf04c0b0e836b199cc23669d28b24c62238fa17cd3c34ff",
+    "artifacts/confirmatory/primary-control/candidate_theories.parquet": "15400d5faf1cc1d80eeae3aaf5fc1d2bbe46d3a0b93c1dc008a098ddbc6dbd6a",
+    "artifacts/confirmatory/primary-control/llm_calls.jsonl": "91af77d377138c7c8c518b10cb606659f24b3ba24da81798cd2eeb0013364282",
+    "artifacts/confirmatory/primary-jump/candidate_theories.parquet": "01a0797d88d5e37db693bd5c612af53f93e677e935ba701e93ebaafe2886e1e9",
+    "artifacts/confirmatory/primary-jump/llm_calls.jsonl": "0f970f577fae604b01dcbb2b8b57fd6ff873ce7f2fcd31cd514a3d79f27f4500",
+    "configs/confirmatory-primary-control.json": "5ea17c7acee107e1a506382181a4b8f7fcac10e52ac86af8db8db4ea7ce03616",
+    "configs/confirmatory-primary-jump.json": "9c83d26b5faf4d3795d99949c5f4aae2762f66f1454e7f8a93d24444ea9d0699",
+    "scripts/audit_aij_contracts.py": "5d2a1997807c2fc9696d285be3d3f5a8d959e6190f65423628aed0dc8f98ea6f",
+    "src/abductive_jump/__init__.py": "baab091dc88612535e1269e2f0b85c35f40e8edcccb37f81c177bfb8a2c989b8",
+    "src/abductive_jump/analysis.py": "e8fdd6e07432a4e13f569dd9825f7c5ea568233ab436e06c577d96641927fa85",
+    "src/abductive_jump/archive.py": "8df8b510523c3b7b0e9e906c696d19279a41cf452aee8db1a66ae815dd75e1dd",
+    "src/abductive_jump/archive_reconstruction.py": "6af07276af092fef7a9ccebfdfd671d89b35daaa4048c1415de668bcf0f7a135",
+    "src/abductive_jump/budget.py": "8ea93db43d441e79bc238a3cd7296a205aadddc17d62068840e85741905743d4",
+    "src/abductive_jump/calibration.py": "1919784250afac36dd8d5baad5f8513d971be87ad9b7e545c11a8ed02807f466",
+    "src/abductive_jump/composition_reachability.py": "f72089931644dd26f2785915d62c9635197a059c203b2586b533fcbfdaa0c53b",
+    "src/abductive_jump/composition_search.py": "68afc16f1d8a88617c9183368dde5818ca067ca4fae1a79359de2fd0adbc56c5",
+    "src/abductive_jump/compositional_analysis.py": "5d1cbf79e6ad8054b7f7c507d7f7404b10559e2f898f342bd1acf153f63b4496",
+    "src/abductive_jump/compositional_experiment.py": "00ec29f129f91012796537cdc1f884fcdeb675a3cd78e92346a6e453393e0f45",
+    "src/abductive_jump/compositional_realization.py": "4a11302ced2b9204750cf540eee13b1abea97721e28c336176da5298143d6d9b",
+    "src/abductive_jump/compositional_replay.py": "1441dfefbb0311297955384fe2a29f1bd0fa2dec00f1ce1f000389f1ef1cefe5",
+    "src/abductive_jump/compositional_reports.py": "ca1c70ca3eb5dde03838fac011ac5f698421cce89dc87cb59a2b6b1ebebcdbe2",
+    "src/abductive_jump/compositional_reproducibility.py": "bacb61263a46a64e63ed3ea85b15e81ccebb6adc3dd959b02fac8dad03a05d79",
+    "src/abductive_jump/compositional_run_audit.py": "b19d243ce7e8b183cecc70038d68e2777c0940616dc28311362fa78961956469",
+    "src/abductive_jump/compositional_setup.py": "5ec7f107a0c3bf231f92ed83476bf13cc2a20817b9a0bd3c2cab3149c2d2aa61",
+    "src/abductive_jump/compositional_worlds.py": "27ac9105f0ae84ab75ce1c171b4a4aa065693a2f63ccfb614eaf2d14bbe11c36",
+    "src/abductive_jump/conditions.py": "4e50228462f4138121e434689804a75426d311077b8917cfff67c293ee4c4c32",
+    "src/abductive_jump/engine_validation.py": "39dbb9c2756a3698e39a8b3552a01b6fd51d31b3b893ebd3900df565aa05c29c",
+    "src/abductive_jump/executable.py": "8f7fb6ffbdc7705505e3c530f0e5166310960a40864cc4e7e0f3b3f1e2a6c8f9",
+    "src/abductive_jump/expressions.py": "31ef1355aa21f347c28ddb2386c8ad819d4042f754b6acf52b01df0472a6bcfb",
+    "src/abductive_jump/extension_analysis.py": "1d199015da065c4239c8f7054c1da2716bef6295fdf5be22d6f28ea35cc8c986",
+    "src/abductive_jump/extension_replay.py": "2bccc9b843586096df52e3a1e32b3e6dddd0b4d7d57e0a2c6a906a2c9b895c80",
+    "src/abductive_jump/external_reasoning_calibration.py": "15fd3313121d87de058f359e844cd736852b03628ca77211f3aa22b4ffab2e8c",
+    "src/abductive_jump/external_validation.py": "fdc62b7f545e94bd4ddd9437ec6201c212da48c6ff911d28e4b107ab54a16a07",
+    "src/abductive_jump/factorial_experiment.py": "c919935cb46d682bfdca0cee55e71588c83b5eb50d52282719ea9cdafaa9b180",
+    "src/abductive_jump/fair_interface.py": "f772cb0ff3939dbe494946d0afe7e318ea60fc0071aa385b68db002d58358527",
+    "src/abductive_jump/fair_interface_analysis.py": "ba8f57c86fb2888b7a70c2ccdbf4cf387fc7c017b282ede9a8e9cbaa8a6a4aab",
+    "src/abductive_jump/fair_interface_experiment.py": "c20b2ceeb8592e2b473eab32b470583e953863d8c5368c1e7047d757dc337fba",
+    "src/abductive_jump/fair_interface_publication.py": "ed53db8c851060d98af2b73b225721aa06b6e63a4ca1ec2cec375042c919432b",
+    "src/abductive_jump/gates.py": "5ec6732d08b533bc963444e545c2ba9b2fbdeff8a2a244bc415e6ca785a37777",
+    "src/abductive_jump/generic_primitives.py": "10142f9ca5af2fb552abec513a4902860a3e5dbb3ee6b18a2bd5589371f389f7",
+    "src/abductive_jump/historical_attrition.py": "5837b910c7849cfe837c073cae9fc9e9f9530bf63c153da84ae0cfe66e8c97de",
+    "src/abductive_jump/hypothesis_genome.py": "94d6634fe9b6397c5e73b548752e951efb2a4082baac84a2d687c45739adf3fe",
+    "src/abductive_jump/hypothesis_validation.py": "6e397a98945941b6a7440b30b22b2e2967c56c8cc75c7f97b467745c036adb72",
+    "src/abductive_jump/llm.py": "8b4f62cabae8d147313895da28f36cd93d650862d14282e95c5f3dc85713ac7a",
+    "src/abductive_jump/minimal_sensitivity.py": "61d115d69b753a1c923cf4f9ab86c22a4c12c79477e7067c99e4115c4d3c2e0c",
+    "src/abductive_jump/minimal_sensitivity_analysis.py": "bcaa5bae9a43ec5f9c33b0ae14cac603b4edb709f1754694dd4ad721a334e4f4",
+    "src/abductive_jump/minimal_sensitivity_replay.py": "e74e3f3a0af35fde639b21067c4f9828d6ad5a0ad4930979443555e0ef9d4910",
+    "src/abductive_jump/minimal_sensitivity_reports.py": "1bd58d7d220f6ffa8759aa65686d98fc1e8188b2e7d8c06ee531be61e629ff03",
+    "src/abductive_jump/mutations.py": "0462c4ce6585bf86fe446c103997c74d9e5f947b39a8ab59556716387d6dc114",
+    "src/abductive_jump/negative_controls.py": "09a6687ee80fdae45096742b5c2fbfb5b68159a81b6f30eb23a7d3ee222dfd10",
+    "src/abductive_jump/oracle.py": "32de33a1e78b50435b39bdcd0f603cf20bd4f8ed8433fcae6ba0d17db091f9d2",
+    "src/abductive_jump/phi_budget_integration.py": "c968e6d1f51d5adcbfa40499e7e8f3ddaf10f7d9617a337dcf82ae031d94c073",
+    "src/abductive_jump/primary_experiment.py": "475c49828b606092765f24e031c26264ddfc45f01a9e9eadbc05bad0e31a1548",
+    "src/abductive_jump/proposals.py": "8822d1a33285dd8c301dea4cc47fd73d2f2b417979bfd56b35180a5cfe41125b",
+    "src/abductive_jump/random_ablation.py": "c5a17d5758f2c73e1490e37a1d665c8270befd4d52de301ea165a3d587ab22b3",
+    "src/abductive_jump/realization.py": "e3cb80a1eb08da03d28ca8bab5711023bc1b718380965aa4251ba607c3e63021",
+    "src/abductive_jump/realizer_audit.py": "0dccda42f505e02295597846534c0b910598338b2bcbf43e28e2df1ad1966813",
+    "src/abductive_jump/replay.py": "4030d937525e52c6192c8a8f7f0b0f616747db72a0cb280fcc920c11cc95ed13",
+    "src/abductive_jump/representation.py": "2d5d1bc72d25aeaad9b239c4ff365a25c7f417855bbc2bcc0cec3ce9b35fc5ac",
+    "src/abductive_jump/reproducibility.py": "b7a387ea91156e3c52c626c51f5b9555ad2116ffef5c9351d8f36f96c0bccef7",
+    "src/abductive_jump/sample_matched_calibration.py": "c84d9e0d1165cc807badaeff4d363469fee5187e877c41e9b05644dd59cc2393",
+    "src/abductive_jump/spontaneous_calibration.py": "0fd6c1990b42ed63542b570e7f61b5a45d8c79f1ef1b98a8b4351004bca2f1cd",
+    "src/abductive_jump/supplied_representation_experiment.py": "9979b9a9ea4bdf46e389f2c12f97cfb793758f1c63e6e212aec801f9c07ae0ef",
+    "src/abductive_jump/worlds.py": "f1e68a4c313d8c1af1a82d98344390ec0d769b00ee74659611aedb4e740d1990"
+  },
+  "variable_names": [
+    {
+      "families": {
+        "causal_ambiguity": 75,
+        "coordinate_transform": 75,
+        "hidden_regimes": 75,
+        "latent_common_cause": 75,
+        "meta_law": 75,
+        "property_to_relation": 75,
+        "state_invention": 75,
+        "unification": 75
+      },
+      "hidden_only_allowlist_names": 0,
+      "source": "artifacts/candidate_theories.parquet",
+      "worlds": 600,
+      "worlds_with_allowed_names_only_in_public_actions": []
+    },
+    {
+      "families": {
+        "causal_ambiguity": 75,
+        "coordinate_transform": 75,
+        "hidden_regimes": 75,
+        "latent_common_cause": 75,
+        "meta_law": 75,
+        "property_to_relation": 75,
+        "state_invention": 75,
+        "triadic_relation_reification": 200,
+        "unification": 75
+      },
+      "hidden_only_allowlist_names": 0,
+      "source": "artifacts/compositional_candidates.parquet",
+      "worlds": 800,
+      "worlds_with_allowed_names_only_in_public_actions": []
+    }
+  ]
+}
