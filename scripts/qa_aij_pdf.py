@@ -30,7 +30,14 @@ def main():
     assert figure_sequence == [str(n) for n in range(1,8)], figure_sequence
     for number in range(1,7): assert f"Table {number}." in alltext,number
     for number in range(1,21): assert f"S{number}." in alltext,number
-    for number in range(1,43): assert re.search(rf"(?m)^{number}\. ",alltext),number
+    source_refs = (ROOT/"manuscript/AIJ_MANUSCRIPT.md").read_text().split("## References\n", 1)[1]
+    expected_refs = re.findall(r"(?m)^(\d+)\. ", source_refs)
+    assert expected_refs == [str(n) for n in range(1, len(expected_refs)+1)], expected_refs
+    pdf_refs = alltext.split("References\n", 1)[1].split("Supplementary methods:", 1)[0]
+    # A wrapped bibliography year (e.g. "1987. https://...") is not an entry number.
+    number_width = len(str(len(expected_refs)))
+    rendered_refs = re.findall(rf"(?m)^(\d{{1,{number_width}}})\. ", pdf_refs)
+    assert rendered_refs == expected_refs, (rendered_refs, expected_refs)
     for term in ["2,400","142/400","3,939","15/96","16/96","35,533","36,168","12,056"]: assert term in alltext,term
     renders=[TMP/f"page-{i:02d}.png" for i in range(1,len(pages)+1)]
     assert all(p.exists() for p in renders),"Missing current-page render"
@@ -44,7 +51,7 @@ def main():
                 sheet.paste(thumb,(col*900+10,35))
             draw.text((col*900+15,10),f"Page {start+col+1}",fill="black")
         sheet.save(TMP/f"contact_{start+1:02d}_{start+len(selected):02d}.png")
-    (ROOT/"reports/AIJ_PDF_QA.json").write_text(json.dumps({"pages":pages,"bounds_violations":violations,"font_size_character_counts":dict(font_sizes),"figure_sequence":figure_sequence,"checks":"page bounds; nonempty pages; mapped glyphs; >=11 pt dominant body; 7 sequential figures; 6 tables; 20 supplementary sections; 42 references; numerical sentinels","visual_inspection":"See AIJ_SUBMISSION_READINESS.md; contact sheets are QA intermediates."},indent=2)+"\n")
+    (ROOT/"reports/AIJ_PDF_QA.json").write_text(json.dumps({"pages":pages,"bounds_violations":violations,"font_size_character_counts":dict(font_sizes),"figure_sequence":figure_sequence,"reference_count":len(expected_refs),"checks":"page bounds; nonempty pages; mapped glyphs; >=11 pt dominant body; 7 sequential figures; 6 tables; 20 supplementary sections; complete sequential references matching source; numerical sentinels","visual_inspection":"See AIJ_SUBMISSION_READINESS.md; contact sheets are QA intermediates."},indent=2)+"\n")
     print(f"{len(pages)} pages checked; 0 bounds/glyph failures; contact sheets prepared")
 
 

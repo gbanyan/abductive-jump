@@ -1,27 +1,22 @@
 Dear Editors,
 
-Please consider “Prospective evaluation and component attribution of hypothesis-space expansion in AI systems” as a Regular Paper in *Artificial Intelligence*.
+Please consider our manuscript, “Prospective evaluation and component attribution of hypothesis-space expansion in AI systems,” as a Regular Paper in *Artificial Intelligence*.
 
-The manuscript connects longstanding questions in knowledge representation, constructive induction and heuristic search with current language-model-centered discovery systems. It asks how a system can prospectively demonstrate departure from a declared hypothesis representation, and how the explanatory content of its evaluated theory can be attributed to model and scaffold components.
+The manuscript connects longstanding problems in knowledge representation, constructive induction and heuristic search with a current challenge in language-model-centred discovery systems: when a hybrid AI system produces a successful explanatory theory, the end-to-end result alone does not establish whether the decisive content came from the model, programmed search, a supplied realization library or the evaluation scaffold.
 
-We contribute an executable assay requiring structural non-membership, observational adequacy, commitment before outcome reveal, discriminating intervention and held-out falsification. We couple the verdict to a reusable evidence record: field-level provenance, specified component interventions, executable replay and an inventory of supplied realization knowledge. This separates validated system performance, model-authored content and the origin and construction of explanatory forms. A versioned JSON Schema, generator, validator and reconstructed record from an archived candidate make the procedure inspectable.
+We introduce a prospective executable assay for bounded hypothesis-space expansion. A candidate must leave a declared structural language, remain consistent with the observations, commit to a discriminating prediction before outcome reveal, outperform a selected incumbent comparator and survive separate falsification tests. We couple this verdict to an evidence record that traces the provenance and transformation of evaluated fields, records supplied realization knowledge and supports specified component-level replay.
 
-The frozen experiments distinguish within-language controls, atomic representation proposals and compositional search policies. Under a fixed family-aligned realizer, structured search reliably reaches validated representations. Provenance and inference-free replay locate the decisive content in deterministic components. An interface sensitivity supplies the complementary case: model-authored graph edits reach execution after interface repair, without an aggregate advantage over random composition. Together these cases show how an end-to-end score can misattribute both success and apparent failure.
+The experiments illustrate why these distinctions matter. External representation proposals and structured compositional search produce validated escapes in the controlled procedural worlds, but code-path inspection and inference-free replay show that the highest-performing path obtains its evaluated representation, predictive expression, ranking and intervention from deterministic scaffold components rather than model output. Conversely, a historical model-proposal condition fails largely before executable evaluation; after redesigning the interface to permit executable model-authored graph edits, the model produces validated candidates in 15 of 96 worlds, compared with 16 of 96 for random composition on the same panel. These complementary cases show that end-to-end success can overattribute capability to a model, while end-to-end failure can obscure content that never reaches the evaluator.
 
-The synthetic, noiseless setting was chosen to make membership, timing and predictions exactly verifiable. The methodological contribution concerns the evaluation of hybrid AI systems rather than one application domain; its demonstrated scope remains the supplied procedural families and realization inventory. We explicitly relate the method to classical representation change and to recent scientific agents and harness-aware evaluation.
+We believe the work is particularly suited to *Artificial Intelligence* because it operationalizes a classical distinction between search within a representation and revision of the representation itself, while providing a reproducible procedure for attributing evaluated theory content in contemporary hybrid AI systems. The synthetic and noiseless setting is deliberately bounded so that structural membership, prospective predictions and component provenance can be audited exactly; the manuscript does not claim general autonomous scientific discovery.
 
-Code, data, raw call ledgers and replay materials are publicly available in the repository and frozen research release linked in the manuscript. ChatGPT/Codex assistance is disclosed substantively, including literature work, drafting and analysis-code support; research model use is documented separately in the methods.
-
-This manuscript is not under consideration by another journal. A manuscript version and research artifacts are publicly accessible through the repository. The existence and identifier of any separately hosted preprint will be stated in the submission metadata after confirmation.
+Code, data, raw call ledgers and replay materials are publicly available through the repository and frozen research release described in the manuscript. The manuscript is not under consideration elsewhere. A version of the manuscript and the research artifacts are publicly available through the repository; no separate preprint or public-manuscript posting is claimed here. All authors have approved the submission and declare no competing interests.
 
 Sincerely,
 
 Jing-Rung Huang\
 Corresponding author, on behalf of both authors\
 Department of Computer Science and Information Engineering\
-National Cheng Kung University, Tainan 701, Taiwan\
+National Cheng Kung University\
+Tainan 701, Taiwan\
 p78084063@mail.ncku.edu.tw
-
----
-
-Author-side check before sending (remove this section): reconfirm no concurrent submission, both authors' approval of this revision, competing interests/funding statements, and the separately hosted preprint status. The repository is public; that fact alone neither proves nor excludes an In Review/Research Square posting. Replace the preprint sentence with the verified status and URL if applicable. This file is a complete editorial draft, not authorization to submit or an attestation of new author approval.

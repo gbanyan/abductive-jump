@@ -26,7 +26,7 @@ The project is executed in the fixed order documented in `research-ledger.md`: d
 
 The frozen AJ5 and CJ5 studies are complete. Subsequent code-path and counterfactual audits show that CJ5 success is attributable to deterministic typed search and a family-aligned motif realizer, not to model output. A separately frozen interface sensitivity produced validated edits in 15/96 worlds but did not outperform matched random composition. The resulting claim is system-level and methodological: the assay detects prospectively validated structural escape while exposing when successful scientific content is supplied by scaffolding rather than by a language model.
 
-The current AIJ manuscript is [AIJ_MANUSCRIPT.md](manuscript/AIJ_MANUSCRIPT.md), with [supplementary methods](manuscript/AIJ_SUPPLEMENTARY_METHODS.md) and a [review PDF](output/pdf/AIJ_manuscript_and_supplement.pdf). Historical NMI material and experiment identifiers are retained for traceability. See also `reports/compositional-representation-jump-final.md`, `experiments/nmi_fair_interface_v1/` and `experiments/nmi_realizer_audit_v1/`.
+The current AIJ manuscript is [AIJ_MANUSCRIPT.md](manuscript/AIJ_MANUSCRIPT.md), with [supplementary methods](manuscript/AIJ_SUPPLEMENTARY_METHODS.md) and a [review PDF](output/pdf/AIJ_manuscript_and_supplement.pdf). It was submitted to *Artificial Intelligence* on 10 September 2026 as `ARTINT-S-26-02213`; post-upload verification is recorded in [`docs/publication/AIJ_EDITORIAL_INTEGRATION.md`](docs/publication/AIJ_EDITORIAL_INTEGRATION.md). Historical NMI material and experiment identifiers are retained for traceability. See also `reports/compositional-representation-jump-final.md`, `experiments/nmi_fair_interface_v1/` and `experiments/nmi_realizer_audit_v1/`.
 
 ### Evidence-record example
 
@@ -39,7 +39,7 @@ python scripts/build_aij_evidence_record.py
 python scripts/validate_aij_evidence_record.py --reproduce
 ```
 
-Generation and reproduction require the raw held-out call ledger from the frozen evidence release. For exact versions, pair code tag `aij-review-package-v1` with data release `nmi-github-submission-v4` using the [clean-environment reproduction instructions](docs/publication/AIJ_REPRODUCTION.md). Omitting `--reproduce` checks record structure only. Neither command makes model calls. [Revision checks and remaining author-side upload holds](reports/AIJ_SUBMISSION_READINESS.md) are recorded separately.
+Generation and reproduction require the raw held-out call ledger from the frozen evidence release. For exact versions, pair code tag `aij-review-package-v1` with data release `nmi-github-submission-v4` using the [clean-environment reproduction instructions](docs/publication/AIJ_REPRODUCTION.md). Omitting `--reproduce` checks record structure only. Neither command makes model calls. [Revision checks and post-upload status](reports/AIJ_SUBMISSION_READINESS.md) are recorded separately.
 
 ## Licensing and citation
 

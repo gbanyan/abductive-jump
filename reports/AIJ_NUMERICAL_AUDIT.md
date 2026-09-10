@@ -2,7 +2,7 @@
 
 No model inference or new experimental population was run. Historical artifacts are read-only. Empirical assertions and manual protocol review are separate checks.
 
-Automated checks: **244 passed, 0 failed**.
+Automated checks: **265 passed, 0 failed**.
 
 | Claim | Verified value | Canonical source |
 |---|---|---|
@@ -250,6 +250,27 @@ Automated checks: **244 passed, 0 failed**.
 | Freeze commit ae1ede683fdef09f2bf60f6e1052b60394ad6cf8 | `True` | `Git object database` |
 | Freeze commit b6e1561 | `True` | `Git object database` |
 | Freeze commit f846c89287e379fe313551c47765c24f2abf4959 | `True` | `Git object database` |
+| Blind-binding paired transitions C3/known | `(0, 53, 0, 347)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| Blind-binding paired transitions C3/heldout | `(0, 0, 0, 100)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| Blind-binding paired transitions C_rand/known | `(333, 10, 15, 42)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| Blind-binding paired transitions C_rand/heldout | `(87, 0, 0, 13)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| Blind-binding paired transitions DeepSeek_grammar/known | `(81, 7, 0, 8)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| C_rand binding lost/gained latent_common_cause | `(0, 15)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| C_rand binding lost/gained meta_law | `(3, 0)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| C_rand binding lost/gained unification | `(7, 0)` | `experiments/nmi_realizer_audit_v1/results/world_results.parquet` |
+| Unique fair-comparison panel worlds | `96` | `experiments/nmi_minimal_sensitivity_v1/panel_manifest.json` |
+| C_rand exact panel identity | `True` | `artifacts/compositional_jump_results.parquet` |
+| Grammar exact panel identity | `True` | `experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet` |
+| C_rand matched-panel family causal_ambiguity | `(12, 0)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family coordinate_transform | `(12, 3)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family hidden_regimes | `(12, 0)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family latent_common_cause | `(12, 0)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family meta_law | `(12, 2)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family property_to_relation | `(12, 10)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family state_invention | `(12, 0)` | `artifacts/compositional_jump_results.parquet` |
+| C_rand matched-panel family unification | `(12, 1)` | `artifacts/compositional_jump_results.parquet` |
+| Raw-world grammar/random paired table | `(66, 15, 14, 1)` | `artifacts/compositional_jump_results.parquet; experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet` |
+| Joint grammar/random success family | `['meta_law']` | `artifacts/compositional_jump_results.parquet; experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet` |
 
 ## Manual numerical/protocol review
 
@@ -266,6 +287,7 @@ No empirical estimate required a new experiment. The inherited phrase 'DOI archi
 - `artifacts/compositional-replay-validation.json`: `54b6a1d2c4a67ff4a049911c4c3f63f3ee26795b062e31a781b6175cd6ceba21`
 - `artifacts/compositional_comparisons.parquet`: `229cea78f02e52888e5404e91110db3c4051f7af6246ac9449de8c71879cc156`
 - `artifacts/compositional_cost_frontier.parquet`: `ffbf03364fc176d361c623e8e7c5689f85d6f9f16cb03efda695d62bc879c07a`
+- `artifacts/compositional_jump_results.parquet`: `99a3d241bb319eeaaffe45f11aaad1362ca80543cbd07746d6f072490f48fb14`
 - `artifacts/condition_summary.parquet`: `b9a098697e6bc51fdaf2b4d12e6539653d2e1c249b22e8ea963fd7cbfbe88700`
 - `artifacts/nmi_component_audit.json`: `8db13020a227460556fac04897f8af115fe4621cd202bba239af6179a16fc447`
 - `artifacts/nmi_gate_attrition.parquet`: `cbb9de97b97ab2e53cd2c50c0f017eb1345fc96a8cd4b133cd19dcb97cb51a16`
@@ -299,6 +321,7 @@ No empirical estimate required a new experiment. The inherited phrase 'DOI archi
 - `experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/initial_replay_report.json`: `d45d0066d4bb4791d4b4d5360dcfecb9757fa4551fd6d2c1d562a30b95154fbd`
 - `experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/replay_report.json`: `ece57c06e0518f4fad1101c298ff706c8e6e3ffffc6d84d68214204cb54a57a2`
 - `experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/verification_correction_001.json`: `2d939e3bffd39824ffec87de7825459c4d25b2bd9f8a5199f031d6839b637d94`
+- `experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet`: `ed1271b2e1204ffe780e877e4b05b07c65677b6441740ebeb7d77135272dca55`
 - `experiments/nmi_minimal_sensitivity_v1/analysis/compute_ledger.csv`: `1f654caeb3dac1d7bb01818bdec7e4f74280281bd8f0f7c02abf99f477e321f7`
 - `experiments/nmi_minimal_sensitivity_v1/analysis/gate_attrition.csv`: `9a4e3bb6e61403f11ca82273055c2d7766e86ad08d8ba1416e554205e0099880`
 - `experiments/nmi_minimal_sensitivity_v1/analysis/per_family.csv`: `799374a531aa141fc3736e7a5e575c2be70a2ba7f9b3d5117a569814b999caca`

@@ -82,7 +82,14 @@ def markdown(path, s):
         line=lines[i].strip(); i+=1
         if not line: continue
         if line.startswith("Procedure box."):
-            story.append(KeepTogether([Paragraph(inline(line), s["box"])])); continue
+            # Keep the six numbered steps legible in the PDF as well as Markdown.
+            box_lines = [inline(line)]
+            while i < len(lines) and not lines[i].strip():
+                i += 1
+            while i < len(lines) and re.match(r"^\d+\. ", lines[i].strip()):
+                box_lines.append(inline(lines[i].strip()))
+                i += 1
+            story.append(KeepTogether([Paragraph("<br/>".join(box_lines), s["box"])])); continue
         if line.startswith("# "):
             story.append(Paragraph(inline(line[2:]),s["title"])); continue
         if line.startswith("## "):
@@ -99,7 +106,10 @@ def markdown(path, s):
             target=TMP/f"equation_{equations}.png"
             mathtext.math_to_image("$"+expression+"$",str(target),dpi=240,prop=font_manager.FontProperties(size=13),color="#192b3b")
             preceding=story.pop()
-            story.append(KeepTogether([preceding,Spacer(1,5),picture(target,13*mm),Spacer(1,9)])); continue
+            prefix=[]
+            while story and isinstance(story[-1],Paragraph) and story[-1].style.name in ("h2","h3"):
+                prefix.insert(0,story.pop())
+            story.append(KeepTogether(prefix+[preceding,Spacer(1,5),picture(target,13*mm),Spacer(1,9)])); continue
         if line.startswith("!["):
             match=re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)",line); assert match,line
             while i<len(lines) and not lines[i].strip(): i+=1

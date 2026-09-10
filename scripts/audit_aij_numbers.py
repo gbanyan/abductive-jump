@@ -131,6 +131,7 @@ def main():
     src="manuscript/figures/aij/source_data.json"; plotted=read(src)
     check("Worked example outcomes",[plotted["data"]["worked_example"][k] for k in ["seed","intervention_outcome","falsification_outcome"]],[40000,2268,1620],src)
     supplementary_checks()
+    section_review_checks()
     report=["# AIJ numerical audit", "", "No model inference or new experimental population was run. Historical artifacts are read-only. Empirical assertions and manual protocol review are separate checks.", "",f"Automated checks: **{len(CHECKS)} passed, 0 failed**.", "", "| Claim | Verified value | Canonical source |", "|---|---|---|"]
     for c in CHECKS:
         report.append(f'| {c["claim"]} | `{c["actual"]}` | `{c["source"]}` |')
@@ -144,6 +145,72 @@ def main():
     (ROOT/"reports/AIJ_NUMERICAL_AUDIT.md").write_text("\n".join(report)+"\n")
     (ROOT/"reports/AIJ_NUMERICAL_CHECKS.json").write_text(json.dumps({"checks":CHECKS,"input_sha256":SOURCES},indent=2)+"\n")
     print(f"{len(CHECKS)} numerical/configuration checks passed")
+
+
+
+def section_review_checks():
+    """Verify added descriptive claims directly from the frozen world tables."""
+    src = "experiments/nmi_realizer_audit_v1/results/world_results.parquet"
+    rows = read(src)
+    paired = {}
+    for r in rows:
+        if r["policy"] in {"aligned", "role_action_blind_binding"}:
+            key = (r["source"], r["family"], r["world_id"])
+            policies = paired.setdefault(key, {})
+            assert r["policy"] not in policies, (key, "duplicate policy")
+            policies[r["policy"]] = bool(r["successful"])
+    grouped = {}
+    family_transitions = {}
+    for (source, family, world_id), policies in paired.items():
+        assert set(policies) == {"aligned", "role_action_blind_binding"}, world_id
+        a, b = policies["aligned"], policies["role_action_blind_binding"]
+        category = "both_pass" if a and b else "lost" if a else "gained" if b else "both_fail"
+        population = "heldout" if family == "triadic_relation_reification" else "known"
+        grouped.setdefault((source, population), Counter())[category] += 1
+        family_transitions.setdefault((source, family), Counter())[category] += 1
+    for key, expected in {
+        ("C3", "known"): (0, 53, 0, 347),
+        ("C3", "heldout"): (0, 0, 0, 100),
+        ("C_rand", "known"): (333, 10, 15, 42),
+        ("C_rand", "heldout"): (87, 0, 0, 13),
+        ("DeepSeek_grammar", "known"): (81, 7, 0, 8),
+    }.items():
+        actual = tuple(grouped[key][k] for k in ("both_fail", "lost", "gained", "both_pass"))
+        check("Blind-binding paired transitions " + "/".join(key), actual, expected, src)
+    for family, expected in {
+        "latent_common_cause": (0, 15), "meta_law": (3, 0), "unification": (7, 0),
+    }.items():
+        counts = family_transitions[("C_rand", family)]
+        check("C_rand binding lost/gained " + family, (counts["lost"], counts["gained"]), expected, src)
+
+    panel_source = "experiments/nmi_minimal_sensitivity_v1/panel_manifest.json"
+    panel = read(panel_source)
+    keys = {(r["family"], r["world_seed"], r["world_id"]) for r in panel["selected_worlds"]}
+    check("Unique fair-comparison panel worlds", len(keys), 96, panel_source)
+    random_source = "artifacts/compositional_jump_results.parquet"
+    random_rows = [r for r in read(random_source)
+                   if r["condition"] == "C_RAND_RANDOM_PRIMITIVES" and not r["no_jump"]
+                   and (r["family"], r["world_seed"], r["world_id"]) in keys]
+    model_source = "experiments/nmi_fair_interface_v1/results/deepseek_fair_cself/world_results.parquet"
+    model_rows = read(model_source)
+    lookups = []
+    for label, values, path in [("C_rand", random_rows, random_source), ("Grammar", model_rows, model_source)]:
+        lookup = {(r["family"], r["world_seed"], r["world_id"]): bool(r["condition_success"]) for r in values}
+        check(label + " exact panel identity", len(values) == len(lookup) == 96 and set(lookup) == keys, True, path)
+        lookups.append(lookup)
+    random, model = lookups
+    expected_random = {"property_to_relation": 10, "coordinate_transform": 3, "meta_law": 2, "unification": 1}
+    for family in sorted({k[0] for k in keys}):
+        family_keys = [k for k in keys if k[0] == family]
+        check("C_rand matched-panel family " + family,
+              (len(family_keys), sum(random[k] for k in family_keys)),
+              (12, expected_random.get(family, 0)), random_source)
+    transitions = Counter((random[k], model[k]) for k in keys)
+    check("Raw-world grammar/random paired table",
+          tuple(transitions[k] for k in [(False, False), (True, False), (False, True), (True, True)]),
+          (66, 15, 14, 1), random_source + "; " + model_source)
+    check("Joint grammar/random success family", sorted(k[0] for k in keys if random[k] and model[k]),
+          ["meta_law"], random_source + "; " + model_source)
 
 
 def supplementary_checks():

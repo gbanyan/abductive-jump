@@ -1,9 +1,9 @@
 {
   "output": "output/pdf/AIJ_manuscript_and_supplement.pdf",
-  "sha256": "2c4da0f703de7c78bb8f94cedd22ae0ecea235d0f71c6fe3a1b0b6c4a67909dc",
+  "sha256": "9265771d0aca781695dcaf23d12583119d8e17040096bfc19f1f1b9252eabb6d",
   "input_sha256": {
-    "manuscript/AIJ_MANUSCRIPT.md": "3481c1145fab9a581de3c495162b63dff29bdf7e29864c2215b19dda695c98df",
-    "manuscript/AIJ_SUPPLEMENTARY_METHODS.md": "aeb2ffe3497eb7b62ebf0e5df7a0645bceda8e30b527a50df926f19854d7e9d4",
+    "manuscript/AIJ_MANUSCRIPT.md": "ddab881c563b4c698ea3c7eda6ac5293a2933067c5d5554ee4ebb97497d1fad7",
+    "manuscript/AIJ_SUPPLEMENTARY_METHODS.md": "0e6966800e07d21f5c7b7f9fa06bb7ac40d5c8bc5d4fc539d2114fb4096a435f",
     "manuscript/figures/aij/figure_1_assay.png": "c6eda24ca409f8c71c0fec8d269199010764d26ef1bf2218a387135c7f18cc1c",
     "manuscript/figures/aij/figure_2_aj5.png": "74b512f2546b19136452325ab832d0377514fd06a952a17853b657e395d5356a",
     "manuscript/figures/aij/figure_3_cj5.png": "a729b5933a80b0b76c16752ce970121270dff075c370a4e33f1eb8a9e3e0aec4",
@@ -11,6 +11,6 @@
     "manuscript/figures/aij/figure_5_interface.png": "d3b3a3435f879d99fef96410e9fbe55425e97434d8e18a6182dcb45d2c606f38",
     "manuscript/figures/aij/figure_6_realizer.png": "0bcc86f65fe883c03a31a7c5ec876cb26908ed53178363dd40e860d15da42211",
     "manuscript/figures/aij/figure_7_worked.png": "1502c0a6cec2e60f516ecb6b6b7f31be84e311f1ecfd73492fa1577536b941e3",
-    "scripts/build_aij_manuscript.py": "bf877e1b4670dca87560e84f2753ba8bbc5ceaa224fead440a7759ade5d248d7"
+    "scripts/build_aij_manuscript.py": "8998379f0647476a7f2633ddc04d8522e803562318761108abd8d4b34d3af7bf"
   }
 }
